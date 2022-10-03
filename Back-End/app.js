@@ -9,12 +9,16 @@ const router = require('./app.router');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/',router);
+app.use('/api',router);
 
 
 
 app.get('/', (req,res)=>{
-    res.send('Hello to my api');
+    res.send('WELCOME TO MY BACK-END');
+})
+
+app.get('/api', (req,res)=>{
+    res.send('WELCOME TO MY API');
 })
 
 app.listen(port , ()=>{

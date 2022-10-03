@@ -1,0 +1,26 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- AlterTable
+ALTER TABLE [dbo].[User_Candidate] ALTER COLUMN [gender] INT NULL;
+ALTER TABLE [dbo].[User_Candidate] ALTER COLUMN [avartar] NVARCHAR(1000) NULL;
+
+-- AlterTable
+ALTER TABLE [dbo].[User_Manager] ALTER COLUMN [gender] INT NULL;
+
+-- AlterTable
+ALTER TABLE [dbo].[User_Recruiter] ALTER COLUMN [avartar] NVARCHAR(1000) NULL;
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH
