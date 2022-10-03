@@ -11,7 +11,7 @@ datasource db {
 }
 
 // Bảng loại người dùng
-model User_type {
+model User_Type {
   id             BigInt    @id @default(autoincrement())
   user_type_name String    @unique
   is_active      Boolean   @default(true)
@@ -22,11 +22,11 @@ model User_type {
   update_user    String?
   delete_date    DateTime?
   delete_user    String?
-  account Account?
+  account User_Account?
 }
 
 // Bảng tài khoản
-model Account {
+model User_Account {
   id   BigInt   @id @default(autoincrement())
   password     String
   username     String   @unique
@@ -36,7 +36,7 @@ model Account {
   is_active    Boolean  @default(true)
   is_delete    Boolean  @default(false)
   create_date  DateTime @default(now())
-  user_type User_type? @relation(fields: [user_type_id], references: [id])
+  user_type User_Type? @relation(fields: [user_type_id], references: [id])
   user_type_id BigInt @unique
 }
 
@@ -49,12 +49,12 @@ model User_Candidate {
   email        String?
   number_phone String?
   age          Int?
-  gender       Int
+  gender       Int?
   address      String?
   city_id      Int?
   district_id  Int?
   ward_id      Int?
-  avartar      String
+  avartar      String?
   is_active    Boolean @default(true)
   is_delete    Boolean @default(false)
   // account      Account?
@@ -70,7 +70,7 @@ model User_Recruiter {
   city_id      Int?
   district_id  Int?
   ward_id      Int?
-  avartar      String // logo
+  avartar      String? // logo
   is_active    Boolean @default(true)
   is_delete    Boolean @default(false)
   // account      Account?
@@ -86,11 +86,11 @@ model User_Manager {
   email        String?
   number_phone String?
   age          Int?
-  gender       Int
+  gender       Int?
   address      String?
   city_id      Int?
   district_id  Int?
   ward_id      Int?
-  avartar      String
+  avartar      String?
   // account      Account?
 }
