@@ -1,0 +1,12 @@
+@import "../../../../styles/theme.scss";
+.header-item {
+	color: $primary-color;
+	padding: 0.6rem 1rem;
+	text-decoration: none;
+	display: inline-block;
+	font-weight: 400;
+	font-size: 12px;
+	text-transform: uppercase;
+	outline: none;
+	cursor: pointer;
+}

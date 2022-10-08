@@ -1,0 +1,107 @@
+$primary-background: #49e4fa;
+$secondary-background: #4cd3e3;
+$info-background: #38a4ff;
+$warning-background: #f4e700;
+$danger-background: #f44a40;
+$default-background: #f9f9ff;
+$header-backround: rgba(0, 0, 0, 0.8);
+
+$primary-color: #fff;
+$font-size-text-small: 2rem;
+$line-height-text-small: 2.8rem;
+
+$font-size-text-xsmall: 1rem;
+$line-height-text-xsmall: 1.4rem;
+
+$font-size-text-large: 4rem;
+$line-height-text-large: 5.6rem;
+
+$mobile-only: "screen and (max-width: 480px)";
+$tablet: "screen and (min-width: 642px)";
+$xtablet: "screen and (min-width: 726px)";
+$lap: "screen and (min-width: 1008px)";
+$desk: "screen and (min-width: 1024px)";
+$widescreen: "screen and (min-width: 1240px)";
+$xl: "screen and (min-width: 1440px)";
+$xxl: "screen and (min-width: 1536px)";
+
+@mixin mq($alias) {
+	@if $alias == "tablet" {
+		@media screen and (min-width: 641px) {
+			@content;
+		}
+	} @else if $alias == "lap" {
+		@media screen and (min-width: 1008px) {
+			@content;
+		}
+	} @else if $alias == "xtablet" {
+		@media screen and (min-width: 726px) {
+			@content;
+		}
+	} @else if $alias == "desk" {
+		@media screen and (min-width: 1024px) {
+			@content;
+		}
+	} @else if $alias == "widescreen" {
+		@media screen and (min-width: 1240px) {
+			@content;
+		}
+	} @else if $alias == "mobile-only" {
+		@media screen and (max-width: 480px) {
+			@content;
+		}
+	} @else if $alias == "xl" {
+		@media screen and (min-width: 1440px) {
+			@content;
+		}
+	} @else if $alias == "xxl" {
+		@media screen and (min-width: 1536px) {
+			@content;
+		}
+	}
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+}
+
+.u__text--small {
+	font-size: $font-size-text-small;
+	line-height: $line-height-text-small;
+}
+
+.u__text--large {
+	font-size: $font-size-text-small;
+	line-height: $line-height-text-small;
+}
+
+html {
+	scroll-behavior: smooth;
+	/* default font-size: 16px -> 62.5% * 16px = 10px */
+	/* => 1rem = 8px*/
+	font-family: "Poppins", sans-serif;
+
+	font-size: 50% !important;
+	@include mq("tablet") {
+		/* => 1rem = 10px*/
+		font-size: 62.5% !important;
+	}
+}
+
+body {
+	box-sizing: border-box;
+	font-size: $font-size-text-xsmall;
+	line-height: $line-height-text-xsmall;
+	font-weight: 500;
+	color: #000;
+	width: 100%;
+	overflow-x: hidden;
+	input,
+	textarea {
+		font-weight: 500;
+	}
+}

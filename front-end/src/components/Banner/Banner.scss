@@ -1,0 +1,9 @@
+@import "../../styles/theme.scss";
+.banner {
+	padding-top: 6rem;
+	.title {
+		margin: 10rem 0;
+		font-size: $font-size-text-large;
+		line-height: $line-height-text-large;
+	}
+}

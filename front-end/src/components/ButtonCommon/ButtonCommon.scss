@@ -1,0 +1,20 @@
+@import "../../styles/theme.scss";
+.button-common {
+	color: $primary-color;
+	border: none;
+	padding: 0 2rem;
+	outline: none;
+	line-height: $line-height-text-small;
+	font-size: $font-size-text-small;
+	text-align: center;
+	text-decoration: none;
+	font-weight: 500;
+	cursor: pointer;
+	height: initial;
+	&.button-primary {
+		background-color: $primary-background;
+		&::hover {
+			// color: ;
+		}
+	}
+}
