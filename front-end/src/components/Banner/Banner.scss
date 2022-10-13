@@ -1,9 +1,28 @@
 @import "../../styles/theme.scss";
 .banner {
 	padding-top: 6rem;
+	background: url("../../assets/images/header-bg.jpg") center;
+	background-size: cover;
+	position: relative;
+	z-index: 2;
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-image: -webkit-linear-gradient(
+			0deg,
+			#bfacff 0%,
+			#795fff 100%
+		);
+		opacity: 0.9;
+	}
 	.title {
-		margin: 10rem 0;
+		margin: 10rem 0 5rem 0;
 		font-size: $font-size-text-large;
 		line-height: $line-height-text-large;
+		color: $primary-color;
 	}
 }

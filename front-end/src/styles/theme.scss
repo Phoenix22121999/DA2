@@ -4,7 +4,7 @@ $info-background: #38a4ff;
 $warning-background: #f4e700;
 $danger-background: #f44a40;
 $default-background: #f9f9ff;
-$header-backround: rgba(0, 0, 0, 0.8);
+$header-backround: rgba(0, 0, 0, 0.5);
 
 $primary-color: #fff;
 $font-size-text-small: 2rem;
@@ -67,6 +67,12 @@ $xxl: "screen and (min-width: 1536px)";
 	align-items: center;
 	flex-direction: column;
 	width: 100%;
+	position: relative;
+	padding: 0 10rem;
+}
+
+.primary-text {
+	color: $primary-background;
 }
 
 .u__text--small {

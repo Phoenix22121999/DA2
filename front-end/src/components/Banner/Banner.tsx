@@ -5,9 +5,14 @@ type BannerProps = {};
 
 export default function Banner({}: BannerProps) {
 	return (
-		<section className="banner container">
-			<div className="title">1500+ Jobs posted last week</div>
-			<SearchBar />
+		<section className="banner">
+			<div className="container">
+				<div className="title">
+					<span className="primary-text">1500+</span> Jobs posted last
+					week
+				</div>
+				<SearchBar />
+			</div>
 		</section>
 	);
 }
