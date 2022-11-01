@@ -1,0 +1,20 @@
+@use "../../styles/variables" as v;
+.home-categories {
+	.categories-title {
+		@include v.text-6xl;
+		color: v.$black-blue;
+		font-weight: 600;
+		margin-bottom: 2rem;
+	}
+	.box {
+		flex-wrap: wrap;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.categories-button {
+		padding-top: 5rem;
+		width: 25%;
+	}
+}

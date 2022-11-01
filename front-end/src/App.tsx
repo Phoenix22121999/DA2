@@ -6,6 +6,7 @@ import {
 	// Link,
 } from "react-router-dom";
 import "./App.css";
+import "./styles/theme.scss";
 import { AppLayout } from "./components/AppLaypout/AppLayout";
 function App() {
 	return (

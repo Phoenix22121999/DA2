@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import ButtonCommon from "../ButtonCommon/ButtonCommon";
 import { HeaderItem } from "./components/HeaderItem/HeaderItem";
 import "./Header.scss";
@@ -39,8 +39,10 @@ export const AppHeader = (props: HeaderProps) => {
 					return <HeaderItem {...item} />;
 				})}
 				{/* <div className="button-group"> */}
-				<ButtonCommon className="signup">sign up</ButtonCommon>
-				<ButtonCommon className="login" onClick={open}>
+				<ButtonCommon className="signup" size="small">
+					sign up
+				</ButtonCommon>
+				<ButtonCommon className="login" onClick={open} size="small">
 					login
 				</ButtonCommon>
 				{/* </div> */}

@@ -1,10 +1,14 @@
-@import "../../styles/theme.scss";
+@use "../../styles/variables" as v;
 .banner {
 	padding-top: 6rem;
 	background: url("../../assets/images/header-bg.jpg") center;
 	background-size: cover;
 	position: relative;
 	z-index: 2;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	&::before {
 		content: "";
 		position: absolute;
@@ -20,9 +24,13 @@
 		opacity: 0.9;
 	}
 	.title {
-		margin: 10rem 0 5rem 0;
-		font-size: $font-size-text-large;
-		line-height: $line-height-text-large;
-		color: $primary-color;
+		margin-bottom: 5rem;
+		@include v.text-6xl;
+		color: v.$primary-color;
+	}
+	.sub-title {
+		font-size: 1.4rem;
+		line-height: 2rem;
+		color: v.$primary-color;
 	}
 }

@@ -1,11 +1,11 @@
-@import "../../styles/theme.scss";
+@use "../../styles/variables" as v;
 .app-layout {
-	height: 100rem;
-	background-color: #4158d0;
-	background-image: linear-gradient(
-		43deg,
-		#4158d0 0%,
-		#c850c0 46%,
-		#ffcc70 100%
-	);
+	// background-color: #4158d0;
+	// background-image: linear-gradient(
+	// 	43deg,
+	// 	#4158d0 0%,
+	// 	#c850c0 46%,
+	// 	#ffcc70 100%
+	// );
+	padding-bottom: 10rem;
 }

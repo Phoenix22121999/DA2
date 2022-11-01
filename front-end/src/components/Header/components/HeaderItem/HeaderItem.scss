@@ -1,6 +1,7 @@
-@import "../../../../styles/theme.scss";
+@use "../../../../styles/variables" as v;
+
 .header-item {
-	color: $primary-color;
+	color: v.$primary-color;
 	padding: 0.6rem 1rem;
 	text-decoration: none;
 	display: inline-block;

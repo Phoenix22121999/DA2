@@ -1,12 +1,9 @@
 import React from "react";
-import { Select } from "antd";
 import "./SearchBar.scss";
 import SelectCommon, { OptionValue } from "../SelectCommon/SelectCommon";
 import ButtonCommon from "../ButtonCommon/ButtonCommon";
 
 type SearchBarProps = {};
-
-const { Option } = Select;
 
 const Test: OptionValue[] = [
 	{
@@ -23,7 +20,7 @@ const Test: OptionValue[] = [
 	},
 ];
 
-function SearchBar({}: SearchBarProps) {
+function SearchBar(props: SearchBarProps) {
 	return (
 		<div className="search-bar">
 			<div className="search-bar-item">
@@ -41,7 +38,7 @@ function SearchBar({}: SearchBarProps) {
 				<SelectCommon data={Test} placeholder="salary" size="large" />
 			</div>
 			<div className="search-bar-item">
-				<ButtonCommon>Search</ButtonCommon>
+				<ButtonCommon size="small">Search</ButtonCommon>
 			</div>
 		</div>
 	);

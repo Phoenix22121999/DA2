@@ -1,0 +1,13 @@
+@use "../../styles/variables" as v;
+.features {
+	translate: 0 -8rem;
+	position: relative;
+	z-index: 2;
+	.features-box {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+}
