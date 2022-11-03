@@ -1,11 +1,11 @@
 import React from "react";
 import "./SearchBar.scss";
-import SelectCommon, { OptionValue } from "../SelectCommon/SelectCommon";
+import SelectCommon, { SelectOptionValue } from "../SelectCommon/SelectCommon";
 import ButtonCommon from "../ButtonCommon/ButtonCommon";
 
 type SearchBarProps = {};
 
-const Test: OptionValue[] = [
+const Test: SelectOptionValue[] = [
 	{
 		key: "it",
 		value: "IT11111111111111111111111111111",

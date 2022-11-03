@@ -3,13 +3,13 @@ import { Select, SelectProps } from "antd";
 import "./SelectCommon.scss";
 const { Option } = Select;
 
-export type OptionValue = {
+export type SelectOptionValue = {
 	value: string;
 	key: string;
 };
 
 interface SelectCommonProps extends SelectProps {
-	data: OptionValue[];
+	data: SelectOptionValue[];
 }
 
 const SelectCommon = ({ data, ...props }: SelectCommonProps) => {

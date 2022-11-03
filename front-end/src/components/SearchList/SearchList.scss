@@ -1,0 +1,19 @@
+@use "../../styles/variables" as v;
+.search-list {
+	.search-list-head {
+		padding: 2rem 0;
+		@include v.text-lg;
+		font-weight: bold;
+		color: v.$black-blue;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	.search-list-body {
+	}
+	.search-list-pagination {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}

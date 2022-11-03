@@ -2,13 +2,22 @@ import React from "react";
 import SearchKeyWord from "./SearchKeyWord/SearchKeyWord";
 import "./SearchFilter.scss";
 import SearchLocation from "./SearchLocation/SearchLocation";
-import SearchJobType from "./SearchJobType/SearchJobType";
 import SearchCategory from "./SearchCategory/SearchCategory";
-type Props = {};
+import SearchJobType from "./SearchJobType/SearchJobType";
+import SearchDatePost from "./SearchDatePost/SearchDatePost";
+import SearchSalary from "./SearchSalary/SearchSalary";
+import classNames from "classnames";
+type Props = {
+	isOpen: boolean;
+};
 
-const SearchFilter = (props: Props) => {
+const SearchFilter = ({ isOpen }: Props) => {
 	return (
-		<div className="search-filter">
+		<div
+			className={classNames("search-filter", {
+				"is-open": isOpen,
+			})}
+		>
 			<div className="search-filter-item">
 				<SearchKeyWord />
 			</div>
@@ -20,6 +29,12 @@ const SearchFilter = (props: Props) => {
 			</div>
 			<div className="search-filter-item">
 				<SearchJobType />
+			</div>
+			<div className="search-filter-item">
+				<SearchDatePost />
+			</div>
+			<div className="search-filter-item">
+				<SearchSalary />
 			</div>
 		</div>
 	);

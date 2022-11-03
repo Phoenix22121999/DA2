@@ -1,0 +1,7 @@
+@use "../../../styles/variables" as v;
+.search-list-sort {
+	min-width: 15rem;
+	@include v.mq("tablet") {
+		min-width: 20rem;
+	}
+}

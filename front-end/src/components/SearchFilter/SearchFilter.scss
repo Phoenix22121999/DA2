@@ -2,6 +2,15 @@
 .search-filter {
 	width: 100%;
 	@include v.border-radius-xsm;
+	height: 0;
+	overflow: hidden;
+	transition: height 0.5s;
+	&.is-open {
+		height: 124rem;
+	}
+	@include v.mq("tablet") {
+		height: inherit;
+	}
 	.search-filter-item {
 		width: 100%;
 		.search-filter-title {

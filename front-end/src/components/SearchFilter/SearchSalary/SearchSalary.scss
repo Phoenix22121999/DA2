@@ -1,0 +1,18 @@
+@use "../../../styles/variables" as v;
+.search-salary {
+	.search-salary-inputs {
+		.search-salary-input-item {
+			padding: 1rem 0;
+
+			&:last-child {
+				padding-bottom: 0;
+			}
+		}
+		.search-salary-item-title {
+			@include v.text-lg;
+			color: #5c6770;
+			font-weight: 500;
+			padding: 0;
+		}
+	}
+}

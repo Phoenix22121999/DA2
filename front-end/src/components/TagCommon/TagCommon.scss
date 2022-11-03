@@ -1,0 +1,9 @@
+@use "../../styles/variables" as v;
+.tag-common {
+	&.tag-medium {
+		.ant-tag {
+			padding: 0.5rem 1rem;
+			@include v.text-base;
+		}
+	}
+}

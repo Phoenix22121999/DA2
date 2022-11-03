@@ -1,0 +1,38 @@
+@use "../../../styles/variables" as v;
+.search-date-post {
+	.search-date-post-button-radio {
+		.ant-radio-group {
+			display: flex;
+			flex-direction: column;
+			.ant-radio-wrapper {
+				padding: 1rem 0;
+				align-items: center;
+				@include v.text-lg;
+				color: #5c6770;
+				font-weight: 500;
+				&:first-child {
+					padding-top: 0;
+				}
+				&:last-child {
+					padding-bottom: 0;
+				}
+				.ant-radio {
+					top: 0;
+					width: 2.6rem;
+					height: 2.6rem;
+					.ant-radio-inner {
+						width: 100%;
+						height: 100%;
+					}
+				}
+				.ant-radio-checked {
+					.ant-radio-inner {
+						&::after {
+							transform: scale(0.75);
+						}
+					}
+				}
+			}
+		}
+	}
+}

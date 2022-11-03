@@ -8,7 +8,11 @@ const SearchKeyWord = (props: Props) => {
 		<div className="search-key-word">
 			<div className="search-filter-title">Key Words</div>
 			<div className="search-filter-input">
-				<InputCommon size="large" suffix={<SearchOutlined />} />
+				<InputCommon
+					size="large"
+					suffix={<SearchOutlined />}
+					allowClear
+				/>
 			</div>
 		</div>
 	);

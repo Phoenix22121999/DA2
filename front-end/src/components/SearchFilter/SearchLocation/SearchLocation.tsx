@@ -1,11 +1,11 @@
 import React from "react";
 import SelectCommon, {
-	OptionValue,
+	SelectOptionValue,
 } from "src/components/SelectCommon/SelectCommon";
 
 type Props = {};
 
-const test: OptionValue[] = [
+const test: SelectOptionValue[] = [
 	{
 		key: "HCM",
 		value: "Hồ Chí MInh",
@@ -29,7 +29,7 @@ const SearchLocation = (props: Props) => {
 		<div className="search-location">
 			<div className="search-filter-title">Location</div>
 			<div className="search-filter-input">
-				<SelectCommon data={test} size="large" />
+				<SelectCommon data={test} size="large" showSearch allowClear />
 			</div>
 		</div>
 	);

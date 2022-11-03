@@ -1,20 +1,88 @@
 @use "../../styles/variables" as v;
 .search-page {
-	margin-top: 10rem;
-	min-height: 100rem;
+	.search-page-banner {
+		position: relative;
+		background: url("../../assets/images/header-bg.jpg") center;
+		background-size: cover;
+		width: 100%;
+		padding: 20rem 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		.search-banner-title {
+			color: v.$primary-color;
+			@include v.text-7xl;
+			z-index: 2;
+		}
+		.search-banner-breadcrumb {
+			color: v.$primary-color;
+			@include v.text-3xl;
+			z-index: 2;
+			a {
+				color: v.$primary-background;
+			}
+		}
+		&::after {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-image: -webkit-linear-gradient(
+				0deg,
+				#bfacff 0%,
+				#795fff 100%
+			);
+			opacity: 0.9;
+			// @include v.border-bottom-radius-md;
+		}
+	}
 	.search-page-inner {
 		width: 100%;
 		display: flex;
+		flex-direction: column;
+		padding-top: 4rem;
 		.search-page-filter {
-			width: 30%;
-			background-color: v.$light-backround;
-			padding: 4rem 2rem;
-			box-shadow: 4px 0px 8px 0px rgb(132 144 255 / 50%);
+			position: relative;
+			width: 100%;
+			height: fit-content;
+			background-color: v.$default-background;
+
+			padding: 2rem;
+			z-index: 3;
 			@include v.border-radius-xsm;
+			.toogle-search-filter {
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				@include v.text-4xl;
+				.filter-test {
+					@include v.text-2xl;
+					margin-right: 1rem;
+				}
+				@include v.mq("tablet") {
+					display: none;
+				}
+			}
 		}
 		.search-page-list {
-			width: 70%;
-			// background-color: red;
+			width: 100%;
+			padding: 2rem;
+		}
+		@include v.mq("tablet") {
+			flex-direction: row;
+			.search-page-filter {
+				position: relative;
+				width: 30%;
+				padding: 2rem;
+				@include v.border-radius-xsm;
+			}
+			.search-page-list {
+				width: 70%;
+				padding: 2rem;
+			}
 		}
 	}
 }

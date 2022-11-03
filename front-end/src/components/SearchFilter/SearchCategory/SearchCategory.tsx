@@ -1,26 +1,26 @@
 import React from "react";
 import SelectCommon, {
-	OptionValue,
+	SelectOptionValue,
 } from "src/components/SelectCommon/SelectCommon";
 
 type Props = {};
 
-const test: OptionValue[] = [
+const test: SelectOptionValue[] = [
 	{
-		key: "HCM",
-		value: "Hồ Chí MInh",
+		key: "it",
+		value: "Information Technology",
 	},
 	{
-		key: "HN",
-		value: "Hà Nội",
+		key: "pharmacy",
+		value: "Pharmacy",
 	},
 	{
-		key: "TG",
-		value: "Tiền Giang",
+		key: "accountant",
+		value: "Accountant",
 	},
 	{
-		key: "H",
-		value: "Huế",
+		key: "marketing",
+		value: "Marketing",
 	},
 ];
 
@@ -29,7 +29,7 @@ const SearchCategory = (props: Props) => {
 		<div className="search-category">
 			<div className="search-filter-title">category</div>
 			<div className="search-filter-input">
-				<SelectCommon data={test} size="large" />
+				<SelectCommon data={test} size="large" showSearch allowClear />
 			</div>
 		</div>
 	);

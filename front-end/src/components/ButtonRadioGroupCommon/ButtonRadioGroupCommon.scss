@@ -1,0 +1,17 @@
+@use "../../styles/variables" as v;
+.button-radio-group-common {
+	.ant-radio-wrapper {
+		.ant-radio {
+			.ant-radio-inner {
+			}
+		}
+		.ant-radio-checked {
+			.ant-radio-inner {
+				border-color: v.$primary-background;
+				&::after {
+					background-color: v.$primary-background;
+				}
+			}
+		}
+	}
+}
