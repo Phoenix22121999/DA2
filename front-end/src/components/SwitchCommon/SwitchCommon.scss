@@ -1,0 +1,6 @@
+@use "../../styles/variables" as v;
+.switch-common {
+	.ant-switch-checked {
+		background-color: v.$primary-background;
+	}
+}

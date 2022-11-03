@@ -6,7 +6,11 @@
 	flex-direction: column;
 	width: 100%;
 	position: relative;
-	padding: 0 10rem;
+	padding: 0 4rem;
+
+	@include variables.mq("lap") {
+		padding: 0 10rem;
+	}
 }
 
 .primary-text {

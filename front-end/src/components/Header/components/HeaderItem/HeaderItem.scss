@@ -1,7 +1,6 @@
 @use "../../../../styles/variables" as v;
 
 .header-item {
-	color: v.$primary-color;
 	padding: 0.6rem 1rem;
 	text-decoration: none;
 	display: inline-block;
@@ -10,4 +9,7 @@
 	text-transform: uppercase;
 	outline: none;
 	cursor: pointer;
+	a {
+		color: v.$primary-color;
+	}
 }

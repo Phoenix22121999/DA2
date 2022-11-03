@@ -1,0 +1,60 @@
+@use "../../styles/variables" as v;
+.footer {
+	background-color: #222222;
+	color: v.$primary-color;
+	width: 100%;
+	padding: 10rem 0;
+	.footer-warpper {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+		flex-direction: column;
+		@include v.mq("tablet") {
+			flex-direction: row;
+		}
+	}
+	.contact {
+		max-width: 100%;
+		display: flex;
+		flex-direction: column;
+		padding: 2rem 0;
+		@include v.mq("tablet") {
+			max-width: 25%;
+		}
+	}
+	.about {
+		max-width: 100%;
+		display: flex;
+		flex-direction: column;
+		padding: 2rem 0;
+		@include v.mq("tablet") {
+			max-width: 25%;
+		}
+	}
+	.newsletter {
+		max-width: 50%;
+		display: flex;
+		flex-direction: column;
+		padding: 2rem 0;
+
+		.newsletter-input {
+			padding: 2rem 0;
+		}
+	}
+	.footer-sub {
+		margin-right: 2rem;
+		.footer-sub-title {
+			@include v.text-4xl;
+		}
+		.footer-sub-item {
+			padding: 1rem 0;
+			@include v.text-base;
+			@include v.mq("tablet") {
+				padding: 2rem 0;
+			}
+		}
+	}
+	.copy-right {
+		@include v.text-sm;
+	}
+}

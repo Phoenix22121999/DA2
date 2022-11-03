@@ -1,0 +1,21 @@
+@use "../../../../styles/variables" as v;
+.job-type-item {
+	display: flex;
+	padding: 1rem 0;
+	align-items: center;
+	justify-content: flex-start;
+	&:first-child {
+		padding-top: 0;
+	}
+	&:last-child {
+		padding-bottom: 0;
+	}
+	.job-type-item-switch {
+		margin-right: 1rem;
+	}
+	.job-type-item-name {
+		@include v.text-lg;
+		color: #5c6770;
+		font-weight: 500;
+	}
+}

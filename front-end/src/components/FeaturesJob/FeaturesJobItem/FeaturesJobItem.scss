@@ -1,0 +1,96 @@
+@use "../../../styles/variables" as v;
+.features-job-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	min-height: 34rem;
+	background-color: #f9f9ff;
+	border-radius: v.$border-radius-xsm;
+	max-width: 103rem;
+	margin-bottom: 4rem;
+	transition: box-shadow 0.3s ease-out;
+	flex-direction: column;
+	&:hover {
+		box-shadow: 4px 4px 10px 0px rgb(132 144 255 / 20%);
+	}
+	@include v.mq("tablet") {
+		flex-direction: row;
+	}
+	.left {
+		padding: 2rem;
+		height: 100%;
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: flex-start;
+		.logo {
+			width: 20%;
+			aspect-ratio: 1/1;
+			margin-right: 2rem;
+			margin-bottom: 0;
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.major {
+			padding: 1rem;
+			background-color: white;
+			@include v.text-base;
+			font-weight: 600;
+		}
+		@include v.mq("tablet") {
+			width: 15%;
+			flex-direction: column;
+			.logo {
+				margin-bottom: 2rem;
+				margin-right: 0;
+				width: 100%;
+			}
+		}
+	}
+	.right {
+		width: 85%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: flex-start;
+		.top {
+			padding: 2rem;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			.top-left {
+				.title {
+					@include v.text-4xl;
+					font-weight: bold;
+					color: v.$dark-blue;
+				}
+				.company {
+					@include v.text-2xl;
+					font-weight: 500;
+				}
+			}
+		}
+		.content {
+			padding: 2rem;
+			display: flex;
+			flex-direction: column;
+			@include v.text-lg;
+			.icon {
+				padding: 0.5rem 2rem 0.5rem 0;
+				@include v.text-2xl;
+			}
+			.salary,
+			.address,
+			.time {
+				display: flex;
+				justify-content: flex-start;
+				align-items: center;
+			}
+		}
+	}
+}

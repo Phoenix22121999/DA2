@@ -52,7 +52,7 @@ const HomeCategories = (props: Props) => {
 					})}
 				</div>
 				<div className="categories-button">
-					<ButtonCommon ghost size="medium">
+					<ButtonCommon ghost size="medium" type="outstanding">
 						All Categories
 					</ButtonCommon>
 				</div>

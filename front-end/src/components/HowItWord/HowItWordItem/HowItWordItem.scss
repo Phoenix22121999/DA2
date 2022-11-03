@@ -1,0 +1,78 @@
+@use "../../../styles/variables" as v;
+.how-it-word-item {
+	position: relative;
+	background-color: rgba($color: #fff, $alpha: 0.1);
+	@include v.border-radius-md;
+
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	align-items: center;
+	padding: 2rem;
+	color: v.$primary-color;
+	// @include v.mq("tablet") {
+	// 	width: 30rem;
+	// }
+	margin-bottom: 6rem;
+	animation: FadeIn-BottomToTop 1s;
+	@include v.mq("lap") {
+		flex-direction: column;
+
+		width: initial;
+		max-width: 34rem;
+		min-height: 50rem;
+	}
+
+	.how-it-word-icon {
+		width: 30%;
+		aspect-ratio: 1/1;
+		@include v.text-3xl;
+		background-color: rgba($color: #000, $alpha: 0.3);
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		@include v.mq("tablet") {
+			width: 20%;
+			@include v.text-7xl;
+		}
+		@include v.mq("lap") {
+			width: 50%;
+			margin-bottom: 2rem;
+		}
+	}
+	.how-it-word-item-bottom {
+		margin-left: 2rem;
+		width: 70%;
+		@include v.mq("tablet") {
+			width: 80%;
+		}
+		.how-it-word-item-title {
+			margin-bottom: 2rem;
+			@include v.text-3xl;
+			@include v.mq("lap") {
+				text-align: center;
+			}
+		}
+	}
+	.how-it-word-number {
+		position: absolute;
+		top: 0;
+		left: 0;
+		transform: translate(-25%, -50%);
+		@include v.text-9xl;
+		font-weight: 900;
+		color: rgba($color: #fff, $alpha: 0.6);
+	}
+}
+
+@keyframes FadeIn-BottomToTop {
+	0% {
+		opacity: 0;
+		transform: translateY(50%);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

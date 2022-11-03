@@ -14,9 +14,9 @@ const HEADER_ITEM = [
 		title: "Home",
 	},
 	{
-		key: "about",
-		link: "/",
-		title: "About",
+		key: "search",
+		link: "/search",
+		title: "Search",
 	},
 ];
 export const AppHeader = (props: HeaderProps) => {

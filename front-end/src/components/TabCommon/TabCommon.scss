@@ -1,0 +1,26 @@
+@use "../../styles/variables" as v;
+.tab-common {
+	width: 100%;
+	.tab-common-inner {
+		width: 100%;
+		.ant-tabs-nav-list {
+			width: 100%;
+			.ant-tabs-tab {
+				width: 100%;
+				height: 8rem;
+				justify-content: center;
+				align-items: center;
+				@include v.text-2xl;
+				color: v.$primary-background;
+			}
+			.ant-tabs-tab-active {
+				.ant-tabs-tab-btn {
+					color: v.$outstanding-background;
+				}
+			}
+			.ant-tabs-ink-bar {
+				background-color: v.$outstanding-background;
+			}
+		}
+	}
+}

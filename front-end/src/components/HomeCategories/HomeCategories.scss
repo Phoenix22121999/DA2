@@ -5,6 +5,7 @@
 		color: v.$black-blue;
 		font-weight: 600;
 		margin-bottom: 2rem;
+		text-align: center;
 	}
 	.box {
 		flex-wrap: wrap;
@@ -15,6 +16,9 @@
 	}
 	.categories-button {
 		padding-top: 5rem;
-		width: 25%;
+		width: 50%;
+		@include v.mq("tablet") {
+			width: 25%;
+		}
 	}
 }

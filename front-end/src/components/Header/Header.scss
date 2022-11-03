@@ -21,9 +21,9 @@
 	.app-menu {
 		display: flex;
 		width: 100%;
-		height: auto;
+		height: 0;
 		overflow: hidden;
-		top: 6rem;
+		top: 8rem;
 		left: 0;
 		position: absolute;
 		flex-direction: column;
@@ -37,6 +37,12 @@
 		}
 		&.is-menu-open {
 			height: 100vh;
+			background-color: rgba($color: #000000, $alpha: 0.8);
+			.signup,
+			.login {
+				width: 12rem;
+				height: 4rem;
+			}
 		}
 		@include v.mq("xtablet") {
 			position: relative;
@@ -61,6 +67,8 @@
 		// font-weight: 400;
 		// font-size: 12px;
 		width: 10rem;
+		height: 4rem;
+
 		// @include mq("xtablet") {
 		// 	margin: 0 1rem;
 		// }

@@ -1,0 +1,14 @@
+@use "../../styles/_variables.scss" as v;
+.search-filter {
+	width: 100%;
+	@include v.border-radius-xsm;
+	.search-filter-item {
+		width: 100%;
+		.search-filter-title {
+			padding: 2rem 0;
+			@include v.text-2xl;
+			font-weight: bold;
+			color: v.$black-blue;
+		}
+	}
+}

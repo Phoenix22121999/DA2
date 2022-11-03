@@ -1,0 +1,14 @@
+@use "../../styles/variables" as v;
+.features-job {
+	.features-job-title {
+		@include v.text-6xl;
+		color: v.$black-blue;
+		font-weight: 600;
+		margin-bottom: 6rem;
+		margin-top: 12rem;
+	}
+	.features-job-button {
+		padding-top: 5rem;
+		width: 25%;
+	}
+}
