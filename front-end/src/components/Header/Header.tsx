@@ -18,6 +18,16 @@ const HEADER_ITEM = [
 		link: "/search",
 		title: "Search",
 	},
+	{
+		key: "cadidate",
+		link: "/cadidate/profile",
+		title: "Cadidate",
+	},
+	{
+		key: "recruiter",
+		link: "/recruiter/profile",
+		title: "Recruiter",
+	},
 ];
 export const AppHeader = (props: HeaderProps) => {
 	const ref = useRef<HTMLDivElement>(null);

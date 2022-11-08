@@ -1,0 +1,33 @@
+@use "../../styles/variables" as v;
+.dashboard-sidebar-item {
+	display: flex;
+	width: 100%;
+	justify-content: flex-start;
+	align-items: center;
+	@include v.border-radius-sm;
+	// background-color: ;
+	padding: 1rem 2rem;
+	border: 2px transparent solid;
+	@include v.text-2xl;
+	color: v.$info-background;
+	font-weight: bold;
+	cursor: pointer;
+	margin-bottom: 1rem;
+	color: v.$primary-background;
+	transition: all 0.5s;
+	.dashboard-sidebar-item-icon {
+		margin-right: 2rem;
+	}
+	.dashboard-sidebar-item-title {
+	}
+	&:hover {
+		border-color: transparent;
+		color: v.$info-background;
+		background-color: rgba($color: v.$primary-background, $alpha: 0.2);
+	}
+	&.dashboard-sidebar-item-active {
+		border-color: transparent;
+		color: v.$info-background;
+		background-color: rgba($color: v.$primary-background, $alpha: 0.2);
+	}
+}

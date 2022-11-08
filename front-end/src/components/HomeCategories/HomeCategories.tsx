@@ -10,35 +10,35 @@ type Props = {};
 const TOP_CATEGORIES: HomeCategoriesItemProps[] = [
 	{
 		icon: <FormatPainterOutlined />,
-		name: "Design & Create",
+		name: "Design & Create 1",
 	},
 	{
 		icon: <FormatPainterOutlined />,
-		name: "Design & Create",
+		name: "Design & Create 2",
 	},
 	{
 		icon: <FormatPainterOutlined />,
-		name: "Design & Create",
+		name: "Design & Create 3",
 	},
 	{
 		icon: <FormatPainterOutlined />,
-		name: "Design & Create",
+		name: "Design & Create 4",
 	},
 	{
 		icon: <FormatPainterOutlined />,
-		name: "Design & Create",
+		name: "Design & Create 5",
 	},
 	{
 		icon: <FormatPainterOutlined />,
-		name: "Design & Create",
+		name: "Design & Create 6",
 	},
 	{
 		icon: <FormatPainterOutlined />,
-		name: "Design & Create",
+		name: "Design & Create 7",
 	},
 	{
 		icon: <FormatPainterOutlined />,
-		name: "Design & Create",
+		name: "Design & Create 8",
 	},
 ];
 const HomeCategories = (props: Props) => {

@@ -1,0 +1,25 @@
+@use "../../styles/variables" as v;
+.candidate-dashboard {
+	.candidate-dashboard-inner {
+		padding-top: 12rem;
+		width: 100%;
+		min-height: 100rem;
+		display: flex;
+		.candidate-dashboard-sidebar {
+			padding: 2rem;
+			padding-left: 0;
+			width: 25%;
+		}
+		.candidate-dashboard-content {
+			padding: 2rem;
+			padding-right: 0;
+			width: 75%;
+		}
+	}
+	.dashboard-title {
+		margin-bottom: 2rem;
+		@include v.text-3xl;
+		font-weight: bold;
+		color: v.$dark-blue;
+	}
+}

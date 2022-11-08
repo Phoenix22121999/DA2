@@ -1,0 +1,46 @@
+@use "../../../styles/variables" as v;
+.info-card {
+	padding: 1rem 2rem;
+	width: 33%;
+	.info-card-inner {
+		cursor: pointer;
+		display: flex;
+		min-height: 40rem;
+		max-width: 35rem;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 2rem 4rem;
+		@include v.border-radius-sm;
+		border: 1px v.$info-background solid;
+		// background-color: rgba($color: v.$info-background, $alpha: 0.2);
+		transition: all 0.5s;
+		.info-card-icon {
+			color: v.$pink-color;
+			@include v.text-8xl;
+			margin-bottom: 2rem;
+			transition: all 0.5s;
+		}
+		.info-card-title {
+			color: v.$black-blue;
+			font-weight: bold;
+			@include v.text-3xl;
+			margin-bottom: 1rem;
+		}
+		.info-card-number {
+			@include v.text-lg;
+			color: v.$danger-background;
+		}
+		&:hover {
+			box-shadow: 4px 4px 10px 0px rgb(132 144 255 / 70%);
+			.info-card-icon {
+				color: v.$info-background;
+			}
+			.info-card-title {
+				font-weight: bold;
+			}
+			.info-card-number {
+			}
+		}
+	}
+}
