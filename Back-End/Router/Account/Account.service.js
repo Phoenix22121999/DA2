@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const { createPassHash } = require("../../Middleware/config");
 const { response } = require("express");
 const bcrypt = require("bcrypt");
+BigInt.prototype.toJSON = function() { return this.toString() }
 
 const prisma = new PrismaClient();
 
@@ -38,8 +39,7 @@ const getListAcccount = async (req, res) => {
 };
 
 // Đăng nhập
-const signIn = async (req, res) => {
-    BigInt.prototype.toJSON = function() { return this.toString() }
+const signIn = async (req, res) => { 
     let { user_name, password } = req.body;
     try {
         // Tìm trong bảng với prisma với điều kiện trùng tên tài khoản để lấy được mật khẩu khi hash
@@ -64,7 +64,8 @@ const signIn = async (req, res) => {
                 let obj = formatObj(resultSignIn);
                 // Trả về token để dùng cho các thao tác khác trong quá trình sử dụng website
                 const AccessToken = jwt.sign(
-                    { UserId: obj.id, role: obj.user_type_id },
+                    // { UserId: obj.id, role: obj.user_type_id },
+                    obj,
                     process.env.ACCESS_TOKEN
                 );
                 return res.json({
@@ -89,6 +90,8 @@ const signIn = async (req, res) => {
         });
     }
 };
+
+
 
 module.exports = {
     getListAcccount,
