@@ -22,7 +22,7 @@ model User_Type {
   update_user    String?
   delete_date    DateTime?
   delete_user    String?
-  account User_Account?
+  account User_Account[]
 }
 
 // Bảng tài khoản
@@ -31,13 +31,12 @@ model User_Account {
   password     String
   username     String   @unique
   // user_type_id Int
-  google_id    Int?     @unique
+  google_id    Int?     
   is_active    Boolean  @default(true)
   is_delete    Boolean  @default(false)
   create_date  DateTime @default(now())
   user_type User_Type? @relation(fields: [user_type_id], references: [id])
-  user_type_id BigInt @unique
-  user_id      Int
+  user_type_id BigInt? 
   first_name   String?
   last_name    String?
   full_name    String?
@@ -51,7 +50,7 @@ model User_Account {
   ward_id      Int?
   avartar      String?
   logo         String?
-  profile      Apply_Profile[]
+  profile      Apply_Profile  []
   post         Recruitment_Post[]
 
 }

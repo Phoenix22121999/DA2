@@ -1,15 +1,19 @@
-version: '1'
+version: '2.2'
 
 services:
     backend:
-      image: a9e053d50ca8
-      build: .
+      build:
+        context : ./Back-End
+        dockerfile : ./Dockerfile
+      image : 'backendda2'
       ports :
         - 4000:4000
-      restart : always
     frontent:
-      image : aeb242e44921
-      build : .
+      build :
+        context : ./front-end
+        dockerfile: ./Dockerfile
+      image : 'frontda2'
       ports :
         - 3000:3000
-      restart : always   
+      links :
+        - "backend:be"
