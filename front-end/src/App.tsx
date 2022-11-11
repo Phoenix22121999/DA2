@@ -15,6 +15,7 @@ import RecruiterProfile from "./components/RecruiterProfile/RecruiterProfile";
 import JobManager from "./components/JobManager/JobManager";
 import AllApplicant from "./components/AllApplicant/AllApplicant";
 import JobPostDetail from "./pages/JobPostDetail/JobPostDetail";
+import PostJob from "./components/PostJob/PostJob";
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
 				element: <Search />,
 			},
 			{
-				path: "post/:postID",
+				path: "post-detail/:postID",
 				element: <JobPostDetail />,
 			},
 
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
 					{
 						path: "profile",
 						element: <RecruiterProfile />,
+					},
+					{
+						path: "post-new-job",
+						element: <PostJob />,
 					},
 					{
 						path: "job-manager",

@@ -1,5 +1,10 @@
 import { BaseErrorType, BaseReponseType } from "src/types/ApiType";
-import { API_URL, METHOD_AXIOS, CONTENT_TYPE } from "../utils/contants";
+import {
+	API_URL,
+	METHOD_AXIOS,
+	CONTENT_TYPE,
+	METHOD_AXIOS_ITEMS,
+} from "../utils/contants";
 import { serializeForm } from "../utils/function";
 const axios = require("axios");
 
@@ -13,7 +18,11 @@ export class BaseApi {
 		DataType,
 		ReponseType extends BaseReponseType<DataType>,
 		ErrorType extends BaseErrorType
-	>(path: string, data: ParametersType, method = METHOD_AXIOS.GET) {
+	>(
+		path: string,
+		data: ParametersType,
+		method: METHOD_AXIOS_ITEMS = METHOD_AXIOS.GET
+	) {
 		const config = {
 			method,
 			headers: {

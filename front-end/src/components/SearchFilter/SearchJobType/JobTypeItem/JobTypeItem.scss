@@ -15,7 +15,7 @@
 	}
 	.job-type-item-name {
 		@include v.text-lg;
-		color: #5c6770;
+		color: v.$light-gray-color;
 		font-weight: 500;
 	}
 }

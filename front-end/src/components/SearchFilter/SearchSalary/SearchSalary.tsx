@@ -3,21 +3,9 @@ import { RangeSliderCommon } from "src/components/SliderCommon/SliderCommon";
 import type { SliderMarks } from "antd/es/slider";
 import InputNumberCommon from "src/components/InputNumberCommon/InputNumberCommon";
 import "./SearchSalary.scss";
+import { sliderFormatter } from "src/utils/function";
+import { inputNumberFormatter } from "./../../../utils/function";
 type SearchSalaryProps = {};
-
-const sliderFormatter = (value: number | undefined) =>
-	new Intl.NumberFormat("vi-VN", {
-		style: "currency",
-		currency: "VND",
-		maximumFractionDigits: 9,
-	}).format(value || 0);
-
-const inputNUmberFormatter = (value: number | undefined | string) =>
-	new Intl.NumberFormat("vi-VN", {
-		style: "currency",
-		currency: "VND",
-		maximumFractionDigits: 9,
-	}).format(Number(value) || 0);
 
 const marks: SliderMarks = {
 	// 0: formatter(0),
@@ -65,7 +53,7 @@ const SearchSalary = (props: SearchSalaryProps) => {
 							min={0}
 							max={50000000}
 							step={500000}
-							formatter={inputNUmberFormatter}
+							formatter={inputNumberFormatter}
 						/>
 					</div>
 					<div className="search-salary-input-item search-salary-item-title">
@@ -75,7 +63,7 @@ const SearchSalary = (props: SearchSalaryProps) => {
 						<InputNumberCommon
 							value={formTo[1]}
 							onChange={handleToChange}
-							formatter={inputNUmberFormatter}
+							formatter={inputNumberFormatter}
 							min={0}
 							max={50000000}
 							step={500000}

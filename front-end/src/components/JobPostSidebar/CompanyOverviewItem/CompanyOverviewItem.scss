@@ -1,0 +1,18 @@
+@use "../../../styles/variables" as v;
+.company-overview-item {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	align-items: center;
+	margin-bottom: 2rem;
+	.company-overview-item-name {
+		color: v.$black-blue;
+		@include v.text-lg;
+		font-weight: bold;
+	}
+	.company-overview-item-content {
+		@include v.text-base;
+		color: #5c6770;
+	}
+}
