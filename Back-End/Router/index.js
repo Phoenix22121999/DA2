@@ -2,9 +2,7 @@ const express = require('express');
 // Tai khoan
 const AccountRouter = require('./Account/Account.route');
 
-
-// Tai khoan quan ly
-const AccountManagerRouter = require('./AccountManager/AccountManager.route');
+const AccountType = require('./AccountType/AccountType.route');
 
 
 const routers = [
@@ -13,9 +11,13 @@ const routers = [
         router : AccountRouter
     },
     {
-        prefix : '/account-manager',
-        router : AccountManagerRouter
+        prefix : '/account-type',
+        router : AccountType
     }
+    // {
+    //     prefix : '/account-manager',
+    //     router : AccountManagerRouter
+    // }
 
 ]
 

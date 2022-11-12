@@ -13,7 +13,7 @@ datasource db {
 // Bảng loại người dùng
 model User_Type {
   id             BigInt    @id @default(autoincrement())
-  user_type_name String    @unique
+  user_type_name String
   is_active      Boolean   @default(true)
   is_delete      Boolean   @default(false)
   create_date    DateTime?
@@ -29,7 +29,7 @@ model User_Type {
 model User_Account {
   id   BigInt   @id @default(autoincrement())
   password     String
-  username     String   @unique
+  username     String 
   // user_type_id Int
   google_id    Int?     
   is_active    Boolean  @default(true)
