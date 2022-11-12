@@ -57,6 +57,10 @@ export const AppHeader = (props: HeaderProps) => {
 		dispatch(resetUser());
 	};
 
+	const onItemMenuClick = () => {
+		setIsMenuOpen(false);
+	};
+
 	return (
 		<div className="app-header" ref={ref}>
 			<div className="app-logo">TDT Job Finder</div>
@@ -66,7 +70,7 @@ export const AppHeader = (props: HeaderProps) => {
 				})}
 			>
 				{HEADER_ITEM.map((item) => {
-					return <HeaderItem {...item} />;
+					return <HeaderItem {...item} onClick={onItemMenuClick} />;
 				})}
 				{/* <div className="button-group"> */}
 				{isAuth ? (
