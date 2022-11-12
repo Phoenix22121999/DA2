@@ -11,6 +11,7 @@ interface ButtonCommonProps extends Omit<ButtonProps, "type" | "size"> {
 		| "info"
 		| "warning"
 		| "danger"
+		| "success"
 		| "outstanding";
 	size?: "small" | "medium" | "large";
 }

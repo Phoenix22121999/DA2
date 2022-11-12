@@ -5,5 +5,7 @@ export type BaseErrorType = {
 export type BaseReponseType<T> = {
 	code: number;
 	message: string;
-	data: T;
+	data?: T;
+	status_resposse: true;
+	AccessToken?: string;
 };

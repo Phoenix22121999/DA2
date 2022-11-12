@@ -1,10 +1,20 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import CandidateDashboardSidebar from "src/components/CandidateDashboardSidebar/CandidateDashboardSidebar";
+import { useCheckUserAuth } from "src/hooks/useCheckUserAuth";
 import "./CandidateDashboard.scss";
 type Props = {};
 
 export const CandidateDashboard = (props: Props) => {
+	const navigate = useNavigate();
+
+	const isAuth = useCheckUserAuth(1);
+	useEffect(() => {
+		if (!isAuth) {
+			navigate("/");
+		}
+	}, [isAuth, navigate]);
+
 	return (
 		<div className="candidate-dashboard">
 			<div className="container">

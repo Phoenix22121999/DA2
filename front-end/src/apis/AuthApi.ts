@@ -1,7 +1,9 @@
 import { BaseApi } from "./base.api";
-import { AuthUser, LoginParameters } from "src/types/AuthType";
-import { BaseReponseType } from "src/types/ApiType";
-import { BaseErrorType } from "src/types/ApiType";
+import {
+	AuthUser,
+	SignInParameters,
+	SignUpParameters,
+} from "src/types/AuthType";
 
 // user is admin
 export class AuthApi extends BaseApi {
@@ -9,7 +11,11 @@ export class AuthApi extends BaseApi {
 		super("account/");
 	}
 
-	async login(data: LoginParameters) {
-		return this.basePost<LoginParameters, AuthUser>("sign-in", data);
+	async signIn(data: SignInParameters) {
+		return this.basePost<SignInParameters, AuthUser>("sign-in", data);
+	}
+
+	async signUp(data: SignUpParameters) {
+		return this.basePost<SignUpParameters, AuthUser>("sign-up", data);
 	}
 }

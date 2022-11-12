@@ -1,4 +1,4 @@
-import { BaseErrorType, BaseReponseType } from "src/types/ApiType";
+import { BaseReponseType } from "src/types/ApiType";
 import {
 	API_URL,
 	METHOD_AXIOS,
@@ -6,7 +6,7 @@ import {
 	METHOD_AXIOS_ITEMS,
 } from "../utils/contants";
 import { serializeForm } from "../utils/function";
-const axios = require("axios");
+import axios from "axios";
 
 export class BaseApi {
 	URL: string;
@@ -16,8 +16,7 @@ export class BaseApi {
 	async abstract<
 		ParametersType,
 		DataType,
-		ReponseType extends BaseReponseType<DataType>,
-		ErrorType extends BaseErrorType
+		ReponseType extends BaseReponseType<DataType>
 	>(
 		path: string,
 		data: ParametersType,
@@ -32,12 +31,12 @@ export class BaseApi {
 			data,
 			withCredentials: true,
 		};
-
-		return axios(config)
-			.then(function (response: ReponseType) {
-				return response ? response.data : response;
+		return axios
+			.request<ReponseType>(config)
+			.then(function (response) {
+				return response.data;
 			})
-			.catch(function (err: ErrorType) {
+			.catch(function (err) {
 				throw new Error(err.message);
 			});
 	}
@@ -45,8 +44,7 @@ export class BaseApi {
 	async methodWithFormData<
 		ParametersType extends { [key: string]: any },
 		DataType,
-		ReponseType extends BaseReponseType<DataType>,
-		ErrorType extends BaseErrorType
+		ReponseType extends BaseReponseType<DataType>
 	>(
 		path: string,
 		data: ParametersType,
@@ -69,11 +67,12 @@ export class BaseApi {
 			withCredentials: true,
 		};
 
-		return axios(config)
-			.then(function (response: ReponseType) {
+		return axios
+			.request<ReponseType>(config)
+			.then(function (response) {
 				return response ? response.data : response;
 			})
-			.catch(function (err: ErrorType) {
+			.catch(function (err) {
 				throw new Error(err.message);
 			});
 	}
@@ -81,8 +80,7 @@ export class BaseApi {
 	async methodWithFormDataWithoutBasePath<
 		ParametersType extends { [key: string]: any },
 		DataType,
-		ReponseType extends BaseReponseType<DataType>,
-		ErrorType extends BaseErrorType
+		ReponseType extends BaseReponseType<DataType>
 	>(
 		path: string,
 		data: ParametersType,
@@ -105,11 +103,12 @@ export class BaseApi {
 			withCredentials: true,
 		};
 
-		return axios(config)
-			.then(function (response: ReponseType) {
+		return axios
+			.request<ReponseType>(config)
+			.then(function (response) {
 				return response ? response.data : response;
 			})
-			.catch(function (err: ErrorType) {
+			.catch(function (err) {
 				throw new Error(err.message);
 			});
 	}
@@ -117,8 +116,7 @@ export class BaseApi {
 	async methodWithFormDataUrlEncoded<
 		ParametersType extends { [key: string]: any },
 		DataType,
-		ReponseType extends BaseReponseType<DataType>,
-		ErrorType extends BaseErrorType
+		ReponseType extends BaseReponseType<DataType>
 	>(
 		path: string,
 		data: ParametersType,
@@ -136,11 +134,12 @@ export class BaseApi {
 			withCredentials: true,
 		};
 
-		return axios(config)
-			.then(function (response: ReponseType) {
+		return axios
+			.request<ReponseType>(config)
+			.then(function (response) {
 				return response ? response.data : response;
 			})
-			.catch(function (err: ErrorType) {
+			.catch(function (err) {
 				throw new Error(err.message);
 			});
 	}
@@ -148,10 +147,9 @@ export class BaseApi {
 	async get<
 		ParametersType extends { [key: string]: any },
 		DataType,
-		ReponseType extends BaseReponseType<DataType>,
-		ErrorType extends BaseErrorType
+		ReponseType extends BaseReponseType<DataType>
 	>(path: string, data: ParametersType) {
-		return this.abstract<ParametersType, DataType, ReponseType, ErrorType>(
+		return this.abstract<ParametersType, DataType, ReponseType>(
 			path,
 			data,
 			METHOD_AXIOS.GET
@@ -164,17 +162,15 @@ export class BaseApi {
 		return this.abstract<
 			ParametersType,
 			DataType,
-			BaseReponseType<DataType>,
-			BaseErrorType
+			BaseReponseType<DataType>
 		>(path, data, METHOD_AXIOS.POST);
 	}
 	async post<
 		ParametersType extends { [key: string]: any },
 		DataType,
-		ReponseType extends BaseReponseType<DataType>,
-		ErrorType extends BaseErrorType
+		ReponseType extends BaseReponseType<DataType>
 	>(path: string, data: ParametersType) {
-		return this.abstract<ParametersType, DataType, ReponseType, ErrorType>(
+		return this.abstract<ParametersType, DataType, ReponseType>(
 			path,
 			data,
 			METHOD_AXIOS.POST
@@ -183,10 +179,9 @@ export class BaseApi {
 	async put<
 		ParametersType extends { [key: string]: any },
 		DataType,
-		ReponseType extends BaseReponseType<DataType>,
-		ErrorType extends BaseErrorType
+		ReponseType extends BaseReponseType<DataType>
 	>(path: string, data: ParametersType) {
-		return this.abstract<ParametersType, DataType, ReponseType, ErrorType>(
+		return this.abstract<ParametersType, DataType, ReponseType>(
 			path,
 			data,
 			METHOD_AXIOS.PUT
@@ -195,10 +190,9 @@ export class BaseApi {
 	async delete<
 		ParametersType extends { [key: string]: any },
 		DataType,
-		ReponseType extends BaseReponseType<DataType>,
-		ErrorType extends BaseErrorType
+		ReponseType extends BaseReponseType<DataType>
 	>(path: string, data: ParametersType) {
-		return this.abstract<ParametersType, DataType, ReponseType, ErrorType>(
+		return this.abstract<ParametersType, DataType, ReponseType>(
 			path,
 			data,
 			METHOD_AXIOS.DELETE

@@ -45,8 +45,10 @@ const FeaturesJob = (props: Props) => {
 			<div className="container">
 				<div className="features-job-title">Featured Job</div>
 				<div className="features-job-box">
-					{FEATURES_JOB.map((features_job) => {
-						return <FeaturesJobItem {...features_job} />;
+					{FEATURES_JOB.map((features_job, index) => {
+						return (
+							<FeaturesJobItem key={index} {...features_job} />
+						);
 					})}
 				</div>
 				<div className="features-job-button">

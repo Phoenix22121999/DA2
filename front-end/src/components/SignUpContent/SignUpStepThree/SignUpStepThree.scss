@@ -1,0 +1,26 @@
+@use "../../../styles/variables" as v;
+.sign-up-step-three {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	.sign-up-success {
+		padding: 16rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		background-color: v.$info-background;
+		@include v.border-radius-md;
+		// background-color: v.$default-background;
+		.sign-up-icon {
+			font-size: 14rem;
+		}
+		.sign-up-message {
+			margin: 4rem 0;
+			// color: v.$success-backround;
+			color: white;
+			@include v.text-2xl;
+		}
+	}
+}

@@ -100,9 +100,9 @@
 	}
 	&.button-danger {
 		background-color: v.$danger-background;
-		color: v.$black-blue;
+		color: v.$primary-color;
 		&:hover {
-			color: v.$black-blue;
+			// color: v.$danger-background;
 			background-color: rgba($color: v.$danger-background, $alpha: 0.6);
 		}
 		&.button-ghost {
@@ -112,6 +112,23 @@
 			&:hover {
 				color: v.$primary-color;
 				background-color: v.$danger-background;
+			}
+		}
+	}
+	&.button-success {
+		background-color: v.$success-background;
+		color: v.$primary-color;
+		&:hover {
+			// color: v.$black-blue;
+			background-color: rgba($color: v.$success-background, $alpha: 0.6);
+		}
+		&.button-ghost {
+			background-color: transparent;
+			border-color: v.$success-background;
+			color: v.$success-background;
+			&:hover {
+				color: v.$primary-color;
+				background-color: v.$success-background;
 			}
 		}
 	}

@@ -11,4 +11,12 @@ const InputCommon = (props: Props) => {
 	);
 };
 
+export const InputPasswordCommon = (props: Props) => {
+	return (
+		<div className="input-common">
+			<Input.Password {...props} />
+		</div>
+	);
+};
+
 export default InputCommon;

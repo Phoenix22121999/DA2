@@ -5,7 +5,7 @@ const { Option } = Select;
 
 export type SelectOptionValue = {
 	value: string;
-	key: string;
+	key: string | number;
 };
 
 interface SelectCommonProps extends SelectProps {

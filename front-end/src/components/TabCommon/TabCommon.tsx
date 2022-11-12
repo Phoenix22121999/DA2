@@ -16,7 +16,7 @@ export type TabItemType = {
 const TabCommon = ({ item = itemss }: Props) => {
 	return (
 		<div className="tab-common">
-			<Tabs items={item} className="tab-common-inner" />
+			<Tabs items={item} className="tab-common-inner" centered />
 		</div>
 	);
 };

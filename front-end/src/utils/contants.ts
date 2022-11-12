@@ -1,6 +1,6 @@
 import { SelectOptionValue } from "src/components/SelectCommon/SelectCommon";
 
-export const API_URL = "http://localhost:4000/api/";
+export const API_URL = "http://localhost:4000/api";
 export const METHOD_AXIOS = {
 	GET: "get",
 	POST: "post",
@@ -22,6 +22,8 @@ export type CONTENT_TYPE_ITEMS = typeof CONTENT_TYPE[CONTENT_TYPE_KEY];
 export const ROUTE = {
 	HOME: "/",
 	SEARCH: "/search/",
+	SIGN_UP: "/sign-up/",
+	SIGN_IN: "/sign-in/",
 	POST_DETAIL: "/post-detail/",
 	CADIDATE: "/cadidate/",
 	CADIDATE_PROFILE: "/cadidate/profile",
@@ -43,15 +45,37 @@ export const GGMAP_API_KEY = "AIzaSyDb0Fl2qgtLb38R85bK6k59qwtt5YOj4Z0";
 
 export const GENDER_OPTION: SelectOptionValue[] = [
 	{
-		key: "male",
+		key: 1,
 		value: "Male",
 	},
 	{
-		key: "female",
+		key: 2,
 		value: "Female",
 	},
 	{
-		key: "other",
+		key: 3,
 		value: "Other",
 	},
 ];
+export const USER_TYPE_OPTION: SelectOptionValue[] = [
+	{
+		key: 0,
+		value: "Admin",
+	},
+	{
+		key: 1,
+		value: "Candidate",
+	},
+	{
+		key: 2,
+		value: "Recruiter",
+	},
+];
+
+export const COOKIES_NAME = {
+	ACCESS_TOKEN: "accessToken",
+	USER: "user",
+} as const;
+
+type COOKIES_NAME_KEY = keyof typeof COOKIES_NAME;
+export type COOKIES_NAME_ITEMS = typeof COOKIES_NAME[COOKIES_NAME_KEY];

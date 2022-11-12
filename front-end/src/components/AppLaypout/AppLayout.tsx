@@ -4,16 +4,19 @@ import { AppHeader } from "../Header/Header";
 import AppContents from "../AppContents/AppContents";
 import Footer from "../Footer/Footer";
 import { Outlet } from "react-router-dom";
+import { CookiesProvider } from "react-cookie";
 export interface HeaderProps {}
 
 export function AppLayout(props: HeaderProps) {
 	return (
 		<div className="app-layout">
-			<AppHeader />
-			<AppContents>
-				<Outlet />
-			</AppContents>
-			<Footer />
+			<CookiesProvider>
+				<AppHeader />
+				<AppContents>
+					<Outlet />
+				</AppContents>
+				<Footer />
+			</CookiesProvider>
 		</div>
 	);
 }

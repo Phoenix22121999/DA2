@@ -1,0 +1,18 @@
+@use "../../styles/variables" as v;
+.sign-in-content {
+	margin: 12rem 0;
+	width: 100%;
+	z-index: 2;
+	.sign-in-content-inner {
+		background-color: v.$default-background;
+		@include v.border-radius-sm;
+		padding: 4rem;
+		max-width: 36rem;
+		width: 100%;
+		.button-sign-in {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+}

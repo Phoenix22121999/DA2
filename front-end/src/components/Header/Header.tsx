@@ -1,11 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ButtonCommon from "../ButtonCommon/ButtonCommon";
 import { HeaderItem } from "./components/HeaderItem/HeaderItem";
 import "./Header.scss";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import classNames from "classnames";
-import { Button, Checkbox, Form, Input, Modal } from "antd";
-import { useModal } from "src/hooks/useModal";
+import { Link } from "react-router-dom";
+import { ROUTE } from "src/utils/contants";
+import { useCookies } from "react-cookie";
+import { useReduxDispatch } from "src/redux/redux-hook";
+import { resetUser, updateUser } from "src/redux/slice/User";
+import { useUserAuth } from "src/hooks/useUserAuth";
 type HeaderProps = {};
 const HEADER_ITEM = [
 	{
@@ -32,10 +36,26 @@ const HEADER_ITEM = [
 export const AppHeader = (props: HeaderProps) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [isMenuOpen, setIsMenuOpen] = useState<Boolean>(false);
+	const [first, setFirst] = useState<boolean>(false);
+	const [cookies, , removeCookie] = useCookies(["user"]);
+	const { isAuth, user } = useUserAuth();
+	const dispatch = useReduxDispatch();
+	useEffect(() => {
+		if (!first) {
+			setFirst(true);
+			if (!cookies.user) return;
+			dispatch(updateUser(cookies.user));
+		}
+	}, [cookies, first, dispatch]);
+
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);
 	};
-	const { close, open, isOpen } = useModal(false);
+
+	const signOut = () => {
+		removeCookie("user");
+		dispatch(resetUser());
+	};
 
 	return (
 		<div className="app-header" ref={ref}>
@@ -49,12 +69,27 @@ export const AppHeader = (props: HeaderProps) => {
 					return <HeaderItem {...item} />;
 				})}
 				{/* <div className="button-group"> */}
-				<ButtonCommon className="signup" size="small">
-					sign up
-				</ButtonCommon>
-				<ButtonCommon className="login" onClick={open} size="small">
-					login
-				</ButtonCommon>
+				{isAuth ? (
+					<>
+						<div className="header-username">{user.username}</div>
+						<ButtonCommon
+							className="login"
+							size="small"
+							onClick={signOut}
+						>
+							Sign out
+						</ButtonCommon>
+					</>
+				) : (
+					<>
+						<ButtonCommon className="signup" size="small">
+							<Link to={ROUTE.SIGN_UP}>Sign up</Link>
+						</ButtonCommon>
+						<ButtonCommon className="login" size="small">
+							<Link to={ROUTE.SIGN_IN}>Sign In</Link>
+						</ButtonCommon>
+					</>
+				)}
 				{/* </div> */}
 			</ul>
 			<div
@@ -68,56 +103,6 @@ export const AppHeader = (props: HeaderProps) => {
 					<CloseOutlined />
 				</div>
 			</div>
-			<Modal open={isOpen} onCancel={close} centered>
-				<Form
-					name="basic"
-					// labelCol={{ span: 8 }}
-					// wrapperCol={{ span: 16 }}
-					initialValues={{ remember: true }}
-					onFinish={close}
-					autoComplete="off"
-				>
-					<Form.Item
-						label="Username"
-						name="username"
-						rules={[
-							{
-								required: true,
-								message: "Please input your username!",
-							},
-						]}
-					>
-						<Input />
-					</Form.Item>
-
-					<Form.Item
-						label="Password"
-						name="password"
-						rules={[
-							{
-								required: true,
-								message: "Please input your password!",
-							},
-						]}
-					>
-						<Input.Password />
-					</Form.Item>
-
-					<Form.Item
-						name="remember"
-						valuePropName="checked"
-						wrapperCol={{ offset: 8, span: 16 }}
-					>
-						<Checkbox>Remember me</Checkbox>
-					</Form.Item>
-
-					<Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-						<Button type="primary" htmlType="submit">
-							Submit
-						</Button>
-					</Form.Item>
-				</Form>
-			</Modal>
 		</div>
 	);
 };
