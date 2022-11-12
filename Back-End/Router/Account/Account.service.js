@@ -2,9 +2,9 @@ const { PrismaClient } = require("@prisma/client");
 const gateToken = require("../../Middleware/Middleware");
 const jwt = require("jsonwebtoken");
 const { createPassHash } = require("../../Middleware/config");
-const { response } = require("express");
 const { v4 : uuidv4 } = require('uuid');
 const bcrypt = require("bcrypt");
+
 BigInt.prototype.toJSON = function () {
     return this.toString();
 };
@@ -27,11 +27,11 @@ const formatObj = (result) => {
 
 const getListAcccount = async (req, res) => {
     try {
-        const products = await prisma.user_Account.findMany();
+        const listAccount = await prisma.user_Account.findMany();
         res.json({
             code: 200,
             message: "get list account",
-            data: products,
+            data: listAccount,
         });
     } catch (error) {
         return res.json({
@@ -180,13 +180,14 @@ const signUp = async (req, res) => {
         });
  
     } catch (error) {
-        console.log(error.message);
         return res.json({
             code: 400,
             message: error.message,
         });
     }
 };
+
+
 
 module.exports = {
     getListAcccount,
