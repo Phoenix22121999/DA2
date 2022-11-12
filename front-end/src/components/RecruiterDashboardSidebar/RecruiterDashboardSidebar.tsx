@@ -10,6 +10,7 @@ import {
 	UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { ROUTE } from "src/utils/contants";
 
 type Props = {};
 const ITEMS: DashboardSidebarItemProps[] = [
@@ -31,14 +32,20 @@ const ITEMS: DashboardSidebarItemProps[] = [
 	{
 		icon: <KeyOutlined />,
 		title: "Change Password",
-		path: "change-password",
+		path: ROUTE.RECRUITER_CHANGE_PASSWORD,
+	},
+	{
+		icon: <KeyOutlined />,
+		title: "ss",
+		path: ROUTE.RECRUITER_POST_NEW_JOB,
 	},
 ];
 
 const RecruiterDashboardSidebar = (props: Props) => {
 	const navigate = useNavigate();
 	const handleClick = (path: string) => {
-		navigate(`/recruiter/${path}`);
+		// navigate(`/recruiter/${path}`);
+		navigate(path);
 	};
 
 	return (

@@ -1,0 +1,19 @@
+@use "../../styles/variables" as v;
+.job-post-sidebar {
+	.job-sidebar-title {
+		@include v.text-2xl;
+		color: v.$black-blue;
+		margin-bottom: 3rem;
+		font-weight: bold;
+	}
+	.job-overview {
+		padding: 2rem 4rem;
+		background-color: v.$default-background;
+		margin-bottom: 4rem;
+		@include v.border-radius-sm;
+	}
+	.company-overview {
+		padding: 2rem 4rem;
+		background-color: v.$default-background;
+	}
+}

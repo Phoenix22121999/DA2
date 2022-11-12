@@ -1,5 +1,4 @@
 import React from "react";
-import { Features } from "../Features/Features";
 import SearchBar from "../SearchBar/SearchBar";
 import "./Banner.scss";
 type BannerProps = {};

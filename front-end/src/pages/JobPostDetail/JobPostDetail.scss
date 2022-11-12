@@ -1,0 +1,23 @@
+@use "../../styles/variables" as v;
+.job-post-detail {
+	min-height: 100vh;
+	width: 100%;
+	.job-post-detail-inner {
+		display: flex;
+
+		width: 100%;
+		@include v.mq("tablet") {
+			flex-direction: row;
+			.job-post-detail-sidebar {
+				position: relative;
+				width: 30%;
+				padding: 2rem;
+				@include v.border-radius-xsm;
+			}
+			.job-post-detail-content {
+				width: 70%;
+				padding: 2rem;
+			}
+		}
+	}
+}
