@@ -1,4 +1,4 @@
-import { Checkbox, Form } from "antd";
+import { Checkbox, Form, message } from "antd";
 import React from "react";
 import { useCookies } from "react-cookie";
 import { useReduxDispatch } from "src/redux/redux-hook";
@@ -10,7 +10,7 @@ import { InputPasswordCommon } from "./../InputCommon/InputCommon";
 import "./SignInContent.scss";
 type Props = {};
 type SignUpForm = {
-	username: string;
+	user_name: string;
 	password: string;
 	remember: boolean;
 };
@@ -19,10 +19,15 @@ const SignInContent = (props: Props) => {
 	const dispatch = useReduxDispatch();
 	const [, setCookies] = useCookies();
 
-	const callback = (data: string | undefined) => {
+	const callback = (isSuccess: boolean, data: string | undefined) => {
 		const remember: boolean = form.getFieldValue("agree");
-		if (remember) {
-			setCookies(COOKIES_NAME.USER, data);
+		if (isSuccess) {
+			if (remember) {
+				setCookies(COOKIES_NAME.USER, data);
+			}
+			message.success("Sign in success");
+		} else {
+			message.error("Sign in fail, please check again");
 		}
 	};
 
@@ -38,8 +43,7 @@ const SignInContent = (props: Props) => {
 					<Form form={form} layout="vertical">
 						<Form.Item
 							label="Username"
-							name={"username"}
-							hasFeedback
+							name={"user_name"}
 							rules={[
 								{
 									required: true,
@@ -52,7 +56,6 @@ const SignInContent = (props: Props) => {
 						<Form.Item
 							label="Password"
 							name={"password"}
-							hasFeedback
 							rules={[
 								{
 									required: true,

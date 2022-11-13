@@ -1,10 +1,7 @@
 import { StepProps } from "antd";
 import React from "react";
-import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
-import {
-	selectSignUpCurentStep,
-	setCurrentSignUpStep,
-} from "src/redux/slice/SignUp";
+import { useReduxSelector } from "src/redux/redux-hook";
+import { selectSignUpCurentStep } from "src/redux/slice/SignUp";
 import StepsCommon from "../StepsCommon/StepsCommon";
 import SignUpStepOne from "./SignUpStepOne/SignUpStepOne";
 import SignUpStepTwo from "./SignUpStepTwo/SignUpStepTwo";
@@ -21,7 +18,7 @@ const steps = [
 		content: <SignUpStepTwo />,
 	},
 	{
-		title: "Last",
+		title: "Final",
 		content: <SignUpStepThree />,
 	},
 ];
@@ -32,11 +29,11 @@ const itemsa: StepProps[] = steps.map((item) => ({
 }));
 const SignUpContent = (props: Props) => {
 	const currentStep = useReduxSelector(selectSignUpCurentStep);
-	const dispatch = useReduxDispatch();
+	// const dispatch = useReduxDispatch();
 
-	const onChange = (value: number) => {
-		dispatch(setCurrentSignUpStep(value));
-	};
+	// const onChange = (value: number) => {
+	// 	dispatch(setCurrentSignUpStep(value));
+	// };
 	return (
 		<div className="sign-up-content">
 			<div className="container">
@@ -44,7 +41,7 @@ const SignUpContent = (props: Props) => {
 					<StepsCommon
 						items={itemsa}
 						current={currentStep}
-						onChange={onChange}
+						// onChange={onChange}
 					/>
 					<div className="sign-up-steps-content">
 						{steps[currentStep].content}

@@ -9,6 +9,7 @@ type Props = {};
 
 const SignUpStepThree = (props: Props) => {
 	const status = useReduxSelector(selectSignUpStatus);
+
 	return (
 		<div className="sign-up-step-three">
 			<LoadingCommon size="large" loading={status === "loading"}>

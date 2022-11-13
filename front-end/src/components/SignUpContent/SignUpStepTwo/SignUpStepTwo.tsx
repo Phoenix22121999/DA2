@@ -1,5 +1,5 @@
-import React from "react";
-import { Form } from "antd";
+import React, { useEffect, useState } from "react";
+import { Form, message } from "antd";
 import SelectCommon from "src/components/SelectCommon/SelectCommon";
 import { GENDER_OPTION } from "src/utils/contants";
 import "./SignUpStepTwo.scss";
@@ -15,6 +15,8 @@ import {
 } from "src/redux/slice/SignUp";
 import { OptionalSignUpParameters } from "src/types/AuthType";
 import { signUp } from "src/redux/slice/User";
+import { CallbackFunction } from "src/types/UtilType";
+import { useNavigate } from "react-router-dom";
 type Props = {};
 
 type SignInStepTwoForm = {
@@ -31,6 +33,25 @@ const SignUpStepTwo = (props: Props) => {
 	const [form] = Form.useForm();
 	const dispatch = useReduxDispatch();
 	const data = useReduxSelector(selectSignUpData);
+	const [isRecruiter, setIsRecruiter] = useState<boolean>(false);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (data.user_type_id && Number(data.user_type_id) === 3) {
+			setIsRecruiter(true);
+		}
+	}, [data]);
+
+	const callback: CallbackFunction<null> = (issuccess: boolean) => {
+		console.log(issuccess);
+
+		if (issuccess) {
+			message.success("Sign up success");
+		} else {
+			message.error("Sign up erroe");
+		}
+		navigate("/");
+	};
 
 	const next = async () => {
 		const value: SignInStepTwoForm = await form.validateFields();
@@ -41,7 +62,7 @@ const SignUpStepTwo = (props: Props) => {
 		};
 		dispatch(updateSignUp(payload));
 		dispatch(nextSignUpStep());
-		dispatch(signUp());
+		dispatch(signUp({ callback }));
 	};
 
 	const prev = () => {
@@ -50,32 +71,51 @@ const SignUpStepTwo = (props: Props) => {
 	return (
 		<div className="sign-up-step-two">
 			<Form form={form} layout="vertical" initialValues={data}>
-				<Form.Item
-					label="First Name"
-					name={"first_name"}
-					hasFeedback
-					rules={[
-						{
-							required: true,
-							message: "Please input your first name!",
-						},
-					]}
-				>
-					<InputCommon />
-				</Form.Item>
-				<Form.Item
-					label="Last Name"
-					name={"last_name"}
-					hasFeedback
-					rules={[
-						{
-							required: true,
-							message: "Please input your last name!",
-						},
-					]}
-				>
-					<InputCommon />
-				</Form.Item>
+				{isRecruiter ? (
+					<Form.Item
+						label="Company Name"
+						name={"full_name"}
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: "Please input your first name!",
+							},
+						]}
+					>
+						<InputCommon />
+					</Form.Item>
+				) : (
+					<>
+						<Form.Item
+							label="First Name"
+							name={"first_name"}
+							hasFeedback
+							rules={[
+								{
+									required: true,
+									message: "Please input your first name!",
+								},
+							]}
+						>
+							<InputCommon />
+						</Form.Item>
+						<Form.Item
+							label="Last Name"
+							name={"last_name"}
+							hasFeedback
+							rules={[
+								{
+									required: true,
+									message: "Please input your last name!",
+								},
+							]}
+						>
+							<InputCommon />
+						</Form.Item>
+					</>
+				)}
+
 				<Form.Item
 					label="Email"
 					name={"email"}
@@ -108,32 +148,37 @@ const SignUpStepTwo = (props: Props) => {
 				>
 					<InputCommon />
 				</Form.Item>
-				<Form.Item
-					label="Age"
-					name={"age"}
-					hasFeedback
-					rules={[
-						{
-							required: true,
-							message: "Please input your age!",
-						},
-					]}
-				>
-					<InputNumberCommon />
-				</Form.Item>
-				<Form.Item
-					label="Gender"
-					name={"gender"}
-					hasFeedback
-					rules={[
-						{
-							required: true,
-							message: "Please input your gender!",
-						},
-					]}
-				>
-					<SelectCommon data={GENDER_OPTION} />
-				</Form.Item>
+				{!isRecruiter && (
+					<>
+						<Form.Item
+							label="Age"
+							name={"age"}
+							hasFeedback
+							rules={[
+								{
+									required: true,
+									message: "Please input your age!",
+								},
+							]}
+						>
+							<InputNumberCommon />
+						</Form.Item>
+						<Form.Item
+							label="Gender"
+							name={"gender"}
+							hasFeedback
+							rules={[
+								{
+									required: true,
+									message: "Please input your gender!",
+								},
+							]}
+						>
+							<SelectCommon data={GENDER_OPTION} />
+						</Form.Item>
+					</>
+				)}
+
 				<Form.Item
 					label="Address"
 					name={"address"}

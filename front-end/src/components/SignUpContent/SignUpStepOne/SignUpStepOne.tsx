@@ -6,7 +6,6 @@ import InputCommon, {
 	InputPasswordCommon,
 } from "./../../InputCommon/InputCommon";
 import SelectCommon from "src/components/SelectCommon/SelectCommon";
-import { USER_TYPE_OPTION } from "src/utils/contants";
 import ButtonCommon from "./../../ButtonCommon/ButtonCommon";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import {
@@ -15,9 +14,10 @@ import {
 	updateSignUp,
 } from "src/redux/slice/SignUp";
 import { OptionalSignUpParameters } from "src/types/AuthType";
+import { USER_TYPE_OPTION } from "src/utils/contants";
 type Props = {};
 type SignUpStepOneForm = {
-	username: string;
+	user_name: string;
 	password: string;
 	confirmPassword: string;
 	user_type_id: number;
@@ -39,7 +39,7 @@ const SignUpStepOne = (props: Props) => {
 			]);
 		}
 		const payload: OptionalSignUpParameters = {
-			username: value.username,
+			user_name: value.user_name,
 			password: value.password,
 			user_type_id: value.user_type_id,
 		};
@@ -49,10 +49,10 @@ const SignUpStepOne = (props: Props) => {
 
 	return (
 		<div className="step-one">
-			<Form form={form} layout="vertical" initialValues={data}>
+			<Form form={form} layout="vertical" initialValues={data || null}>
 				<Form.Item
 					label="Username"
-					name={"username"}
+					name={"user_name"}
 					hasFeedback
 					rules={[
 						{
@@ -96,7 +96,10 @@ const SignUpStepOne = (props: Props) => {
 					<InputPasswordCommon />
 				</Form.Item>
 				<Form.Item label="Role" name={"user_type_id"} hasFeedback>
-					<SelectCommon data={USER_TYPE_OPTION} />
+					<SelectCommon
+						data={USER_TYPE_OPTION}
+						placeholder="Select your role"
+					/>
 				</Form.Item>
 				<Form.Item
 					name={"agree"}
