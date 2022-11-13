@@ -49,11 +49,8 @@ const signIn = async (req, res) => {
         const resultSignIn = await prisma.user_Account.findMany({
             where: {
                 username: user_name,
-                // is_active : 1,
-                // is_delete : 0
             },
         });
-
         // Nếu không có kết quả trả về là không tồn tại tài khoản này
         if (!resultSignIn && !resultSignIn.length) {
             return res.json({
@@ -100,7 +97,7 @@ const signUp = async (req, res) => {
             password,
             username,
             google_id,
-            usert_type_id,
+            user_type_id,
             first_name,
             last_name,
             full_name,
@@ -132,8 +129,11 @@ const signUp = async (req, res) => {
                     password : passHash,
                     is_active : true,
                     is_delete : false,
-                    user_type : {
-                        user_type_id : usert_type_id
+                    // user_type_id : user_type.user_type_id,
+                    user_type :{
+                        create : {
+                            id : user_type_id
+                        }
                     },
                     first_name :  first_name,
                     last_name : last_name,
@@ -180,6 +180,7 @@ const signUp = async (req, res) => {
         });
  
     } catch (error) {
+        console.log(error.message);
         return res.json({
             code: 400,
             message: error.message,
