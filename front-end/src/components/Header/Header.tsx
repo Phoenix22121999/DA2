@@ -5,7 +5,7 @@ import "./Header.scss";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
-import { ROUTE } from "src/utils/contants";
+import { COOKIES_NAME, ROUTE } from "src/utils/contants";
 import { useCookies } from "react-cookie";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { resetUser, updateUser } from "src/redux/slice/User";
@@ -37,7 +37,7 @@ export const AppHeader = (props: HeaderProps) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [isMenuOpen, setIsMenuOpen] = useState<Boolean>(false);
 	const [first, setFirst] = useState<boolean>(false);
-	const [cookies, , removeCookie] = useCookies(["user"]);
+	const [cookies, , removeCookie] = useCookies([COOKIES_NAME.USER]);
 	const { isAuth, user } = useUserAuth();
 	const dispatch = useReduxDispatch();
 	useEffect(() => {
@@ -53,7 +53,7 @@ export const AppHeader = (props: HeaderProps) => {
 	};
 
 	const signOut = () => {
-		removeCookie("user");
+		removeCookie(COOKIES_NAME.USER);
 		dispatch(resetUser());
 	};
 
@@ -75,7 +75,7 @@ export const AppHeader = (props: HeaderProps) => {
 				{/* <div className="button-group"> */}
 				{isAuth ? (
 					<>
-						<div className="header-username">{user.user_name}</div>
+						<div className="header-username">{user.username}</div>
 						<ButtonCommon
 							className="login"
 							size="small"

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Recruitment.scss";
-import CandidateImage from "../../assets/images/good-job.jpg";
-import RecruiterImage from "../../assets/images/word.jpg";
+import RecruiterImage from "../../assets/images/good-job.jpg";
+import CandidateImage from "../../assets/images/word.jpg";
 import ButtonCommon from "../ButtonCommon/ButtonCommon";
 type RecruitmentProps = {};
 

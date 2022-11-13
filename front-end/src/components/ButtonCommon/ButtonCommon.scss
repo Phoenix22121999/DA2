@@ -13,7 +13,7 @@
 	width: 100%;
 	height: 100%;
 	border: transparent 1px solid;
-
+	@include v.border-radius-sm;
 	&.button-small {
 		padding: 0.6rem 2rem;
 		@include v.text-base;

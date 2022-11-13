@@ -2,6 +2,7 @@
 .home-categories-item {
 	min-width: 25%;
 	padding: 2rem;
+
 	.home-categories-icon {
 		padding: 5rem 3rem 1rem 3rem;
 		@include v.text-4xl;
@@ -15,13 +16,13 @@
 		transition: all 0.2s;
 	}
 	.home-categories-inner {
+		@include v.border-radius-sm;
 		cursor: pointer;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
 		background-color: v.$primary-color;
-		border-radius: v.$border-radius-xsm;
 		transition: all 0.2s;
 		border: transparent 1px solid;
 

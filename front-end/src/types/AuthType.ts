@@ -2,7 +2,7 @@ import { UserAccount } from "./Type";
 
 export type AuthUser = {
 	id: number;
-	user_name: string;
+	username: string;
 	user_id: number;
 	use_type_id: number;
 };

@@ -1,6 +1,7 @@
 import { Checkbox, Form, message } from "antd";
 import React from "react";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { signIn } from "src/redux/slice/User";
 import { COOKIES_NAME } from "src/utils/contants";
@@ -17,15 +18,19 @@ type SignUpForm = {
 const SignInContent = (props: Props) => {
 	const [form] = Form.useForm();
 	const dispatch = useReduxDispatch();
-	const [, setCookies] = useCookies();
+	const [, setCookies] = useCookies([COOKIES_NAME.USER]);
+	const natigate = useNavigate();
 
 	const callback = (isSuccess: boolean, data: string | undefined) => {
 		const remember: boolean = form.getFieldValue("agree");
 		if (isSuccess) {
 			if (remember) {
-				setCookies(COOKIES_NAME.USER, data);
+				var expires = new Date();
+				expires.setDate(expires.getDate() + 3);
+				setCookies(COOKIES_NAME.USER, data, { expires });
 			}
 			message.success("Sign in success");
+			natigate("/");
 		} else {
 			message.error("Sign in fail, please check again");
 		}
@@ -65,22 +70,7 @@ const SignInContent = (props: Props) => {
 						>
 							<InputPasswordCommon />
 						</Form.Item>
-						<Form.Item
-							name={"agree"}
-							valuePropName="checked"
-							rules={[
-								{
-									validator: (_, value) =>
-										value
-											? Promise.resolve()
-											: Promise.reject(
-													new Error(
-														"Should accept agreement"
-													)
-											  ),
-								},
-							]}
-						>
+						<Form.Item name={"agree"} valuePropName="checked">
 							<Checkbox>Remember me</Checkbox>
 						</Form.Item>
 					</Form>

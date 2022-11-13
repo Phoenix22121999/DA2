@@ -3,12 +3,22 @@ import "./SignUpStepThree.scss";
 import LoadingCommon from "./../../LoadingCommon/LoadingCommon";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
-import { useReduxSelector } from "src/redux/redux-hook";
-import { selectSignUpStatus } from "src/redux/slice/SignUp";
+import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
+import {
+	selectSignUpStatus,
+	setCurrentSignUpStep,
+} from "src/redux/slice/SignUp";
+import { useNavigate } from "react-router-dom";
 type Props = {};
 
 const SignUpStepThree = (props: Props) => {
 	const status = useReduxSelector(selectSignUpStatus);
+	const navigate = useNavigate();
+	const dispatch = useReduxDispatch();
+	const backToHomePage = () => {
+		dispatch(setCurrentSignUpStep(0));
+		navigate("/");
+	};
 
 	return (
 		<div className="sign-up-step-three">
@@ -30,6 +40,7 @@ const SignUpStepThree = (props: Props) => {
 						<ButtonCommon
 							size="medium"
 							type={status === "idle" ? "success" : "danger"}
+							onClick={backToHomePage}
 						>
 							Back to Home Page
 						</ButtonCommon>

@@ -5,6 +5,8 @@ import FeaturesJobItem, {
 import TEST_LOGO from "../../assets/images/logo.png";
 import "./FeaturesJob.scss";
 import ButtonCommon from "./../ButtonCommon/ButtonCommon";
+import { Link } from "react-router-dom";
+import { ROUTE } from "src/utils/contants";
 type Props = {};
 const FEATURES_JOB: FeaturesJobItemProps[] = [
 	{
@@ -53,7 +55,7 @@ const FeaturesJob = (props: Props) => {
 				</div>
 				<div className="features-job-button">
 					<ButtonCommon ghost size="medium" type="outstanding">
-						All Job
+						<Link to={ROUTE.SEARCH}>All Job</Link>
 					</ButtonCommon>
 				</div>
 			</div>

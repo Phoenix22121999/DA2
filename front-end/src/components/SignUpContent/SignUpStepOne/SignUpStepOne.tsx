@@ -39,7 +39,7 @@ const SignUpStepOne = (props: Props) => {
 			]);
 		}
 		const payload: OptionalSignUpParameters = {
-			user_name: value.user_name,
+			username: value.user_name,
 			password: value.password,
 			user_type_id: value.user_type_id,
 		};

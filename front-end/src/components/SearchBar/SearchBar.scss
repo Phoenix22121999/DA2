@@ -3,11 +3,13 @@
 	width: 100%;
 	background-color: #a998f6;
 	border: 1px solid #b8aaf3;
-	padding: 20px 0;
+	padding: 2rem;
 	margin: 4rem 0 2rem 0;
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
+	@include v.border-radius-sm;
+
 	.search-bar-item {
 		padding: 1.4rem;
 		width: 100%;

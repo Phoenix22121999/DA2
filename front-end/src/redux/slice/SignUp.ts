@@ -16,7 +16,7 @@ export interface SignUpState {
 const initialState: SignUpState = {
 	data: {
 		password: "",
-		user_name: "",
+		username: "",
 		google_id: null,
 		user_type_id: null,
 		first_name: null,
@@ -68,7 +68,7 @@ export const signUpSlice = createSlice({
 		resetSignUp: (state) => {
 			state.data = {
 				password: "",
-				user_name: "",
+				username: "",
 				google_id: null,
 				user_type_id: null,
 				first_name: null,
@@ -105,7 +105,7 @@ export const signUpSlice = createSlice({
 			.addCase(signUp.fulfilled, (state, action) => {
 				state.data = {
 					password: "",
-					user_name: "",
+					username: "",
 					google_id: null,
 					user_type_id: null,
 					first_name: null,
@@ -122,7 +122,7 @@ export const signUpSlice = createSlice({
 					avartar: null,
 					logo: null,
 				};
-				state.currentStep = 0;
+				state.status = "idle";
 			})
 			.addCase(signUp.rejected, (state) => {
 				state.status = "failed";

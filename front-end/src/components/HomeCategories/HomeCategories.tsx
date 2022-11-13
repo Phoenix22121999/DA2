@@ -5,6 +5,8 @@ import HomeCategoriesItem, {
 } from "./HomeCategoriesItem/HomeCategoriesItem";
 import { FormatPainterOutlined } from "@ant-design/icons";
 import ButtonCommon from "../ButtonCommon/ButtonCommon";
+import { Link } from "react-router-dom";
+import { ROUTE } from "src/utils/contants";
 type Props = {};
 
 const TOP_CATEGORIES: HomeCategoriesItemProps[] = [
@@ -53,7 +55,7 @@ const HomeCategories = (props: Props) => {
 				</div>
 				<div className="categories-button">
 					<ButtonCommon ghost size="medium" type="outstanding">
-						All Categories
+						<Link to={ROUTE.SEARCH}>All Categories</Link>
 					</ButtonCommon>
 				</div>
 			</div>

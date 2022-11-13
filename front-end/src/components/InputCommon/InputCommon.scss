@@ -1,8 +1,9 @@
+@use "../../styles/variables" as v;
 .input-common {
+	// border-radius: 1rem;
 	.ant-input {
-		border-radius: 1rem;
 	}
 	.ant-input-affix-wrapper {
-		border-radius: 1rem;
+		@include v.border-radius-sm;
 	}
 }

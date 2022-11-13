@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, message } from "antd";
+import { Form } from "antd";
 import SelectCommon from "src/components/SelectCommon/SelectCommon";
 import { GENDER_OPTION } from "src/utils/contants";
 import "./SignUpStepTwo.scss";
@@ -15,8 +15,6 @@ import {
 } from "src/redux/slice/SignUp";
 import { OptionalSignUpParameters } from "src/types/AuthType";
 import { signUp } from "src/redux/slice/User";
-import { CallbackFunction } from "src/types/UtilType";
-import { useNavigate } from "react-router-dom";
 type Props = {};
 
 type SignInStepTwoForm = {
@@ -34,7 +32,6 @@ const SignUpStepTwo = (props: Props) => {
 	const dispatch = useReduxDispatch();
 	const data = useReduxSelector(selectSignUpData);
 	const [isRecruiter, setIsRecruiter] = useState<boolean>(false);
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (data.user_type_id && Number(data.user_type_id) === 3) {
@@ -42,16 +39,14 @@ const SignUpStepTwo = (props: Props) => {
 		}
 	}, [data]);
 
-	const callback: CallbackFunction<null> = (issuccess: boolean) => {
-		console.log(issuccess);
-
-		if (issuccess) {
-			message.success("Sign up success");
-		} else {
-			message.error("Sign up erroe");
-		}
-		navigate("/");
-	};
+	// const callback: CallbackFunction<null> = (issuccess: boolean) => {
+	// 	if (issuccess) {
+	// 		message.success("Sign up success");
+	// 	} else {
+	// 		message.error("Sign up erroe");
+	// 	}
+	// 	navigate("/");
+	// };
 
 	const next = async () => {
 		const value: SignInStepTwoForm = await form.validateFields();
@@ -62,7 +57,7 @@ const SignUpStepTwo = (props: Props) => {
 		};
 		dispatch(updateSignUp(payload));
 		dispatch(nextSignUpStep());
-		dispatch(signUp({ callback }));
+		dispatch(signUp({}));
 	};
 
 	const prev = () => {
