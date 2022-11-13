@@ -144,6 +144,17 @@ export class BaseApi {
 			});
 	}
 
+	async baseGet<ParametersType extends { [key: string]: any }, DataType>(
+		path: string,
+		data: ParametersType
+	) {
+		return this.abstract<
+			ParametersType,
+			DataType,
+			BaseReponseType<DataType>
+		>(path, data, METHOD_AXIOS.GET);
+	}
+
 	async get<
 		ParametersType extends { [key: string]: any },
 		DataType,

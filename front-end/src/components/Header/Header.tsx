@@ -75,7 +75,7 @@ export const AppHeader = (props: HeaderProps) => {
 				{/* <div className="button-group"> */}
 				{isAuth ? (
 					<>
-						<div className="header-username">{user.username}</div>
+						<div className="header-username">{user.user_name}</div>
 						<ButtonCommon
 							className="login"
 							size="small"

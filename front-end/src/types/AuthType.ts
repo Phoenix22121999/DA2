@@ -2,7 +2,7 @@ import { UserAccount } from "./Type";
 
 export type AuthUser = {
 	id: number;
-	username: string;
+	user_name: string;
 	user_id: number;
 	use_type_id: number;
 };
@@ -24,7 +24,7 @@ export interface SignUpParameters
 export type OptionalSignUpParameters = Partial<SignUpParameters>;
 
 export type SignInParameters = {
-	username: string;
+	user_name: string;
 	password: string;
 };
 

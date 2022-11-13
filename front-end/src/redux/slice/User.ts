@@ -19,9 +19,14 @@ const initialState: UserState = {
 
 export const signUp = createAsyncThunk(
 	"user/sign-up",
-	async (_, { getState }) => {
+	async ({ callback }: ActionPayload<null>, { getState }) => {
 		const data = selectSignUpData(getState() as RootState);
 		const response = await api.authApi.signUp(data);
+		if (response.code !== 200) {
+			callback && callback(false, response);
+		} else {
+			callback && callback(true, response);
+		}
 		// The value we return becomes the `fulfilled` action payload
 		return response;
 	}
@@ -30,11 +35,17 @@ export const signUp = createAsyncThunk(
 export const signIn = createAsyncThunk(
 	"user/sign-in",
 	async (action: ActionPayload<SignInParameters>) => {
+		if (!action.payload) {
+			throw new Error("need payload");
+		}
 		const response = await api.authApi.signIn(action.payload);
-
-		action.callback && action.callback(response);
-		// The value we return becomes the `fulfilled` action payload
+		if (response.code !== 200) {
+			action.callback && action.callback(false, response);
+		} else {
+			action.callback && action.callback(true, response);
+		}
 		return response;
+		// The value we return becomes the `fulfilled` action payload
 	}
 );
 

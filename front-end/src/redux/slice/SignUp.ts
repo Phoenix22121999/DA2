@@ -1,7 +1,11 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { OptionalSignUpParameters, SignUpParameters } from "src/types/AuthType";
 import { RootState } from "../store";
 import { signUp } from "./User";
+import { ActionPayload } from "src/types/UtilType";
+import api from "./../../apis/index.api";
+import { BaseReponseType } from "src/types/ApiType";
+import { UserType } from "src/types/Type";
 
 export interface SignUpState {
 	data: SignUpParameters;
@@ -12,9 +16,9 @@ export interface SignUpState {
 const initialState: SignUpState = {
 	data: {
 		password: "",
-		username: "",
+		user_name: "",
 		google_id: null,
-		user_type_id: 0,
+		user_type_id: null,
 		first_name: null,
 		last_name: null,
 		full_name: null,
@@ -33,6 +37,23 @@ const initialState: SignUpState = {
 	status: "idle",
 };
 
+export const getUserTypeList = createAsyncThunk(
+	"sign-up/user-type",
+	async (
+		action: ActionPayload<null, BaseReponseType<Partial<UserType>[]>>,
+		{ getState }
+	) => {
+		const response = await api.utilApi.getListUserType();
+		if (response.code !== 200) {
+			action.callback && action.callback(false, response);
+		} else {
+			action.callback && action.callback(true, response);
+		}
+		// The value we return becomes the `fulfilled` action payload
+		// return response;
+	}
+);
+
 export const signUpSlice = createSlice({
 	name: "sign-up",
 	initialState,
@@ -45,7 +66,26 @@ export const signUpSlice = createSlice({
 			state.data = { ...state.data, ...action.payload };
 		},
 		resetSignUp: (state) => {
-			state = initialState;
+			state.data = {
+				password: "",
+				user_name: "",
+				google_id: null,
+				user_type_id: null,
+				first_name: null,
+				last_name: null,
+				full_name: null,
+				email: null,
+				number_phone: null,
+				age: null,
+				gender: null,
+				address: null,
+				city_id: null,
+				district_id: null,
+				ward_id: null,
+				avartar: null,
+				logo: null,
+			};
+			state.currentStep = 0;
 		},
 		nextSignUpStep: (state) => {
 			state.currentStep++;
@@ -63,8 +103,26 @@ export const signUpSlice = createSlice({
 				state.status = "loading";
 			})
 			.addCase(signUp.fulfilled, (state, action) => {
-				state.status = "idle";
-				state = initialState;
+				state.data = {
+					password: "",
+					user_name: "",
+					google_id: null,
+					user_type_id: null,
+					first_name: null,
+					last_name: null,
+					full_name: null,
+					email: null,
+					number_phone: null,
+					age: null,
+					gender: null,
+					address: null,
+					city_id: null,
+					district_id: null,
+					ward_id: null,
+					avartar: null,
+					logo: null,
+				};
+				state.currentStep = 0;
 			})
 			.addCase(signUp.rejected, (state) => {
 				state.status = "failed";
