@@ -4,7 +4,7 @@ const path = require("path");
 
 const app = express();
 require("dotenv").config();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3002;
 const cors = require("cors");
 const corsConfig = {
 	credentials: true,
@@ -16,7 +16,7 @@ const router = require("./app.router");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
-app.use("/api", router);
+app.use("/cdn", router);
 
 // Static file     
 app.use(express.static(path.join(__dirname, 'Upload/file'), { index: false }));
@@ -24,11 +24,11 @@ app.use(express.static(path.join(__dirname, 'Upload/file'), { index: false }));
 
 
 app.get("/", (req, res) => {
-	res.send("WELCOME TO MY BACK-END");
+	res.send("WELCOME TO MY CDN");
 });
 
-app.get("/api", (req, res) => {
-	res.send("WELCOME TO MY API");
+app.get("/cdn", (req, res) => {
+	res.send("WELCOME TO MY CDN");
 });
 
 app.listen(port, () => {

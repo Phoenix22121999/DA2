@@ -17,3 +17,11 @@ services:
         - 3000:3000
       links :
         - "backend:be"
+    cdn:
+      build:
+        context : ./cdn
+        dockerfile : ./Dockerfile
+      image : 'cdnda2'
+      ports :
+        - 3002:3002
+      
