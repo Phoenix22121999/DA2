@@ -8,7 +8,7 @@ export const useCheckUserAuth = (userTypeId: number) => {
 	if (!isAuth) {
 		return false;
 	}
-	if (user.use_type_id !== userTypeId) {
+	if (Number(user.user_type_id) !== userTypeId) {
 		return false;
 	}
 	return true;

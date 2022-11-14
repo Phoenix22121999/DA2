@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./SignUpStepThree.scss";
 import LoadingCommon from "./../../LoadingCommon/LoadingCommon";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import {
+	resetSignUp,
 	selectSignUpStatus,
 	setCurrentSignUpStep,
 } from "src/redux/slice/SignUp";
@@ -15,9 +16,11 @@ const SignUpStepThree = (props: Props) => {
 	const status = useReduxSelector(selectSignUpStatus);
 	const navigate = useNavigate();
 	const dispatch = useReduxDispatch();
+
 	const backToHomePage = () => {
-		dispatch(setCurrentSignUpStep(0));
 		navigate("/");
+		dispatch(setCurrentSignUpStep(0));
+		dispatch(resetSignUp());
 	};
 
 	return (

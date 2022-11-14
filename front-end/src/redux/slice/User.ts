@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import api from "src/apis/index.api";
 import { SignInParameters, OptionalAuthUser } from "src/types/AuthType";
+import { UserAccount } from "src/types/Type";
 import { ActionPayload } from "src/types/UtilType";
 import { RootState } from "../store";
 import { selectSignUpData } from "./SignUp";
 
 export interface UserState {
-	data: OptionalAuthUser;
+	data: Partial<UserAccount>;
 	AccessToken?: string;
 	status: "idle" | "loading" | "failed";
 }
@@ -24,7 +25,11 @@ export const signUp = createAsyncThunk(
 		const response = await api.authApi.signUp(data);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, response);
+			throw new Error(response.message);
 		} else {
+			response.data!.user_type_id = Number(
+				response.data?.user_type_id || 0
+			);
 			action.callback && action.callback(true, response);
 		}
 		// The value we return becomes the `fulfilled` action payload
@@ -42,6 +47,9 @@ export const signIn = createAsyncThunk(
 		if (response.code !== 200) {
 			action.callback && action.callback(false, response);
 		} else {
+			response.data!.user_type_id = Number(
+				response.data?.user_type_id || 0
+			);
 			action.callback && action.callback(true, response);
 		}
 		return response;
@@ -85,6 +93,7 @@ export const userSlice = createSlice({
 export const { updateUser, resetUser } = userSlice.actions;
 export const selectUserData = (state: RootState) => state.user.data;
 export const selectUserToken = (state: RootState) => state.user.AccessToken;
-export const selectUserType = (state: RootState) => state.user.data.use_type_id;
+export const selectUserType = (state: RootState) =>
+	state.user.data.user_type_id;
 
 export const userReducer = userSlice.reducer;

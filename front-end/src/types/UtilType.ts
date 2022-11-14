@@ -4,3 +4,7 @@ export type ActionPayload<T, K = any> = {
 };
 
 export type CallbackFunction<T> = (isSuccess: boolean, result: T) => void;
+
+export type IsDirtyObject<T> = {
+	[P in keyof T]: boolean;
+};

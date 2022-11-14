@@ -8,8 +8,9 @@ type Props = {};
 export const CandidateDashboard = (props: Props) => {
 	const navigate = useNavigate();
 
-	const isAuth = useCheckUserAuth(1);
+	const isAuth = useCheckUserAuth(2);
 	useEffect(() => {
+		console.log(isAuth);
 		if (!isAuth) {
 			navigate("/");
 		}

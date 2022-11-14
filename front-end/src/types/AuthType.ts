@@ -4,7 +4,7 @@ export type AuthUser = {
 	id: number;
 	username: string;
 	user_id: number;
-	use_type_id: number;
+	user_type_id: number;
 };
 export type OptionalAuthUser = Partial<AuthUser>;
 

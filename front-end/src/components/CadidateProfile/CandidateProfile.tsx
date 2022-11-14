@@ -6,6 +6,7 @@ import SelectCommon, { SelectOptionValue } from "../SelectCommon/SelectCommon";
 import SwitchCommon from "../SwitchCommon/SwitchCommon";
 import "./CandidateProfile.scss";
 import ProfileAvatar from "../ProfileAvatar/ProfileAvatar";
+import { UserAccount } from "src/types/Type";
 const test: SelectOptionValue[] = [
 	{
 		key: "HCM",
@@ -28,6 +29,16 @@ type Props = {};
 
 const CadidateProfile = (props: Props) => {
 	const [form] = Form.useForm();
+	// const [isDirty, setIsDirty] = useState<boolean>(false);
+	// const [isDirtyObject, setisDirtyObject] = useState<
+	// 	IsDirtyObject<OptionalAuthUser>
+	// >({});
+	// usePrompt("dar");
+	// const handleOnValuesChange = (value:  Partial<UserAccount>, values: UserAccount) => {
+	// 	Object.entries(value).forEach(
+	// 		([key, value]) => console.log(key, value)
+	// 	  );
+	// };
 
 	return (
 		<div className="cadidate-profile">
@@ -36,21 +47,22 @@ const CadidateProfile = (props: Props) => {
 				<div className="avatar">
 					<ProfileAvatar />
 				</div>
-				<div className="profile=form">
-					<Form form={form} layout="vertical">
-						<Form.Item label="First Name">
+				<div className="profile-form">
+					<Form<UserAccount>
+						form={form}
+						layout="vertical"
+						// onValuesChange={handleOnValuesChange}
+					>
+						<Form.Item label="First Name" name={"first_name"}>
 							<InputCommon />
 						</Form.Item>
-						<Form.Item label="Last Name">
+						<Form.Item label="Last Name" name={"last_name"}>
 							<InputCommon />
 						</Form.Item>
-						<Form.Item label="Email">
+						<Form.Item label="Email" name={"email"}>
 							<InputCommon />
 						</Form.Item>
-						<Form.Item label="Numberphone">
-							<InputCommon />
-						</Form.Item>
-						<Form.Item label="Numberphone">
+						<Form.Item label="Numberphone" name={"number_phone"}>
 							<InputCommon />
 						</Form.Item>
 						<Form.Item label="Category">
