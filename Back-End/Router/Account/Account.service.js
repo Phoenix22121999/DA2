@@ -13,14 +13,16 @@ const prisma = new PrismaClient();
 
 const formatObj = (result) => {
 	let obj = {
-		id: result[0].id,
-		username: result[0].username,
+		id: result.id,
+		username: result.username,
 		//   name: result[0].name,
 		//   email: result[0].email,
-		user_id: result[0].user_id,
-		user_type_id: result[0].user_type_id,
-		//   address: result[0].address,
-		//   role: result[0].role,
+		user_id: result.user_id,
+		user_type_id: result.user_type_id,
+        first_name:result.first_name,
+        last_name: result.last_name,
+        full_name: result.full_name,
+        email: result.email,
 	};
 	return obj;
 };
@@ -60,7 +62,7 @@ const signIn = async (req, res) => {
 			// Nếu có trùng tên tài khoản thì so sanh mật khẩu vừa nhập với mật khẩu đã hash lưu vào database
 			let verify = bcrypt.compareSync(password, resultSignIn[0].password);
 			if (verify) {
-				let obj = formatObj(resultSignIn);
+				let obj = formatObj((resultSignIn[0] || {}));
 				// Trả về token để dùng cho các thao tác khác trong quá trình sử dụng website
 				const AccessToken = jwt.sign(
 					// { UserId: obj.id, role: obj.user_type_id },
@@ -158,13 +160,14 @@ const signUp = async (req, res) => {
 					message: "Đăng nhập thất bại vui lòng thử lại !",
 				});
 			}
-			const AccessToken = jwt.sign(requestCreate, process.env.ACCESS_TOKEN);
+			let obj = formatObj((requestCreate || {}))
+			const AccessToken = jwt.sign(obj, process.env.ACCESS_TOKEN);
 
 			return res.json({
 				code: 200,
 				status_resposse: true,
 				message: "Đăng kí và đăng nhập thành công",
-				data: requestCreate,
+				data: obj,
 				AccessToken: AccessToken,
 			});
 		}
@@ -185,10 +188,7 @@ const signUp = async (req, res) => {
 const update = async (req,res) => {
 	try{
 		const {
-			password,
 			username,
-			google_id,
-			user_type_id,
 			first_name,
 			last_name,
 			full_name,
@@ -200,23 +200,23 @@ const update = async (req,res) => {
 			city_id,
 			district_id,
 			ward_id,
-			avartar,
-			user_type,
 			logo,
+			avartar
 		} = req.body;
+		// console.log(req.id)
+		let {user_id , user_type_id = null} = req;
 		let isExists = await prisma.user_Account.findMany({
 			where: {
-				username: username,
+					username: username,
 			},
 		});
 
 		if ((isExists.length > 0)) {
 			const requestUpdate = await prisma.user_Account.update({
 				where : {
-					username :  username
+					id  :Number(user_id), 
 				},
 				data: {
-					user_type_id: Number(user_type_id),
 					first_name: first_name,
 					last_name: last_name,
 					full_name: full_name,
@@ -232,7 +232,19 @@ const update = async (req,res) => {
 					logo: logo,
 				},
 			})
-			console.log(requestUpdate);
+			// console.log(requestUpdate);
+			if(!requestUpdate){
+				return res.json({
+					code: 400,
+					status_resposse: false,
+					message: "Cập nhật tài khoản thất bại !",
+				});
+			}
+			return res.json({
+				code: 200,
+				status_resposse: true,
+				message: "Cập nhật tài khoản thành công",
+			});
 		}else{
 			return res.json({
 				code: 400,
@@ -242,7 +254,81 @@ const update = async (req,res) => {
 		}
 
 	}catch(error){
-		console.log(error.message);
+		return res.json({
+			code: 400,
+			message: error.message,
+		});
+	}
+}
+
+const changePassword = async (req, res) =>{
+	try{
+		let {
+			current_password,
+			new_password,		
+		} = req.body;
+
+		let {user_id = null , user_type_id} = req;
+
+		let isExists = await prisma.user_Account.findFirst({
+            where :{
+                AND : [{
+                    id : Number(user_id),
+                    is_active : true,
+                    is_delete : false
+                }]
+
+            }
+        })
+		if(!isExists){
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Tài khoản không tồn tại , vui lòng thử lại sau !",
+			});
+		}
+		let verify = bcrypt.compareSync(current_password, isExists.password);
+		if (verify) {
+			let passHash = createPassHash(new_password);
+			const requestChangePass = await prisma.user_Account.update({
+				where : {
+					id  :Number(user_id), 
+				},
+				data: {
+					password : passHash
+				},
+			})
+			if(!requestChangePass){
+				return res.json({
+					code: 500,
+					status_resposse: false,
+					message: "Thay đổi mật khẩu thất bại!",
+				});
+			}
+
+			let obj = formatObj((isExists || {}));
+			// Trả về token để dùng cho các thao tác khác trong quá trình sử dụng website
+			const AccessToken = jwt.sign(
+				// { UserId: obj.id, role: obj.user_type_id },
+				obj,
+				process.env.ACCESS_TOKEN
+			);
+			return res.json({
+				code: 200,
+				status_resposse: true,
+				message: "Thay đổi mật khẩu thành công",
+				data: obj,
+				AccessToken: AccessToken,
+			});
+		} else {
+			return res.json({
+				code: 500,
+				status_resposse: false,
+				message: "Mật khẩu hiện tại không chính xác!",
+			});
+		}
+	}catch(error){
+		console.log(error)
 		return res.json({
 			code: 400,
 			message: error.message,
@@ -254,5 +340,6 @@ module.exports = {
 	getListAcccount,
 	signIn,
 	signUp,
-	update
+	update,
+	changePassword
 };

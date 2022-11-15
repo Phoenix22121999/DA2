@@ -8,8 +8,8 @@ const checkToken = (req,res, next)=>{
     }
     try{
         const decrypt = jwt.verify(token , process.env.ACCESS_TOKEN);
-        req.userId = decrypt.UserId;
-        req.role = decrypt.role;
+        req.user_id = decrypt.id;
+        req.user_type_id = decrypt.user_type_id;
         next();
     }catch(error){
         return res.json({code : 500 , message: error.message});
