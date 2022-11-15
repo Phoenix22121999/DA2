@@ -40,7 +40,6 @@ const getListAcccount = async (req, res) => {
 		});
 	}
 };
-
 // Đăng nhập
 const signIn = async (req, res) => {
 	let { user_name, password } = req.body;
@@ -159,17 +158,13 @@ const signUp = async (req, res) => {
 					message: "Đăng nhập thất bại vui lòng thử lại !",
 				});
 			}
-			let obj =
-				requestCreate && requestCreate.length > 0
-					? formatObj(requestCreate)
-					: {};
-			const AccessToken = jwt.sign(obj, process.env.ACCESS_TOKEN);
+			const AccessToken = jwt.sign(requestCreate, process.env.ACCESS_TOKEN);
 
 			return res.json({
 				code: 200,
 				status_resposse: true,
 				message: "Đăng kí và đăng nhập thành công",
-				data: obj,
+				data: requestCreate,
 				AccessToken: AccessToken,
 			});
 		}
@@ -187,8 +182,77 @@ const signUp = async (req, res) => {
 	}
 };
 
+const update = async (req,res) => {
+	try{
+		const {
+			password,
+			username,
+			google_id,
+			user_type_id,
+			first_name,
+			last_name,
+			full_name,
+			email,
+			number_phone,
+			age,
+			gender,
+			address,
+			city_id,
+			district_id,
+			ward_id,
+			avartar,
+			user_type,
+			logo,
+		} = req.body;
+		let isExists = await prisma.user_Account.findMany({
+			where: {
+				username: username,
+			},
+		});
+
+		if ((isExists.length > 0)) {
+			const requestUpdate = await prisma.user_Account.update({
+				where : {
+					username :  username
+				},
+				data: {
+					user_type_id: Number(user_type_id),
+					first_name: first_name,
+					last_name: last_name,
+					full_name: full_name,
+					email: email,
+					number_phone: number_phone,
+					age: age,
+					gender: gender,
+					address: address,
+					city_id: city_id,
+					district_id: district_id,
+					ward_id: ward_id,
+					avartar: avartar,
+					logo: logo,
+				},
+			})
+			console.log(requestUpdate);
+		}else{
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Tài khoản không tồn tại , vui lòng thử lại sau !",
+			});
+		}
+
+	}catch(error){
+		console.log(error.message);
+		return res.json({
+			code: 400,
+			message: error.message,
+		});
+	}
+}
+
 module.exports = {
 	getListAcccount,
 	signIn,
 	signUp,
+	update
 };
