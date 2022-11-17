@@ -32,12 +32,14 @@ const getListAcccount = async (req, res) => {
 		const listAccount = await prisma.user_Account.findMany();
 		res.json({
 			code: 200,
+			status_resposse: true,
 			message: "get list account",
 			data: listAccount,
 		});
 	} catch (error) {
 		return res.json({
 			code: 400,
+			status_resposse: false,
 			message: error.message,
 		});
 	}
@@ -56,6 +58,7 @@ const signIn = async (req, res) => {
 		if (!resultSignIn && !resultSignIn.length) {
 			return res.json({
 				code: 404,
+				status_resposse: false,
 				message: "Không tìm thấy tài khoản này",
 			});
 		} else {
@@ -87,6 +90,7 @@ const signIn = async (req, res) => {
 	} catch (error) {
 		return res.json({
 			code: 400,
+			status_resposse: false,
 			message: error.message,
 		});
 	}
@@ -157,7 +161,7 @@ const signUp = async (req, res) => {
 				return res.json({
 					code: 400,
 					status_resposse: false,
-					message: "Đăng nhập thất bại vui lòng thử lại !",
+					message: "Đăng kí thất bại vui lòng thử lại !",
 				});
 			}
 			let obj = formatObj((requestCreate || {}))
@@ -180,6 +184,7 @@ const signUp = async (req, res) => {
 		console.log(error.message);
 		return res.json({
 			code: 400,
+			status_resposse: false,
 			message: error.message,
 		});
 	}
@@ -203,7 +208,6 @@ const update = async (req,res) => {
 			logo,
 			avartar
 		} = req.body;
-		// console.log(req.id)
 		let {user_id , user_type_id = null} = req;
 		let isExists = await prisma.user_Account.findMany({
 			where: {

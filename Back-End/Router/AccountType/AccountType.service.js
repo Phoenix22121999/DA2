@@ -24,7 +24,7 @@ const createAccountType = async (req , res) =>{
             for (i in values) {
               mess = values[i].msg;
             }
-            res.json({ code: 1, message: mess })
+            res.json({ code: 1, message: mess , status_resposse: false, })
         }
         const {
             user_type_name,
@@ -76,9 +76,9 @@ const createAccountType = async (req , res) =>{
         });
 
     }catch(error){
-        console.log(error.message);
         return res.json({
             code: 400,
+            status_resposse: false,
             message: error.message,
         });
     }
@@ -91,11 +91,13 @@ const getListAccountType = async (req, res)=>{
         res.json({
             code: 200,
             message: "get list account",
+			status_resposse: true,
             data: listUserAccountType,
         });
     } catch (error) {
         return res.json({
             code: 400,
+			status_resposse: false,
             message: error.message,
         });
     }
@@ -131,6 +133,7 @@ const deleteAccountType = async (req, res) =>{
     }catch(error){
         return res.json({
             code: 400,
+			status_resposse: false,
             message: error.message,
         });
     }
