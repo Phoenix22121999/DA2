@@ -8,6 +8,7 @@ const { v4 : uuidv4 } = require('uuid');
 const bcrypt = require("bcrypt");
 const { response } = require("express");
 const path = require("path");
+const http = require("http");
 
 BigInt.prototype.toJSON = function () {
     return this.toString();
@@ -239,12 +240,12 @@ const downloadCV = async (req , res) => {
         }
 
             let newFileName =encodeURIComponent(isExists.file_name);
-            res.setHeader('Content-Disposition',  'attachment;filename=ef6062e0-c2c1-4ced-9ff3-895e91d9f4f5.pdf');
+            res.setHeader('Content-Disposition',  'attachment;filename='+ isExists.file_name_hash);
             res.setHeader('Content-Type', `application/pdf`);
 
 
-            let pathURL = `${process.env.CDN_URL}ef6062e0-c2c1-4ced-9ff3-895e91d9f4f5.pdf`;
-            https.get(pathURL, (stream) => {
+            let pathURL = `${process.env.CDN_URL}${isExists.file_name_hash}`;
+            http.get(pathURL, (stream) => {
                 stream.pipe(res);
             });
 
