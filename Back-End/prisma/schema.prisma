@@ -52,6 +52,7 @@ model User_Account {
   logo         String?
   profile      Apply_Profile[]
   post         Recruitment_Post[]
+  cv           cv[]
 }
 
 // Bảng người dùng ứng viên
@@ -220,10 +221,14 @@ model cv {
   id             BigInt   @id @default(autoincrement())
   file_name_hash String // Lưu tên file đã được hash và lưu trên cdn
   file_name      String // Lưu tên file nguyên bản của tập tin
+  user_id     BigInt
+  extname     String? 
+  user        User_Account @relation(fields: [user_id], references: [id])
   create_date    DateTime @default(now())
   create_user    String?
   is_active      Boolean  @default(true)
   is_delete      Boolean  @default(false)
+
 }
 
 model administrative_regions {
