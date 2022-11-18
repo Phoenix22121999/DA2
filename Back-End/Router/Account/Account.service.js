@@ -19,10 +19,15 @@ const formatObj = (result) => {
 		//   email: result[0].email,
 		user_id: result.user_id,
 		user_type_id: result.user_type_id,
-        first_name:result.first_name,
-        last_name: result.last_name,
-        full_name: result.full_name,
-        email: result.email,
+		first_name: result.first_name,
+		last_name: result.last_name,
+		full_name: result.full_name,
+		email: result.email,
+		number_phone: result.number_phone,
+		age: result.age,
+		avartar: result.avartar,
+		address: result.address,
+		gender: result.gender,
 	};
 	return obj;
 };
@@ -52,6 +57,7 @@ const signIn = async (req, res) => {
 				username: user_name,
 			},
 		});
+		// console.log(resultSignIn[0]);
 		// Nếu không có kết quả trả về là không tồn tại tài khoản này
 		if (!resultSignIn && !resultSignIn.length) {
 			return res.json({
@@ -62,7 +68,7 @@ const signIn = async (req, res) => {
 			// Nếu có trùng tên tài khoản thì so sanh mật khẩu vừa nhập với mật khẩu đã hash lưu vào database
 			let verify = bcrypt.compareSync(password, resultSignIn[0].password);
 			if (verify) {
-				let obj = formatObj((resultSignIn[0] || {}));
+				let obj = formatObj(resultSignIn[0] || {});
 				// Trả về token để dùng cho các thao tác khác trong quá trình sử dụng website
 				const AccessToken = jwt.sign(
 					// { UserId: obj.id, role: obj.user_type_id },
@@ -83,6 +89,49 @@ const signIn = async (req, res) => {
 					message: "Đăng nhập thất bại vui lòng thử lại !",
 				});
 			}
+		}
+	} catch (error) {
+		return res.json({
+			code: 400,
+			message: error.message,
+		});
+	}
+};
+
+// Đăng nhập
+const signInWithToken = async (req, res) => {
+	let { user_id } = req.body;
+	try {
+		// Tìm trong bảng với prisma với điều kiện trùng tên tài khoản để lấy được mật khẩu khi hash
+		const resultSignIn = await prisma.user_Account.findMany({
+			where: {
+				id: user_id,
+			},
+		});
+		// console.log(resultSignIn[0]);
+		// Nếu không có kết quả trả về là không tồn tại tài khoản này
+		if (!resultSignIn && !resultSignIn.length) {
+			return res.json({
+				code: 404,
+				message: "Không tìm thấy tài khoản này",
+			});
+		} else {
+			// Nếu có trùng tên tài khoản thì so sanh mật khẩu vừa nhập với mật khẩu đã hash lưu vào database
+
+			let obj = formatObj(resultSignIn[0] || {});
+			// Trả về token để dùng cho các thao tác khác trong quá trình sử dụng website
+			const AccessToken = jwt.sign(
+				// { UserId: obj.id, role: obj.user_type_id },
+				obj,
+				process.env.ACCESS_TOKEN
+			);
+			return res.json({
+				code: 200,
+				status_resposse: true,
+				message: "Đăng nhập thành công",
+				data: obj,
+				AccessToken: AccessToken,
+			});
 		}
 	} catch (error) {
 		return res.json({
@@ -160,7 +209,7 @@ const signUp = async (req, res) => {
 					message: "Đăng nhập thất bại vui lòng thử lại !",
 				});
 			}
-			let obj = formatObj((requestCreate || {}))
+			let obj = formatObj(requestCreate || {});
 			const AccessToken = jwt.sign(obj, process.env.ACCESS_TOKEN);
 
 			return res.json({
@@ -185,8 +234,8 @@ const signUp = async (req, res) => {
 	}
 };
 
-const update = async (req,res) => {
-	try{
+const update = async (req, res) => {
+	try {
 		const {
 			username,
 			first_name,
@@ -201,20 +250,20 @@ const update = async (req,res) => {
 			district_id,
 			ward_id,
 			logo,
-			avartar
+			avartar,
 		} = req.body;
 		// console.log(req.id)
-		let {user_id , user_type_id = null} = req;
+		let { user_id, user_type_id = null } = req;
 		let isExists = await prisma.user_Account.findMany({
 			where: {
-					username: username,
+				username: username,
 			},
 		});
 
-		if ((isExists.length > 0)) {
+		if (isExists.length > 0) {
 			const requestUpdate = await prisma.user_Account.update({
-				where : {
-					id  :Number(user_id), 
+				where: {
+					id: Number(user_id),
 				},
 				data: {
 					first_name: first_name,
@@ -231,9 +280,9 @@ const update = async (req,res) => {
 					avartar: avartar,
 					logo: logo,
 				},
-			})
+			});
 			// console.log(requestUpdate);
-			if(!requestUpdate){
+			if (!requestUpdate) {
 				return res.json({
 					code: 400,
 					status_resposse: false,
@@ -243,44 +292,42 @@ const update = async (req,res) => {
 			return res.json({
 				code: 200,
 				status_resposse: true,
+				data: formatObj(requestUpdate || {}),
 				message: "Cập nhật tài khoản thành công",
 			});
-		}else{
+		} else {
 			return res.json({
 				code: 400,
 				status_resposse: false,
 				message: "Tài khoản không tồn tại , vui lòng thử lại sau !",
 			});
 		}
-
-	}catch(error){
+	} catch (error) {
 		return res.json({
 			code: 400,
 			message: error.message,
 		});
 	}
-}
+};
 
-const changePassword = async (req, res) =>{
-	try{
-		let {
-			current_password,
-			new_password,		
-		} = req.body;
+const changePassword = async (req, res) => {
+	try {
+		let { current_password, new_password } = req.body;
 
-		let {user_id = null , user_type_id} = req;
+		let { user_id = null, user_type_id } = req;
 
 		let isExists = await prisma.user_Account.findFirst({
-            where :{
-                AND : [{
-                    id : Number(user_id),
-                    is_active : true,
-                    is_delete : false
-                }]
-
-            }
-        })
-		if(!isExists){
+			where: {
+				AND: [
+					{
+						id: Number(user_id),
+						is_active: true,
+						is_delete: false,
+					},
+				],
+			},
+		});
+		if (!isExists) {
 			return res.json({
 				code: 400,
 				status_resposse: false,
@@ -291,14 +338,14 @@ const changePassword = async (req, res) =>{
 		if (verify) {
 			let passHash = createPassHash(new_password);
 			const requestChangePass = await prisma.user_Account.update({
-				where : {
-					id  :Number(user_id), 
+				where: {
+					id: Number(user_id),
 				},
 				data: {
-					password : passHash
+					password: passHash,
 				},
-			})
-			if(!requestChangePass){
+			});
+			if (!requestChangePass) {
 				return res.json({
 					code: 500,
 					status_resposse: false,
@@ -306,7 +353,7 @@ const changePassword = async (req, res) =>{
 				});
 			}
 
-			let obj = formatObj((isExists || {}));
+			let obj = formatObj(isExists || {});
 			// Trả về token để dùng cho các thao tác khác trong quá trình sử dụng website
 			const AccessToken = jwt.sign(
 				// { UserId: obj.id, role: obj.user_type_id },
@@ -327,19 +374,20 @@ const changePassword = async (req, res) =>{
 				message: "Mật khẩu hiện tại không chính xác!",
 			});
 		}
-	}catch(error){
-		console.log(error)
+	} catch (error) {
+		console.log(error);
 		return res.json({
 			code: 400,
 			message: error.message,
 		});
 	}
-}
+};
 
 module.exports = {
 	getListAcccount,
 	signIn,
+	signInWithToken,
 	signUp,
 	update,
-	changePassword
+	changePassword,
 };

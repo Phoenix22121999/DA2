@@ -1,4 +1,4 @@
-export type ActionPayload<T, K = any> = {
+export type ActionPayload<T = null, K = any> = {
 	payload?: T;
 	callback?: CallbackFunction<K>;
 };

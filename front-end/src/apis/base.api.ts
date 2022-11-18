@@ -41,6 +41,36 @@ export class BaseApi {
 			});
 	}
 
+	async abstractWithAuth<
+		ParametersType,
+		DataType,
+		ReponseType extends BaseReponseType<DataType>
+	>(
+		path: string,
+		token: string,
+		data: ParametersType,
+		method: METHOD_AXIOS_ITEMS = METHOD_AXIOS.GET
+	) {
+		const config = {
+			method,
+			headers: {
+				"Content-Type": "application/json;charset=UTF-8",
+				Authorization: `bearer ${token}`,
+			},
+			url: `${this.URL}${path}`,
+			data,
+			withCredentials: true,
+		};
+		return axios
+			.request<ReponseType>(config)
+			.then(function (response) {
+				return response.data;
+			})
+			.catch(function (err) {
+				throw new Error(err.message);
+			});
+	}
+
 	async methodWithFormData<
 		ParametersType extends { [key: string]: any },
 		DataType,
@@ -176,6 +206,19 @@ export class BaseApi {
 			BaseReponseType<DataType>
 		>(path, data, METHOD_AXIOS.POST);
 	}
+
+	async authPost<ParametersType extends { [key: string]: any }, DataType>(
+		path: string,
+		token: string,
+		data: ParametersType
+	) {
+		return this.abstractWithAuth<
+			ParametersType,
+			DataType,
+			BaseReponseType<DataType>
+		>(path, token, data, METHOD_AXIOS.POST);
+	}
+
 	async post<
 		ParametersType extends { [key: string]: any },
 		DataType,

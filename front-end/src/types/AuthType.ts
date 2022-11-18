@@ -28,6 +28,11 @@ export type SignInParameters = {
 	password: string;
 };
 
+export type ChangePasswordParameters = {
+	current_password: string;
+	new_password: string;
+};
+
 // export type User = {
 // 	id: number;
 // 	password: string;

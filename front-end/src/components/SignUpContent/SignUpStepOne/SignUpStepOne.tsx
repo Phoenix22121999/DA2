@@ -12,7 +12,7 @@ import {
 	nextSignUpStep,
 	selectSignUpData,
 	updateSignUp,
-} from "src/redux/slice/SignUp";
+} from "src/redux/slice/SignUpSlice";
 import { OptionalSignUpParameters } from "src/types/AuthType";
 import { USER_TYPE_OPTION } from "src/utils/contants";
 type Props = {};
