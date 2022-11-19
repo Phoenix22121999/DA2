@@ -18,6 +18,9 @@ import JobPostDetail from "./pages/JobPostDetail/JobPostDetail";
 import PostJob from "./components/PostJob/PostJob";
 import SignUp from "./pages/SignUp/SignUp";
 import SignIn from "./pages/SignIn/SignIn";
+import { pdfjs } from "react-pdf";
+import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import "react-pdf/dist/esm/Page/TextLayer.css";
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -93,6 +96,10 @@ const router = createBrowserRouter([
 	},
 ]);
 function App() {
+	pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
+	console.log(process.env.NODE_ENV);
+	console.log(process.env.REACT_APP_ENV);
+
 	return (
 		<RouterProvider router={router} />
 		// 	<AppLayout />

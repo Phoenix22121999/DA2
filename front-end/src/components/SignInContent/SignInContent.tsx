@@ -3,7 +3,7 @@ import React from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { useReduxDispatch } from "src/redux/redux-hook";
-import { signIn } from "src/redux/slice/User";
+import { signIn } from "src/redux/slice/UserSilce";
 import { COOKIES_NAME } from "src/utils/contants";
 import ButtonCommon from "../ButtonCommon/ButtonCommon";
 import InputCommon from "../InputCommon/InputCommon";
@@ -18,7 +18,7 @@ type SignUpForm = {
 const SignInContent = (props: Props) => {
 	const [form] = Form.useForm();
 	const dispatch = useReduxDispatch();
-	const [, setCookies] = useCookies([COOKIES_NAME.USER]);
+	const [, setCookies] = useCookies([COOKIES_NAME.ACCESS_TOKEN]);
 	const natigate = useNavigate();
 
 	const callback = (isSuccess: boolean, data: string | undefined) => {
@@ -27,7 +27,7 @@ const SignInContent = (props: Props) => {
 			if (remember) {
 				var expires = new Date();
 				expires.setDate(expires.getDate() + 3);
-				setCookies(COOKIES_NAME.USER, data, { expires });
+				setCookies(COOKIES_NAME.ACCESS_TOKEN, data, { expires });
 			}
 			message.success("Sign in success");
 			natigate("/");

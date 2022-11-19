@@ -1,0 +1,21 @@
+.show-cv-modal {
+	overflow: auto;
+	.cv-pdf-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.cv-pdf-button-gr {
+		flex-direction: column;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.buttonc {
+			display: flex;
+			button {
+				margin: 1rem;
+				min-width: 10rem;
+			}
+		}
+	}
+}

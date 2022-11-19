@@ -170,3 +170,93 @@ export type RecruitmentPostJobType = {
 	is_delete: boolean;
 	is_active: boolean;
 };
+
+/**
+ * Model cv
+ *
+ */
+export type CV = {
+	id: number;
+	file_name_hash: string;
+	file_name: string;
+	user_id: number;
+	extname: string | null;
+	create_date: Date;
+	create_user: string | null;
+	is_active: boolean;
+	is_delete: boolean;
+};
+
+/**
+ * Model administrative_regions
+ *
+ */
+export type AdministrativeRegions = {
+	id: number;
+	name: string;
+	name_en: string;
+	code_name_en: string | null;
+	code_name: string | null;
+};
+
+/**
+ * Model administrative_units
+ *
+ */
+export type AdministrativeUnits = {
+	id: number;
+	full_name: string | null;
+	full_name_en: string | null;
+	short_name: string;
+	short_name_en: string | null;
+	code_name: string;
+	code_name_en: string | null;
+};
+
+/**
+ * Model provinces
+ *
+ */
+export type Provinces = {
+	id: number;
+	code: string;
+	name: string;
+	name_en: string | null;
+	full_name: string;
+	full_name_en: string | null;
+	code_name: string | null;
+	administrative_unit_id: number | null;
+	adminstrative_region_id: number | null;
+};
+
+/**
+ * Model Districts
+ *
+ */
+export type Districts = {
+	id: number;
+	code: string;
+	name: string;
+	name_en: string | null;
+	full_name: string | null;
+	full_name_en: string | null;
+	code_name: string | null;
+	administrative_unit_id: number;
+	province_code: string;
+};
+
+/**
+ * Model wards
+ *
+ */
+export type Wards = {
+	id: number;
+	code: string;
+	name: string;
+	name_en: string | null;
+	full_name: string;
+	full_name_en: string | null;
+	code_name: string | null;
+	district_code: string;
+	administrative_unit_id: number;
+};

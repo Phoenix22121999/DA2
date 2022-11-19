@@ -10,7 +10,6 @@ export const CandidateDashboard = (props: Props) => {
 
 	const isAuth = useCheckUserAuth(2);
 	useEffect(() => {
-		console.log(isAuth);
 		if (!isAuth) {
 			navigate("/");
 		}

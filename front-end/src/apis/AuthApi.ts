@@ -15,6 +15,10 @@ export class AuthApi extends BaseApi {
 		return this.basePost<SignInParameters, AuthUser>("sign-in", data);
 	}
 
+	async signInWithToken(token: string) {
+		return this.authPost<{}, AuthUser>("sign-in-with-token", token, {});
+	}
+
 	async signUp(data: SignUpParameters) {
 		return this.basePost<SignUpParameters, AuthUser>("sign-up", data);
 	}

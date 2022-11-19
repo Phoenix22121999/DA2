@@ -12,7 +12,7 @@ import {
 	nextSignUpStep,
 	selectSignUpData,
 	updateSignUp,
-} from "src/redux/slice/SignUp";
+} from "src/redux/slice/SignUpSlice";
 import { OptionalSignUpParameters } from "src/types/AuthType";
 import { USER_TYPE_OPTION } from "src/utils/contants";
 type Props = {};
@@ -30,14 +30,7 @@ const SignUpStepOne = (props: Props) => {
 
 	const next = async () => {
 		const value: SignUpStepOneForm = await form.validateFields();
-		if (value.password !== value.confirmPassword) {
-			form.setFields([
-				{
-					name: "confirmPassword",
-					errors: ["password not match"],
-				},
-			]);
-		}
+
 		const payload: OptionalSignUpParameters = {
 			username: value.user_name,
 			password: value.password,

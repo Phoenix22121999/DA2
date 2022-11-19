@@ -12,9 +12,9 @@ import {
 	prevSignUpStep,
 	selectSignUpData,
 	updateSignUp,
-} from "src/redux/slice/SignUp";
+} from "src/redux/slice/SignUpSlice";
 import { OptionalSignUpParameters } from "src/types/AuthType";
-import { signUp } from "src/redux/slice/User";
+import { signUp } from "src/redux/slice/UserSilce";
 type Props = {};
 
 type SignInStepTwoForm = {

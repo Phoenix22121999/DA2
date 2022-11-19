@@ -1,7 +1,7 @@
 import { StepProps } from "antd";
 import React from "react";
 import { useReduxSelector } from "src/redux/redux-hook";
-import { selectSignUpCurentStep } from "src/redux/slice/SignUp";
+import { selectSignUpCurentStep } from "src/redux/slice/SignUpSlice";
 import StepsCommon from "../StepsCommon/StepsCommon";
 import SignUpStepOne from "./SignUpStepOne/SignUpStepOne";
 import SignUpStepTwo from "./SignUpStepTwo/SignUpStepTwo";

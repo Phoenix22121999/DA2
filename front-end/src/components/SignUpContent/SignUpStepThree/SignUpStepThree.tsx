@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./SignUpStepThree.scss";
 import LoadingCommon from "./../../LoadingCommon/LoadingCommon";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
@@ -8,7 +8,7 @@ import {
 	resetSignUp,
 	selectSignUpStatus,
 	setCurrentSignUpStep,
-} from "src/redux/slice/SignUp";
+} from "src/redux/slice/SignUpSlice";
 import { useNavigate } from "react-router-dom";
 type Props = {};
 

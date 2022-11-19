@@ -79,3 +79,11 @@
 	font-size: 12.8rem; /* 128px */
 	line-height: 1;
 }
+
+.button-form {
+	display: flex;
+	justify-content: flex-end;
+	button {
+		width: clamp(5rem, 50%, 10rem);
+	}
+}

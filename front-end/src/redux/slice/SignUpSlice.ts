@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { OptionalSignUpParameters, SignUpParameters } from "src/types/AuthType";
 import { RootState } from "../store";
-import { signUp } from "./User";
+import { signUp } from "./UserSilce";
 import { ActionPayload } from "src/types/UtilType";
-import api from "./../../apis/index.api";
+import api from "../../apis/index.api";
 import { BaseReponseType } from "src/types/ApiType";
 import { UserType } from "src/types/Type";
 

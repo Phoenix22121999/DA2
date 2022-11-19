@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { newPostReducer } from "./slice/NewPost";
-import { signUpReducer } from "./slice/SignUp";
-import { userReducer } from "./slice/User";
+import { cvReducer } from "./slice/CVSlide";
+import { newPostReducer } from "./slice/NewPostSlice";
+import { signUpReducer } from "./slice/SignUpSlice";
+import { userReducer } from "./slice/UserSilce";
 
 export const store = configureStore({
 	reducer: {
 		newPost: newPostReducer,
 		signUp: signUpReducer,
 		user: userReducer,
+		cv: cvReducer,
 	},
 });
 

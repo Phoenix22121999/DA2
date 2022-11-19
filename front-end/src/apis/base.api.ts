@@ -10,9 +10,10 @@ import axios from "axios";
 
 export class BaseApi {
 	URL: string;
-	constructor(pathUrl: string) {
-		this.URL = `${API_URL}/${pathUrl}`;
+	constructor(pathUrl: string, apiUrl: string = API_URL) {
+		this.URL = `${apiUrl}/${pathUrl}`;
 	}
+
 	async abstract<
 		ParametersType,
 		DataType,
@@ -41,6 +42,36 @@ export class BaseApi {
 			});
 	}
 
+	async abstractWithAuth<
+		ParametersType,
+		DataType,
+		ReponseType extends BaseReponseType<DataType>
+	>(
+		path: string,
+		token: string,
+		data: ParametersType,
+		method: METHOD_AXIOS_ITEMS = METHOD_AXIOS.GET
+	) {
+		const config = {
+			method,
+			headers: {
+				"Content-Type": "application/json;charset=UTF-8",
+				Authorization: `bearer ${token}`,
+			},
+			url: `${this.URL}${path}`,
+			data,
+			withCredentials: true,
+		};
+		return axios
+			.request<ReponseType>(config)
+			.then(function (response) {
+				return response.data;
+			})
+			.catch(function (err) {
+				throw new Error(err.message);
+			});
+	}
+
 	async methodWithFormData<
 		ParametersType extends { [key: string]: any },
 		DataType,
@@ -48,7 +79,7 @@ export class BaseApi {
 	>(
 		path: string,
 		data: ParametersType,
-		method = METHOD_AXIOS.GET,
+		method: METHOD_AXIOS_ITEMS = METHOD_AXIOS.GET,
 		contentType = CONTENT_TYPE.MULTIPART_FORM_DATA
 	) {
 		// eslint-disable-next-line no-undef
@@ -84,7 +115,7 @@ export class BaseApi {
 	>(
 		path: string,
 		data: ParametersType,
-		method = METHOD_AXIOS.GET,
+		method: METHOD_AXIOS_ITEMS = METHOD_AXIOS.GET,
 		contentType = CONTENT_TYPE.MULTIPART_FORM_DATA
 	) {
 		// eslint-disable-next-line no-undef
@@ -120,7 +151,7 @@ export class BaseApi {
 	>(
 		path: string,
 		data: ParametersType,
-		method = METHOD_AXIOS.GET,
+		method: METHOD_AXIOS_ITEMS = METHOD_AXIOS.GET,
 		contentType = CONTENT_TYPE.FORM_URLENCODED
 	) {
 		var bodyFormData = serializeForm(data);
@@ -155,6 +186,18 @@ export class BaseApi {
 		>(path, data, METHOD_AXIOS.GET);
 	}
 
+	async authGet<ParametersType extends { [key: string]: any }, DataType>(
+		path: string,
+		token: string,
+		data: ParametersType
+	) {
+		return this.abstractWithAuth<
+			ParametersType,
+			DataType,
+			BaseReponseType<DataType>
+		>(path, token, data, METHOD_AXIOS.GET);
+	}
+
 	async get<
 		ParametersType extends { [key: string]: any },
 		DataType,
@@ -176,6 +219,30 @@ export class BaseApi {
 			BaseReponseType<DataType>
 		>(path, data, METHOD_AXIOS.POST);
 	}
+
+	async formDataPost<ParametersType extends { [key: string]: any }, DataType>(
+		path: string,
+		data: ParametersType
+	) {
+		return this.methodWithFormData<
+			ParametersType,
+			DataType,
+			BaseReponseType<DataType>
+		>(path, data, METHOD_AXIOS.POST);
+	}
+
+	async authPost<ParametersType extends { [key: string]: any }, DataType>(
+		path: string,
+		token: string,
+		data: ParametersType
+	) {
+		return this.abstractWithAuth<
+			ParametersType,
+			DataType,
+			BaseReponseType<DataType>
+		>(path, token, data, METHOD_AXIOS.POST);
+	}
+
 	async post<
 		ParametersType extends { [key: string]: any },
 		DataType,
@@ -197,6 +264,18 @@ export class BaseApi {
 			data,
 			METHOD_AXIOS.PUT
 		);
+	}
+
+	async authPut<ParametersType extends { [key: string]: any }, DataType>(
+		path: string,
+		token: string,
+		data: ParametersType
+	) {
+		return this.abstractWithAuth<
+			ParametersType,
+			DataType,
+			BaseReponseType<DataType>
+		>(path, token, data, METHOD_AXIOS.PUT);
 	}
 	async delete<
 		ParametersType extends { [key: string]: any },

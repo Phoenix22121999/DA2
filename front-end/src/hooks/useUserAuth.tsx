@@ -1,5 +1,5 @@
 import { useReduxSelector } from "src/redux/redux-hook";
-import { selectUserData, selectUserToken } from "src/redux/slice/User";
+import { selectUserData, selectUserToken } from "src/redux/slice/UserSilce";
 
 export const useUserAuth = () => {
 	const accessToken = useReduxSelector(selectUserToken);

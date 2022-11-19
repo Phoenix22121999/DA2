@@ -1,6 +1,7 @@
 import { SelectOptionValue } from "src/components/SelectCommon/SelectCommon";
 
 export const API_URL = "http://localhost:4000/api";
+export const CDN_URL = "http://localhost:3002";
 export const METHOD_AXIOS = {
 	GET: "get",
 	POST: "post",

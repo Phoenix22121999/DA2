@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React, {
+	useEffect,
+	useRef,
+	useState,
+	useMemo,
+	useCallback,
+} from "react";
 import ButtonCommon from "../ButtonCommon/ButtonCommon";
 import { HeaderItem } from "./components/HeaderItem/HeaderItem";
 import "./Header.scss";
@@ -8,9 +14,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { COOKIES_NAME, ROUTE } from "src/utils/contants";
 import { useCookies } from "react-cookie";
 import { useReduxDispatch } from "src/redux/redux-hook";
-import { resetUser, updateUser } from "src/redux/slice/User";
+import { resetUser, signInWithToken } from "src/redux/slice/UserSilce";
 import { useUserAuth } from "src/hooks/useUserAuth";
-import { resetSignUp } from "src/redux/slice/SignUp";
+import { resetSignUp } from "src/redux/slice/SignUpSlice";
+import { CallbackFunction } from "src/types/UtilType";
 type HeaderProps = {};
 const HEADER_ITEM = [
 	{
@@ -27,9 +34,9 @@ const HEADER_ITEM = [
 export const AppHeader = (props: HeaderProps) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [isMenuOpen, setIsMenuOpen] = useState<Boolean>(false);
-	const [first, setFirst] = useState<boolean>(false);
-	const [cookies, , removeCookie] = useCookies([COOKIES_NAME.USER]);
-	const { isAuth, user } = useUserAuth();
+	const [first, setFirst] = useState(false);
+	const [cookies, , removeCookie] = useCookies([COOKIES_NAME.ACCESS_TOKEN]);
+	const { isAuth, user, accessToken } = useUserAuth();
 	const navidate = useNavigate();
 	const dispatch = useReduxDispatch();
 
@@ -57,20 +64,31 @@ export const AppHeader = (props: HeaderProps) => {
 		return HEADER_ITEM;
 	}, [user, isAuth]);
 
+	const callback: CallbackFunction<null> = useCallback(
+		(isSuccess) => {
+			if (!isSuccess) {
+				removeCookie(COOKIES_NAME.ACCESS_TOKEN);
+			}
+		},
+		[removeCookie]
+	);
 	useEffect(() => {
 		if (!first) {
+			if (cookies[COOKIES_NAME.ACCESS_TOKEN]) {
+				if (!accessToken) {
+					dispatch(signInWithToken({ callback }));
+				}
+			}
 			setFirst(true);
-			if (!cookies.user) return;
-			dispatch(updateUser(cookies.user));
 		}
-	}, [cookies, first, dispatch]);
+	}, [cookies, dispatch, accessToken, callback, first]);
 
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);
 	};
 
 	const signOut = () => {
-		removeCookie(COOKIES_NAME.USER);
+		removeCookie(COOKIES_NAME.ACCESS_TOKEN);
 		dispatch(resetUser());
 	};
 
