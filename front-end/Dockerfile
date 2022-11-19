@@ -10,9 +10,17 @@ RUN npm run build
 
 FROM nginx:alpine
 
-COPY --from=da2frontend /app/build /var/www/jobportaltdtu/html
+COPY --from=da2frontend /app/build /usr/share/nginx/html
 COPY --from=da2frontend /app/nginx/default.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
+
+WORKDIR /usr/share/nginx/html
+
+RUN rm -rf ./*
+# Copy static assets from builder stage
+COPY --from=build /app/build .
+# Containers run nginx with global directives and daemon off
+
+ENV PORT=3000
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
 
