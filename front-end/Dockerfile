@@ -19,6 +19,7 @@ WORKDIR /usr/share/nginx/html
 
 # Copy static assets from builder stage
 COPY --from=da2frontend /app/build .
+COPY --from=da2frontend /app/nginx/default.conf /etc/nginx/conf.d/default.conf
 # Containers run nginx with global directives and daemon off
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
