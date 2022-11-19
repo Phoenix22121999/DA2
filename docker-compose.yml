@@ -10,9 +10,8 @@ services:
         - 4000:4000
     frontent:
       build :
-      context: .
-        # context : ./front-end
-        # dockerfile: ./Dockerfile
+        context : ./front-end
+        dockerfile: ./Dockerfile
       image : 'frontda2'
       ports :
         - 3000:80

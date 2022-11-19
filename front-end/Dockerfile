@@ -3,7 +3,12 @@ FROM node:14.17.3-alpine AS da2frontend
 WORKDIR /app
 COPY package*.json ./
 RUN yarn install
-COPY . .
+COPY . /app
+
+ENV CI=true
+ENV PORT=3000
+CMD [ "npm", "start" ]
+
 
 
 RUN yarn build
@@ -16,7 +21,6 @@ WORKDIR /usr/share/nginx/html
 COPY --from=da2frontend /app/build .
 # Containers run nginx with global directives and daemon off
 
-ENV PORT=3000
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
 
