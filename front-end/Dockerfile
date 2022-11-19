@@ -6,16 +6,12 @@ RUN yarn install
 COPY . .
 
 
-RUN npm run build
+RUN yarn build
 
 FROM nginx:alpine
 
-COPY --from=da2frontend /app/build /usr/share/nginx/html
-COPY --from=da2frontend /app/nginx/default.conf /etc/nginx/conf.d/default.conf
-
 WORKDIR /usr/share/nginx/html
 
-RUN rm -rf ./*
 # Copy static assets from builder stage
 COPY --from=da2frontend /app/build .
 # Containers run nginx with global directives and daemon off
