@@ -10,7 +10,7 @@ RUN npm run build
 
 FROM nginx:alpine
 
-COPY ./build /var/www/jobportaltdtu/html
+COPY --from=da2frontend /app/build /var/www/jobportaltdtu/html
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
