@@ -81,6 +81,22 @@
 			}
 		}
 	}
+	&.button-info {
+		background-color: v.$info-background;
+		&:hover {
+			color: v.$info-background;
+			background-color: rgba($color: v.$info-background, $alpha: 0.3);
+		}
+		&.button-ghost {
+			background-color: transparent;
+			border-color: v.$info-background;
+			color: v.$info-background;
+			&:hover {
+				color: v.$primary-color;
+				background-color: v.$info-background;
+			}
+		}
+	}
 	&.button-warning {
 		background-color: v.$warning-background;
 		color: v.$black-blue;

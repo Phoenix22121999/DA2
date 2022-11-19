@@ -3,12 +3,15 @@ import React from "react";
 
 interface TableCommonProps<T> extends TableProps<T> {}
 
-const TableCommon = <T extends object>(props: TableCommonProps<T>) => {
+const TableCommon = <T extends object>({
+	children,
+	...props
+}: TableCommonProps<T>) => {
 	return (
 		<div className="table-common">
-			<Table {...props}></Table>
+			<Table {...props}>{children}</Table>
 		</div>
 	);
 };
-
+export const { Column: ColumnCommon, ColumnGroup } = Table;
 export default TableCommon;

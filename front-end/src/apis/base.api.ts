@@ -10,9 +10,10 @@ import axios from "axios";
 
 export class BaseApi {
 	URL: string;
-	constructor(pathUrl: string) {
-		this.URL = `${API_URL}/${pathUrl}`;
+	constructor(pathUrl: string, apiUrl: string = API_URL) {
+		this.URL = `${apiUrl}/${pathUrl}`;
 	}
+
 	async abstract<
 		ParametersType,
 		DataType,
@@ -78,7 +79,7 @@ export class BaseApi {
 	>(
 		path: string,
 		data: ParametersType,
-		method = METHOD_AXIOS.GET,
+		method: METHOD_AXIOS_ITEMS = METHOD_AXIOS.GET,
 		contentType = CONTENT_TYPE.MULTIPART_FORM_DATA
 	) {
 		// eslint-disable-next-line no-undef
@@ -114,7 +115,7 @@ export class BaseApi {
 	>(
 		path: string,
 		data: ParametersType,
-		method = METHOD_AXIOS.GET,
+		method: METHOD_AXIOS_ITEMS = METHOD_AXIOS.GET,
 		contentType = CONTENT_TYPE.MULTIPART_FORM_DATA
 	) {
 		// eslint-disable-next-line no-undef
@@ -150,7 +151,7 @@ export class BaseApi {
 	>(
 		path: string,
 		data: ParametersType,
-		method = METHOD_AXIOS.GET,
+		method: METHOD_AXIOS_ITEMS = METHOD_AXIOS.GET,
 		contentType = CONTENT_TYPE.FORM_URLENCODED
 	) {
 		var bodyFormData = serializeForm(data);
@@ -185,6 +186,18 @@ export class BaseApi {
 		>(path, data, METHOD_AXIOS.GET);
 	}
 
+	async authGet<ParametersType extends { [key: string]: any }, DataType>(
+		path: string,
+		token: string,
+		data: ParametersType
+	) {
+		return this.abstractWithAuth<
+			ParametersType,
+			DataType,
+			BaseReponseType<DataType>
+		>(path, token, data, METHOD_AXIOS.GET);
+	}
+
 	async get<
 		ParametersType extends { [key: string]: any },
 		DataType,
@@ -201,6 +214,17 @@ export class BaseApi {
 		data: ParametersType
 	) {
 		return this.abstract<
+			ParametersType,
+			DataType,
+			BaseReponseType<DataType>
+		>(path, data, METHOD_AXIOS.POST);
+	}
+
+	async formDataPost<ParametersType extends { [key: string]: any }, DataType>(
+		path: string,
+		data: ParametersType
+	) {
+		return this.methodWithFormData<
 			ParametersType,
 			DataType,
 			BaseReponseType<DataType>
@@ -240,6 +264,18 @@ export class BaseApi {
 			data,
 			METHOD_AXIOS.PUT
 		);
+	}
+
+	async authPut<ParametersType extends { [key: string]: any }, DataType>(
+		path: string,
+		token: string,
+		data: ParametersType
+	) {
+		return this.abstractWithAuth<
+			ParametersType,
+			DataType,
+			BaseReponseType<DataType>
+		>(path, token, data, METHOD_AXIOS.PUT);
 	}
 	async delete<
 		ParametersType extends { [key: string]: any },

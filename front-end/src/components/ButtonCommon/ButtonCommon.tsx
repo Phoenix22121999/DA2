@@ -3,7 +3,7 @@ import classNames from "classnames";
 import React from "react";
 import "./ButtonCommon.scss";
 interface ButtonCommonProps extends Omit<ButtonProps, "type" | "size"> {
-	children: React.ReactNode;
+	children?: React.ReactNode;
 	className?: string;
 	type?:
 		| "primary"
