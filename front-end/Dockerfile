@@ -17,7 +17,7 @@ WORKDIR /usr/share/nginx/html
 
 RUN rm -rf ./*
 # Copy static assets from builder stage
-COPY --from=build /app/build .
+COPY --from=da2frontend /app/build .
 # Containers run nginx with global directives and daemon off
 
 ENV PORT=3000
