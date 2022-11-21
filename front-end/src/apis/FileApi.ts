@@ -1,8 +1,9 @@
 import { BaseApi } from "./base.api";
 import { CDN_URL } from "src/utils/contants";
 import { FileTypeUploadReponese } from "src/types/UploadType";
+import { DownloadCVParameters } from "src/types/CVType";
 
-export class UploadFileApi extends BaseApi {
+export class FileApi extends BaseApi {
 	constructor() {
 		super("cdn/", CDN_URL);
 	}

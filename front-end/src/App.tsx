@@ -97,8 +97,6 @@ const router = createBrowserRouter([
 ]);
 function App() {
 	pdfjs.GlobalWorkerOptions.workerSrc = `/pdf.worker.js`;
-	console.log(process.env.NODE_ENV);
-	console.log(process.env.REACT_APP_ENV);
 
 	return (
 		<RouterProvider router={router} />

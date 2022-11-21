@@ -3,9 +3,11 @@ import { BaseApi } from "./base.api";
 import {
 	CreateCVParameters,
 	DeleteCVParameters,
+	DownloadCVParameters,
 	UpdateCVParameters,
 } from "src/types/CVType";
 import { CV } from "src/types/Type";
+import { AxiosResponse } from "axios";
 
 // user is admin
 export class CVApi extends BaseApi {
@@ -24,5 +26,13 @@ export class CVApi extends BaseApi {
 	}
 	async deleteCV(data: DeleteCVParameters, token: string) {
 		return this.authPost<DeleteCVParameters, CV>("delete", token, data);
+	}
+
+	async downloadCV(data: DownloadCVParameters, token: string) {
+		return this.authCustomResponsePost<DownloadCVParameters, any>(
+			"download",
+			token,
+			data
+		);
 	}
 }

@@ -3,13 +3,15 @@ import api from "src/apis/index.api";
 import {
 	CreateCVParameters,
 	DeleteCVParameters,
+	DownloadCVParameters,
 	UpdateCVParameters,
 } from "src/types/CVType";
 import { CV } from "src/types/Type";
 import { ActionPayload } from "src/types/UtilType";
 import { RootState } from "../store";
 import { selectUserToken } from "./UserSilce";
-
+import fileDownload from "js-file-download";
+import languageEncoding from "detect-file-encoding-and-language";
 export interface CVType {
 	cvName: string;
 	fileName: string;
@@ -77,6 +79,54 @@ export const deleteCV = createAsyncThunk(
 			action.callback && action.callback(true, null);
 		}
 		return response;
+		// The value we return becomes the `fulfilled` action payload
+	}
+);
+
+export const downloadCV = createAsyncThunk(
+	"cv/download",
+	async (action: ActionPayload<DownloadCVParameters>, { getState }) => {
+		try {
+			if (!action.payload) {
+				throw new Error("need payload");
+			}
+			const { ext, file_name } = action.payload;
+			const token = selectUserToken(getState() as RootState) || "";
+			const rawResponse = await api.cvApi.downloadCV(
+				action.payload,
+				token
+			);
+			languageEncoding(new Blob([rawResponse])).then((fileInfo) =>
+				console.log(fileInfo)
+			);
+			const blob = new Blob([rawResponse], { type: "application/pdf" });
+			const url = window.URL.createObjectURL(new Blob([rawResponse]));
+
+			// const reader = new FileReader();
+			// reader.readAsText(new Blob([rawResponse]));
+			// console.log(reader.result);
+
+			// console.log(url);
+			const link = document.createElement("a");
+			link.href = url;
+			link.setAttribute("download", `${file_name}.${ext}`);
+
+			// Append to html link element page
+			// document.body.appendChild(link);
+
+			// Start download
+			link.click();
+
+			// Clean up and remove the link
+			link.parentNode?.removeChild(link);
+
+			// fileDownload(blob, `${file_name}.${ext}`);
+			// const a = await blob.stream();
+			// console.log(blob);
+		} catch (err) {
+			console.log(err);
+			// return err;
+		}
 		// The value we return becomes the `fulfilled` action payload
 	}
 );

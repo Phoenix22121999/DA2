@@ -42,6 +42,32 @@ export class BaseApi {
 			});
 	}
 
+	async abstractWithAuthCustomReponse<ParametersType, ReponseType>(
+		path: string,
+		token: string,
+		data: ParametersType,
+		method: METHOD_AXIOS_ITEMS = METHOD_AXIOS.GET
+	) {
+		const config = {
+			method,
+			headers: {
+				"Content-Type": "application/json;charset=UTF-8",
+				Authorization: `bearer ${token}`,
+			},
+			url: `${this.URL}${path}`,
+			data,
+			withCredentials: true,
+		};
+		return axios
+			.request<ReponseType>(config)
+			.then(function (response) {
+				return response.data;
+			})
+			.catch(function (err) {
+				throw new Error(err.message);
+			});
+	}
+
 	async abstractWithAuth<
 		ParametersType,
 		DataType,
@@ -254,6 +280,19 @@ export class BaseApi {
 			METHOD_AXIOS.POST
 		);
 	}
+
+	async authCustomResponsePost<
+		ParametersType extends { [key: string]: any },
+		ReponseType
+	>(path: string, token: string, data: ParametersType) {
+		return this.abstractWithAuthCustomReponse<ParametersType, ReponseType>(
+			path,
+			token,
+			data,
+			METHOD_AXIOS.POST
+		);
+	}
+
 	async put<
 		ParametersType extends { [key: string]: any },
 		DataType,
