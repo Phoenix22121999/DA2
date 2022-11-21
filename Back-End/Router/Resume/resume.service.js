@@ -214,8 +214,7 @@ const deleteCV = async (req, res) => {
 
 const downloadCV = async (req, res) => {
 	try {
-		let { id_cv } = req.body;
-
+		let  id_cv = req.params.file_id;
 		let isExists = await prisma.cv.findFirst({
 			where: {
 				AND: [
@@ -238,13 +237,13 @@ const downloadCV = async (req, res) => {
 		let newFileName = encodeURIComponent(isExists.file_name);
 		res.setHeader(
 			"Content-Disposition",
-			"attachment;filename=" + isExists.file_name_hash
+			"attachment;filename=" + `${newFileName}${isExists.extname}`
 		);
 		res.setHeader("Content-Type", `application/pdf`);
 
 		let pathURL = `${process.env.CDN_URL}${isExists.file_name_hash}`;
 		http.get(pathURL, (stream) => {
-			stream.pipe(res);
+			stream.pipe(res);			
 		});
 	} catch (error) {
 		return res.json({
@@ -254,16 +253,6 @@ const downloadCV = async (req, res) => {
 		});
 	}
 };
-
-// let newFileName =encodeURIComponent(nameConvert);
-
-// res.setHeader('Content-Disposition',  'attachment;filename='+ newFileName);
-// res.setHeader('Content-Type', `${file_mime}`);
-
-// let pathURL = `${config.domain_cdn}${file_url}`;
-// https.get(pathURL, (stream) => {
-//     stream.pipe(res);
-// });
 
 module.exports = {
 	getListResume,
