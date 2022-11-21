@@ -12,7 +12,7 @@ router.put("/", checkToken , ResumeService.updateCV);
 
 router.post("/delete" , checkToken ,ResumeService.deleteCV)
 
-router.get("/download/:file_id(\\d+)" , ResumeService.downloadCV)
+router.get("/download/:file_id(\\d+)", checkToken , ResumeService.downloadCV)
 
 
 module.exports = router;
