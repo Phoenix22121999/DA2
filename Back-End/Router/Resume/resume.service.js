@@ -238,13 +238,14 @@ const downloadCV = async (req, res) => {
 		let newFileName = encodeURIComponent(isExists.file_name);
 		res.setHeader(
 			"Content-Disposition",
-			"attachment;filename=" + isExists.file_name_hash
+			"attachment;filename=" + `${isExists.file_name_hash}`
 		);
 		res.setHeader("Content-Type", `application/pdf`);
 
 		let pathURL = `${process.env.CDN_URL}${isExists.file_name_hash}`;
 		http.get(pathURL, (stream) => {
 			stream.pipe(res);
+			
 		});
 	} catch (error) {
 		return res.json({
@@ -254,16 +255,6 @@ const downloadCV = async (req, res) => {
 		});
 	}
 };
-
-// let newFileName =encodeURIComponent(nameConvert);
-
-// res.setHeader('Content-Disposition',  'attachment;filename='+ newFileName);
-// res.setHeader('Content-Type', `${file_mime}`);
-
-// let pathURL = `${config.domain_cdn}${file_url}`;
-// https.get(pathURL, (stream) => {
-//     stream.pipe(res);
-// });
 
 module.exports = {
 	getListResume,
