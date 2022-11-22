@@ -1,6 +1,6 @@
 import { AuthApi } from "./AuthApi";
 import { CVApi } from "./CVApi";
-import { UploadFileApi } from "./UploadFileApi";
+import { FileApi } from "./FileApi";
 import { UserApi } from "./UserApi";
 import { UtilApi } from "./UtilApi";
 
@@ -9,7 +9,7 @@ class api {
 	static utilApi = new UtilApi();
 	static userApi = new UserApi();
 	static cvApi = new CVApi();
-	static uploadFileApi = new UploadFileApi();
+	static fileApi = new FileApi();
 }
 
 export default api;

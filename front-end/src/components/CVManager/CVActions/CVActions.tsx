@@ -2,10 +2,15 @@ import React from "react";
 import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import TooltipCommon from "src/components/TooltipCommon/TooltipCommon";
 import { CV } from "src/types/Type";
-import { ToolOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+	ToolOutlined,
+	DeleteOutlined,
+	EyeOutlined,
+	DownloadOutlined,
+} from "@ant-design/icons";
 import PopconfirmCommon from "./../../PopconfirmCommon/PopconfirmCommon";
 import { useReduxDispatch } from "src/redux/redux-hook";
-import { deleteCV } from "src/redux/slice/CVSlide";
+import { deleteCV, downloadCV } from "src/redux/slice/CVSlide";
 
 type Props = {
 	record: CV;
@@ -26,6 +31,20 @@ const CVActions = ({ handleRenameClick, record, handleViewPdf }: Props) => {
 
 	const onViewClick = () => {
 		handleViewPdf(record);
+	};
+
+	const handleDownload = () => {
+		console.log({ record });
+
+		dispatch(
+			downloadCV({
+				payload: {
+					id_cv: record.id,
+					file_name: record.file_name,
+					ext: record.file_name_hash.split(".")[1],
+				},
+			})
+		);
 	};
 
 	return (
@@ -57,6 +76,14 @@ const CVActions = ({ handleRenameClick, record, handleViewPdf }: Props) => {
 					icon={<EyeOutlined />}
 					type="success"
 					onClick={onViewClick}
+				/>
+			</TooltipCommon>
+			<TooltipCommon title="Download">
+				<ButtonCommon
+					size="small"
+					icon={<DownloadOutlined />}
+					type="danger"
+					onClick={handleDownload}
 				/>
 			</TooltipCommon>
 		</div>

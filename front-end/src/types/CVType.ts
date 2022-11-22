@@ -10,3 +10,9 @@ export type UpdateCVParameters = {
 export type DeleteCVParameters = {
 	id_cv: number;
 };
+
+export type DownloadCVParameters = {
+	id_cv: number;
+	file_name: string;
+	ext: string;
+};

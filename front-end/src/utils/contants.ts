@@ -1,7 +1,14 @@
 import { SelectOptionValue } from "src/components/SelectCommon/SelectCommon";
 
-export const API_URL = "http://localhost:4000/api";
-export const CDN_URL = "http://localhost:3002";
+export const API_URL =
+	process.env.NODE_ENV === "production"
+		? "http://159.223.54.199:3000/api"
+		: "http://localhost:4000/api";
+// export const CDN_URL = "http://159.223.54.199:3002";
+export const CDN_URL =
+	process.env.NODE_ENV === "production"
+		? "http://159.223.54.199:3002"
+		: "http://localhost:3002";
 export const METHOD_AXIOS = {
 	GET: "get",
 	POST: "post",

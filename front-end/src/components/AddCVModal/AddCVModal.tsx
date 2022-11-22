@@ -34,7 +34,7 @@ const customRequest: UploadProps["customRequest"] = async ({
 	onError,
 }) => {
 	try {
-		const response = await api.uploadFileApi.uploadFile({ files: file });
+		const response = await api.fileApi.uploadFile({ files: file });
 		if (response.code !== 200) {
 			onError && onError(new Error("Upload Error"), response);
 		}
