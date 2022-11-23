@@ -1,9 +1,11 @@
-const { PrismaClient, prisma } = require("@prisma/client");
+const { PrismaClient } = require("@prisma/client");
 const gateToken = require("../../Middleware/Middleware");
-const { use } = require("../Resume/resume.route");
+const moment =  require('moment-timezone')
 BigInt.prototype.toJSON = function () {
 	return this.toString();
 };
+
+const prisma = new PrismaClient();
 
 const getListPostOfUser = async (req , res) =>{
     try{
@@ -50,7 +52,12 @@ const getListPostOfUser = async (req , res) =>{
 }
 const getListPost = async (req, res) =>{
     try{
-        let resultList = await prisma.Recruitment_Post.findMany({});
+        let resultList = await prisma.Recruitment_Post.findMany({
+            where : {
+                is_active : true,
+                is_delete : false
+            }
+        });
         if(resultList && resultList.length < 0){
             return res.json({
                 code: 400,
@@ -96,11 +103,10 @@ const createPost = async (req,res)=>{
         data : {
             content : content,
             title : title,
-            user : {
-                recuiter_id : Number(user_id)
-            },
+            recuiter_id : Number(user_id),
             to_value : Number(to_value),
             from_value : Number(from_value),
+            create_date : new Date (moment(new Date()).format("YYYY-MM-DD")),
             is_active : is_active,
             is_delete : is_delete
         }
@@ -147,7 +153,8 @@ const update = async (req, res) =>{
                 {
                     id : Number(post_id),
                     is_active : is_active,
-                    is_delete : is_delete
+                    is_delete : is_delete,
+                    recuiter_id : Number(user_id)
                 }
             ]
         }
@@ -201,13 +208,15 @@ const deletePost = async (req,res)=> {
         let {
             post_id
         } = req.body
+        let { user_id = null, user_type_id = null } = req;
         let isExists = await prisma.Recruitment_Post.findFirst({
             where :{
                 AND : [
                     {
                         id : Number(post_id),
-                        is_active : is_active,
-                        is_delete : is_delete
+                        is_active : true,
+                        is_delete : false,
+                        recuiter_id : Number(user_id)
                     }
                 ]
             }

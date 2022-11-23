@@ -5,7 +5,7 @@ const { checkToken } = require("../../Middleware/Middleware");
 
 router.get("/" , recruiterPostService.getListPost);
 
-router.get("/of-user", checkToken , recruiterPostService.getListPostOfUser);
+router.get("/list-of-user", checkToken , recruiterPostService.getListPostOfUser);
 
 router.post("/", checkToken , recruiterPostService.createPost);
 

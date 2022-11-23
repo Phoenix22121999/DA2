@@ -176,13 +176,13 @@ model Recruitment_Post {
   recuiter_id BigInt
   user        User_Account @relation(fields: [recuiter_id], references: [id])
   to_value    BigInt       @default(0)
-  from_vale   BigInt       @default(0)
-  create_date DateTime     @default(now())
-  create_user String
+  from_value   BigInt?       @default(0)
+  create_date DateTime?     @default(now())
+  create_user String?
   update_date DateTime?
   update_user String?
   delete_date DateTime?
-  delete_user String
+  delete_user String?
   is_delete   Boolean      @default(false)
   is_active   Boolean      @default(true)
 }
