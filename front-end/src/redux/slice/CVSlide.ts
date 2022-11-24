@@ -11,7 +11,8 @@ import { ActionPayload } from "src/types/UtilType";
 import { RootState } from "../store";
 import { selectUserToken } from "./UserSilce";
 import fileDownload from "js-file-download";
-import languageEncoding from "detect-file-encoding-and-language";
+import axios from "axios";
+import { API_URL } from "src/utils/contants";
 export interface CVType {
 	cvName: string;
 	fileName: string;
@@ -96,33 +97,8 @@ export const downloadCV = createAsyncThunk(
 				action.payload,
 				token
 			);
-			languageEncoding(new Blob([rawResponse])).then((fileInfo) =>
-				console.log(fileInfo)
-			);
-			const blob = new Blob([rawResponse], { type: "application/pdf" });
-			const url = window.URL.createObjectURL(new Blob([rawResponse]));
 
-			// const reader = new FileReader();
-			// reader.readAsText(new Blob([rawResponse]));
-			// console.log(reader.result);
-
-			// console.log(url);
-			const link = document.createElement("a");
-			link.href = url;
-			link.setAttribute("download", `${file_name}.${ext}`);
-
-			// Append to html link element page
-			// document.body.appendChild(link);
-
-			// Start download
-			link.click();
-
-			// Clean up and remove the link
-			link.parentNode?.removeChild(link);
-
-			// fileDownload(blob, `${file_name}.${ext}`);
-			// const a = await blob.stream();
-			// console.log(blob);
+			fileDownload(rawResponse, `${file_name}.${ext}`);
 		} catch (err) {
 			console.log(err);
 			// return err;

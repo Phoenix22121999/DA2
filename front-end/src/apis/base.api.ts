@@ -6,7 +6,7 @@ import {
 	METHOD_AXIOS_ITEMS,
 } from "../utils/contants";
 import { serializeForm } from "../utils/function";
-import axios from "axios";
+import axios, { ResponseType } from "axios";
 
 export class BaseApi {
 	URL: string;
@@ -46,10 +46,12 @@ export class BaseApi {
 		path: string,
 		token: string,
 		data: ParametersType,
-		method: METHOD_AXIOS_ITEMS = METHOD_AXIOS.GET
+		method: METHOD_AXIOS_ITEMS = METHOD_AXIOS.GET,
+		responseType: ResponseType = "blob"
 	) {
 		const config = {
 			method,
+			responseType,
 			headers: {
 				"Content-Type": "application/json;charset=UTF-8",
 				Authorization: `bearer ${token}`,
@@ -281,7 +283,7 @@ export class BaseApi {
 		);
 	}
 
-	async authCustomResponsePost<
+	async authCustomResponseGet<
 		ParametersType extends { [key: string]: any },
 		ReponseType
 	>(path: string, token: string, data: ParametersType) {
@@ -289,7 +291,7 @@ export class BaseApi {
 			path,
 			token,
 			data,
-			METHOD_AXIOS.POST
+			METHOD_AXIOS.GET
 		);
 	}
 

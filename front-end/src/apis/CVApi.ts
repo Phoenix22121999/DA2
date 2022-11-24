@@ -29,10 +29,10 @@ export class CVApi extends BaseApi {
 	}
 
 	async downloadCV(data: DownloadCVParameters, token: string) {
-		return this.authCustomResponsePost<DownloadCVParameters, any>(
-			"download",
+		return this.authCustomResponseGet<{}, any>(
+			`download/${data.id_cv}`,
 			token,
-			data
+			{}
 		);
 	}
 }
