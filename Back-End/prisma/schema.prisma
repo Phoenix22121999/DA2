@@ -172,16 +172,17 @@ model Apply_Profile {
 model Recruitment_Post {
   id          BigInt       @id @default(autoincrement())
   content     String
+  title       String
   recuiter_id BigInt
   user        User_Account @relation(fields: [recuiter_id], references: [id])
   to_value    BigInt       @default(0)
-  from_vale   BigInt       @default(0)
-  create_date DateTime     @default(now())
-  create_user String
+  from_value   BigInt?       @default(0)
+  create_date DateTime?     @default(now())
+  create_user String?
   update_date DateTime?
   update_user String?
   delete_date DateTime?
-  delete_user String
+  delete_user String?
   is_delete   Boolean      @default(false)
   is_active   Boolean      @default(true)
 }
@@ -214,6 +215,14 @@ model Recruitment_Post_Job_Type {
   delete_user String?
   is_delete   Boolean   @default(false)
   is_active   Boolean   @default(true)
+}
+model Recruitment_Post_Image {
+  id BigInt @id @default(autoincrement())
+  post_id BigInt ?
+  user_id BigInt?
+  url_image String?
+  is_active Boolean?
+  is_delete Boolean
 }
 
 // để lưu hồ sơ ứng tuyển
