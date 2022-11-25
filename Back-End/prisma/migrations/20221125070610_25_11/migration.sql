@@ -1,0 +1,22 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- AlterTable
+ALTER TABLE [dbo].[Recruitment_Post] ALTER COLUMN [create_date] DATETIME2 NULL;
+ALTER TABLE [dbo].[Recruitment_Post] ALTER COLUMN [create_user] NVARCHAR(1000) NULL;
+ALTER TABLE [dbo].[Recruitment_Post] ALTER COLUMN [delete_user] NVARCHAR(1000) NULL;
+ALTER TABLE [dbo].[Recruitment_Post] ALTER COLUMN [from_value] BIGINT NULL;
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH
