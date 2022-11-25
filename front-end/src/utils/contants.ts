@@ -43,7 +43,8 @@ export const ROUTE = {
 	RECRUITER_JOB_MANAGER: "/recruiter/job-manager",
 	RECRUITER_ALL_APPLICANTS: "/recruiter/all-applicants",
 	RECRUITER_CHANGE_PASSWORD: "/recruiter/change-password",
-	RECRUITER_POST_NEW_JOB: "/recruiter/post-new-job",
+	RECRUITER_POST_NEW_JOB: "/recruiter/job-manager/post-new-job",
+	RECRUITER_EDIT_JOB: "/recruiter/job-manager/edit-job",
 } as const;
 
 type ROUTE_KEY = keyof typeof ROUTE;

@@ -8,6 +8,7 @@ import {
 	FileOutlined,
 	KeyOutlined,
 	UsergroupAddOutlined,
+	PlusCircleOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "src/utils/contants";
@@ -21,9 +22,14 @@ const ITEMS: DashboardSidebarItemProps[] = [
 	},
 	{
 		icon: <FileOutlined />,
-		title: "Job Manager",
+		title: "Post Manager",
 		path: "job-manager",
 	},
+	// {
+	// 	icon: <PlusCircleOutlined />,
+	// 	title: "New Post",
+	// 	path: ROUTE.RECRUITER_POST_NEW_JOB,
+	// },
 	{
 		icon: <UsergroupAddOutlined />,
 		title: "All Applicants",
@@ -33,11 +39,6 @@ const ITEMS: DashboardSidebarItemProps[] = [
 		icon: <KeyOutlined />,
 		title: "Change Password",
 		path: ROUTE.RECRUITER_CHANGE_PASSWORD,
-	},
-	{
-		icon: <KeyOutlined />,
-		title: "ss",
-		path: ROUTE.RECRUITER_POST_NEW_JOB,
 	},
 ];
 

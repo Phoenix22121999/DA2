@@ -1,41 +1,39 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "src/apis/index.api";
 import {
-	CreateCVParameters,
-	DeleteCVParameters,
-	DownloadCVParameters,
-	UpdateCVParameters,
-} from "src/types/CVType";
-import { CV } from "src/types/Type";
+	CreatePostParameters,
+	DeletePostParameters,
+	UpdatePostParameters,
+} from "src/types/PostType";
+import { RecruitmentPost } from "src/types/Type";
 import { ActionPayload } from "src/types/UtilType";
 import { RootState } from "../store";
 import { selectUserToken } from "./UserSilce";
-import fileDownload from "js-file-download";
-export interface CVType {
-	cvName: string;
+export interface PostType {
+	postName: string;
 	fileName: string;
 }
 
-export interface CVState {
-	data: CV[];
+export interface PostState {
+	data: RecruitmentPost[];
 	currentStep: number;
 	status: "idle" | "loading" | "failed";
 }
 
-const initialState: CVState = {
+const initialState: PostState = {
 	data: [],
 	currentStep: 0,
 	status: "idle",
 };
 
-export const createCV = createAsyncThunk(
-	"cv/create",
-	async (action: ActionPayload<CreateCVParameters>, { getState }) => {
+export const createPost = createAsyncThunk(
+	"post/create",
+	async (action: ActionPayload<CreatePostParameters>, { getState }) => {
 		if (!action.payload) {
 			throw new Error("need payload");
 		}
 		const token = selectUserToken(getState() as RootState) || "";
-		const response = await api.cvApi.createCV(action.payload, token);
+		const response = await api.postApi.createPost(action.payload, token);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, null);
 		} else {
@@ -46,14 +44,14 @@ export const createCV = createAsyncThunk(
 	}
 );
 
-export const updateCV = createAsyncThunk(
-	"cv/update",
-	async (action: ActionPayload<UpdateCVParameters>, { getState }) => {
+export const updatePost = createAsyncThunk(
+	"post/update",
+	async (action: ActionPayload<UpdatePostParameters>, { getState }) => {
 		if (!action.payload) {
 			throw new Error("need payload");
 		}
 		const token = selectUserToken(getState() as RootState) || "";
-		const response = await api.cvApi.updateCV(action.payload, token);
+		const response = await api.postApi.updatePost(action.payload, token);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, null);
 		} else {
@@ -64,14 +62,14 @@ export const updateCV = createAsyncThunk(
 	}
 );
 
-export const deleteCV = createAsyncThunk(
-	"cv/delete",
-	async (action: ActionPayload<DeleteCVParameters>, { getState }) => {
+export const deletePost = createAsyncThunk(
+	"post/delete",
+	async (action: ActionPayload<DeletePostParameters>, { getState }) => {
 		if (!action.payload) {
 			throw new Error("need payload");
 		}
 		const token = selectUserToken(getState() as RootState) || "";
-		const response = await api.cvApi.deleteCV(action.payload, token);
+		const response = await api.postApi.deletePost(action.payload, token);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, null);
 		} else {
@@ -82,34 +80,25 @@ export const deleteCV = createAsyncThunk(
 	}
 );
 
-export const downloadCV = createAsyncThunk(
-	"cv/download",
-	async (action: ActionPayload<DownloadCVParameters>, { getState }) => {
-		try {
-			if (!action.payload) {
-				throw new Error("need payload");
-			}
-			const { ext, file_name } = action.payload;
-			const token = selectUserToken(getState() as RootState) || "";
-			const rawResponse = await api.cvApi.downloadCV(
-				action.payload,
-				token
-			);
-
-			fileDownload(rawResponse, `${file_name}.${ext}`);
-		} catch (err) {
-			console.log(err);
-			// return err;
+export const getListPost = createAsyncThunk(
+	"post/get-list",
+	async (action: ActionPayload, { getState }) => {
+		const response = await api.postApi.getListPost();
+		if (response.code !== 200) {
+			action.callback && action.callback(false, null);
+		} else {
+			action.callback && action.callback(true, null);
 		}
+		return response;
 		// The value we return becomes the `fulfilled` action payload
 	}
 );
 
-export const getListCV = createAsyncThunk(
-	"cv/get-list",
+export const getListPostByUser = createAsyncThunk(
+	"post/get-list-by-user",
 	async (action: ActionPayload, { getState }) => {
 		const token = selectUserToken(getState() as RootState) || "";
-		const response = await api.cvApi.getList(token);
+		const response = await api.postApi.getListPostByUser(token);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, null);
 		} else {
@@ -120,42 +109,45 @@ export const getListCV = createAsyncThunk(
 	}
 );
 
-export const cvSlice = createSlice({
-	name: "cv",
+export const PostSlice = createSlice({
+	name: "post",
 	initialState,
 	reducers: {
 		// Use the PayloadAction type to declare the contents of `action.payload`
 	},
 	extraReducers: (buider) => {
 		buider
-			.addCase(createCV.fulfilled, (state, action) => {
+			.addCase(createPost.fulfilled, (state, action) => {
 				if (action.payload.data) {
 					state.data = [...state.data, action.payload.data];
 				}
 			})
-			.addCase(updateCV.fulfilled, (state, { payload }) => {
+			.addCase(updatePost.fulfilled, (state, { payload }) => {
 				if (payload.data) {
-					state.data = state.data.map((cv) => {
-						if (cv.id === payload.data?.id) return payload.data;
-						else return cv;
+					state.data = state.data.map((Post) => {
+						if (Post.id === payload.data?.id) return payload.data;
+						else return Post;
 					});
 				}
 			})
-			.addCase(deleteCV.fulfilled, (state, { payload }) => {
+			.addCase(deletePost.fulfilled, (state, { payload }) => {
 				if (payload.data) {
-					state.data = state.data.filter((cv) => {
-						if (cv.id === payload.data?.id) return false;
+					state.data = state.data.filter((Post) => {
+						if (Post.id === payload.data?.id) return false;
 						else return true;
 					});
 				}
 			})
-			.addCase(getListCV.fulfilled, (state, action) => {
+			.addCase(getListPost.fulfilled, (state, action) => {
+				state.data = action.payload.data!;
+			})
+			.addCase(getListPostByUser.fulfilled, (state, action) => {
 				state.data = action.payload.data!;
 			});
 	},
 });
 
-// export const {} = cvSlice.actions;
-export const selectCVList = (state: RootState) => state.cv.data;
+// export const {} = PostSlice.actions;
+export const selectPostList = (state: RootState) => state.post.data;
 
-export const cvReducer = cvSlice.reducer;
+export const postReducer = PostSlice.reducer;

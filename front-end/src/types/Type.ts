@@ -27,7 +27,7 @@ export type UserAccount = {
 	is_active: boolean;
 	is_delete: boolean;
 	create_date: Date;
-	user_type_id: string | number | null;
+	user_type_id: number;
 	first_name: string | null;
 	last_name: string | null;
 	full_name: string | null;
@@ -120,15 +120,16 @@ export type ApplyProfile = {
 export type RecruitmentPost = {
 	id: number;
 	content: string;
+	title: string;
 	recuiter_id: number;
 	to_value: number;
-	from_vale: number;
-	create_date: Date;
-	create_user: string;
+	from_value: number | null;
+	create_date: Date | null;
+	create_user: string | null;
 	update_date: Date | null;
 	update_user: string | null;
 	delete_date: Date | null;
-	delete_user: string;
+	delete_user: string | null;
 	is_delete: boolean;
 	is_active: boolean;
 };
@@ -169,6 +170,19 @@ export type RecruitmentPostJobType = {
 	delete_user: string | null;
 	is_delete: boolean;
 	is_active: boolean;
+};
+
+/**
+ * Model Recruitment_Post_Image
+ *
+ */
+export type RecruitmentPostImage = {
+	id: number;
+	post_id: number | null;
+	user_id: number | null;
+	url_image: string | null;
+	is_active: boolean | null;
+	is_delete: boolean;
 };
 
 /**
@@ -230,7 +244,7 @@ export type Provinces = {
 };
 
 /**
- * Model Districts
+ * Model districts
  *
  */
 export type Districts = {

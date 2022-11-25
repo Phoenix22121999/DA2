@@ -12,6 +12,7 @@ import {
 import TagCommon from "src/components/TagCommon/TagCommon";
 
 export type SearchListItemProps = {
+	id: number;
 	logo: string;
 	major: string;
 	title: string;

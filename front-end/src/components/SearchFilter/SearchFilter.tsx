@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SearchKeyWord from "./SearchKeyWord/SearchKeyWord";
 import "./SearchFilter.scss";
 import SearchLocation from "./SearchLocation/SearchLocation";
@@ -12,6 +12,8 @@ type Props = {
 };
 
 const SearchFilter = ({ isOpen }: Props) => {
+	useEffect(() => {}, []);
+
 	return (
 		<div
 			className={classNames("search-filter", {

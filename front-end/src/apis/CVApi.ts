@@ -7,7 +7,6 @@ import {
 	UpdateCVParameters,
 } from "src/types/CVType";
 import { CV } from "src/types/Type";
-import { AxiosResponse } from "axios";
 
 // user is admin
 export class CVApi extends BaseApi {

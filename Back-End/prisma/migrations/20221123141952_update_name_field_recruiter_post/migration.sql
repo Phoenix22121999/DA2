@@ -7,7 +7,7 @@
 BEGIN TRY
 
 BEGIN TRAN;
-
+ALTER TABLE [dbo].[Recruitment_Post] DROP CONSTRAINT [Recruitment_Post_from_vale_df];
 -- AlterTable
 ALTER TABLE [dbo].[Recruitment_Post] DROP COLUMN [from_vale];
 ALTER TABLE [dbo].[Recruitment_Post] ADD [from_value] BIGINT NOT NULL CONSTRAINT [Recruitment_Post_from_value_df] DEFAULT 0;

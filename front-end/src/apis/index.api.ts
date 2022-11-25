@@ -1,6 +1,7 @@
 import { AuthApi } from "./AuthApi";
 import { CVApi } from "./CVApi";
 import { FileApi } from "./FileApi";
+import { PostApi } from "./PostApi";
 import { UserApi } from "./UserApi";
 import { UtilApi } from "./UtilApi";
 
@@ -10,6 +11,7 @@ class api {
 	static userApi = new UserApi();
 	static cvApi = new CVApi();
 	static fileApi = new FileApi();
+	static postApi = new PostApi();
 }
 
 export default api;

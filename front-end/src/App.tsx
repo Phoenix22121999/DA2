@@ -75,7 +75,7 @@ const router = createBrowserRouter([
 						element: <RecruiterProfile />,
 					},
 					{
-						path: "post-new-job",
+						path: "job-manager/post-new-job",
 						element: <PostJob />,
 					},
 					{
