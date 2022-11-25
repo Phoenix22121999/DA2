@@ -51,18 +51,39 @@ const getListPostOfUser = async (req , res) =>{
     }
 }
 const getListPost = async (req, res) =>{
+    let {
+            key_word  = '',
+            item_per_page = 10,
+            page = 1,
+            from_value = 0,
+            to_value = 0
+        } = req.query;
     try{
         let resultList = await prisma.Recruitment_Post.findMany({
             where : {
-                is_active : true,
-                is_delete : false
-            }
+                AND : [{
+                    is_active : true,
+                    is_delete : false,
+                    OR : [
+                        {
+                            title : {
+                                contains: `${key_word}`,
+                                // mode : 'insensitive'
+                            },
+                            // from_value : from_value <
+                        }
+                    ]
+                }]
+            },
+            take : Number(item_per_page),
+            skip : Number(item_per_page * (page - 1))
+
         });
         if(resultList && resultList.length < 0){
             return res.json({
                 code: 400,
                 status_resposse: false,
-                message: error.message,
+                message: "Lấy danh sách thất bại",
             });
         }
         return res.json({
@@ -74,7 +95,8 @@ const getListPost = async (req, res) =>{
     }catch(error){
         return res.json({
             code : 400,
-            message : "Lấy danh sách bài viết thất bại"
+            status_resposse: false,
+            message : error.message
         })
     }
 }

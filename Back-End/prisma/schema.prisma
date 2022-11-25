@@ -171,7 +171,7 @@ model Apply_Profile {
 
 model Recruitment_Post {
   id          BigInt       @id @default(autoincrement())
-  content     String
+  content     String       @db.NVarChar(4000)
   title       String
   recuiter_id BigInt
   user        User_Account @relation(fields: [recuiter_id], references: [id])
