@@ -3,12 +3,15 @@
 .header-item {
 	padding: 0.6rem 1rem;
 	text-decoration: none;
-	display: inline-block;
 	font-weight: 400;
 	font-size: 12px;
 	text-transform: uppercase;
 	outline: none;
 	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
 	a {
 		color: v.$primary-color;
 	}

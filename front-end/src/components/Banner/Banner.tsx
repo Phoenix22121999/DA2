@@ -11,6 +11,22 @@ export default function Banner(props: BannerProps) {
 					<span className="primary-text">1500+</span> Jobs posted last
 					week
 				</div>
+				<div
+					style={{
+						width: "1rem",
+						color: "yellow",
+						height: "5px",
+						zIndex: 10,
+					}}
+				></div>
+				<div
+					style={{
+						width: "10px",
+						color: "red",
+						height: "5px",
+						zIndex: 10,
+					}}
+				></div>
 				<SearchBar />
 				<div className="sub-title">
 					<span className="primary-text">Search by tags:</span>{" "}

@@ -1,61 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./JobManager.scss";
 import TableCommon, { ColumnCommon } from "./../TableCommon/TableCommon";
-import { ColumnsType } from "antd/lib/table";
-import { Space } from "antd";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import { getListPostByUser, selectPostList } from "src/redux/slice/PostSlide";
 import ButtonCommon from "./../ButtonCommon/ButtonCommon";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "src/utils/contants";
+import JobActions from "./JobActions/JobActions";
+import { RecruitmentPost } from "src/types/Type";
 type Props = {};
-
-interface DataType {
-	key: string;
-	name: string;
-	description: string;
-	category: string;
-}
-
-const columns: ColumnsType<DataType> = [
-	{
-		title: "Name",
-		dataIndex: "name",
-		key: "name",
-		// render: (text) => <a>{text}</a>,
-	},
-	{
-		title: "Description",
-		dataIndex: "description",
-		key: "description",
-	},
-	{
-		title: "Category",
-		dataIndex: "category",
-		key: "category",
-	},
-	{
-		title: "Action",
-		key: "action",
-		width: 300,
-		render: (_, record) => (
-			<Space size="middle">
-				<div>Edit</div>
-				<div>Delete</div>
-			</Space>
-		),
-	},
-];
 
 const JobManager = (props: Props) => {
 	const dispatch = useReduxDispatch();
 	const postList = useReduxSelector(selectPostList);
 	const navigate = useNavigate();
+	const [first, setFirst] = useState(true);
 	useEffect(() => {
-		if (!postList) {
-			dispatch(getListPostByUser({}));
-		}
-	}, [dispatch, postList]);
+		dispatch(getListPostByUser({}));
+	}, [dispatch]);
 
 	const onAddClick = (e: React.MouseEvent<HTMLElement>) => {
 		e.preventDefault();
@@ -89,18 +51,12 @@ const JobManager = (props: Props) => {
 							);
 						}}
 					/>
-					<ColumnCommon<CV>
+					<ColumnCommon<RecruitmentPost>
 						title="Action"
 						key="action"
 						width={"30%"}
 						render={(_, record) => {
-							return (
-								<CVActions
-									record={record}
-									handleRenameClick={handleRenameClick}
-									handleViewPdf={handleViewPdf}
-								/>
-							);
+							return <JobActions record={record} />;
 						}}
 					/>
 				</TableCommon>

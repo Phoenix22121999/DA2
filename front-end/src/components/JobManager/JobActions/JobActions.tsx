@@ -1,7 +1,7 @@
 import React from "react";
 import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import TooltipCommon from "src/components/TooltipCommon/TooltipCommon";
-import { CV, RecruitmentPost } from "src/types/Type";
+import { RecruitmentPost } from "src/types/Type";
 import { ToolOutlined, DeleteOutlined } from "@ant-design/icons";
 import PopconfirmCommon from "../../PopconfirmCommon/PopconfirmCommon";
 

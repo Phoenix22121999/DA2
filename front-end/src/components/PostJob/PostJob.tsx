@@ -1,17 +1,15 @@
-import { message, StepProps } from "antd";
+import { StepProps } from "antd";
 import React from "react";
 import StepsCommon from "../StepsCommon/StepsCommon";
-import ButtonCommon from "./../ButtonCommon/ButtonCommon";
 import { useReduxSelector } from "src/redux/redux-hook";
 import {
-	nextStep,
-	prevStep,
 	selectNewPostCurentStep,
 	setCurrent,
 } from "src/redux/slice/NewPostSlice";
 import { useReduxDispatch } from "./../../redux/redux-hook";
 import StepOne from "./StepOne/StepOne";
 import StepTwo from "./StepTwo/StepTwo";
+import StepThree from "./StepThree/StepThree";
 type Props = {};
 const steps = [
 	{
@@ -24,7 +22,7 @@ const steps = [
 	},
 	{
 		title: "Last",
-		content: "Last-content",
+		content: <StepThree />,
 	},
 ];
 
@@ -36,14 +34,6 @@ const itemsa: StepProps[] = steps.map((item) => ({
 const PostJob = (props: Props) => {
 	const currentStep = useReduxSelector(selectNewPostCurentStep);
 	const dispatch = useReduxDispatch();
-
-	const next = () => {
-		dispatch(nextStep());
-	};
-
-	const prev = () => {
-		dispatch(prevStep());
-	};
 
 	const onChange = (value: number) => {
 		dispatch(setCurrent(value));
@@ -63,29 +53,6 @@ const PostJob = (props: Props) => {
 			/>
 
 			<div className="steps-content">{steps[currentStep].content}</div>
-			<div className="steps-action">
-				{currentStep < steps.length - 1 && (
-					<ButtonCommon type="primary" onClick={() => next()}>
-						Next
-					</ButtonCommon>
-				)}
-				{currentStep === steps.length - 1 && (
-					<ButtonCommon
-						type="primary"
-						onClick={() => message.success("Processing complete!")}
-					>
-						Done
-					</ButtonCommon>
-				)}
-				{currentStep > 0 && (
-					<ButtonCommon
-						style={{ margin: "0 8px" }}
-						onClick={() => prev()}
-					>
-						Previous
-					</ButtonCommon>
-				)}
-			</div>
 		</div>
 	);
 };

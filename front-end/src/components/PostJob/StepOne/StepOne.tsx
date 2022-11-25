@@ -8,6 +8,10 @@ import { RangeSliderCommon } from "src/components/SliderCommon/SliderCommon";
 import { sliderFormatter } from "src/utils/function";
 import { SliderMarks } from "antd/lib/slider";
 import "./StepOnes.scss";
+import InputCommon from "src/components/InputCommon/InputCommon";
+import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
+import { useReduxDispatch } from "src/redux/redux-hook";
+import { nextStep, updateNewPost } from "src/redux/slice/NewPostSlice";
 type Props = {};
 const test: SelectOptionValue[] = [
 	{
@@ -35,13 +39,46 @@ const marks: SliderMarks = {
 	40000000: sliderFormatter(40000000),
 	50000000: sliderFormatter(50000000),
 };
+type NewPostFormStepOne = {
+	title: string;
+	salary: [number, number];
+};
 
 const StepOne = (props: Props) => {
-	const [form] = Form.useForm();
+	const [form] = Form.useForm<NewPostFormStepOne>();
+	const dispatch = useReduxDispatch();
 
+	const next = async () => {
+		try {
+			const value = await form.validateFields();
+			dispatch(
+				updateNewPost({
+					title: value.title,
+					form_value: value.salary[0],
+					to_value: value.salary[1],
+				})
+			);
+			dispatch(nextStep());
+		} catch (error) {}
+
+		// dispatch(nextStep());
+	};
 	return (
 		<div className="step-one">
-			<Form form={form} layout="vertical">
+			<Form<NewPostFormStepOne>
+				form={form}
+				layout="vertical"
+				initialValues={{
+					salary: [0, 5000000],
+				}}
+			>
+				<Form.Item
+					label="Title"
+					name={"title"}
+					rules={[{ required: true, message: "Title is required" }]}
+				>
+					<InputCommon />
+				</Form.Item>
 				<Form.Item label="Category">
 					<SelectCommon data={test} />
 				</Form.Item>
@@ -49,18 +86,22 @@ const StepOne = (props: Props) => {
 					<SelectCommon data={GENDER_OPTION} />
 				</Form.Item>
 
-				<Form.Item name="slider" label="Salary">
+				<Form.Item name="salary" label="Salary">
 					<RangeSliderCommon
 						marks={marks}
 						min={0}
 						max={50000000}
 						range
-						defaultValue={[0, 5000000]}
 						step={500000}
 						tooltip={{ formatter: sliderFormatter }}
 					/>
 				</Form.Item>
 			</Form>
+			<div className="button-form">
+				<ButtonCommon type="primary" onClick={next} size="small">
+					Next
+				</ButtonCommon>
+			</div>
 		</div>
 	);
 };

@@ -1,14 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "src/apis/index.api";
-import {
-	CreatePostParameters,
-	DeletePostParameters,
-	UpdatePostParameters,
-} from "src/types/PostType";
+import { DeletePostParameters, UpdatePostParameters } from "src/types/PostType";
 import { RecruitmentPost } from "src/types/Type";
 import { ActionPayload } from "src/types/UtilType";
 import { RootState } from "../store";
 import { selectUserToken } from "./UserSilce";
+import { selectNewPostData } from "./NewPostSlice";
 export interface PostType {
 	postName: string;
 	fileName: string;
@@ -28,12 +25,21 @@ const initialState: PostState = {
 
 export const createPost = createAsyncThunk(
 	"post/create",
-	async (action: ActionPayload<CreatePostParameters>, { getState }) => {
-		if (!action.payload) {
-			throw new Error("need payload");
-		}
+	async (action: ActionPayload<null>, { getState }) => {
 		const token = selectUserToken(getState() as RootState) || "";
-		const response = await api.postApi.createPost(action.payload, token);
+		const value = selectNewPostData(getState() as RootState);
+		console.log(value);
+		const response = await api.postApi.createPost(
+			{
+				title: value.title,
+				content: value.content,
+				from_value: value.form_value,
+				to_value: value.to_value,
+				is_active: true,
+				is_delete: false,
+			},
+			token
+		);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, null);
 		} else {
