@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./JobManager.scss";
-import TableCommon from "./../TableCommon/TableCommon";
+import TableCommon, { ColumnCommon } from "./../TableCommon/TableCommon";
 import { ColumnsType } from "antd/lib/table";
 import { Space } from "antd";
+import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
+import { getListPostByUser, selectPostList } from "src/redux/slice/PostSlide";
+import ButtonCommon from "./../ButtonCommon/ButtonCommon";
+import { useNavigate } from "react-router-dom";
+import { ROUTE } from "src/utils/contants";
 type Props = {};
 
 interface DataType {
@@ -41,36 +46,64 @@ const columns: ColumnsType<DataType> = [
 		),
 	},
 ];
-const data: DataType[] = [
-	{
-		key: "1",
-		name: "Job 1",
-		description:
-			"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque, rem?",
-		category: "marketing",
-	},
-	{
-		key: "2",
-		name: "Job 2",
-		description:
-			"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque, rem?",
-		category: "marketing",
-	},
-	{
-		key: "3",
-		name: "Job 3",
-		description:
-			"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloremque, rem?",
-		category: "marketing",
-	},
-];
 
 const JobManager = (props: Props) => {
+	const dispatch = useReduxDispatch();
+	const postList = useReduxSelector(selectPostList);
+	const navigate = useNavigate();
+	useEffect(() => {
+		if (!postList) {
+			dispatch(getListPostByUser({}));
+		}
+	}, [dispatch, postList]);
+
+	const onAddClick = (e: React.MouseEvent<HTMLElement>) => {
+		e.preventDefault();
+		navigate(ROUTE.RECRUITER_POST_NEW_JOB);
+	};
+
 	return (
 		<div className="Job-manager">
-			<div className="dashboard-title">Job Manager</div>
+			<div className="dashboard-title">Post Manager</div>
+			<div>
+				<ButtonCommon size="small" onClick={onAddClick}>
+					Add new job
+				</ButtonCommon>
+			</div>
 			<div className="inner-content">
-				<TableCommon columns={columns} dataSource={data} />
+				<TableCommon dataSource={postList} rowKey="id">
+					<ColumnCommon
+						title="Post Title"
+						dataIndex="file_name"
+						key="file_name"
+					/>
+					<ColumnCommon
+						title="Create Date"
+						dataIndex="create_date"
+						key="create_date"
+						render={(value: string) => {
+							const event = new Date(value);
+
+							return (
+								<div>{event.toLocaleDateString("vi-VI")}</div>
+							);
+						}}
+					/>
+					<ColumnCommon<CV>
+						title="Action"
+						key="action"
+						width={"30%"}
+						render={(_, record) => {
+							return (
+								<CVActions
+									record={record}
+									handleRenameClick={handleRenameClick}
+									handleViewPdf={handleViewPdf}
+								/>
+							);
+						}}
+					/>
+				</TableCommon>
 			</div>
 		</div>
 	);
