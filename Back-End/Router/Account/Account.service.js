@@ -387,6 +387,45 @@ const changePassword = async (req, res) => {
 	}
 };
 
+const getDetailAccount = async (req , res) =>{
+	try{
+		let { user_id = null, user_type_id = null } = req;
+		if(!user_id){
+            return res.json({
+                code : 400,
+                message : "Người dùng không hợp lệ",
+                status_resposse: false,
+            })
+        }
+		const result = await prisma.user_Account.findFirst({
+			where: {
+				id: Number(user_id),
+			},
+		});
+		if(!result){
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Lấy thông tin tài khoản thất bại",
+			});
+		}
+		let obj = formatObj(result || {});
+		return res.json({
+			code: 200,
+			status_resposse: true,
+			message: "Lấy thông tin tài khoản",
+			data: obj,
+		});
+		
+	}catch(error){
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+}
+
 module.exports = {
 	getListAcccount,
 	signIn,
@@ -394,4 +433,5 @@ module.exports = {
 	signUp,
 	update,
 	changePassword,
+	getDetailAccount
 };

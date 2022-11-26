@@ -13,7 +13,7 @@ router.put("/", checkToken , jobType.updateJobType);
 router.post("/delete" , checkToken ,jobType.deleteJobType)
 
 
-
+module.exports = router;
 // getListJobType,
 // createJobType,
 // updateJobType,
