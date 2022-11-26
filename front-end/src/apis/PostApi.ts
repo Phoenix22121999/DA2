@@ -6,6 +6,8 @@ import {
 	DeletePostParameters,
 	UpdatePostParameters,
 } from "src/types/PostType";
+import { SearchParameter, SearchReponse } from "src/types/SearchType";
+import { searchParameterBuilder } from "src/utils/function";
 
 export class PostApi extends BaseApi {
 	constructor() {
@@ -19,11 +21,13 @@ export class PostApi extends BaseApi {
 			data
 		);
 	}
-	async getListPost() {
-		return this.baseGet<{}, RecruitmentPost[]>("", {});
+	async getListPost(searchParameter: SearchParameter) {
+		const params = searchParameterBuilder(searchParameter);
+
+		return this.baseGet<{}, SearchReponse>(`?${params}`, {});
 	}
 	async getListPostByUser(token: string) {
-		return this.authGet<{}, RecruitmentPost[]>("", token, {});
+		return this.authGet<{}, RecruitmentPost[]>("list-of-user", token, {});
 	}
 	async updatePost(data: UpdatePostParameters, token: string) {
 		return this.authPut<UpdatePostParameters, RecruitmentPost>(

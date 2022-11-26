@@ -16,8 +16,13 @@ const JobManager = (props: Props) => {
 	const navigate = useNavigate();
 	const [first, setFirst] = useState(true);
 	useEffect(() => {
-		dispatch(getListPostByUser({}));
-	}, [dispatch]);
+		if (postList) {
+			if (first && postList.length < 1) {
+				dispatch(getListPostByUser({}));
+				setFirst(false);
+			}
+		}
+	}, [dispatch, first, postList]);
 
 	const onAddClick = (e: React.MouseEvent<HTMLElement>) => {
 		e.preventDefault();
@@ -25,7 +30,7 @@ const JobManager = (props: Props) => {
 	};
 
 	return (
-		<div className="Job-manager">
+		<div className="job-manager">
 			<div className="dashboard-title">Post Manager</div>
 			<div>
 				<ButtonCommon size="small" onClick={onAddClick}>
@@ -36,8 +41,8 @@ const JobManager = (props: Props) => {
 				<TableCommon dataSource={postList} rowKey="id">
 					<ColumnCommon
 						title="Post Title"
-						dataIndex="file_name"
-						key="file_name"
+						dataIndex="title"
+						key="title"
 					/>
 					<ColumnCommon
 						title="Create Date"

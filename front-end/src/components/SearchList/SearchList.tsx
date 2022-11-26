@@ -1,127 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./SearchList.scss";
 import SearchListSort from "./SearchListSort/SearchListSort";
-import TEST_LOGO from "../../assets/images/logo.png";
-import SearchListItem, {
-	SearchListItemProps,
-} from "./SearchListItem/SearchListItem";
+import SearchListItem from "./SearchListItem/SearchListItem";
 import PaginationCommon from "../PaginationCommon/PaginationCommon";
+import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
+import {
+	searchPost,
+	selectSearchPostList,
+	selectSearchTotal,
+} from "src/redux/slice/SearchPostSlide";
 type Props = {};
 
-const FEATURES_JOB: SearchListItemProps[] = [
-	{
-		id: 1,
-		logo: TEST_LOGO,
-		major: "string",
-		title: "string",
-		company: "string",
-		description: "string",
-		time: "string",
-		address: "string",
-		salary: "string",
-	},
-	{
-		id: 2,
-		logo: TEST_LOGO,
-		major: "string",
-		title: "string",
-		company: "string",
-		description: "string",
-		time: "string",
-		address: "string",
-		salary: "string",
-	},
-	{
-		id: 3,
-		logo: TEST_LOGO,
-		major: "string",
-		title: "string",
-		company: "string",
-		description: "string",
-		time: "string",
-		address: "string",
-		salary: "string",
-	},
-	{
-		id: 4,
-		logo: TEST_LOGO,
-		major: "string",
-		title: "string",
-		company: "string",
-		description: "string",
-		time: "string",
-		address: "string",
-		salary: "string",
-	},
-	{
-		id: 5,
-		logo: TEST_LOGO,
-		major: "string",
-		title: "string",
-		company: "string",
-		description: "string",
-		time: "string",
-		address: "string",
-		salary: "string",
-	},
-	{
-		id: 6,
-		logo: TEST_LOGO,
-		major: "string",
-		title: "string",
-		company: "string",
-		description: "string",
-		time: "string",
-		address: "string",
-		salary: "string",
-	},
-	{
-		id: 7,
-		logo: TEST_LOGO,
-		major: "string",
-		title: "string",
-		company: "string",
-		description: "string",
-		time: "string",
-		address: "string",
-		salary: "string",
-	},
-	{
-		id: 8,
-		logo: TEST_LOGO,
-		major: "string",
-		title: "string",
-		company: "string",
-		description: "string",
-		time: "string",
-		address: "string",
-		salary: "string",
-	},
-	{
-		id: 9,
-		logo: TEST_LOGO,
-		major: "string",
-		title: "string",
-		company: "string",
-		description: "string",
-		time: "string",
-		address: "string",
-		salary: "string",
-	},
-	{
-		id: 10,
-		logo: TEST_LOGO,
-		major: "string",
-		title: "string",
-		company: "string",
-		description: "string",
-		time: "string",
-		address: "string",
-		salary: "string",
-	},
-];
-
 const SearchList = (props: Props) => {
+	const dispatch = useReduxDispatch();
+	const postList = useReduxSelector(selectSearchPostList);
+	const total = useReduxSelector(selectSearchTotal);
+	useEffect(() => {
+		dispatch(searchPost({}));
+	}, [dispatch]);
+
 	return (
 		<div className="search-list">
 			<div className="search-list-head">
@@ -134,17 +31,12 @@ const SearchList = (props: Props) => {
 				</div>
 			</div>
 			<div className="search-list-body">
-				{FEATURES_JOB.map((features_job) => {
-					return (
-						<SearchListItem
-							key={features_job.id}
-							{...features_job}
-						/>
-					);
+				{postList.map((post) => {
+					return <SearchListItem key={post.id} {...post} />;
 				})}
 			</div>
 			<div className="search-list-pagination">
-				<PaginationCommon total={500} showSizeChanger={false} />
+				<PaginationCommon total={total} showSizeChanger={false} />
 			</div>
 		</div>
 	);

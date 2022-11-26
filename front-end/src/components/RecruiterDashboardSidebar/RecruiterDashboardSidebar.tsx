@@ -8,7 +8,6 @@ import {
 	FileOutlined,
 	KeyOutlined,
 	UsergroupAddOutlined,
-	PlusCircleOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "src/utils/contants";
@@ -50,7 +49,7 @@ const RecruiterDashboardSidebar = (props: Props) => {
 	};
 
 	return (
-		<div className="recruiter-dashboard-sidebar-content">
+		<div className="recruiter-dashboard-sidebar-content sidebar-content-common">
 			{ITEMS.map((item) => (
 				<DashboardSidebarItem
 					key={item.path}

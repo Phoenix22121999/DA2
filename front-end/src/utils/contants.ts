@@ -84,3 +84,28 @@ export const COOKIES_NAME = {
 
 type COOKIES_NAME_KEY = keyof typeof COOKIES_NAME;
 export type COOKIES_NAME_ITEMS = typeof COOKIES_NAME[COOKIES_NAME_KEY];
+
+export const quillModules = {
+	toolbar: [
+		[{ header: "1" }, { header: "2" }, { font: [] }],
+		[{ size: [] }],
+		[{ header: [1, 2, 3, 4, 5, 6, false] }],
+		[{ color: [] }, { background: [] }],
+		[{ align: [] }],
+		["bold", "italic", "underline", "strike"], // toggled buttons
+		["blockquote", "code-block"],
+		[{ script: "sub" }, { script: "super" }],
+		[
+			{ list: "ordered" },
+			{ list: "bullet" },
+			{ indent: "-1" },
+			{ indent: "+1" },
+		],
+		["link", "image", "video"],
+		["clean"],
+	],
+	clipboard: {
+		// toggle to add extra line breaks when pasting HTML:
+		// matchVisual: false,
+	},
+};

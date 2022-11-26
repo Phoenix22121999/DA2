@@ -1,0 +1,11 @@
+.job-manager {
+	.job-action {
+		display: flex;
+		justify-content: flex-end;
+		.button-common {
+			margin: 0 1rem;
+			max-width: 5rem;
+			padding: 1rem;
+		}
+	}
+}

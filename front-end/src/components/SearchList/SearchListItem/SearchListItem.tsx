@@ -10,20 +10,17 @@ import {
 	BookOutlined,
 } from "@ant-design/icons";
 import TagCommon from "src/components/TagCommon/TagCommon";
+import { RecruitmentPostWithUser } from "src/types/Combine";
+import { inputNumberFormatter } from "./../../../utils/function";
 
-export type SearchListItemProps = {
-	id: number;
-	logo: string;
-	major: string;
-	title: string;
-	company: string;
-	description: string;
-	time: string;
-	address: string;
-	salary: string;
-};
+export interface SearchListItemProps extends RecruitmentPostWithUser {}
 
-const SearchListItem = (props: SearchListItemProps) => {
+const SearchListItem = ({
+	title,
+	from_value,
+	to_value,
+	user: { full_name, address },
+}: SearchListItemProps) => {
 	return (
 		<div className="search-list-item">
 			<div className="left">
@@ -34,8 +31,8 @@ const SearchListItem = (props: SearchListItemProps) => {
 			<div className="right">
 				<div className="top">
 					<div className="top-left">
-						<div className="title">Creative Art Designer</div>
-						<div className="company">Premium Labels Limited</div>
+						<div className="title">{title}</div>
+						<div className="company">{full_name}</div>
 					</div>
 					<div className="top-right">
 						<ButtonCommon size="small">Apply</ButtonCommon>
@@ -67,7 +64,7 @@ const SearchListItem = (props: SearchListItemProps) => {
 							size="medium"
 							icon={<EnvironmentOutlined />}
 						>
-							Ha Noi
+							{address}
 						</TagCommon>
 					</div>
 					<div className="salary">
@@ -76,7 +73,8 @@ const SearchListItem = (props: SearchListItemProps) => {
 							size="medium"
 							icon={<DollarOutlined />}
 						>
-							15k - 25k
+							{inputNumberFormatter(from_value || 0)} -{" "}
+							{inputNumberFormatter(to_value || 0)}
 						</TagCommon>
 					</div>
 				</div>

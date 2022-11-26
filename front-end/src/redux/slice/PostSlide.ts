@@ -28,12 +28,11 @@ export const createPost = createAsyncThunk(
 	async (action: ActionPayload<null>, { getState }) => {
 		const token = selectUserToken(getState() as RootState) || "";
 		const value = selectNewPostData(getState() as RootState);
-		console.log(value);
 		const response = await api.postApi.createPost(
 			{
 				title: value.title,
 				content: value.content,
-				from_value: value.form_value,
+				from_value: value.from_value,
 				to_value: value.to_value,
 				is_active: true,
 				is_delete: false,
@@ -86,24 +85,26 @@ export const deletePost = createAsyncThunk(
 	}
 );
 
-export const getListPost = createAsyncThunk(
-	"post/get-list",
-	async (action: ActionPayload, { getState }) => {
-		const response = await api.postApi.getListPost();
-		if (response.code !== 200) {
-			action.callback && action.callback(false, null);
-		} else {
-			action.callback && action.callback(true, null);
-		}
-		return response;
-		// The value we return becomes the `fulfilled` action payload
-	}
-);
+// export const getListPost = createAsyncThunk(
+// 	"post/get-list",
+// 	async (action: ActionPayload, { getState }) => {
+// 		const response = await api.postApi.getListPost();
+// 		if (response.code !== 200) {
+// 			action.callback && action.callback(false, null);
+// 		} else {
+// 			action.callback && action.callback(true, null);
+// 		}
+// 		return response;
+// 		// The value we return becomes the `fulfilled` action payload
+// 	}
+// );
 
 export const getListPostByUser = createAsyncThunk(
 	"post/get-list-by-user",
 	async (action: ActionPayload, { getState }) => {
 		const token = selectUserToken(getState() as RootState) || "";
+		console.log(token);
+
 		const response = await api.postApi.getListPostByUser(token);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, null);
@@ -144,9 +145,9 @@ export const PostSlice = createSlice({
 					});
 				}
 			})
-			.addCase(getListPost.fulfilled, (state, action) => {
-				state.data = action.payload.data!;
-			})
+			// .addCase(getListPost.fulfilled, (state, action) => {
+			// 	state.data = action.payload.data!;
+			// })
 			.addCase(getListPostByUser.fulfilled, (state, action) => {
 				state.data = action.payload.data!;
 			});

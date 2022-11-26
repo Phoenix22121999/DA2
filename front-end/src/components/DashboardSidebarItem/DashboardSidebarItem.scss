@@ -6,9 +6,9 @@
 	align-items: center;
 	@include v.border-radius-sm;
 	// background-color: ;
-	padding: 1rem 2rem;
+	padding: 0.8rem 1.2rem;
 	border: 2px transparent solid;
-	@include v.text-2xl;
+	@include v.text-lg;
 	color: v.$info-background;
 	font-weight: bold;
 	cursor: pointer;
@@ -17,6 +17,7 @@
 	transition: all 0.5s;
 	.dashboard-sidebar-item-icon {
 		margin-right: 2rem;
+		@include v.text-3xl;
 	}
 	.dashboard-sidebar-item-title {
 	}

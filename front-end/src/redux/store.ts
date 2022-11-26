@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { cvReducer } from "./slice/CVSlide";
+import { editPostReducer } from "./slice/EditPostSlice";
 import { newPostReducer } from "./slice/NewPostSlice";
 import { postReducer } from "./slice/PostSlide";
 import { searchPostReducer } from "./slice/SearchPostSlide";
@@ -14,6 +15,7 @@ export const store = configureStore({
 		cv: cvReducer,
 		post: postReducer,
 		searchPost: searchPostReducer,
+		editPost: editPostReducer,
 	},
 });
 

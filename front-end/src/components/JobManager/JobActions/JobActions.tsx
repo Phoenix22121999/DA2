@@ -4,24 +4,31 @@ import TooltipCommon from "src/components/TooltipCommon/TooltipCommon";
 import { RecruitmentPost } from "src/types/Type";
 import { ToolOutlined, DeleteOutlined } from "@ant-design/icons";
 import PopconfirmCommon from "../../PopconfirmCommon/PopconfirmCommon";
+import { updateEditPost } from "src/redux/slice/EditPostSlice";
+import { useReduxDispatch } from "src/redux/redux-hook";
+import { useNavigate } from "react-router-dom";
+import { ROUTE } from "src/utils/contants";
+import { deletePost } from "src/redux/slice/PostSlide";
 
 type Props = {
 	record: RecruitmentPost;
 };
 
 const JobActions = ({ record }: Props) => {
-	// const dispatch = useReduxDispatch();
+	const dispatch = useReduxDispatch();
+	const navigate = useNavigate();
 
 	const onDeleteConfirm = () => {
-		// dispatch(deleteCV({ payload: { id_cv: record.id } }));
+		dispatch(deletePost({ payload: { post_id: record.id } }));
 	};
 
 	const onEditClick = () => {
-		console.log(record);
+		dispatch(updateEditPost(record));
+		navigate(ROUTE.RECRUITER_EDIT_JOB);
 	};
 
 	return (
-		<div className="cv-action">
+		<div className="job-action">
 			<TooltipCommon title="Edit">
 				<ButtonCommon
 					size="small"

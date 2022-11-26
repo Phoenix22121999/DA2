@@ -32,14 +32,14 @@ const test: SelectOptionValue[] = [
 	},
 ];
 
-const marks: SliderMarks = {
+export const salaryMarks: SliderMarks = {
 	0: sliderFormatter(0),
 	10000000: sliderFormatter(10000000),
 	25000000: sliderFormatter(25000000),
 	40000000: sliderFormatter(40000000),
 	50000000: sliderFormatter(50000000),
 };
-type NewPostFormStepOne = {
+export type NewPostFormStepOne = {
 	title: string;
 	salary: [number, number];
 };
@@ -54,7 +54,7 @@ const StepOne = (props: Props) => {
 			dispatch(
 				updateNewPost({
 					title: value.title,
-					form_value: value.salary[0],
+					from_value: value.salary[0],
 					to_value: value.salary[1],
 				})
 			);
@@ -88,7 +88,7 @@ const StepOne = (props: Props) => {
 
 				<Form.Item name="salary" label="Salary">
 					<RangeSliderCommon
-						marks={marks}
+						marks={salaryMarks}
 						min={0}
 						max={50000000}
 						range

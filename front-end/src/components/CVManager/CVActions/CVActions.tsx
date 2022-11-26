@@ -34,8 +34,6 @@ const CVActions = ({ handleRenameClick, record, handleViewPdf }: Props) => {
 	};
 
 	const handleDownload = () => {
-		console.log({ record });
-
 		dispatch(
 			downloadCV({
 				payload: {

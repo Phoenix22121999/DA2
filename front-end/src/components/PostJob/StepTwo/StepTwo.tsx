@@ -12,32 +12,9 @@ import ButtonCommon from "./../../ButtonCommon/ButtonCommon";
 // import parse from "html-react-parser";
 import "./StepTwo.scss";
 import { createPost } from "./../../../redux/slice/PostSlide";
+import { quillModules } from "src/utils/contants";
 
 type Props = {};
-const modules = {
-	toolbar: [
-		[{ header: "1" }, { header: "2" }, { font: [] }],
-		[{ size: [] }],
-		[{ header: [1, 2, 3, 4, 5, 6, false] }],
-		[{ color: [] }, { background: [] }],
-		[{ align: [] }],
-		["bold", "italic", "underline", "strike"], // toggled buttons
-		["blockquote", "code-block"],
-		[{ script: "sub" }, { script: "super" }],
-		[
-			{ list: "ordered" },
-			{ list: "bullet" },
-			{ indent: "-1" },
-			{ indent: "+1" },
-		],
-		["link", "image", "video"],
-		["clean"],
-	],
-	clipboard: {
-		// toggle to add extra line breaks when pasting HTML:
-		// matchVisual: false,
-	},
-};
 
 const StepTwo = (props: Props) => {
 	// const [value, setValue] = useState("");
@@ -75,7 +52,7 @@ const StepTwo = (props: Props) => {
 			<div className="editor">
 				<ReactQuill
 					ref={ref}
-					modules={modules}
+					modules={quillModules}
 					theme="snow"
 					// value={value}
 					// onChange={setValue}

@@ -47,7 +47,7 @@ const CandidateDashboardSidebar = (props: Props) => {
 	};
 
 	return (
-		<div className="candidate-dashboard-sidebar-content">
+		<div className="candidate-dashboard-sidebar-content sidebar-content-common">
 			{ITEMS.map((item) => (
 				<DashboardSidebarItem
 					key={item.path}

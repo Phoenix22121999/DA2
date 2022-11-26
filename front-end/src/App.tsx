@@ -21,6 +21,7 @@ import SignIn from "./pages/SignIn/SignIn";
 import { pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
+import EditPost from "./components/EditPost/EditPost";
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
 					{
 						path: "job-manager/post-new-job",
 						element: <PostJob />,
+					},
+					{
+						path: "job-manager/edit-job",
+						element: <EditPost />,
 					},
 					{
 						path: "job-manager",

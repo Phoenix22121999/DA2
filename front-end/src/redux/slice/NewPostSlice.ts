@@ -5,13 +5,14 @@ import { createPost } from "./PostSlide";
 export interface NewPostDataType {
 	content?: string;
 	to_value?: number;
-	form_value?: number;
+	from_value?: number;
 	job_type_id?: number;
 	majors_id?: number;
 	title?: string;
 }
 
 export interface NewPostState {
+	editID: number | null;
 	data: Required<NewPostDataType>;
 	currentStep: number;
 	status: "idle" | "loading" | "failed";
@@ -22,10 +23,11 @@ const initialState: NewPostState = {
 		title: "",
 		content: "",
 		to_value: 0,
-		form_value: 0,
+		from_value: 0,
 		job_type_id: 1,
 		majors_id: 1,
 	},
+	editID: null,
 	currentStep: 0,
 	status: "idle",
 };
@@ -61,7 +63,7 @@ export const newPostSlice = createSlice({
 					title: "",
 					content: "",
 					to_value: 0,
-					form_value: 0,
+					from_value: 0,
 					job_type_id: 1,
 					majors_id: 1,
 				};
