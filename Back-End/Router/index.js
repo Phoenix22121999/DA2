@@ -8,6 +8,12 @@ const cv = require('./Resume/resume.route');
 
 const recruiterPost = require('./RecruiterPost/recruiterPost.route');
 
+const JobType = require('./JobType/JobType.route');
+
+const Major = require('./Major/Major.route');
+
+const Address = require('./Address/Address.route');
+
 const routers = [
     {
         prefix : '/account',
@@ -24,7 +30,20 @@ const routers = [
     {
         prefix : '/recruiter-post',
         router : recruiterPost
+    },
+    {
+        prefix : '/job-type',
+        router : JobType
+    },
+    {
+        prefix : '/majors',
+        router : Major
+    },
+    {
+        prefix : '/address',
+        router : Address
     }
+
 
 ]
 

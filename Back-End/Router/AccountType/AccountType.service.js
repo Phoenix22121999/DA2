@@ -26,7 +26,6 @@ const createAccountType = async (req, res) => {
 			res.json({ code: 1, message: mess, status_resposse: false });
 		}
 		const { user_type_name, is_active, is_delete } = req.body;
-
 		let isExists = await prisma.user_Type.findMany({
 			where: {
 				AND: [

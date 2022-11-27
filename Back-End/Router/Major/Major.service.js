@@ -1,51 +1,39 @@
 const { PrismaClient } = require("@prisma/client");
 const gateToken = require("../../Middleware/Middleware");
-const moment =  require('moment-timezone')
+const moment = require("moment-timezone");
 BigInt.prototype.toJSON = function () {
 	return this.toString();
 };
 
 const prisma = new PrismaClient();
 
-
-const getListJobType = async (req, res)=>{
+const getListMajor = async (req,res)=>{
     let {
         key_word  = '',
         item_per_page = 10,
         page = 1,
-        from_value = 0,
-        to_value = 0
     } = req.query
 
     try{
-        let resultList = await prisma.job_Type.findMany({
+        const resultListMajor = await prisma.majors.findMany({
             where : {
                 AND : [{
-                    is_delete : false,
                     is_active : true,
-                    OR : [
-                        {
-                            job_type_name : { contains: key_word },
-                        }
-                    ] 
+                    is_delete : false,
+                    OR : [{
+                        majors_name : { contains: key_word },
+                    }]
                 }]
             },
             take : Number(item_per_page),
             skip : Number(item_per_page * (page - 1))
         })
-        if(resultList && resultList.length < 0){
-            return res.json({
-                code: 400,
-                status_resposse: false,
-                message: "Lấy danh sách loại công việc thất bại",
-            });
-        }
         return res.json({
-			code: 200,
-			message: "Lấy danh sách thành công",
-			status_resposse: true,
-			data: resultList,
-		});
+            code : 200,
+            message : "Lấy danh sách thành công",
+            status_resposse : true,
+            data : resultListMajor
+        })
     }catch(error){
         return res.json({
             code : 400,
@@ -54,59 +42,57 @@ const getListJobType = async (req, res)=>{
         })
     }
 
-
 }
 
-const createJobType = async (req, res)=>{
+const createMajor = async (req, res)=>{
     let {
-        job_type_name = "",
+        majors_name = '',
     } = req.body
-
+    let { user_id = null, user_type_id = null } = req;
     try{
-        let { user_id = null, user_type_id = null } = req;
-        if(!user_id || user_type_id !=1 ){
+        if(!user_id){
             return res.json({
                 code : 400,
                 message : "Người dùng không hợp lệ",
                 status_resposse: false,
             })
         }
-        const result = await prisma.job_Type.create({
+        const result = await prisma.majors.create({
             data : {
-                job_type_name : job_type_name,
-                is_active : true,
-                is_delete : false,
-                create_date : new Date (moment(new Date()).format("YYYY-MM-DD")),
-                create_user : String(user_id)
+                majors_name : majors_name,
+                 is_active : true,
+                 is_delete : false,
+                 create_user : user_id,
+                 create_date : new Date (moment(new Date()).format("YYYY-MM-DD")),
             }
         })
         if(!result){
             return res.json({
                 code: 400,
                 status_resposse: false,
-                messsage: "Tạo loại công việc thất bại",
+                messsage: "Tạo ngành nghề thất bại",
             }); 
         }
         return res.json({
             code: 200,
-            message: "Tạo bài đăng thành công",
+            message: "Tạo ngành nghề thành công",
             status_resposse: true,
             data: result,
         });
+
     }catch(error){
         return res.json({
-			code: 400,
-			status_resposse: false,
-			message: error.message,
-		});
+            code : 400,
+            status_resposse: false,
+            message : error.message
+        })
     }
-
 }
 
-const updateJobType = async (req , res ) => {
-    let {
-        job_type_id,
-        job_type_name = "",
+const updateMajor = async (req, res)=>{
+    let{
+        majors_id,
+        majors_name
     } = req.body
     try{
         let { user_id = null, user_type_id = null } = req;
@@ -117,12 +103,12 @@ const updateJobType = async (req , res ) => {
                 status_resposse: false,
             })
         }
-        const result = await prisma.job_Type.update({
+        const result = await prisma.majors.update({
             where : {
-                id : Number(job_type_id)
+                id : Number(majors_id)
             },
             data : {
-                job_type_name : String(job_type_name),
+                majors_name : majors_name,
                 update_date : new Date (moment(new Date()).format("YYYY-MM-DD")),
                 update_user : user_id
             }
@@ -131,12 +117,12 @@ const updateJobType = async (req , res ) => {
             return res.json({
                 code: 400,
                 status_resposse: false,
-                messsage: "Cập nhật loại công việc thất bại",
-            });
+                messsage: "Cập nhật ngành nghề thất bại",
+            }); 
         }
         return res.json({
             code: 200,
-            message: "Cập nhật loại công việc thành công",
+            message: "cập nhật ngành nghề thành công",
             status_resposse: true,
             data: result,
         });
@@ -147,11 +133,12 @@ const updateJobType = async (req , res ) => {
 			message: error.message,
 		});
     }
+
 }
 
-const deleteJobType = async (req , res ) => {
-    let {
-        job_type_id,
+const deleteMajor = async (req, res)=>{
+    let{
+        majors_id,
     } = req.body
     try{
         let { user_id = null, user_type_id = null } = req;
@@ -162,27 +149,27 @@ const deleteJobType = async (req , res ) => {
                 status_resposse: false,
             })
         }
-        const result = await prisma.job_Type.update({
+        const result = await prisma.majors.update({
             where : {
-                id : Number(job_type_id)
+                id : Number(majors_id)
             },
             data : {
-                is_active : false,
-                is_delete : true,
                 delete_date : new Date (moment(new Date()).format("YYYY-MM-DD")),
                 delete_user : user_id,
+                is_active : false,
+                is_delete : true
             }
         })
         if(!result){
             return res.json({
                 code: 400,
                 status_resposse: false,
-                messsage: "xóa loại công việc thất bại",
-            });
+                messsage: "Xóa ngành nghề thất bại",
+            }); 
         }
         return res.json({
             code: 200,
-            message: "xóa loại công việc thành công",
+            message: "Xóa ngành nghề thành công",
             status_resposse: true,
             data: result,
         });
@@ -193,11 +180,14 @@ const deleteJobType = async (req , res ) => {
 			message: error.message,
 		});
     }
+
 }
 
+
+
 module.exports = {
-    getListJobType,
-    createJobType,
-    updateJobType,
-    deleteJobType
+    getListMajor,
+    createMajor,
+    updateMajor,
+    deleteMajor
 }

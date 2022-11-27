@@ -13,5 +13,10 @@ router.put("/", checkToken , recruiterPostService.update);
 
 router.post("/delete" , checkToken ,recruiterPostService.deletePost)
 
+router.get("/get-detail" ,recruiterPostService.getDetail)
+
+
+//getDetail
+
 
 module.exports = router;

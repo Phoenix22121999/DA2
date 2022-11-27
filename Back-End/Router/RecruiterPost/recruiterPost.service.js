@@ -177,6 +177,9 @@ const createPost = async (req, res) => {
 			title,
 			is_active,
 			is_delete,
+			gender,
+			list_job_type = [],
+			list_major = [],
 		} = req.body;
 		let { user_id = null, user_type_id = null } = req;
 		if (!user_id) {
@@ -195,10 +198,13 @@ const createPost = async (req, res) => {
 				to_value: Number(to_value),
 				from_value: Number(from_value),
 				create_date: new Date(moment(new Date()).format("YYYY-MM-DD")),
+				gender : Number(gender),
 				is_active: is_active,
 				is_delete: is_delete,
 			},
 		});
+
+
 		if (!result) {
 			return res.json({
 				code: 400,
@@ -206,6 +212,53 @@ const createPost = async (req, res) => {
 				messsage: "Tạo bài đăng thất bại",
 			});
 		}
+
+		if(list_job_type && list_job_type.length > 0){
+			let arrayMap = (list_job_type || []).map(item =>{
+				return {
+					...item,
+					is_delete : false,
+					is_active : true,
+					post_id : Number(result.id)
+				}
+			})
+			const resultCreatePostJobType = await prisma.recruitment_Post_Job_Type.createMany({
+				data : arrayMap,
+			})
+	
+			if (!resultCreatePostJobType) {
+				return res.json({
+					code: 400,
+					status_resposse: false,
+					messsage: "Tạo loại công việc cho bài đăng thất bại",
+				});
+			}
+		}
+		if(list_major && list_major.length > 0){
+			let arrayMapMajors = (list_major || []).map(item =>{
+				return {
+					...item,
+					is_delete : false,
+					is_active : true,
+					post_id : Number(result.id)
+				}
+			})
+	
+	
+			const resultCreatePostMajors = await prisma.recruitment_Post_Majors.createMany({
+				data : arrayMapMajors,
+			})
+	
+			if (!resultCreatePostMajors) {
+				return res.json({
+					code: 400,
+					status_resposse: false,
+					messsage: "Tạo nhóm nghề nghiệp cho bài đăng thất bại",
+				});
+			}
+		}
+
+
 		return res.json({
 			code: 200,
 			message: "Tạo bài đăng thành công",
@@ -232,6 +285,9 @@ const update = async (req, res) => {
 			title,
 			is_active,
 			is_delete,
+			gender,
+			list_job_type = [],
+			list_major = [],
 		} = req.body;
 		let { user_id = null, user_type_id = null } = req;
 		let isExists = await prisma.Recruitment_Post.findFirst({
@@ -262,6 +318,10 @@ const update = async (req, res) => {
 				content: content,
 				to_value: Number(to_value),
 				from_value: Number(from_value),
+                update_date : new Date (moment(new Date()).format("YYYY-MM-DD")),
+                update_user : user_id,
+				gender : Number(gender)
+
 			},
 		});
 
@@ -272,7 +332,71 @@ const update = async (req, res) => {
 				messsage: "Cập nhật bài đăng thất bại",
 			});
 		}
+		// Danh sách tag loại công việc
+		if(list_job_type && list_job_type.length > 0){
+			let arrayMap = (list_job_type || []).map(item =>{
+				return {
+					...item,
+					is_delete : false,
+					is_active : true,
+					post_id : Number(post_id)
+				}
+			})
+			// Cập nhật thì sẽ xóa tạm các tag loại công việc của bài đăng đó
+			const resultDeleteTemp = await prisma.recruitment_Post_Job_Type.updateMany({
+				where: { post_id: Number(post_id) } ,
+				data : {
+					is_active: false,
+					is_delete: true,
+				}
+			})
 
+			// Tiến hành tạo mới các tag loại công việc
+			const resultCreatePostJobType = await prisma.recruitment_Post_Job_Type.createMany({
+				data : arrayMap,
+			})
+
+			if (!resultCreatePostJobType) {
+				return res.json({
+					code: 400,
+					status_resposse: false,
+					messsage: "Tạo loại công việc cho bài đăng thất bại",
+				});
+			}
+		}
+		// Danh sách ngành nghề
+		if(list_major && list_major.length > 0){
+			let arrayMapMajors = (list_major || []).map(item =>{
+				return {
+					...item,
+					is_delete : false,
+					is_active : true,
+					post_id : Number(post_id)
+				}
+			})
+
+			// Xóa các tag nghành nghề đang được đính vào bài viết
+			const resultDeleteTemp = await prisma.recruitment_Post_Majors.updateMany({
+				where: { post_id: Number(post_id) } ,
+				data : {
+					is_active: false,
+					is_delete: true,
+				}
+			})
+			// Tạo lại danh sách tag nghề nghiệp mới của bài viết
+			const resultCreatePostMajors = await prisma.recruitment_Post_Majors.createMany({
+				data : arrayMapMajors,
+			})
+
+			if (!resultCreatePostMajors) {
+				return res.json({
+					code: 400,
+					status_resposse: false,
+					messsage: "Tạo nhóm nghề nghiệp cho bài đăng thất bại",
+				});
+			}
+		}
+		
 		return res.json({
 			code: 200,
 			message: "Cập nhật bài đăng thành công",
@@ -319,6 +443,9 @@ const deletePost = async (req, res) => {
 			data: {
 				is_active: false,
 				is_delete: true,
+				delete_date : new Date (moment(new Date()).format("YYYY-MM-DD")),
+                delete_user : user_id,
+
 			},
 		});
 		if (!resultDelete) {
@@ -343,10 +470,102 @@ const deletePost = async (req, res) => {
 		});
 	}
 };
+
+
+const getDetail = async (req, res) => {
+	try{
+		let { post_id } = req.query;
+		let isExists = await prisma.Recruitment_Post.findFirst({
+			where: {
+				AND: [
+					{
+						id: Number(post_id),
+						is_active: true,
+						is_delete: false
+					},
+				],
+			},
+		});
+		if (!isExists) {
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Không tìm thấy bài đăng này",
+			});
+		}
+		// Dùng transaction để lấy danh sách loại công việc và loại nghề nghiệp
+		const [list_job_type, list_major] = await prisma.$transaction(
+			[
+			  	prisma.recruitment_Post_Job_Type.findMany({
+					where : {
+						AND : [{
+							is_active: true,
+							is_delete: false,
+							post_id : Number(post_id)
+						}]
+					}
+					 
+			  	}),
+			  	prisma.recruitment_Post_Majors.findMany({ 
+					where : {
+						AND : [{
+							is_active: true,
+							is_delete: false,
+							post_id : Number(post_id)
+						}]
+					}
+				}),
+			]
+		)
+		
+		// danh sách lấy id loại công việc
+		let list_job_type_convert = (list_job_type ||[]).map(item =>{
+			return Number(item.job_type_id)
+		})
+		// Lấy tất tên của loại công việc có id nằm trong danh sách id loại công việc
+		if(list_job_type_convert && list_job_type_convert.length > 0) {
+			const result = await prisma.job_Type.findMany({
+				where : {
+					id : {in : list_job_type_convert}
+				}
+			})
+			isExists.list_job_type = (result || []);
+		}
+
+		// Danh sách id ngành nghề
+		let list_major_convert = (list_major || []).map(item => {
+			return Number(item.majors_id);
+		})
+		// Lấy tên của ngành nghề có id nằm trong danh sách id ngành nghề
+		if(list_major_convert && list_major_convert.length >0 ){
+			const result = await prisma.majors.findMany({
+				where : {
+					id : {in : list_major_convert}
+				}
+			})
+			isExists.list_major_convert = (result || []);
+		}
+
+		return res.json({
+			code: 200,
+			message: "Lấy danh sách bài đăng truyển dụng thành công",
+			status_resposse: true,
+			data: isExists,
+		});
+
+	}catch(error){
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+}
 module.exports = {
 	update,
 	createPost,
 	getListPost,
 	getListPostOfUser,
 	deletePost,
+	getDetail
 };
