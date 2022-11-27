@@ -54,7 +54,7 @@ const HomeCategories = (props: Props) => {
 					})}
 				</div>
 				<div className="categories-button">
-					<ButtonCommon ghost size="medium" type="outstanding">
+					<ButtonCommon ghost size="large" type="outstanding">
 						<Link to={ROUTE.SEARCH}>All Categories</Link>
 					</ButtonCommon>
 				</div>

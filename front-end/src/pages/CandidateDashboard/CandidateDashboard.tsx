@@ -72,15 +72,17 @@ export const CandidateDashboard = (props: Props) => {
 							</div>
 						</Sider>
 						<Content>
-							<div
-								className="sidebar-toggle"
-								onClick={toggleSider}
-							>
-								{collapsed ? (
-									<MenuUnfoldOutlined />
-								) : (
-									<MenuFoldOutlined />
-								)}
+							<div className="sidebar-toggle">
+								<div
+									className="sidebar-toggle-icon"
+									onClick={toggleSider}
+								>
+									{collapsed ? (
+										<MenuUnfoldOutlined />
+									) : (
+										<MenuFoldOutlined />
+									)}
+								</div>
 							</div>
 							<div className="candidate-dashboard-content dashboard-content-common">
 								{" "}

@@ -4,14 +4,19 @@
 	padding: 0.6rem 1rem;
 	text-decoration: none;
 	font-weight: 400;
-	font-size: 12px;
+	// font-size: 12px;
+	@include v.text-base;
 	text-transform: uppercase;
 	outline: none;
 	cursor: pointer;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100%;
+	// height: 100%;
+	border: 1px solid transparent;
+	&:hover {
+		border-bottom: 1px v.$primary-color solid;
+	}
 	a {
 		color: v.$primary-color;
 	}

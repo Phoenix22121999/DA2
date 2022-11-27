@@ -54,7 +54,7 @@ const FeaturesJob = (props: Props) => {
 					})}
 				</div>
 				<div className="features-job-button">
-					<ButtonCommon ghost size="medium" type="outstanding">
+					<ButtonCommon ghost size="large" type="outstanding">
 						<Link to={ROUTE.SEARCH}>All Job</Link>
 					</ButtonCommon>
 				</div>

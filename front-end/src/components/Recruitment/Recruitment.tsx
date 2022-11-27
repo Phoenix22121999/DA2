@@ -24,7 +24,7 @@ const Recruitment = (props: RecruitmentProps) => {
 						provident qui!
 					</div>
 					<div>
-						<ButtonCommon>Upload CV</ButtonCommon>
+						<ButtonCommon size="large">Upload CV</ButtonCommon>
 					</div>
 				</div>
 				{/* </div> */}
@@ -41,7 +41,7 @@ const Recruitment = (props: RecruitmentProps) => {
 						provident qui!
 					</div>
 					<div>
-						<ButtonCommon type="outstanding" size="medium">
+						<ButtonCommon type="outstanding" size="large">
 							Write your post{" "}
 						</ButtonCommon>
 					</div>

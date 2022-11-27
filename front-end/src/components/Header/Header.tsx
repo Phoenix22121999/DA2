@@ -66,7 +66,7 @@ export const AppHeader = (props: HeaderProps) => {
 				...HEADER_ITEM,
 				{
 					key: "admin",
-					link: "/admin/profile",
+					link: "/admin/",
 					title: "Admin",
 				},
 			];

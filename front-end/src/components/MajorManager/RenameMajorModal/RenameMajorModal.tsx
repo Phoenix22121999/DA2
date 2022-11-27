@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import { CV } from "src/types/Type";
-import InputCommon from "../InputCommon/InputCommon";
+import React, { useState, useEffect } from "react";
+import { Majors } from "src/types/Type";
 import { Form, message } from "antd";
-import "./RenameCVModal.scss";
+import "./RenameMajorModal.scss";
 import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import { useReduxDispatch } from "src/redux/redux-hook";
-import { updateCV } from "src/redux/slice/CVSlide";
 import { CallbackFunction } from "src/types/UtilType";
+import InputCommon from "src/components/InputCommon/InputCommon";
+import { updateMajor } from "src/redux/slice/MajorSlide";
 type Props = {
-	edited?: CV;
+	edited?: Majors;
 	onClose: () => void;
 };
 
-const RenameCVModal = ({ edited, onClose }: Props) => {
-	const [name, setName] = useState(edited?.file_name);
+const RenameMajorModal = ({ edited, onClose }: Props) => {
+	const [name, setName] = useState(edited?.majors_name);
 	const dispatch = useReduxDispatch();
 	const onChane = (e: React.ChangeEvent<HTMLInputElement>) => {
 		// console.log();
@@ -27,16 +27,20 @@ const RenameCVModal = ({ edited, onClose }: Props) => {
 		}
 		onClose();
 	};
+	useEffect(() => {
+		setName(edited?.majors_name);
+	}, [edited]);
+
 	const onRename = () => {
-		if (name === edited?.file_name) {
+		if (name === edited?.majors_name) {
 			return;
 		}
 		if (edited) {
 			dispatch(
-				updateCV({
+				updateMajor({
 					payload: {
-						id_cv: edited.id,
-						file_name_new: name || "",
+						majors_id: edited.id,
+						majors_name: name || "",
 					},
 					callback,
 				})
@@ -57,4 +61,4 @@ const RenameCVModal = ({ edited, onClose }: Props) => {
 	);
 };
 
-export default RenameCVModal;
+export default RenameMajorModal;

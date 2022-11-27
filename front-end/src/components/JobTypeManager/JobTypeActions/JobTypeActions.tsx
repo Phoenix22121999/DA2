@@ -1,40 +1,36 @@
 import React from "react";
 import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import TooltipCommon from "src/components/TooltipCommon/TooltipCommon";
-import { RecruitmentPost } from "src/types/Type";
+import { JobType } from "src/types/Type";
 import { ToolOutlined, DeleteOutlined } from "@ant-design/icons";
-import PopconfirmCommon from "../../PopconfirmCommon/PopconfirmCommon";
-import { updateEditPost } from "src/redux/slice/EditPostSlice";
+import { deleteJobType } from "src/redux/slice/JobTypeSlide";
 import { useReduxDispatch } from "src/redux/redux-hook";
-import { useNavigate } from "react-router-dom";
-import { ROUTE } from "src/utils/contants";
-import { deletePost } from "src/redux/slice/PostSlide";
+import PopconfirmCommon from "src/components/PopconfirmCommon/PopconfirmCommon";
 
 type Props = {
-	record: RecruitmentPost;
+	record: JobType;
+	handleRenameClick: (record: JobType) => void;
 };
 
-const JobActions = ({ record }: Props) => {
+const AccountTypeActions = ({ handleRenameClick, record }: Props) => {
 	const dispatch = useReduxDispatch();
-	const navigate = useNavigate();
 
 	const onDeleteConfirm = () => {
-		dispatch(deletePost({ payload: { post_id: record.id } }));
+		dispatch(deleteJobType({ payload: { job_type_id: record.id } }));
 	};
 
-	const onEditClick = () => {
-		dispatch(updateEditPost(record));
-		navigate(ROUTE.RECRUITER_EDIT_JOB);
+	const onRenameClick = () => {
+		handleRenameClick(record);
 	};
 
 	return (
-		<div className="job-action">
-			<TooltipCommon title="Edit">
+		<div className="buttons-action">
+			<TooltipCommon title="Rename">
 				<ButtonCommon
 					// size="small"
 					icon={<ToolOutlined />}
 					type="info"
-					onClick={onEditClick}
+					onClick={onRenameClick}
 				/>
 			</TooltipCommon>
 
@@ -54,4 +50,4 @@ const JobActions = ({ record }: Props) => {
 	);
 };
 
-export default JobActions;
+export default AccountTypeActions;

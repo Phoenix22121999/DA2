@@ -137,8 +137,15 @@ export const AccountTypeSlice = createSlice({
 					});
 				}
 			})
+			.addCase(getListAccountType.pending, (state, action) => {
+				state.status = "loading";
+			})
+			.addCase(getListAccountType.rejected, (state, action) => {
+				state.status = "failed";
+			})
 			.addCase(getListAccountType.fulfilled, (state, action) => {
 				state.data = action.payload.data!;
+				state.status = "idle";
 			});
 	},
 });
@@ -146,5 +153,6 @@ export const AccountTypeSlice = createSlice({
 // export const {} = AccountTypeSlice.actions;
 export const selectAccountTypeList = (state: RootState) =>
 	state.accountType.data;
-
+export const selectAccountTypeStatus = (state: RootState) =>
+	state.accountType.status;
 export const accountTypeReducer = AccountTypeSlice.reducer;

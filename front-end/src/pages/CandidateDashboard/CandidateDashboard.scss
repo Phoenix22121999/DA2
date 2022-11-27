@@ -30,7 +30,9 @@
 	align-items: center;
 	@include v.text-2xl;
 	color: v.$primary-background;
-	cursor: pointer;
+	.sidebar-toggle-icon {
+		cursor: pointer;
+	}
 }
 .dashboard-layout {
 	position: relative;

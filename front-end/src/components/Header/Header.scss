@@ -60,6 +60,16 @@
 			button {
 				margin: 0 1rem;
 			}
+			&.is-menu-open {
+				transition: all 0s;
+				height: 8rem;
+				background-color: v.$header-backround;
+				.signup,
+				.login {
+					width: 10rem;
+					height: 4rem;
+				}
+			}
 		}
 	}
 	.header-username {

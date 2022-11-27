@@ -130,9 +130,9 @@ const deleteAccountType = async (req, res) => {
 const updateAccountType = async (req, res) => {
 	const { user_type_id, user_type_name, is_active, is_delete } = req.body;
 	try {
-		const resultDelete = await prisma.user_Type.update({
+		const resultUpdate = await prisma.user_Type.update({
 			where: {
-				id: user_type_id,
+				id: Number(user_type_id),
 			},
 			data: {
 				user_type_name: user_type_name,
@@ -142,7 +142,7 @@ const updateAccountType = async (req, res) => {
 				is_delete: is_delete,
 			},
 		});
-		if (resultDelete && resultDelete.length < 0) {
+		if (resultUpdate && resultUpdate.length < 0) {
 			return res.json({
 				code: 400,
 				status_resposse: false,
@@ -152,6 +152,7 @@ const updateAccountType = async (req, res) => {
 		return res.json({
 			code: 200,
 			status_resposse: true,
+			data: resultUpdate,
 			message: "Cập nhật tài loại tài khoản thành công!",
 		});
 	} catch (error) {

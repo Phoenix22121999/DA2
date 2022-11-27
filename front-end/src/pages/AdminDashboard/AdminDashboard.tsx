@@ -1,10 +1,10 @@
 import { Drawer, Layout } from "antd";
 import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import CandidateDashboardSidebar from "src/components/CandidateDashboardSidebar/CandidateDashboardSidebar";
 import { useCheckUserAuth } from "src/hooks/useCheckUserAuth";
 import "./AdminDashboard.scss";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import AdminDashboardSidebar from "src/components/AdminDashboardSidebar/AdminDashboardSidebar";
 type Props = {};
 const { Sider, Content } = Layout;
 export const AdminDashboard = (props: Props) => {
@@ -53,7 +53,7 @@ export const AdminDashboard = (props: Props) => {
 							getContainer={false}
 						>
 							<div className="admin-dashboard-sidebar dashboard-sidebar-common">
-								<CandidateDashboardSidebar />
+								<AdminDashboardSidebar />
 							</div>
 						</Drawer>
 						<Sider
@@ -66,21 +66,21 @@ export const AdminDashboard = (props: Props) => {
 							className="dashboard-sider"
 						>
 							<div className="admin-dashboard-sidebar dashboard-sidebar-common">
-								<CandidateDashboardSidebar
-									collapsed={collapsed}
-								/>
+								<AdminDashboardSidebar collapsed={collapsed} />
 							</div>
 						</Sider>
 						<Content>
-							<div
-								className="sidebar-toggle"
-								onClick={toggleSider}
-							>
-								{collapsed ? (
-									<MenuUnfoldOutlined />
-								) : (
-									<MenuFoldOutlined />
-								)}
+							<div className="sidebar-toggle">
+								<div
+									className="sidebar-toggle-icon"
+									onClick={toggleSider}
+								>
+									{collapsed ? (
+										<MenuUnfoldOutlined />
+									) : (
+										<MenuFoldOutlined />
+									)}
+								</div>
 							</div>
 							<div className="admin-dashboard-content dashboard-content-common">
 								{" "}

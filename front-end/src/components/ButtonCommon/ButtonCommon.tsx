@@ -22,6 +22,7 @@ export default function ButtonCommon({
 	type = "primary",
 	ghost,
 	size = "medium",
+	icon,
 	...props
 }: ButtonCommonProps) {
 	return (
@@ -30,7 +31,9 @@ export default function ButtonCommon({
 				[`button-${size}`]: size,
 				[`button-${type}`]: type,
 				[`button-ghost`]: ghost,
+				"button-icon-only": icon && !children,
 			})}
+			icon={icon}
 			{...props}
 		>
 			{children}

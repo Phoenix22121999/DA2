@@ -38,7 +38,7 @@ function SearchBar(props: SearchBarProps) {
 				<SelectCommon data={Test} placeholder="salary" size="large" />
 			</div>
 			<div className="search-bar-item">
-				<ButtonCommon size="small">Search</ButtonCommon>
+				<ButtonCommon>Search</ButtonCommon>
 			</div>
 		</div>
 	);

@@ -23,12 +23,17 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import EditPost from "./components/EditPost/EditPost";
 import { AdminDashboard } from "./pages/AdminDashboard/AdminDashboard";
+import AccountTypeManager from "./components/AccountTypeManager/AccountTypeManager";
+import JobTypeManager from "./components/JobTypeManager/JobTypeManager";
+import MajorManager from "./components/MajorManager/MajorManager";
+import Test from "./pages/Test/Test";
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <AppLayout />,
 		children: [
 			{ path: "/", element: <Home />, index: true },
+			{ path: "test", element: <Test /> },
 			{
 				path: "search",
 				element: <Search />,
@@ -50,20 +55,16 @@ const router = createBrowserRouter([
 				element: <AdminDashboard />,
 				children: [
 					{
-						path: "profile",
-						element: <CadidateProfile />,
+						path: "account-type",
+						element: <AccountTypeManager />,
 					},
 					{
-						path: "cv-manager",
-						element: <CVManager />,
+						path: "job-type",
+						element: <JobTypeManager />,
 					},
 					{
-						path: "applied-jobs",
-						element: <AppliedJobs />,
-					},
-					{
-						path: "change-password",
-						element: <ChangePassword />,
+						path: "major",
+						element: <MajorManager />,
 					},
 				],
 			},

@@ -1,7 +1,7 @@
 import { PaginationParameters } from "./UtilType";
 
 export interface GetListJobTypeParameters extends PaginationParameters {
-	key_word: string;
+	key_word?: string;
 }
 
 export type CreateJobTypeParameters = {
