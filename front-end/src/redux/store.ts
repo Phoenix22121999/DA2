@@ -9,6 +9,7 @@ import { userReducer } from "./slice/UserSilce";
 import { jobTypeReducer } from "./slice/JobTypeSlide";
 import { majorReducer } from "./slice/MajorSlide";
 import { accountTypeReducer } from "./slice/AccountTypeSlide";
+import { locationReducer } from "./slice/LocationSlide";
 
 export const store = configureStore({
 	reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
 		accountType: accountTypeReducer,
 		jobType: jobTypeReducer,
 		major: majorReducer,
+		location: locationReducer,
 	},
 });
 

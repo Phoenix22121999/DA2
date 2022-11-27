@@ -7,6 +7,7 @@ import { UserApi } from "./UserApi";
 import { UtilApi } from "./UtilApi";
 import { JobTypeApi } from "./JobTypeApi";
 import { MajorApi } from "./MajorApi";
+import { LocationApi } from "./LocationApi";
 
 class api {
 	static authApi = new AuthApi();
@@ -18,6 +19,7 @@ class api {
 	static accountTypeApi = new AccountTypeApi();
 	static jobTypeApi = new JobTypeApi();
 	static majorApi = new MajorApi();
+	static locationApi = new LocationApi();
 }
 
 export default api;
