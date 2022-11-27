@@ -59,9 +59,10 @@ export const signIn = createAsyncThunk(
 
 export const signInWithToken = createAsyncThunk(
 	"user/sign-in-with-token",
-	async (action: ActionPayload, { getState }) => {
-		const token = selectUserToken(getState() as RootState);
-		const response = await api.authApi.signInWithToken(token || "");
+	async (action: ActionPayload<string>, { getState }) => {
+		const response = await api.authApi.signInWithToken(
+			action.payload || ""
+		);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, response);
 		} else {

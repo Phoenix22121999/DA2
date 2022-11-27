@@ -9,6 +9,7 @@ export interface NewPostDataType {
 	job_type_id?: number;
 	majors_id?: number;
 	title?: string;
+	gender?: number;
 }
 
 export interface NewPostState {
@@ -26,6 +27,7 @@ const initialState: NewPostState = {
 		from_value: 0,
 		job_type_id: 1,
 		majors_id: 1,
+		gender: 1,
 	},
 	editID: null,
 	currentStep: 0,
@@ -66,6 +68,7 @@ export const newPostSlice = createSlice({
 					from_value: 0,
 					job_type_id: 1,
 					majors_id: 1,
+					gender: 1,
 				};
 				state.status = "idle";
 			})

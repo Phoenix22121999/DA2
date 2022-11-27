@@ -11,3 +11,8 @@ export type CallbackFunction<T = null> = (
 export type IsDirtyObject<T> = {
 	[P in keyof T]: boolean;
 };
+
+export type PaginationParameters = {
+	item_per_page?: number;
+	page?: number;
+};

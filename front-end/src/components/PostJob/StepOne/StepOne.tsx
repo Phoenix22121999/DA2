@@ -42,6 +42,7 @@ export const salaryMarks: SliderMarks = {
 export type NewPostFormStepOne = {
 	title: string;
 	salary: [number, number];
+	gender: number;
 };
 
 const StepOne = (props: Props) => {
@@ -56,6 +57,7 @@ const StepOne = (props: Props) => {
 					title: value.title,
 					from_value: value.salary[0],
 					to_value: value.salary[1],
+					gender: Number(value.gender),
 				})
 			);
 			dispatch(nextStep());
@@ -82,7 +84,7 @@ const StepOne = (props: Props) => {
 				<Form.Item label="Category">
 					<SelectCommon data={test} />
 				</Form.Item>
-				<Form.Item label="Gender">
+				<Form.Item label="Gender" name={"gender"}>
 					<SelectCommon data={GENDER_OPTION} />
 				</Form.Item>
 

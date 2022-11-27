@@ -78,6 +78,11 @@ const signIn = async (req, res) => {
 					obj,
 					process.env.ACCESS_TOKEN
 				);
+				const test = jwt.verify(
+					// { UserId: obj.id, role: obj.user_type_id },
+					AccessToken,
+					process.env.ACCESS_TOKEN
+				);
 				return res.json({
 					code: 200,
 					status_resposse: true,
@@ -104,12 +109,12 @@ const signIn = async (req, res) => {
 
 // Đăng nhập
 const signInWithToken = async (req, res) => {
-	let { user_id } = req.body;
+	let { user_id } = req;
 	try {
 		// Tìm trong bảng với prisma với điều kiện trùng tên tài khoản để lấy được mật khẩu khi hash
 		const resultSignIn = await prisma.user_Account.findMany({
 			where: {
-				id: user_id,
+				id: Number(user_id),
 			},
 		});
 		// console.log(resultSignIn[0]);
@@ -129,6 +134,7 @@ const signInWithToken = async (req, res) => {
 				obj,
 				process.env.ACCESS_TOKEN
 			);
+
 			return res.json({
 				code: 200,
 				status_resposse: true,
@@ -387,22 +393,22 @@ const changePassword = async (req, res) => {
 	}
 };
 
-const getDetailAccount = async (req , res) =>{
-	try{
+const getDetailAccount = async (req, res) => {
+	try {
 		let { user_id = null, user_type_id = null } = req;
-		if(!user_id){
-            return res.json({
-                code : 400,
-                message : "Người dùng không hợp lệ",
-                status_resposse: false,
-            })
-        }
+		if (!user_id) {
+			return res.json({
+				code: 400,
+				message: "Người dùng không hợp lệ",
+				status_resposse: false,
+			});
+		}
 		const result = await prisma.user_Account.findFirst({
 			where: {
 				id: Number(user_id),
 			},
 		});
-		if(!result){
+		if (!result) {
 			return res.json({
 				code: 400,
 				status_resposse: false,
@@ -416,15 +422,14 @@ const getDetailAccount = async (req , res) =>{
 			message: "Lấy thông tin tài khoản",
 			data: obj,
 		});
-		
-	}catch(error){
+	} catch (error) {
 		return res.json({
 			code: 400,
 			status_resposse: false,
 			message: error.message,
 		});
 	}
-}
+};
 
 module.exports = {
 	getListAcccount,
@@ -433,5 +438,5 @@ module.exports = {
 	signUp,
 	update,
 	changePassword,
-	getDetailAccount
+	getDetailAccount,
 };

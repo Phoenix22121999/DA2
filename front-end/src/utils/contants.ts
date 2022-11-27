@@ -68,6 +68,10 @@ export const GENDER_OPTION: SelectOptionValue[] = [
 ];
 export const USER_TYPE_OPTION: SelectOptionValue[] = [
 	{
+		key: 1,
+		value: "Admin",
+	},
+	{
 		key: 2,
 		value: "Candidate",
 	},

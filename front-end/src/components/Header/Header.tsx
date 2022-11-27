@@ -61,6 +61,16 @@ export const AppHeader = (props: HeaderProps) => {
 				},
 			];
 		}
+		if (user.user_type_id === 1 && isAuth) {
+			return [
+				...HEADER_ITEM,
+				{
+					key: "admin",
+					link: "/admin/profile",
+					title: "Admin",
+				},
+			];
+		}
 		return HEADER_ITEM;
 	}, [user, isAuth]);
 
@@ -76,7 +86,12 @@ export const AppHeader = (props: HeaderProps) => {
 		if (!first) {
 			if (cookies[COOKIES_NAME.ACCESS_TOKEN]) {
 				if (!accessToken) {
-					dispatch(signInWithToken({ callback }));
+					dispatch(
+						signInWithToken({
+							payload: cookies[COOKIES_NAME.ACCESS_TOKEN],
+							callback,
+						})
+					);
 				}
 			}
 			setFirst(true);

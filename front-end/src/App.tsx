@@ -22,6 +22,7 @@ import { pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import EditPost from "./components/EditPost/EditPost";
+import { AdminDashboard } from "./pages/AdminDashboard/AdminDashboard";
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -44,7 +45,28 @@ const router = createBrowserRouter([
 				path: "post-detail/:postID",
 				element: <JobPostDetail />,
 			},
-
+			{
+				path: "admin",
+				element: <AdminDashboard />,
+				children: [
+					{
+						path: "profile",
+						element: <CadidateProfile />,
+					},
+					{
+						path: "cv-manager",
+						element: <CVManager />,
+					},
+					{
+						path: "applied-jobs",
+						element: <AppliedJobs />,
+					},
+					{
+						path: "change-password",
+						element: <ChangePassword />,
+					},
+				],
+			},
 			{
 				path: "cadidate",
 				element: <CandidateDashboard />,

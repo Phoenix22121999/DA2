@@ -6,6 +6,9 @@ import { postReducer } from "./slice/PostSlide";
 import { searchPostReducer } from "./slice/SearchPostSlide";
 import { signUpReducer } from "./slice/SignUpSlice";
 import { userReducer } from "./slice/UserSilce";
+import { jobTypeReducer } from "./slice/JobTypeSlide";
+import { majorReducer } from "./slice/MajorSlide";
+import { accountTypeReducer } from "./slice/AccountTypeSlide";
 
 export const store = configureStore({
 	reducer: {
@@ -16,6 +19,9 @@ export const store = configureStore({
 		post: postReducer,
 		searchPost: searchPostReducer,
 		editPost: editPostReducer,
+		accountType: accountTypeReducer,
+		jobType: jobTypeReducer,
+		major: majorReducer,
 	},
 });
 

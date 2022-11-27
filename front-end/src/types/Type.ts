@@ -117,6 +117,10 @@ export type ApplyProfile = {
  * Model Recruitment_Post
  *
  */
+/**
+ * Model Recruitment_Post
+ *
+ */
 export type RecruitmentPost = {
 	id: number;
 	content: string;
@@ -124,6 +128,7 @@ export type RecruitmentPost = {
 	recuiter_id: number;
 	to_value: number;
 	from_value: number | null;
+	gender: number | null;
 	create_date: Date | null;
 	create_user: string | null;
 	update_date: Date | null;
@@ -161,11 +166,28 @@ export type RecruitmentPostJobType = {
 	id: number;
 	post_id: number;
 	job_type_id: number;
-	majors_id: number;
-	create_date: Date;
-	create_user: string;
+	create_date: Date | null;
+	create_user: string | null;
 	update_date: Date | null;
-	update_user: string;
+	update_user: string | null;
+	delete_date: Date | null;
+	delete_user: string | null;
+	is_delete: boolean;
+	is_active: boolean;
+};
+
+/**
+ * Model Recruitment_Post_Majors
+ *
+ */
+export type RecruitmentPostMajors = {
+	id: number;
+	post_id: number;
+	majors_id: number;
+	create_date: Date | null;
+	create_user: string | null;
+	update_date: Date | null;
+	update_user: string | null;
 	delete_date: Date | null;
 	delete_user: string | null;
 	is_delete: boolean;

@@ -1,0 +1,23 @@
+@use "../../styles/variables" as v;
+.admin-dashboard {
+	.admin-dashboard-inner {
+		padding-top: 12rem;
+		width: 100%;
+		min-height: 100rem;
+		display: flex;
+		position: relative;
+		.admin-dashboard-sidebar {
+			padding: 1rem;
+			overflow: hidden;
+		}
+		.admin-dashboard-content {
+			padding: 1rem;
+		}
+	}
+	.dashboard-title {
+		margin-bottom: 2rem;
+		@include v.text-3xl;
+		font-weight: bold;
+		color: v.$dark-blue;
+	}
+}
