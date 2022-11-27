@@ -11,8 +11,9 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "src/utils/contants";
-
-type Props = {};
+type Props = {
+	collapsed?: boolean;
+};
 const ITEMS: DashboardSidebarItemProps[] = [
 	{
 		icon: <ProfileOutlined />,
@@ -41,20 +42,22 @@ const ITEMS: DashboardSidebarItemProps[] = [
 	},
 ];
 
-const RecruiterDashboardSidebar = (props: Props) => {
+const RecruiterDashboardSidebar = ({ collapsed }: Props) => {
 	const navigate = useNavigate();
 	const handleClick = (path: string) => {
 		// navigate(`/recruiter/${path}`);
 		navigate(path);
 	};
+	console.log(collapsed);
 
 	return (
-		<div className="recruiter-dashboard-sidebar-content sidebar-content-common">
+		<div className="recruiter-dashboard-sidebar-content">
 			{ITEMS.map((item) => (
 				<DashboardSidebarItem
 					key={item.path}
 					{...item}
 					onClick={handleClick}
+					collapsed={collapsed}
 				/>
 			))}
 		</div>

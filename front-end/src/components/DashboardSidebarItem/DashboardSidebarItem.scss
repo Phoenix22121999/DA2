@@ -6,20 +6,25 @@
 	align-items: center;
 	@include v.border-radius-sm;
 	// background-color: ;
-	padding: 0.8rem 1.2rem;
+	padding: 1rem;
 	border: 2px transparent solid;
-	@include v.text-lg;
+	@include v.text-base;
 	color: v.$info-background;
 	font-weight: bold;
 	cursor: pointer;
-	margin-bottom: 1rem;
+	margin-bottom: 1.4rem;
 	color: v.$primary-background;
 	transition: all 0.5s;
+	height: 6rem;
 	.dashboard-sidebar-item-icon {
-		margin-right: 2rem;
-		@include v.text-3xl;
+		margin-right: 2.4rem;
+		@include v.text-2xl;
+		transition: all 0.5s;
 	}
 	.dashboard-sidebar-item-title {
+		overflow: hidden;
+		width: initial;
+		transition: all 1s;
 	}
 	&:hover {
 		border-color: transparent;
@@ -30,5 +35,18 @@
 		border-color: transparent;
 		color: v.$info-background;
 		background-color: rgba($color: v.$primary-background, $alpha: 0.2);
+	}
+	&.dashboard-sidebar-item-collapsed {
+		padding: 1rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.dashboard-sidebar-item-icon {
+			margin: 0;
+			@include v.text-2xl;
+		}
+		.dashboard-sidebar-item-title {
+			width: 0px;
+		}
 	}
 }

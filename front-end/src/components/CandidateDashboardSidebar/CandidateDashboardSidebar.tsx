@@ -10,8 +10,9 @@ import {
 	SnippetsOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-
-type Props = {};
+type Props = {
+	collapsed?: boolean;
+};
 const ITEMS: DashboardSidebarItemProps[] = [
 	// {
 	// 	icon: <HomeOutlined />,
@@ -40,19 +41,20 @@ const ITEMS: DashboardSidebarItemProps[] = [
 	},
 ];
 
-const CandidateDashboardSidebar = (props: Props) => {
+const CandidateDashboardSidebar = ({ collapsed }: Props) => {
 	const navigate = useNavigate();
 	const handleClick = (path: string) => {
 		navigate(`/cadidate/${path}`);
 	};
 
 	return (
-		<div className="candidate-dashboard-sidebar-content sidebar-content-common">
+		<div className="candidate-dashboard-sidebar-content">
 			{ITEMS.map((item) => (
 				<DashboardSidebarItem
 					key={item.path}
 					{...item}
 					onClick={handleClick}
+					collapsed={collapsed}
 				/>
 			))}
 		</div>

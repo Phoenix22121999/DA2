@@ -1,19 +1,16 @@
 @use "../../styles/variables" as v;
 .recruiter-dashboard {
 	.recruiter-dashboard-inner {
-		padding-top: 12rem;
+		position: relative;
+		margin-top: 12rem;
 		width: 100%;
 		min-height: 100rem;
 		display: flex;
 		.recruiter-dashboard-sidebar {
-			padding: 2rem;
-			padding-left: 0;
-			width: 25%;
+			padding: 1rem;
 		}
 		.recruiter-dashboard-content {
-			padding: 2rem;
-			padding-right: 0;
-			width: 75%;
+			padding: 1rem;
 		}
 	}
 	.dashboard-title {
@@ -24,5 +21,16 @@
 	}
 }
 
-.sidebar-content-common {
-}
+// .dashboard-sidebar-common {
+// 	padding-top: 5rem;
+// 	position: absolute;
+// 	top: 0;
+// 	left: 0;
+// 	width: 100%;
+// 	height: calc(100vh - 27rem);
+// 	background-color: v.$primary-color;
+// 	z-index: 3;
+// }
+// .dashboard-content-common {
+// 	width: 100%;
+// }

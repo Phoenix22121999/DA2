@@ -7,6 +7,7 @@ export type DashboardSidebarItemProps = {
 	title: string;
 	path: string;
 	onClick?: (path: string) => void;
+	collapsed?: boolean;
 };
 
 const DashboardSidebarItem = ({
@@ -14,6 +15,7 @@ const DashboardSidebarItem = ({
 	title,
 	onClick,
 	path,
+	collapsed,
 }: DashboardSidebarItemProps) => {
 	const [active, setActive] = useState<boolean>(false);
 	let location = useLocation();
@@ -33,6 +35,7 @@ const DashboardSidebarItem = ({
 		<div
 			className={classNames("dashboard-sidebar-item", {
 				"dashboard-sidebar-item-active": active,
+				"dashboard-sidebar-item-collapsed": collapsed,
 			})}
 			onClick={handleClick}
 		>
