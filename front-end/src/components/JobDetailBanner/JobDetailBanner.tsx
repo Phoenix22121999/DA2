@@ -1,14 +1,13 @@
 import React from "react";
 import "./JobDetailBanner.scss";
 import TEST_LOGO from "../../assets/images/logo.png";
-import ButtonCommon from "../ButtonCommon/ButtonCommon";
 import {
 	ClockCircleOutlined,
 	EnvironmentOutlined,
 	DollarOutlined,
 	BookOutlined,
 } from "@ant-design/icons";
-import TagCommon from "../TagCommon/TagCommon";
+import { ButtonCommon, TagCommon } from "src/common";
 type Props = {};
 
 const JobDetailBanner = (props: Props) => {

@@ -1,6 +1,6 @@
 import { Button } from "antd";
 import React from "react";
-import { ButtonCommon } from "src/components";
+import { ButtonCommon } from "src/common";
 
 type Props = {};
 

@@ -3,9 +3,8 @@ import React from "react";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { createMajor } from "src/redux/slice/MajorSlide";
 import { CallbackFunction } from "src/types/UtilType";
-import InputCommon from "src/components/InputCommon/InputCommon";
-import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import { CreateMajorParameters } from "src/types/MajorType";
+import { ButtonCommon, InputCommon } from "src/common";
 
 type Props = {
 	onClose: () => void;

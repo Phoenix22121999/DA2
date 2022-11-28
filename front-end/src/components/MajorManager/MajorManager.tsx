@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import {
+	ButtonCommon,
+	ColumnCommon,
+	ModalCommon,
+	TableCommon,
+} from "src/common";
 import { useModal } from "src/hooks/useModal";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import { getListMajor, selectMajorList } from "src/redux/slice/MajorSlide";
 import { Majors } from "src/types/Type";
-import ButtonCommon from "../ButtonCommon/ButtonCommon";
-import ModalCommon from "../ModalCommon/ModalCommon";
-import TableCommon, { ColumnCommon } from "../TableCommon/TableCommon";
 import AddMajorModal from "./AddMajorModal/AddMajorModal";
 import MajorActions from "./MajorActions/MajorActions";
 import RenameMajorModal from "./RenameMajorModal/RenameMajorModal";

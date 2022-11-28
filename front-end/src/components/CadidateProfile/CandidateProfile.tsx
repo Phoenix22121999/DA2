@@ -1,15 +1,14 @@
 import { Form, message } from "antd";
 
 import React from "react";
-import InputCommon from "../InputCommon/InputCommon";
-import SelectCommon, { SelectOptionValue } from "../SelectCommon/SelectCommon";
 import "./CandidateProfile.scss";
 import ProfileAvatar from "../ProfileAvatar/ProfileAvatar";
 import { UserAccount } from "src/types/Type";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import { selectUserData, updateAccount } from "src/redux/slice/UserSilce";
-import ButtonCommon from "../ButtonCommon/ButtonCommon";
 import { CallbackFunction } from "src/types/UtilType";
+import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
+import { ButtonCommon, InputCommon, SelectCommon } from "src/common";
 const test: SelectOptionValue[] = [
 	{
 		key: "HCM",

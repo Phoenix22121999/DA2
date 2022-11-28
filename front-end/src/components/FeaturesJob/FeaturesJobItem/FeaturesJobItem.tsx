@@ -1,12 +1,12 @@
 import React from "react";
 import "./FeaturesJobItem.scss";
 import TEST_LOGO from "../../../assets/images/logo.png";
-import ButtonCommon from "./../../ButtonCommon/ButtonCommon";
 import {
 	ClockCircleOutlined,
 	EnvironmentOutlined,
 	DollarOutlined,
 } from "@ant-design/icons";
+import { ButtonCommon } from "src/common";
 export type FeaturesJobItemProps = {
 	logo: string;
 	major: string;

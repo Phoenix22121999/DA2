@@ -1,7 +1,7 @@
 import { Space } from "antd";
 import { ColumnsType } from "antd/lib/table";
 import React from "react";
-import TableCommon from "../TableCommon/TableCommon";
+import { TableCommon } from "src/common";
 interface DataType {
 	key: string;
 	name: string;

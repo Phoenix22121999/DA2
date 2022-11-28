@@ -1,7 +1,5 @@
 import { Form, message, Upload } from "antd";
 import React, { useState } from "react";
-import ButtonCommon from "../ButtonCommon/ButtonCommon";
-import InputCommon from "../InputCommon/InputCommon";
 import "./AddCVModal.scss";
 import { UploadOutlined } from "@ant-design/icons";
 import { RcFile, UploadFile, UploadProps } from "antd/lib/upload";
@@ -11,6 +9,7 @@ import { createCV } from "src/redux/slice/CVSlide";
 import { BaseReponseType } from "src/types/ApiType";
 import { FileTypeUploadReponese } from "src/types/UploadType";
 import { CallbackFunction } from "src/types/UtilType";
+import { ButtonCommon, InputCommon } from "src/common";
 
 type Props = {
 	onClose: () => void;

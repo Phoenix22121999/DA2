@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { CV } from "src/types/Type";
-import InputCommon from "../InputCommon/InputCommon";
 import { Form, message } from "antd";
 import "./RenameCVModal.scss";
-import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { updateCV } from "src/redux/slice/CVSlide";
 import { CallbackFunction } from "src/types/UtilType";
+import { ButtonCommon, InputCommon } from "src/common";
 type Props = {
 	edited?: CV;
 	onClose: () => void;

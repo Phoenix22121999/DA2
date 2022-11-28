@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { SelectOptionValue } from "src/components/SelectCommon/SelectCommon";
+import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import {
 	getListJobType,

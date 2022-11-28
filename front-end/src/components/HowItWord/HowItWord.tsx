@@ -1,5 +1,6 @@
 import React from "react";
-import TabCommon, { TabItemType } from "../TabCommon/TabCommon";
+import { TabCommon } from "src/common";
+import { TabItemType } from "src/common/TabCommon/TabCommon";
 import "./HowItWord.scss";
 import HowItWordCamdidate from "./HowItWordCandidate/HowItWordCandidate";
 import HowItWordRecuiter from "./HowItWordRecruiter/HowItWordRecuiter";

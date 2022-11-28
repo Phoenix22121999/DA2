@@ -1,20 +1,22 @@
 import React from "react";
 import { Form } from "antd";
-import SelectCommon from "src/components/SelectCommon/SelectCommon";
 import { GENDER_OPTION } from "src/utils/contants";
-import { RangeSliderCommon } from "src/components/SliderCommon/SliderCommon";
 import {
 	formValueToCreatePostParameters,
 	sliderFormatter,
 } from "src/utils/function";
 import { SliderMarks } from "antd/lib/slider";
 import "./StepOnes.scss";
-import InputCommon from "src/components/InputCommon/InputCommon";
-import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { nextStep, updateNewPost } from "src/redux/slice/NewPostSlice";
 
 import useGetStatictisOption from "src/hooks/useGetStatictisOption";
+import {
+	ButtonCommon,
+	InputCommon,
+	RangeSliderCommon,
+	SelectCommon,
+} from "src/common";
 type Props = {};
 
 export const salaryMarks: SliderMarks = {

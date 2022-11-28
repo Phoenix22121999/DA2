@@ -6,11 +6,10 @@ import {
 	selectAccountTypeList,
 } from "src/redux/slice/AccountTypeSlide";
 import { UserType } from "src/types/Type";
-import ModalCommon from "../ModalCommon/ModalCommon";
-import TableCommon, { ColumnCommon } from "../TableCommon/TableCommon";
 import AccountTypeActions from "./AccountTypeActions/AccountTypeActions";
 import RenameAccountTypeModal from "./RenameAccountTypeModal/RenameAccountTypeModal";
 import { selectAccountTypeStatus } from "./../../redux/slice/AccountTypeSlide";
+import { ColumnCommon, ModalCommon, TableCommon } from "src/common";
 
 type Props = {};
 

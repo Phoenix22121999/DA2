@@ -13,5 +13,6 @@ const TableCommon = <T extends object>({
 		</div>
 	);
 };
+export type TableCommonType = typeof TableCommon;
 export const { Column: ColumnCommon, ColumnGroup } = Table;
 export default TableCommon;

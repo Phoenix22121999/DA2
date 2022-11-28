@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { UserType } from "src/types/Type";
 import { Form, message } from "antd";
 import "./RenameAccountTypeModal.scss";
-import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { CallbackFunction } from "src/types/UtilType";
-import InputCommon from "src/components/InputCommon/InputCommon";
 import { updateAccountType } from "src/redux/slice/AccountTypeSlide";
+import { ButtonCommon, InputCommon } from "src/common";
 type Props = {
 	edited?: UserType;
 	onClose: () => void;

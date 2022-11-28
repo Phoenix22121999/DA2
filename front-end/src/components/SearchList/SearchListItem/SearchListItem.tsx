@@ -1,7 +1,6 @@
 import React from "react";
 import "./SearchListItem.scss";
 import TEST_LOGO from "../../../assets/images/logo.png";
-import ButtonCommon from "../../ButtonCommon/ButtonCommon";
 
 import {
 	ClockCircleOutlined,
@@ -9,9 +8,9 @@ import {
 	DollarOutlined,
 	BookOutlined,
 } from "@ant-design/icons";
-import TagCommon from "src/components/TagCommon/TagCommon";
 import { RecruitmentPostWithUser } from "src/types/CombineType";
 import { inputNumberFormatter } from "./../../../utils/function";
+import { ButtonCommon, TagCommon } from "src/common";
 
 export interface SearchListItemProps extends RecruitmentPostWithUser {}
 

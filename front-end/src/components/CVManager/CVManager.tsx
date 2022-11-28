@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./CVManager.scss";
-import TableCommon, { ColumnCommon } from "./../TableCommon/TableCommon";
-import ButtonCommon from "../ButtonCommon/ButtonCommon";
-import ModalCommon from "../ModalCommon/ModalCommon";
 import AddCVModal from "../AddCVModal/AddCVModal";
 import { useModal } from "src/hooks/useModal";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
@@ -11,6 +8,9 @@ import { CV } from "src/types/Type";
 import CVActions from "./CVActions/CVActions";
 import ReanmeCVModal from "../RenameCVModal/RenameCVModal";
 import ShowCVModal from "./../ShowCVModal/ShowCVModal";
+import ButtonCommon from "src/common/ButtonCommon/ButtonCommon";
+import { ModalCommon, TableCommon } from "src/common";
+import { ColumnCommon } from "src/common/TableCommon/TableCommon";
 type Props = {};
 
 const CVManager = (props: Props) => {

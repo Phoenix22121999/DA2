@@ -4,9 +4,9 @@ import HomeCategoriesItem, {
 	HomeCategoriesItemProps,
 } from "./HomeCategoriesItem/HomeCategoriesItem";
 import { FormatPainterOutlined } from "@ant-design/icons";
-import ButtonCommon from "../ButtonCommon/ButtonCommon";
 import { Link } from "react-router-dom";
 import { ROUTE } from "src/utils/contants";
+import { ButtonCommon } from "src/common";
 type Props = {};
 
 const TOP_CATEGORIES: HomeCategoriesItemProps[] = [

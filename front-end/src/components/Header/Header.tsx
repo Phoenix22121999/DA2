@@ -5,7 +5,6 @@ import React, {
 	useMemo,
 	useCallback,
 } from "react";
-import ButtonCommon from "../ButtonCommon/ButtonCommon";
 import { HeaderItem } from "./components/HeaderItem/HeaderItem";
 import "./Header.scss";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
@@ -22,6 +21,7 @@ import {
 import { useUserAuth } from "src/hooks/useUserAuth";
 import { resetSignUp } from "src/redux/slice/SignUpSlice";
 import { CallbackFunction } from "src/types/UtilType";
+import { ButtonCommon } from "src/common";
 type HeaderProps = {};
 const HEADER_ITEM = [
 	{

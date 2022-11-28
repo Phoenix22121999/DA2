@@ -1,8 +1,7 @@
 import React from "react";
 import "./StepThree.scss";
-import LoadingCommon from "../../LoadingCommon/LoadingCommon";
+import LoadingCommon from "../../../common/LoadingCommon/LoadingCommon";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
-import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import { useNavigate } from "react-router-dom";
 import {
@@ -11,6 +10,7 @@ import {
 	setCurrent,
 } from "src/redux/slice/NewPostSlice";
 import { ROUTE } from "src/utils/contants";
+import { ButtonCommon } from "src/common";
 type Props = {};
 
 const StepThree = (props: Props) => {

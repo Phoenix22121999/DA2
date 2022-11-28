@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
+import { ButtonCommon } from "src/common";
 import { CV } from "src/types/Type";
 import { CDN_URL } from "src/utils/contants";
 import "./ShowCVModal.scss";
-import ButtonCommon from "./../ButtonCommon/ButtonCommon";
 type Props = {
 	record?: CV;
 };

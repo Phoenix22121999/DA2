@@ -1,14 +1,12 @@
 import React from "react";
-import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
-import TooltipCommon from "src/components/TooltipCommon/TooltipCommon";
 import { RecruitmentPost } from "src/types/Type";
 import { ToolOutlined, DeleteOutlined } from "@ant-design/icons";
-import PopconfirmCommon from "../../PopconfirmCommon/PopconfirmCommon";
 import { setEditPostID } from "src/redux/slice/EditPostSlice";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "src/utils/contants";
 import { deletePost } from "src/redux/slice/PostSlide";
+import { ButtonCommon, PopconfirmCommon, TooltipCommon } from "src/common";
 
 type Props = {
 	record: RecruitmentPost;

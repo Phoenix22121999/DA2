@@ -3,13 +3,12 @@ import { Form } from "antd";
 import React from "react";
 import { useReduxSelector } from "src/redux/redux-hook";
 import { selectUserData, updateAccount } from "src/redux/slice/UserSilce";
-import InputCommon from "../InputCommon/InputCommon";
 import ProfileAvatar from "../ProfileAvatar/ProfileAvatar";
-import SelectCommon, { SelectOptionValue } from "../SelectCommon/SelectCommon";
 import "./RecruiterProfile.scss";
-import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import { UserAccount } from "src/types/Type";
 import { useReduxDispatch } from "./../../redux/redux-hook";
+import { ButtonCommon, InputCommon, SelectCommon } from "src/common";
+import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
 const test: SelectOptionValue[] = [
 	{
 		key: "HCM",

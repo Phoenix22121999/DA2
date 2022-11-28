@@ -1,4 +1,4 @@
-import { SelectOptionValue } from "src/components/SelectCommon/SelectCommon";
+import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
 
 export const API_URL =
 	process.env.NODE_ENV === "production"

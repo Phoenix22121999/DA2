@@ -7,24 +7,26 @@ import {
 	formValueToUpdatePostParameters,
 	sliderFormatter,
 } from "src/utils/function";
-import InputCommon from "../InputCommon/InputCommon";
 import { NewPostFormStepOne, salaryMarks } from "../PostJob/StepOne/StepOne";
-import SelectCommon from "../SelectCommon/SelectCommon";
-import { RangeSliderCommon } from "../SliderCommon/SliderCommon";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import {
 	selectEditPostData,
 	selectEditPostID,
 	selectEditPostStatus,
 } from "src/redux/slice/EditPostSlice";
-import ButtonCommon from "../ButtonCommon/ButtonCommon";
 import "./EditPost.scss";
 import { getPostDetail, updatePost } from "src/redux/slice/PostSlide";
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
 import { CallbackFunction } from "src/types/UtilType";
 import { useNavigate } from "react-router-dom";
-import LoadingCommon from "./../LoadingCommon/LoadingCommon";
 import useGetStatictisOption from "src/hooks/useGetStatictisOption";
+import {
+	ButtonCommon,
+	InputCommon,
+	LoadingCommon,
+	RangeSliderCommon,
+	SelectCommon,
+} from "src/common";
 type Props = {};
 
 const EditPost = (props: Props) => {

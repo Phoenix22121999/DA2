@@ -5,9 +5,10 @@ import { useCheckUserAuth } from "src/hooks/useCheckUserAuth";
 import "./AdminDashboard.scss";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import AdminDashboardSidebar from "src/components/AdminDashboardSidebar/AdminDashboardSidebar";
+import LoadingCommon from "src/common/LoadingCommon/LoadingCommon";
 type Props = {};
 const { Sider, Content } = Layout;
-export const AdminDashboard = (props: Props) => {
+const AdminDashboard = (props: Props) => {
 	const navigate = useNavigate();
 
 	const isAuth = useCheckUserAuth(1);
@@ -83,8 +84,16 @@ export const AdminDashboard = (props: Props) => {
 								</div>
 							</div>
 							<div className="admin-dashboard-content dashboard-content-common">
-								{" "}
-								<Outlet />
+								<React.Suspense
+									fallback={
+										<div className="loading-page">
+											<LoadingCommon loading />
+										</div>
+									}
+								>
+									{" "}
+									<Outlet />
+								</React.Suspense>
 							</div>
 						</Content>
 					</Layout>
@@ -93,3 +102,5 @@ export const AdminDashboard = (props: Props) => {
 		</div>
 	);
 };
+
+export default AdminDashboard;

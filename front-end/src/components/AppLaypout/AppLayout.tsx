@@ -6,6 +6,7 @@ import Footer from "../Footer/Footer";
 import { Outlet } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
+import { LoadingCommon } from "./../../common/index";
 export interface HeaderProps {}
 
 export function AppLayout(props: HeaderProps) {
@@ -14,9 +15,17 @@ export function AppLayout(props: HeaderProps) {
 			<CookiesProvider>
 				<ScrollToTop />
 				<AppHeader />
-				<AppContents>
-					<Outlet />
-				</AppContents>
+				<React.Suspense
+					fallback={
+						<div className="loading-page">
+							<LoadingCommon loading />
+						</div>
+					}
+				>
+					<AppContents>
+						<Outlet />
+					</AppContents>
+				</React.Suspense>
 				<Footer />
 			</CookiesProvider>
 		</div>

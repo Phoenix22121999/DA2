@@ -1,11 +1,9 @@
 import React from "react";
-import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
-import TooltipCommon from "src/components/TooltipCommon/TooltipCommon";
 import { JobType } from "src/types/Type";
 import { ToolOutlined, DeleteOutlined } from "@ant-design/icons";
 import { deleteJobType } from "src/redux/slice/JobTypeSlide";
 import { useReduxDispatch } from "src/redux/redux-hook";
-import PopconfirmCommon from "src/components/PopconfirmCommon/PopconfirmCommon";
+import { ButtonCommon, PopconfirmCommon, TooltipCommon } from "src/common";
 
 type Props = {
 	record: JobType;

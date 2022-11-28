@@ -2,11 +2,11 @@ import { StepProps } from "antd";
 import React from "react";
 import { useReduxSelector } from "src/redux/redux-hook";
 import { selectSignUpCurentStep } from "src/redux/slice/SignUpSlice";
-import StepsCommon from "../StepsCommon/StepsCommon";
 import SignUpStepOne from "./SignUpStepOne/SignUpStepOne";
 import SignUpStepTwo from "./SignUpStepTwo/SignUpStepTwo";
 import "./SignUpContent.scss";
 import SignUpStepThree from "./SignUpStepThree/SignUpStepThree";
+import { StepsCommon } from "src/common";
 type Props = {};
 const steps = [
 	{

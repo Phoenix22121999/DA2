@@ -2,11 +2,7 @@ import React from "react";
 import { Checkbox, Form } from "antd";
 
 import "./SignUpStepOne.scss";
-import InputCommon, {
-	InputPasswordCommon,
-} from "./../../InputCommon/InputCommon";
-import SelectCommon from "src/components/SelectCommon/SelectCommon";
-import ButtonCommon from "./../../ButtonCommon/ButtonCommon";
+
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import {
 	nextSignUpStep,
@@ -15,6 +11,12 @@ import {
 } from "src/redux/slice/SignUpSlice";
 import { OptionalSignUpParameters } from "src/types/AuthType";
 import { USER_TYPE_OPTION } from "src/utils/contants";
+import {
+	ButtonCommon,
+	InputCommon,
+	InputPasswordCommon,
+	SelectCommon,
+} from "src/common";
 type Props = {};
 type SignUpStepOneForm = {
 	user_name: string;

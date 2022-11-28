@@ -1,7 +1,7 @@
 import { Input } from "antd";
 import React from "react";
+import { ButtonCommon } from "src/common";
 import "./Footer.scss";
-import ButtonCommon from "./../ButtonCommon/ButtonCommon";
 type Props = {};
 
 const Footer = (props: Props) => {

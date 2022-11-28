@@ -1,5 +1,5 @@
 import React from "react";
-import InputCommon from "../../InputCommon/InputCommon";
+import InputCommon from "../../../common/InputCommon/InputCommon";
 import { SearchOutlined } from "@ant-design/icons";
 
 type Props = {

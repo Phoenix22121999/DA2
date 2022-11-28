@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Form } from "antd";
-import SelectCommon from "src/components/SelectCommon/SelectCommon";
 import { GENDER_OPTION } from "src/utils/contants";
 import "./SignUpStepTwo.scss";
-import InputCommon from "./../../InputCommon/InputCommon";
-import InputNumberCommon from "src/components/InputNumberCommon/InputNumberCommon";
-import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import {
 	nextSignUpStep,
@@ -15,6 +11,12 @@ import {
 } from "src/redux/slice/SignUpSlice";
 import { OptionalSignUpParameters } from "src/types/AuthType";
 import { signUp } from "src/redux/slice/UserSilce";
+import {
+	ButtonCommon,
+	InputCommon,
+	InputNumberCommon,
+	SelectCommon,
+} from "src/common";
 type Props = {};
 
 type SignInStepTwoForm = {

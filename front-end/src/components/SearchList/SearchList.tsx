@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import "./SearchList.scss";
 import SearchListSort from "./SearchListSort/SearchListSort";
 import SearchListItem from "./SearchListItem/SearchListItem";
-import PaginationCommon from "../PaginationCommon/PaginationCommon";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import {
 	searchPost,
 	selectSearchPostList,
 	selectSearchTotal,
 } from "src/redux/slice/SearchPostSlide";
+import { PaginationCommon } from "src/common";
 type Props = {};
 
 const SearchList = (props: Props) => {

@@ -2,7 +2,7 @@ import React from "react";
 import {
 	ButtonRadioGroupCommon,
 	RadioValue,
-} from "src/components/ButtonRadioGroupCommon/ButtonRadioGroupCommon";
+} from "src/common/ButtonRadioGroupCommon/ButtonRadioGroupCommon";
 import "./SearchDatePost.scss";
 type Props = {};
 

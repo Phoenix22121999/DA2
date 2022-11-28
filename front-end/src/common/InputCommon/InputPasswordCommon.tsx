@@ -3,20 +3,11 @@ import React from "react";
 import "./InputCommon.scss";
 interface Props extends InputProps {}
 
-const InputCommon = (props: Props) => {
-	return (
-		<div className="input-common">
-			<Input {...props} />
-		</div>
-	);
-};
-
-export const InputPasswordCommon = (props: Props) => {
+const InputPasswordCommon = (props: Props) => {
 	return (
 		<div className="input-common">
 			<Input.Password {...props} />
 		</div>
 	);
 };
-
-export default InputCommon;
+export default InputPasswordCommon;

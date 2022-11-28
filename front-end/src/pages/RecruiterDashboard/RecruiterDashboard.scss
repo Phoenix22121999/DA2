@@ -21,16 +21,16 @@
 	}
 }
 
-// .dashboard-sidebar-common {
-// 	padding-top: 5rem;
-// 	position: absolute;
-// 	top: 0;
-// 	left: 0;
-// 	width: 100%;
-// 	height: calc(100vh - 27rem);
-// 	background-color: v.$primary-color;
-// 	z-index: 3;
-// }
-// .dashboard-content-common {
-// 	width: 100%;
-// }
+.sidebar-toggle {
+	width: 100%;
+	height: 6rem;
+	display: flex;
+	padding: 0 2rem;
+	justify-content: flex-start;
+	align-items: center;
+	@include v.text-2xl;
+	color: v.$primary-background;
+	.sidebar-toggle-icon {
+		cursor: pointer;
+	}
+}

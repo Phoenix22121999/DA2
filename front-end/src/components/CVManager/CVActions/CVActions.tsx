@@ -1,6 +1,4 @@
 import React from "react";
-import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
-import TooltipCommon from "src/components/TooltipCommon/TooltipCommon";
 import { CV } from "src/types/Type";
 import {
 	ToolOutlined,
@@ -8,9 +6,9 @@ import {
 	EyeOutlined,
 	DownloadOutlined,
 } from "@ant-design/icons";
-import PopconfirmCommon from "./../../PopconfirmCommon/PopconfirmCommon";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { deleteCV, downloadCV } from "src/redux/slice/CVSlide";
+import { ButtonCommon, PopconfirmCommon, TooltipCommon } from "src/common";
 
 type Props = {
 	record: CV;

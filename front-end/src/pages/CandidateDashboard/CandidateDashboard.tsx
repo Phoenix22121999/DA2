@@ -5,9 +5,10 @@ import CandidateDashboardSidebar from "src/components/CandidateDashboardSidebar/
 import { useCheckUserAuth } from "src/hooks/useCheckUserAuth";
 import "./CandidateDashboard.scss";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import LoadingCommon from "src/common/LoadingCommon/LoadingCommon";
 type Props = {};
 const { Sider, Content } = Layout;
-export const CandidateDashboard = (props: Props) => {
+const CandidateDashboard = (props: Props) => {
 	const navigate = useNavigate();
 
 	const isAuth = useCheckUserAuth(2);
@@ -85,8 +86,16 @@ export const CandidateDashboard = (props: Props) => {
 								</div>
 							</div>
 							<div className="candidate-dashboard-content dashboard-content-common">
-								{" "}
-								<Outlet />
+								<React.Suspense
+									fallback={
+										<div className="loading-page">
+											<LoadingCommon loading />
+										</div>
+									}
+								>
+									{" "}
+									<Outlet />
+								</React.Suspense>
 							</div>
 						</Content>
 					</Layout>
@@ -95,3 +104,5 @@ export const CandidateDashboard = (props: Props) => {
 		</div>
 	);
 };
+
+export default CandidateDashboard;

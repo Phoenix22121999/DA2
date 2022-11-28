@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { RangeSliderCommon } from "src/components/SliderCommon/SliderCommon";
 import type { SliderMarks } from "antd/es/slider";
-import InputNumberCommon from "src/components/InputNumberCommon/InputNumberCommon";
+import InputNumberCommon from "src/common/InputNumberCommon/InputNumberCommon";
 import "./SearchSalary.scss";
 import { inputNumberParser, sliderFormatter } from "src/utils/function";
 import { inputNumberFormatter } from "./../../../utils/function";
+import { RangeSliderCommon } from "src/common";
 type SearchSalaryProps = {
 	handleChange: (value: [number, number]) => void;
 };

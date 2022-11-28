@@ -5,10 +5,11 @@ import RecruiterDashboardSidebar from "src/components/RecruiterDashboardSidebar/
 import { useCheckUserAuth } from "src/hooks/useCheckUserAuth";
 import "./RecruiterDashboard.scss";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import LoadingCommon from "src/common/LoadingCommon/LoadingCommon";
 type Props = {};
 const { Sider, Content } = Layout;
 
-export const RecruiterDashboard = (props: Props) => {
+const RecruiterDashboard = (props: Props) => {
 	const navigate = useNavigate();
 
 	const isAuth = useCheckUserAuth(3);
@@ -86,8 +87,16 @@ export const RecruiterDashboard = (props: Props) => {
 								</div>
 							</div>
 							<div className="recruiter-dashboard-content dashboard-content-common">
-								{" "}
-								<Outlet />
+								<React.Suspense
+									fallback={
+										<div className="loading-page">
+											<LoadingCommon loading />
+										</div>
+									}
+								>
+									{" "}
+									<Outlet />
+								</React.Suspense>
 							</div>
 						</Content>
 					</Layout>
@@ -96,3 +105,5 @@ export const RecruiterDashboard = (props: Props) => {
 		</div>
 	);
 };
+
+export default RecruiterDashboard;

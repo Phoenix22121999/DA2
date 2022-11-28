@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Majors } from "src/types/Type";
 import { Form, message } from "antd";
 import "./RenameMajorModal.scss";
-import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { CallbackFunction } from "src/types/UtilType";
-import InputCommon from "src/components/InputCommon/InputCommon";
 import { updateMajor } from "src/redux/slice/MajorSlide";
+import { ButtonCommon, InputCommon } from "src/common";
 type Props = {
 	edited?: Majors;
 	onClose: () => void;

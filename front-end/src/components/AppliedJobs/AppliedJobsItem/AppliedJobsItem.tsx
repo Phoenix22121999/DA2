@@ -1,7 +1,6 @@
 import React from "react";
 import "./AppliedJobsItem.scss";
 import TEST_LOGO from "../../../assets/images/logo.png";
-import ButtonCommon from "../../ButtonCommon/ButtonCommon";
 
 import {
 	ClockCircleOutlined,
@@ -9,7 +8,7 @@ import {
 	DollarOutlined,
 	BookOutlined,
 } from "@ant-design/icons";
-import TagCommon from "src/components/TagCommon/TagCommon";
+import { ButtonCommon, TagCommon } from "src/common";
 
 export type AppliedJobsItemProps = {
 	logo: string;

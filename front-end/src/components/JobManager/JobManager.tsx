@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./JobManager.scss";
-import TableCommon, { ColumnCommon } from "./../TableCommon/TableCommon";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import { getListPostByUser, selectPostList } from "src/redux/slice/PostSlide";
-import ButtonCommon from "./../ButtonCommon/ButtonCommon";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "src/utils/contants";
 import JobActions from "./JobActions/JobActions";
 import { RecruitmentPost } from "src/types/Type";
+import { ButtonCommon, TableCommon } from "src/common";
+import { ColumnCommon } from "src/common/TableCommon/TableCommon";
 type Props = {};
 
 const JobManager = (props: Props) => {

@@ -2,7 +2,7 @@ import React from "react";
 import "./Recruitment.scss";
 import RecruiterImage from "../../assets/images/good-job.jpg";
 import CandidateImage from "../../assets/images/word.jpg";
-import ButtonCommon from "../ButtonCommon/ButtonCommon";
+import { ButtonCommon } from "src/common";
 type RecruitmentProps = {};
 
 const Recruitment = (props: RecruitmentProps) => {

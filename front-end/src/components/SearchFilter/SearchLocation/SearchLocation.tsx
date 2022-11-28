@@ -1,7 +1,6 @@
 import React from "react";
-import SelectCommon, {
-	SelectOptionValue,
-} from "src/components/SelectCommon/SelectCommon";
+import { SelectCommon } from "src/common";
+import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
 
 type Props = {};
 

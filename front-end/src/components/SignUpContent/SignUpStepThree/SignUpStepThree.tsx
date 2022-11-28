@@ -1,8 +1,6 @@
 import React from "react";
 import "./SignUpStepThree.scss";
-import LoadingCommon from "./../../LoadingCommon/LoadingCommon";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
-import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import {
 	resetSignUp,
@@ -10,6 +8,7 @@ import {
 	setCurrentSignUpStep,
 } from "src/redux/slice/SignUpSlice";
 import { useNavigate } from "react-router-dom";
+import { ButtonCommon, LoadingCommon } from "src/common";
 type Props = {};
 
 const SignUpStepThree = (props: Props) => {

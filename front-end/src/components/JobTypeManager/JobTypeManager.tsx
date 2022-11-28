@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { ButtonCommon, ModalCommon, TableCommon } from "src/common";
+import { ColumnCommon } from "src/common/TableCommon/TableCommon";
 import { useModal } from "src/hooks/useModal";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import {
@@ -6,9 +8,6 @@ import {
 	selectJobTypeList,
 } from "src/redux/slice/JobTypeSlide";
 import { JobType } from "src/types/Type";
-import ButtonCommon from "../ButtonCommon/ButtonCommon";
-import ModalCommon from "../ModalCommon/ModalCommon";
-import TableCommon, { ColumnCommon } from "../TableCommon/TableCommon";
 import AddJobTypeModal from "./AddJobTypeModal/AddJobTypeModal";
 import JobTypeActions from "./JobTypeActions/JobTypeActions";
 import RenameJobTypeModal from "./RenameJobTypeModal/RenameJobTypeModal";

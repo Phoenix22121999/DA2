@@ -1,7 +1,7 @@
 import React from "react";
+import { ButtonCommon, SelectCommon } from "src/common";
+import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
 import "./SearchBar.scss";
-import SelectCommon, { SelectOptionValue } from "../SelectCommon/SelectCommon";
-import ButtonCommon from "../ButtonCommon/ButtonCommon";
 
 type SearchBarProps = {};
 

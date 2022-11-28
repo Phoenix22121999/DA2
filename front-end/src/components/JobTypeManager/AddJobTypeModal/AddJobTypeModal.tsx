@@ -3,9 +3,8 @@ import React from "react";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { createJobType } from "src/redux/slice/JobTypeSlide";
 import { CallbackFunction } from "src/types/UtilType";
-import InputCommon from "src/components/InputCommon/InputCommon";
-import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
 import { CreateJobTypeParameters } from "src/types/JobTypeType";
+import { ButtonCommon, InputCommon } from "src/common";
 
 type Props = {
 	onClose: () => void;

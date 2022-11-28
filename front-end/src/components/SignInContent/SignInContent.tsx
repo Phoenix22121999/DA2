@@ -2,14 +2,12 @@ import { Checkbox, Form, message } from "antd";
 import React from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { ButtonCommon, InputCommon, InputPasswordCommon } from "src/common";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { signIn } from "src/redux/slice/UserSilce";
 import { BaseReponseType } from "src/types/ApiType";
 import { AuthUser } from "src/types/AuthType";
 import { COOKIES_NAME } from "src/utils/contants";
-import ButtonCommon from "../ButtonCommon/ButtonCommon";
-import InputCommon from "../InputCommon/InputCommon";
-import { InputPasswordCommon } from "./../InputCommon/InputCommon";
 import "./SignInContent.scss";
 type Props = {};
 type SignUpForm = {

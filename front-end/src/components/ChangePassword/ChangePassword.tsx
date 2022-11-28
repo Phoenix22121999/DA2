@@ -1,11 +1,10 @@
 import { Form, message } from "antd";
 import React from "react";
-import { InputPasswordCommon } from "../InputCommon/InputCommon";
-import ButtonCommon from "./../ButtonCommon/ButtonCommon";
 import { ChangePasswordParameters } from "src/types/AuthType";
 import { useReduxDispatch } from "./../../redux/redux-hook";
 import { changePasswordAction } from "./../../redux/slice/UserSilce";
 import { CallbackFunction } from "src/types/UtilType";
+import { ButtonCommon, InputPasswordCommon } from "src/common";
 
 type Props = {};
 

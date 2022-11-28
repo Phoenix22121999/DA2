@@ -1,5 +1,5 @@
 import React from "react";
-import SwitchCommon from "src/components/SwitchCommon/SwitchCommon";
+import { SwitchCommon } from "src/common";
 import "./JobTypeItem.scss";
 export type JobTypeItemProps = {
 	name: string;

@@ -3,48 +3,50 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
 import "./styles/theme.scss";
 import { AppLayout } from "./components/AppLaypout/AppLayout";
-import Home from "./pages/Home/Home";
-import Search from "./pages/Search/Search";
-import { CandidateDashboard } from "./pages/CandidateDashboard/CandidateDashboard";
 import CVManager from "./components/CVManager/CVManager";
 import ChangePassword from "./components/ChangePassword/ChangePassword";
 import AppliedJobs from "./components/AppliedJobs/AppliedJobs";
-import { RecruiterDashboard } from "./pages/RecruiterDashboard/RecruiterDashboard";
 import CadidateProfile from "./components/CadidateProfile/CandidateProfile";
 import RecruiterProfile from "./components/RecruiterProfile/RecruiterProfile";
 import JobManager from "./components/JobManager/JobManager";
 import AllApplicant from "./components/AllApplicant/AllApplicant";
 import JobPostDetail from "./pages/JobPostDetail/JobPostDetail";
 import PostJob from "./components/PostJob/PostJob";
-import SignUp from "./pages/SignUp/SignUp";
-import SignIn from "./pages/SignIn/SignIn";
 import { pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import EditPost from "./components/EditPost/EditPost";
-import { AdminDashboard } from "./pages/AdminDashboard/AdminDashboard";
 import AccountTypeManager from "./components/AccountTypeManager/AccountTypeManager";
 import JobTypeManager from "./components/JobTypeManager/JobTypeManager";
 import MajorManager from "./components/MajorManager/MajorManager";
 import Test from "./pages/Test/Test";
+import {
+	AdminDashboardPage,
+	CandidateDashboardPage,
+	HomePage,
+	RecruiterDashboardPage,
+	SearchPage,
+	SignInPage,
+	SignUpPage,
+} from "./pages";
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <AppLayout />,
 		children: [
-			{ path: "/", element: <Home />, index: true },
+			{ path: "/", element: <HomePage />, index: true },
 			{ path: "test", element: <Test /> },
 			{
 				path: "search",
-				element: <Search />,
+				element: <SearchPage />,
 			},
 			{
 				path: "sign-up",
-				element: <SignUp />,
+				element: <SignUpPage />,
 			},
 			{
 				path: "sign-in",
-				element: <SignIn />,
+				element: <SignInPage />,
 			},
 			{
 				path: "post-detail/:postID",
@@ -52,7 +54,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "admin",
-				element: <AdminDashboard />,
+				element: <AdminDashboardPage />,
 				children: [
 					{
 						path: "account-type",
@@ -70,7 +72,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "cadidate",
-				element: <CandidateDashboard />,
+				element: <CandidateDashboardPage />,
 				children: [
 					{
 						path: "profile",
@@ -92,7 +94,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "recruiter",
-				element: <RecruiterDashboard />,
+				element: <RecruiterDashboardPage />,
 				children: [
 					{
 						path: "profile",

@@ -37,3 +37,4 @@ export const ButtonRadioGroupCommon = ({ data, className }: Props) => {
 		</div>
 	);
 };
+export default ButtonRadioGroupCommon;

@@ -1,6 +1,5 @@
 import { StepProps } from "antd";
 import React from "react";
-import StepsCommon from "../StepsCommon/StepsCommon";
 import { useReduxSelector } from "src/redux/redux-hook";
 import {
 	selectNewPostCurentStep,
@@ -10,6 +9,7 @@ import { useReduxDispatch } from "./../../redux/redux-hook";
 import StepOne from "./StepOne/StepOne";
 import StepTwo from "./StepTwo/StepTwo";
 import StepThree from "./StepThree/StepThree";
+import { StepsCommon } from "src/common";
 type Props = {};
 const steps = [
 	{

@@ -4,9 +4,9 @@ import FeaturesJobItem, {
 } from "./FeaturesJobItem/FeaturesJobItem";
 import TEST_LOGO from "../../assets/images/logo.png";
 import "./FeaturesJob.scss";
-import ButtonCommon from "./../ButtonCommon/ButtonCommon";
 import { Link } from "react-router-dom";
 import { ROUTE } from "src/utils/contants";
+import { ButtonCommon } from "src/common";
 type Props = {};
 const FEATURES_JOB: FeaturesJobItemProps[] = [
 	{
