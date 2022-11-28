@@ -7,8 +7,20 @@ import { UserAccount } from "src/types/Type";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import { selectUserData, updateAccount } from "src/redux/slice/UserSilce";
 import { CallbackFunction } from "src/types/UtilType";
-import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
-import { ButtonCommon, InputCommon, SelectCommon } from "src/common";
+import SelectCommon, {
+	SelectOptionValue,
+} from "src/common/SelectCommon/SelectCommon";
+// import {
+// 	ButtonCommon,
+// 	InputCommon,
+// 	InputNumberCommon,
+// 	SelectCommon,
+// } from "src/common";
+import SelectLocation from "../SelectLocation/SelectLocation";
+import { GENDER_OPTION } from "src/utils/contants";
+import InputCommon from "src/common/InputCommon/InputCommon";
+import InputNumberCommon from "src/common/InputNumberCommon/InputNumberCommon";
+import { ButtonCommon, TagCommon } from "src/common";
 const test: SelectOptionValue[] = [
 	{
 		key: "HCM",
@@ -54,41 +66,118 @@ const CadidateProfile = (props: Props) => {
 				<div className="avatar">
 					<ProfileAvatar />
 				</div>
-				<div className="profile-form">
-					<Form<UserAccount>
-						form={form}
-						layout="vertical"
-						initialValues={data}
-						// onValuesChange={handleOnValuesChange}
-					>
-						<Form.Item label="First Name" name={"first_name"}>
-							<InputCommon />
-						</Form.Item>
-						<Form.Item label="Last Name" name={"last_name"}>
-							<InputCommon />
-						</Form.Item>
-						<Form.Item label="Email" name={"email"}>
-							<InputCommon />
-						</Form.Item>
-						<Form.Item label="Numberphone" name={"number_phone"}>
-							<InputCommon />
-						</Form.Item>
-						<Form.Item label="Address" name={"address"}>
-							<InputCommon />
-						</Form.Item>
-						<Form.Item label="City">
-							<SelectCommon data={test} />
-						</Form.Item>
-						<Form.Item label="District">
-							<SelectCommon data={test} />
-						</Form.Item>
-					</Form>
-					<div className="button-form">
-						<ButtonCommon size="small" onClick={onUpdate}>
-							Update
-						</ButtonCommon>
+				<React.Suspense fallback={<div>loading</div>}>
+					<div className="profile-form">
+						<Form<UserAccount>
+							form={form}
+							layout="vertical"
+							initialValues={data}
+							// onValuesChange={handleOnValuesChange}
+						>
+							<Form.Item
+								label="First Name"
+								name={"first_name"}
+								hasFeedback
+								rules={[
+									{
+										required: true,
+										message:
+											"Please input your first name!",
+									},
+								]}
+							>
+								<InputCommon />
+							</Form.Item>
+							<Form.Item
+								label="Last Name"
+								name={"last_name"}
+								hasFeedback
+								rules={[
+									{
+										required: true,
+										message: "Please input your last name!",
+									},
+								]}
+							>
+								<InputCommon />
+							</Form.Item>
+							<Form.Item
+								label="Email"
+								name={"email"}
+								hasFeedback
+								rules={[
+									{
+										required: true,
+										message: "Please input your email!",
+									},
+									{
+										pattern: new RegExp(
+											"([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \\t]|(\\[\\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\\t -Z^-~]*])"
+										),
+										message: "Please input validate email!",
+									},
+								]}
+							>
+								<InputCommon />
+							</Form.Item>
+							<Form.Item
+								label="Number Phone"
+								name={"number_phone"}
+								hasFeedback
+								rules={[
+									{
+										required: true,
+										message:
+											"Please input your number phone!",
+									},
+								]}
+							>
+								<InputCommon />
+							</Form.Item>
+							<Form.Item
+								label="Age"
+								name={"age"}
+								hasFeedback
+								rules={[
+									{
+										required: true,
+										message: "Please input your age!",
+									},
+								]}
+							>
+								<InputNumberCommon min={1} />
+							</Form.Item>
+							<Form.Item
+								label="Gender"
+								name={"gender"}
+								hasFeedback
+								rules={[
+									{
+										required: true,
+										message: "Please input your gender!",
+									},
+								]}
+							>
+								<SelectCommon data={GENDER_OPTION} />
+							</Form.Item>
+							<SelectLocation
+								initialValue={{
+									city_id: data.city_id,
+									district_id: data.district_id,
+									ward_id: data.ward_id,
+								}}
+							/>
+							<Form.Item label="Address" name={"address"}>
+								<InputCommon />
+							</Form.Item>
+						</Form>
+						<div className="button-form">
+							<ButtonCommon size="small" onClick={onUpdate}>
+								Update
+							</ButtonCommon>
+						</div>
 					</div>
-				</div>
+				</React.Suspense>
 			</div>
 		</div>
 	);

@@ -17,7 +17,7 @@ export function AppLayout(props: HeaderProps) {
 				<AppHeader />
 				<React.Suspense
 					fallback={
-						<div className="loading-page">
+						<div className="loading-page-full">
 							<LoadingCommon loading />
 						</div>
 					}

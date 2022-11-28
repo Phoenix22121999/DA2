@@ -17,6 +17,7 @@ import {
 	InputNumberCommon,
 	SelectCommon,
 } from "src/common";
+import SelectLocation from "src/components/SelectLocation/SelectLocation";
 type Props = {};
 
 type SignInStepTwoForm = {
@@ -158,7 +159,7 @@ const SignUpStepTwo = (props: Props) => {
 								},
 							]}
 						>
-							<InputNumberCommon />
+							<InputNumberCommon min={1} />
 						</Form.Item>
 						<Form.Item
 							label="Gender"
@@ -175,7 +176,13 @@ const SignUpStepTwo = (props: Props) => {
 						</Form.Item>
 					</>
 				)}
-
+				<SelectLocation
+					initialValue={{
+						city_id: data.city_id,
+						district_id: data.district_id,
+						ward_id: data.ward_id,
+					}}
+				/>
 				<Form.Item
 					label="Address"
 					name={"address"}

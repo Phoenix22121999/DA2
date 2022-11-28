@@ -117,7 +117,7 @@ const signInWithToken = async (req, res) => {
 				id: Number(user_id),
 			},
 		});
-		// console.log(resultSignIn[0]);
+		console.log(resultSignIn[0]);
 		// Nếu không có kết quả trả về là không tồn tại tài khoản này
 		if (!resultSignIn && !resultSignIn.length) {
 			return res.json({
@@ -200,12 +200,12 @@ const signUp = async (req, res) => {
 					full_name: full_name,
 					email: email,
 					number_phone: number_phone,
-					age: age,
-					gender: gender,
+					age: age && Number(age),
+					gender: gender && Number(gender),
 					address: address,
-					city_id: city_id,
-					district_id: district_id,
-					ward_id: ward_id,
+					city_id: city_id && Number(city_id),
+					district_id: district_id && Number(district_id),
+					ward_id: ward_id && Number(ward_id),
 					avartar: avartar,
 					user_type: user_type,
 					logo: logo,
@@ -281,12 +281,12 @@ const update = async (req, res) => {
 					full_name: full_name,
 					email: email,
 					number_phone: number_phone,
-					age: age,
-					gender: gender,
+					age: age && Number(age),
+					gender: gender && Number(gender),
 					address: address,
-					city_id: city_id,
-					district_id: district_id,
-					ward_id: ward_id,
+					city_id: city_id && Number(city_id),
+					district_id: district_id && Number(district_id),
+					ward_id: ward_id && Number(ward_id),
 					avartar: avartar,
 					logo: logo,
 				},

@@ -44,7 +44,7 @@ const SignUpStepOne = (props: Props) => {
 
 	return (
 		<div className="step-one">
-			<Form form={form} layout="vertical" initialValues={data || null}>
+			<Form form={form} layout="vertical" initialValues={data}>
 				<Form.Item
 					label="Username"
 					name={"user_name"}

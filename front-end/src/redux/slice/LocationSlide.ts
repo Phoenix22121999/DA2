@@ -75,8 +75,14 @@ export const LocationSlice = createSlice({
 			.addCase(getProvinces.fulfilled, (state, action) => {
 				state.provinces = action.payload.data!;
 			})
+			.addCase(getProvinces.pending, (state, action) => {
+				state.district = [];
+			})
 			.addCase(getDistrict.fulfilled, (state, action) => {
 				state.district = action.payload.data!;
+			})
+			.addCase(getDistrict.pending, (state, action) => {
+				state.ward = [];
 			})
 			.addCase(getWard.fulfilled, (state, action) => {
 				state.ward = action.payload.data!;
