@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RecruitmentPost } from "src/types/Type";
 import { RootState } from "../store";
-import { updatePost } from "./PostSlide";
+import { getPostDetail, updatePost } from "./PostSlide";
 
 export interface NewPostState {
 	data: RecruitmentPost | null;
@@ -32,6 +32,9 @@ export const newPostSlice = createSlice({
 		buider
 			.addCase(updatePost.pending, (state) => {
 				state.status = "loading";
+			})
+			.addCase(getPostDetail.fulfilled, (state, action) => {
+				state.data = action.payload.data!;
 			})
 			.addCase(updatePost.fulfilled, (state, action) => {
 				state.data = null;

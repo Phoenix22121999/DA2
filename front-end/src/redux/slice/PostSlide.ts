@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "src/apis/index.api";
-import { DeletePostParameters, UpdatePostParameters } from "src/types/PostType";
+import {
+	DeletePostParameters,
+	GetPostDetailParameters,
+	UpdatePostParameters,
+} from "src/types/PostType";
 import { RecruitmentPost } from "src/types/Type";
 import { ActionPayload } from "src/types/UtilType";
 import { RootState } from "../store";
@@ -28,17 +32,7 @@ export const createPost = createAsyncThunk(
 	async (action: ActionPayload<null>, { getState }) => {
 		const token = selectUserToken(getState() as RootState) || "";
 		const value = selectNewPostData(getState() as RootState);
-		const response = await api.postApi.createPost(
-			{
-				title: value.title,
-				content: value.content,
-				from_value: value.from_value,
-				to_value: value.to_value,
-				is_active: true,
-				is_delete: false,
-			},
-			token
-		);
+		const response = await api.postApi.createPost(value, token);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, null);
 		} else {
@@ -85,25 +79,27 @@ export const deletePost = createAsyncThunk(
 	}
 );
 
-// export const getListPost = createAsyncThunk(
-// 	"post/get-list",
-// 	async (action: ActionPayload, { getState }) => {
-// 		const response = await api.postApi.getListPost();
-// 		if (response.code !== 200) {
-// 			action.callback && action.callback(false, null);
-// 		} else {
-// 			action.callback && action.callback(true, null);
-// 		}
-// 		return response;
-// 		// The value we return becomes the `fulfilled` action payload
-// 	}
-// );
+export const getPostDetail = createAsyncThunk(
+	"post/get-detail",
+	async (action: ActionPayload<GetPostDetailParameters>, { getState }) => {
+		if (!action.payload) {
+			throw new Error("need payload");
+		}
+		const response = await api.postApi.getListDetail(action.payload);
+		if (response.code !== 200) {
+			action.callback && action.callback(false, null);
+		} else {
+			action.callback && action.callback(true, null);
+		}
+		return response;
+		// The value we return becomes the `fulfilled` action payload
+	}
+);
 
 export const getListPostByUser = createAsyncThunk(
 	"post/get-list-by-user",
 	async (action: ActionPayload, { getState }) => {
 		const token = selectUserToken(getState() as RootState) || "";
-		console.log(token);
 
 		const response = await api.postApi.getListPostByUser(token);
 		if (response.code !== 200) {

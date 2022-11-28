@@ -9,7 +9,7 @@ const validationCreate = require("../../Validation/Validation");
 // router.post('/sign-up', AccoutService.signUp)
 router.post(
 	"/",
-	checkToken,
+	// checkToken,
 	validationCreate,
 	AccoutTypeService.createAccountType
 ); //deleteAccountType

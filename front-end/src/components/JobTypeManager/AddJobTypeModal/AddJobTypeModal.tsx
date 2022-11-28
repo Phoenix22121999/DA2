@@ -29,7 +29,6 @@ const AddJobTypeModal = ({ onClose }: Props) => {
 	};
 	const onAdd = async () => {
 		const value = await form.validateFields();
-
 		dispatch(
 			createJobType({
 				payload: value,

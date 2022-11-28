@@ -67,6 +67,10 @@ export const GENDER_OPTION: SelectOptionValue[] = [
 	},
 	{
 		key: 3,
+		value: "Both",
+	},
+	{
+		key: 4,
 		value: "Other",
 	},
 ];

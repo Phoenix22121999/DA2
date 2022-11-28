@@ -4,6 +4,8 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { signIn } from "src/redux/slice/UserSilce";
+import { BaseReponseType } from "src/types/ApiType";
+import { AuthUser } from "src/types/AuthType";
 import { COOKIES_NAME } from "src/utils/contants";
 import ButtonCommon from "../ButtonCommon/ButtonCommon";
 import InputCommon from "../InputCommon/InputCommon";
@@ -18,16 +20,22 @@ type SignUpForm = {
 const SignInContent = (props: Props) => {
 	const [form] = Form.useForm();
 	const dispatch = useReduxDispatch();
-	const [, setCookies] = useCookies([COOKIES_NAME.ACCESS_TOKEN]);
+	const [, setCookies] = useCookies([
+		COOKIES_NAME.ACCESS_TOKEN,
+		COOKIES_NAME.USER,
+	]);
 	const natigate = useNavigate();
 
-	const callback = (isSuccess: boolean, data: string | undefined) => {
+	const callback = (isSuccess: boolean, data: BaseReponseType<AuthUser>) => {
 		const remember: boolean = form.getFieldValue("agree");
 		if (isSuccess) {
 			if (remember) {
 				var expires = new Date();
 				expires.setDate(expires.getDate() + 3);
-				setCookies(COOKIES_NAME.ACCESS_TOKEN, data, { expires });
+				setCookies(COOKIES_NAME.ACCESS_TOKEN, data.AccessToken, {
+					expires,
+				});
+				setCookies(COOKIES_NAME.USER, data.data, { expires });
 			}
 			message.success("Sign in success");
 			natigate("/");

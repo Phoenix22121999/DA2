@@ -44,7 +44,9 @@ export function inputNumberParser(
 			.replace(new RegExp("\\" + decimalSeparator), ".")
 	);
 }
-export const searchParameterBuilder = (searchParameter: SearchParameter) => {
+export const searchParameterBuilder = (
+	searchParameter: SearchParameter | { [key: string]: any } | Object
+) => {
 	const searchParams = new URLSearchParams(searchParameter as any);
 	return searchParams.toString();
 };

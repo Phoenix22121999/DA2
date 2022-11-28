@@ -45,12 +45,12 @@ export const signIn = createAsyncThunk(
 		}
 		const response = await api.authApi.signIn(action.payload);
 		if (response.code !== 200) {
-			action.callback && action.callback(false, response.AccessToken);
+			action.callback && action.callback(false, response);
 		} else {
 			response.data!.user_type_id = Number(
 				response.data?.user_type_id || 0
 			);
-			action.callback && action.callback(true, response.AccessToken);
+			action.callback && action.callback(true, response);
 		}
 		return response;
 		// The value we return becomes the `fulfilled` action payload
@@ -124,6 +124,10 @@ export const userSlice = createSlice({
 			state.data = action.payload.data || {};
 			state.AccessToken = action.payload.AccessToken;
 		},
+		addAccessToken: (state, action: PayloadAction<string>) => {
+			state.AccessToken = action.payload;
+		},
+
 		resetUser: (state) => {
 			state.AccessToken = undefined;
 			state.data = {};
@@ -156,7 +160,7 @@ export const userSlice = createSlice({
 	},
 });
 
-export const { updateUser, resetUser } = userSlice.actions;
+export const { updateUser, resetUser, addAccessToken } = userSlice.actions;
 export const selectUserData = (state: RootState) => state.user.data;
 export const selectUserToken = (state: RootState) => state.user.AccessToken;
 export const selectUserType = (state: RootState) =>

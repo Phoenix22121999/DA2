@@ -48,7 +48,6 @@ const RecruiterDashboardSidebar = ({ collapsed }: Props) => {
 		// navigate(`/recruiter/${path}`);
 		navigate(path);
 	};
-	console.log(collapsed);
 
 	return (
 		<div className="recruiter-dashboard-sidebar-content">

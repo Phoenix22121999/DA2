@@ -14,7 +14,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { COOKIES_NAME, ROUTE } from "src/utils/contants";
 import { useCookies } from "react-cookie";
 import { useReduxDispatch } from "src/redux/redux-hook";
-import { resetUser, signInWithToken } from "src/redux/slice/UserSilce";
+import {
+	resetUser,
+	signInWithToken,
+	updateUser,
+} from "src/redux/slice/UserSilce";
 import { useUserAuth } from "src/hooks/useUserAuth";
 import { resetSignUp } from "src/redux/slice/SignUpSlice";
 import { CallbackFunction } from "src/types/UtilType";
@@ -35,7 +39,10 @@ export const AppHeader = (props: HeaderProps) => {
 	const ref = useRef<HTMLDivElement>(null);
 	const [isMenuOpen, setIsMenuOpen] = useState<Boolean>(false);
 	const [first, setFirst] = useState(false);
-	const [cookies, , removeCookie] = useCookies([COOKIES_NAME.ACCESS_TOKEN]);
+	const [cookies, , removeCookie] = useCookies([
+		COOKIES_NAME.ACCESS_TOKEN,
+		COOKIES_NAME.USER,
+	]);
 	const { isAuth, user, accessToken } = useUserAuth();
 	const navidate = useNavigate();
 	const dispatch = useReduxDispatch();
@@ -87,6 +94,12 @@ export const AppHeader = (props: HeaderProps) => {
 			if (cookies[COOKIES_NAME.ACCESS_TOKEN]) {
 				if (!accessToken) {
 					dispatch(
+						updateUser({
+							data: cookies[COOKIES_NAME.USER],
+							AccessToken: cookies[COOKIES_NAME.ACCESS_TOKEN],
+						})
+					);
+					dispatch(
 						signInWithToken({
 							payload: cookies[COOKIES_NAME.ACCESS_TOKEN],
 							callback,
@@ -104,6 +117,7 @@ export const AppHeader = (props: HeaderProps) => {
 
 	const signOut = () => {
 		removeCookie(COOKIES_NAME.ACCESS_TOKEN);
+		removeCookie(COOKIES_NAME.USER);
 		dispatch(resetUser());
 	};
 

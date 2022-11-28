@@ -1,16 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { CreatePostParameters } from "src/types/PostType";
 import { RootState } from "../store";
 import { createPost } from "./PostSlide";
 
-export interface NewPostDataType {
-	content?: string;
-	to_value?: number;
-	from_value?: number;
-	job_type_id?: number;
-	majors_id?: number;
-	title?: string;
-	gender?: number;
-}
+export interface NewPostDataType extends Partial<CreatePostParameters> {}
 
 export interface NewPostState {
 	editID: number | null;
@@ -25,9 +18,11 @@ const initialState: NewPostState = {
 		content: "",
 		to_value: 0,
 		from_value: 0,
-		job_type_id: 1,
-		majors_id: 1,
+		list_job_type: [],
+		list_major: [],
 		gender: 1,
+		is_active: true,
+		is_delete: false,
 	},
 	editID: null,
 	currentStep: 0,
@@ -66,9 +61,11 @@ export const newPostSlice = createSlice({
 					content: "",
 					to_value: 0,
 					from_value: 0,
-					job_type_id: 1,
-					majors_id: 1,
+					list_job_type: [],
+					list_major: [],
 					gender: 1,
+					is_active: true,
+					is_delete: false,
 				};
 				state.status = "idle";
 			})

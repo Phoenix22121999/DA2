@@ -4,6 +4,7 @@ import { RecruitmentPost } from "src/types/Type";
 import {
 	CreatePostParameters,
 	DeletePostParameters,
+	GetPostDetailParameters,
 	UpdatePostParameters,
 } from "src/types/PostType";
 import { SearchParameter, SearchReponse } from "src/types/SearchType";
@@ -28,6 +29,11 @@ export class PostApi extends BaseApi {
 	}
 	async getListPostByUser(token: string) {
 		return this.authGet<{}, RecruitmentPost[]>("list-of-user", token, {});
+	}
+	async getListDetail(data: GetPostDetailParameters) {
+		const params = searchParameterBuilder(data);
+
+		return this.baseGet<{}, RecruitmentPost>(`?${params}`, {});
 	}
 	async updatePost(data: UpdatePostParameters, token: string) {
 		return this.authPut<UpdatePostParameters, RecruitmentPost>(

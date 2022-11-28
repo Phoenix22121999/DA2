@@ -19,8 +19,8 @@ const JobManager = (props: Props) => {
 		if (postList) {
 			if (first && postList.length < 1) {
 				dispatch(getListPostByUser({}));
-				setFirst(false);
 			}
+			setFirst(false);
 		}
 	}, [dispatch, first, postList]);
 

@@ -1,4 +1,4 @@
-import { RecruitmentPostWithUser } from "./Combine";
+import { RecruitmentPostWithUser } from "./CombineType";
 
 export type SearchParameter = {
 	key_word?: string;

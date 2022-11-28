@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import api from "src/apis/index.api";
-import { RecruitmentPostWithUser } from "src/types/Combine";
+import { RecruitmentPostWithUser } from "src/types/CombineType";
 import { SearchParameter } from "src/types/SearchType";
 import { ActionPayload } from "src/types/UtilType";
 import { RootState } from "../store";

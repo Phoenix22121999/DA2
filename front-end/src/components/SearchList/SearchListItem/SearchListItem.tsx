@@ -10,7 +10,7 @@ import {
 	BookOutlined,
 } from "@ant-design/icons";
 import TagCommon from "src/components/TagCommon/TagCommon";
-import { RecruitmentPostWithUser } from "src/types/Combine";
+import { RecruitmentPostWithUser } from "src/types/CombineType";
 import { inputNumberFormatter } from "./../../../utils/function";
 
 export interface SearchListItemProps extends RecruitmentPostWithUser {}
