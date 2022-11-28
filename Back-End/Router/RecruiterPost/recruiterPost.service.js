@@ -34,6 +34,14 @@ function exclude(obj, keys) {
 	return obj;
 }
 
+function arrayIntersection(arr1, arr2) {
+	return arr1.filter((x) => arr2.includes(x));
+}
+
+function arrayDifference(arr1, arr2) {
+	return arr1.filter((x) => !arr2.includes(x));
+}
+
 const getListPostOfUser = async (req, res) => {
 	try {
 		let { user_id = null, user_type_id = null } = req;
@@ -147,6 +155,10 @@ const getListPost = async (req, res) => {
 							},
 						},
 					},
+					where: {
+						is_delete: false,
+						is_active: true,
+					},
 				},
 				post_majors: {
 					select: {
@@ -157,6 +169,10 @@ const getListPost = async (req, res) => {
 								majors_name: true,
 							},
 						},
+					},
+					where: {
+						is_delete: false,
+						is_active: true,
 					},
 				},
 			},
@@ -281,10 +297,10 @@ const createPost = async (req, res) => {
 				gender: Number(gender),
 				is_active: is_active,
 				is_delete: is_delete,
-				job_types: {
+				post_job_types: {
 					create: list_job_type_array,
 				},
-				majors: {
+				post_majors: {
 					create: list_major_array,
 				},
 			},
@@ -340,6 +356,38 @@ const update = async (req, res) => {
 					},
 				],
 			},
+			include: {
+				post_job_types: {
+					select: {
+						id: true,
+						job_type: {
+							select: {
+								id: true,
+								job_type_name: true,
+							},
+						},
+					},
+					where: {
+						is_delete: false,
+						is_active: true,
+					},
+				},
+				post_majors: {
+					select: {
+						id: true,
+						majors: {
+							select: {
+								id: true,
+								majors_name: true,
+							},
+						},
+					},
+					where: {
+						is_delete: false,
+						is_active: true,
+					},
+				},
+			},
 		});
 		if (!isExists) {
 			return res.json({
@@ -348,6 +396,68 @@ const update = async (req, res) => {
 				message: "Không tìm thấy bài đăng này",
 			});
 		}
+		//major processing
+		const oldMajor = isExists.post_majors.map((post_majors) =>
+			Number(post_majors.majors.id)
+		);
+		const newMajor = list_major.map((item) => Number(item.majors_id));
+		const deleteMajor = arrayDifference(oldMajor, newMajor);
+		const updateOrCreateMajor = arrayDifference(newMajor, oldMajor);
+
+		const upsertMajor = updateOrCreateMajor.map((majors_id) => {
+			return {
+				where: {
+					majors_id: Number(majors_id),
+					post_id: Number(post_id),
+				},
+				update: {
+					is_delete: false,
+					is_active: true,
+				},
+				create: {
+					is_delete: false,
+					is_active: true,
+					majors: {
+						connect: {
+							id: Number(majors_id),
+						},
+					},
+				},
+			};
+		});
+		//end major processing
+		//job type processing
+		const oldJobType = isExists.post_job_types.map((post_job_type) =>
+			Number(post_job_type.job_type.id)
+		);
+		const newJobType = list_job_type.map((item) =>
+			Number(item.job_type_id)
+		);
+		const deleteJobType = arrayDifference(oldJobType, newJobType);
+		const updateOrCreateJobType = arrayDifference(newJobType, oldJobType);
+		const upsertJobType = updateOrCreateJobType.map((job_type_id) => {
+			return {
+				where: {
+					job_type_id: Number(job_type_id),
+					post_id: Number(post_id),
+				},
+				update: {
+					is_delete: false,
+					is_active: true,
+				},
+				create: {
+					is_delete: false,
+					is_active: true,
+					job_type: {
+						connect: {
+							id: Number(job_type_id),
+						},
+					},
+				},
+			};
+		});
+		//end job type processing
+
 		const resultUpdate = await prisma.Recruitment_Post.update({
 			where: {
 				id: Number(post_id),
@@ -360,6 +470,32 @@ const update = async (req, res) => {
 				update_date: new Date(moment(new Date()).format("YYYY-MM-DD")),
 				update_user: user_id,
 				gender: Number(gender),
+				post_job_types: {
+					updateMany: {
+						where: {
+							job_type_id: { in: deleteJobType },
+							post_id: Number(post_id),
+						},
+						data: {
+							is_delete: true,
+							is_active: false,
+						},
+					},
+					upsert: upsertJobType,
+				},
+				post_majors: {
+					updateMany: {
+						where: {
+							majors_id: { in: deleteMajor },
+							post_id: Number(post_id),
+						},
+						data: {
+							is_delete: true,
+							is_active: false,
+						},
+					},
+					upsert: upsertMajor,
+				},
 			},
 		});
 
@@ -370,74 +506,6 @@ const update = async (req, res) => {
 				messsage: "Cập nhật bài đăng thất bại",
 			});
 		}
-		// Danh sách tag loại công việc
-		if (list_job_type && list_job_type.length > 0) {
-			let arrayMap = (list_job_type || []).map((item) => {
-				return {
-					...item,
-					is_delete: false,
-					is_active: true,
-					post_id: Number(post_id),
-				};
-			});
-			// Cập nhật thì sẽ xóa tạm các tag loại công việc của bài đăng đó
-			const resultDeleteTemp =
-				await prisma.recruitment_Post_Job_Type.updateMany({
-					where: { post_id: Number(post_id) },
-					data: {
-						is_active: false,
-						is_delete: true,
-					},
-				});
-
-			// Tiến hành tạo mới các tag loại công việc
-			const resultCreatePostJobType =
-				await prisma.recruitment_Post_Job_Type.createMany({
-					data: arrayMap,
-				});
-
-			if (!resultCreatePostJobType) {
-				return res.json({
-					code: 400,
-					status_resposse: false,
-					messsage: "Tạo loại công việc cho bài đăng thất bại",
-				});
-			}
-		}
-		// Danh sách ngành nghề
-		if (list_major && list_major.length > 0) {
-			let arrayMapMajors = (list_major || []).map((item) => {
-				return {
-					...item,
-					is_delete: false,
-					is_active: true,
-					post_id: Number(post_id),
-				};
-			});
-
-			// Xóa các tag nghành nghề đang được đính vào bài viết
-			const resultDeleteTemp =
-				await prisma.recruitment_Post_Majors.updateMany({
-					where: { post_id: Number(post_id) },
-					data: {
-						is_active: false,
-						is_delete: true,
-					},
-				});
-			// Tạo lại danh sách tag nghề nghiệp mới của bài viết
-			const resultCreatePostMajors =
-				await prisma.recruitment_Post_Majors.createMany({
-					data: arrayMapMajors,
-				});
-
-			if (!resultCreatePostMajors) {
-				return res.json({
-					code: 400,
-					status_resposse: false,
-					messsage: "Tạo nhóm nghề nghiệp cho bài đăng thất bại",
-				});
-			}
-		}
 
 		return res.json({
 			code: 200,
@@ -446,6 +514,7 @@ const update = async (req, res) => {
 			data: resultUpdate,
 		});
 	} catch (error) {
+		console.log(error);
 		return res.json({
 			code: 400,
 			status_resposse: false,
@@ -550,6 +619,10 @@ const getDetail = async (req, res) => {
 							},
 						},
 					},
+					where: {
+						is_delete: false,
+						is_active: true,
+					},
 				},
 				post_majors: {
 					select: {
@@ -560,6 +633,10 @@ const getDetail = async (req, res) => {
 								majors_name: true,
 							},
 						},
+					},
+					where: {
+						is_delete: false,
+						is_active: true,
 					},
 				},
 			},

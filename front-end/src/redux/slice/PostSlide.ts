@@ -35,6 +35,7 @@ export const createPost = createAsyncThunk(
 		const response = await api.postApi.createPost(value, token);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, null);
+			throw new Error(response.message);
 		} else {
 			action.callback && action.callback(true, null);
 		}
@@ -85,7 +86,7 @@ export const getPostDetail = createAsyncThunk(
 		if (!action.payload) {
 			throw new Error("need payload");
 		}
-		const response = await api.postApi.getListDetail(action.payload);
+		const response = await api.postApi.getPostDetail(action.payload);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, null);
 		} else {
@@ -141,9 +142,7 @@ export const PostSlice = createSlice({
 					});
 				}
 			})
-			// .addCase(getListPost.fulfilled, (state, action) => {
-			// 	state.data = action.payload.data!;
-			// })
+
 			.addCase(getListPostByUser.fulfilled, (state, action) => {
 				state.data = action.payload.data!;
 			});

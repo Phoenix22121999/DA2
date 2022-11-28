@@ -18,7 +18,7 @@ export type CreatePostParameters = {
 };
 
 export interface UpdatePostParameters
-	extends Omit<Partial<RecruitmentPost>, "id"> {
+	extends Omit<Partial<CreatePostParameters>, "id"> {
 	post_id: number;
 }
 

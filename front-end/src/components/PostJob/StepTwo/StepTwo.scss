@@ -2,19 +2,22 @@
 	padding: 2rem;
 }
 .step-two {
-	.editor {
-		margin: 4rem 0;
-		border: 1px solid black;
-		padding: 2px;
-		height: 400px;
-		overflow: auto;
-		width: 100%;
-		.ql-toolbar {
-			position: sticky;
-			top: 0;
-			z-index: 2;
-			left: 0;
-			background-color: #fff;
-		}
+}
+.editor {
+	margin: 4rem 0;
+	border: 1px solid black;
+	padding: 2px;
+	height: 400px;
+	overflow: auto;
+	width: 100%;
+	.quill {
+		height: 328px;
+	}
+	.ql-toolbar {
+		position: sticky;
+		top: 0;
+		z-index: 2;
+		left: 0;
+		background-color: #fff;
 	}
 }

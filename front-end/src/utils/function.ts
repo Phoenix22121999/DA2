@@ -1,3 +1,5 @@
+import { NewPostFormStepOne } from "src/components/PostJob/StepOne/StepOne";
+import { CreatePostParameters, UpdatePostParameters } from "src/types/PostType";
 import { SearchParameter } from "src/types/SearchType";
 
 export const serializeForm = (data: any) => {
@@ -49,4 +51,42 @@ export const searchParameterBuilder = (
 ) => {
 	const searchParams = new URLSearchParams(searchParameter as any);
 	return searchParams.toString();
+};
+
+export const formValueToCreatePostParameters = (
+	value: NewPostFormStepOne
+): Partial<CreatePostParameters> => {
+	return {
+		title: value.title,
+		from_value: value.salary[0],
+		to_value: value.salary[1],
+		gender: Number(value.gender),
+		list_job_type: value.jobTypeList.map((id) => {
+			return { job_type_id: id };
+		}),
+		list_major: value.majorList.map((id) => {
+			return { majors_id: id };
+		}),
+	};
+};
+
+export const formValueToUpdatePostParameters = (
+	id: number,
+	value: NewPostFormStepOne,
+	content: string
+): UpdatePostParameters => {
+	return {
+		post_id: id,
+		content: content,
+		title: value.title,
+		from_value: value.salary[0],
+		to_value: value.salary[1],
+		gender: Number(value.gender),
+		list_job_type: value.jobTypeList.map((id) => {
+			return { job_type_id: id };
+		}),
+		list_major: value.majorList.map((id) => {
+			return { majors_id: id };
+		}),
+	};
 };

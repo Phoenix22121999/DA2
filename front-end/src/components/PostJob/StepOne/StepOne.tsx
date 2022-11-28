@@ -1,22 +1,20 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React from "react";
 import { Form } from "antd";
-import SelectCommon, {
-	SelectOptionValue,
-} from "src/components/SelectCommon/SelectCommon";
+import SelectCommon from "src/components/SelectCommon/SelectCommon";
 import { GENDER_OPTION } from "src/utils/contants";
 import { RangeSliderCommon } from "src/components/SliderCommon/SliderCommon";
-import { sliderFormatter } from "src/utils/function";
+import {
+	formValueToCreatePostParameters,
+	sliderFormatter,
+} from "src/utils/function";
 import { SliderMarks } from "antd/lib/slider";
 import "./StepOnes.scss";
 import InputCommon from "src/components/InputCommon/InputCommon";
 import ButtonCommon from "src/components/ButtonCommon/ButtonCommon";
-import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
+import { useReduxDispatch } from "src/redux/redux-hook";
 import { nextStep, updateNewPost } from "src/redux/slice/NewPostSlice";
-import {
-	getListJobType,
-	selectJobTypeList,
-} from "src/redux/slice/JobTypeSlide";
-import { getListMajor, selectMajorList } from "src/redux/slice/MajorSlide";
+
+import useGetStatictisOption from "src/hooks/useGetStatictisOption";
 type Props = {};
 
 export const salaryMarks: SliderMarks = {
@@ -41,55 +39,15 @@ const StepOne = (props: Props) => {
 	const next = async () => {
 		try {
 			const value = await form.validateFields();
-			dispatch(
-				updateNewPost({
-					title: value.title,
-					from_value: value.salary[0],
-					to_value: value.salary[1],
-					gender: Number(value.gender),
-					list_job_type: value.jobTypeList.map((id) => {
-						return { job_type_id: id };
-					}),
-					list_major: value.majorList.map((id) => {
-						return { majors_id: id };
-					}),
-				})
-			);
+
+			dispatch(updateNewPost(formValueToCreatePostParameters(value)));
 			dispatch(nextStep());
 		} catch (error) {}
 
 		// dispatch(nextStep());
 	};
-	const [first, setFirst] = useState(true);
-	const jobTypeList = useReduxSelector(selectJobTypeList);
-	const majorList = useReduxSelector(selectMajorList);
-	useEffect(() => {
-		if (first) {
-			if (jobTypeList.length === 0) {
-				dispatch(getListJobType({ payload: {} }));
-			}
-			if (majorList.length === 0) {
-				dispatch(getListMajor({}));
-			}
-			setFirst(false);
-		}
-	}, [dispatch, first, jobTypeList, majorList]);
-	const jobTypeOption: SelectOptionValue[] = useMemo(() => {
-		return jobTypeList.map((jobType) => {
-			return {
-				value: jobType.job_type_name,
-				key: jobType.id,
-			};
-		});
-	}, [jobTypeList]);
-	const majorOption: SelectOptionValue[] = useMemo(() => {
-		return majorList.map((major) => {
-			return {
-				value: major.majors_name,
-				key: major.id,
-			};
-		});
-	}, [majorList]);
+	const { jobTypeOption, majorOption } = useGetStatictisOption();
+
 	return (
 		<div className="step-one">
 			<Form<NewPostFormStepOne>

@@ -221,6 +221,8 @@ model Recruitment_Post_Job_Type {
   delete_user String?
   is_delete   Boolean          @default(false)
   is_active   Boolean          @default(true)
+
+  @@unique([post_id, job_type_id])
 }
 
 model Recruitment_Post_Majors {
@@ -237,6 +239,8 @@ model Recruitment_Post_Majors {
   delete_user String?
   is_delete   Boolean          @default(false)
   is_active   Boolean          @default(true)
+
+  @@unique([post_id, majors_id])
 }
 
 model Recruitment_Post_Image {

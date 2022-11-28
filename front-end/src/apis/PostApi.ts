@@ -9,6 +9,7 @@ import {
 } from "src/types/PostType";
 import { SearchParameter, SearchReponse } from "src/types/SearchType";
 import { searchParameterBuilder } from "src/utils/function";
+import { DetailRecruitmentPost } from "src/types/CombineType";
 
 export class PostApi extends BaseApi {
 	constructor() {
@@ -30,10 +31,13 @@ export class PostApi extends BaseApi {
 	async getListPostByUser(token: string) {
 		return this.authGet<{}, RecruitmentPost[]>("list-of-user", token, {});
 	}
-	async getListDetail(data: GetPostDetailParameters) {
+	async getPostDetail(data: GetPostDetailParameters) {
 		const params = searchParameterBuilder(data);
 
-		return this.baseGet<{}, RecruitmentPost>(`?${params}`, {});
+		return this.baseGet<{}, DetailRecruitmentPost>(
+			`get-detail?${params}`,
+			{}
+		);
 	}
 	async updatePost(data: UpdatePostParameters, token: string) {
 		return this.authPut<UpdatePostParameters, RecruitmentPost>(

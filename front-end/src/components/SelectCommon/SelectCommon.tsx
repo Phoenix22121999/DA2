@@ -24,7 +24,11 @@ const SelectCommon = ({ data, ...props }: SelectCommonProps) => {
 			}
 		>
 			{data.map((item) => {
-				return <Option key={item.key}>{item.value}</Option>;
+				return (
+					<Option key={item.key} value={item.key}>
+						{item.value}
+					</Option>
+				);
 			})}
 		</Select>
 	);

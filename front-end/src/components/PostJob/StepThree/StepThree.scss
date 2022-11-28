@@ -1,11 +1,11 @@
 @use "../../../styles/variables" as v;
-.sign-up-step-three {
+.new-post-step-three {
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	margin: 4rem 0;
-	.sign-up-success {
+	.new-post-success {
 		padding: 6rem;
 		display: flex;
 		justify-content: center;
@@ -14,10 +14,10 @@
 		background-color: v.$info-background;
 		@include v.border-radius-md;
 		// background-color: v.$default-background;
-		.sign-up-icon {
+		.new-post-icon {
 			font-size: 10rem;
 		}
-		.sign-up-message {
+		.new-post-message {
 			margin: 2rem 0;
 			// color: v.$success-backround;
 			color: white;

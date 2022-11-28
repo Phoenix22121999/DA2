@@ -4,7 +4,7 @@ import TooltipCommon from "src/components/TooltipCommon/TooltipCommon";
 import { RecruitmentPost } from "src/types/Type";
 import { ToolOutlined, DeleteOutlined } from "@ant-design/icons";
 import PopconfirmCommon from "../../PopconfirmCommon/PopconfirmCommon";
-import { updateEditPost } from "src/redux/slice/EditPostSlice";
+import { setEditPostID } from "src/redux/slice/EditPostSlice";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "src/utils/contants";
@@ -23,7 +23,7 @@ const JobActions = ({ record }: Props) => {
 	};
 
 	const onEditClick = () => {
-		dispatch(updateEditPost(record));
+		dispatch(setEditPostID(record.id));
 		navigate(ROUTE.RECRUITER_EDIT_JOB);
 	};
 
