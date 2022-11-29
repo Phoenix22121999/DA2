@@ -556,6 +556,17 @@ const deletePost = async (req, res) => {
 				is_delete: true,
 				delete_date: new Date(moment(new Date()).format("YYYY-MM-DD")),
 				delete_user: user_id,
+				History_Apply_Job : {
+					updateMany : {
+						where : {
+							post_id : Number(post_id)
+						},
+						data : {
+							is_delete : true,
+							is_active : false
+						}
+					}
+				}
 			},
 		});
 		if (!resultDelete) {
