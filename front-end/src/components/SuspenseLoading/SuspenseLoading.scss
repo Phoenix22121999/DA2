@@ -1,0 +1,18 @@
+.suspense-loading {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	&.suspense-loading-xsmall {
+		height: 12rem;
+	}
+	&.suspense-loading-small {
+		height: 25rem;
+	}
+	&.suspense-loading-medium {
+		height: 50rem;
+	}
+	&.suspense-loading-large {
+		height: 100vh;
+	}
+}

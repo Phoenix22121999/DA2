@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "./CVManager.scss";
-import AddCVModal from "../AddCVModal/AddCVModal";
 import { useModal } from "src/hooks/useModal";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import { getListCV, selectCVList } from "src/redux/slice/CVSlide";
 import { CV } from "src/types/Type";
 import CVActions from "./CVActions/CVActions";
-import ReanmeCVModal from "../RenameCVModal/RenameCVModal";
-import ShowCVModal from "./../ShowCVModal/ShowCVModal";
 import ButtonCommon from "src/common/ButtonCommon/ButtonCommon";
 import { ModalCommon, TableCommon } from "src/common";
 import { ColumnCommon } from "src/common/TableCommon/TableCommon";
+import ShowCVModal from "./ShowCVModal/ShowCVModal";
+import AddCVModal from "./AddCVModal/AddCVModal";
+import RenameCVModal from "./RenameCVModal/RenameCVModal";
 type Props = {};
 
 const CVManager = (props: Props) => {
@@ -96,7 +96,7 @@ const CVManager = (props: Props) => {
 				onCancel={renameClose}
 				footer={null}
 			>
-				<ReanmeCVModal onClose={renameClose} edited={edited} />
+				<RenameCVModal onClose={renameClose} edited={edited} />
 			</ModalCommon>
 			<ModalCommon
 				centered

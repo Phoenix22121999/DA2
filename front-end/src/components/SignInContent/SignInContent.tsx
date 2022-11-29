@@ -8,6 +8,7 @@ import { signIn } from "src/redux/slice/UserSilce";
 import { BaseReponseType } from "src/types/ApiType";
 import { AuthUser } from "src/types/AuthType";
 import { COOKIES_NAME } from "src/utils/contants";
+import SuspenseLoading from "../SuspenseLoading/SuspenseLoading";
 import "./SignInContent.scss";
 type Props = {};
 type SignUpForm = {
@@ -50,42 +51,44 @@ const SignInContent = (props: Props) => {
 	return (
 		<div className="sign-in-content">
 			<div className="container">
-				<div className="sign-in-content-inner">
-					<Form form={form} layout="vertical">
-						<Form.Item
-							label="Username"
-							name={"user_name"}
-							rules={[
-								{
-									required: true,
-									message: "Please input your username!",
-								},
-							]}
-						>
-							<InputCommon />
-						</Form.Item>
-						<Form.Item
-							label="Password"
-							name={"password"}
-							rules={[
-								{
-									required: true,
-									message: "Please input your username!",
-								},
-							]}
-						>
-							<InputPasswordCommon />
-						</Form.Item>
-						<Form.Item name={"agree"} valuePropName="checked">
-							<Checkbox>Remember me</Checkbox>
-						</Form.Item>
-					</Form>
-					<div className="button-sign-in">
-						<ButtonCommon onClick={handleSignIn} size="small">
-							Sign In
-						</ButtonCommon>
+				<React.Suspense fallback={<SuspenseLoading size="medium" />}>
+					<div className="sign-in-content-inner">
+						<Form form={form} layout="vertical">
+							<Form.Item
+								label="Username"
+								name={"user_name"}
+								rules={[
+									{
+										required: true,
+										message: "Please input your username!",
+									},
+								]}
+							>
+								<InputCommon />
+							</Form.Item>
+							<Form.Item
+								label="Password"
+								name={"password"}
+								rules={[
+									{
+										required: true,
+										message: "Please input your username!",
+									},
+								]}
+							>
+								<InputPasswordCommon />
+							</Form.Item>
+							<Form.Item name={"agree"} valuePropName="checked">
+								<Checkbox>Remember me</Checkbox>
+							</Form.Item>
+						</Form>
+						<div className="button-sign-in">
+							<ButtonCommon onClick={handleSignIn} size="small">
+								Sign In
+							</ButtonCommon>
+						</div>
 					</div>
-				</div>
+				</React.Suspense>
 			</div>
 		</div>
 	);

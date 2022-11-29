@@ -6,28 +6,24 @@ import Footer from "../Footer/Footer";
 import { Outlet } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
-import { LoadingCommon } from "./../../common/index";
+import SuspenseLoading from "../SuspenseLoading/SuspenseLoading";
 export interface HeaderProps {}
 
 export function AppLayout(props: HeaderProps) {
 	return (
 		<div className="app-layout">
-			<CookiesProvider>
-				<ScrollToTop />
-				<AppHeader />
-				<React.Suspense
-					fallback={
-						<div className="loading-page-full">
-							<LoadingCommon loading />
-						</div>
-					}
-				>
-					<AppContents>
-						<Outlet />
-					</AppContents>
-				</React.Suspense>
-				<Footer />
-			</CookiesProvider>
+			<React.Suspense fallback={<SuspenseLoading size="large" />}>
+				<CookiesProvider>
+					<ScrollToTop />
+					<AppHeader />
+					<React.Suspense fallback={<SuspenseLoading size="large" />}>
+						<AppContents>
+							<Outlet />
+						</AppContents>
+					</React.Suspense>
+					<Footer />
+				</CookiesProvider>
+			</React.Suspense>
 		</div>
 	);
 }

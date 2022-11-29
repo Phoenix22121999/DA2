@@ -1,4 +1,4 @@
-import { NewPostFormStepOne } from "src/components/PostJob/StepOne/StepOne";
+import { NewPostFormStepOne } from "src/subpage/PostJob/StepOne/StepOne";
 import { CreatePostParameters, UpdatePostParameters } from "src/types/PostType";
 import { SearchParameter } from "src/types/SearchType";
 

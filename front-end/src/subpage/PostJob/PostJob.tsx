@@ -5,7 +5,7 @@ import {
 	selectNewPostCurentStep,
 	setCurrent,
 } from "src/redux/slice/NewPostSlice";
-import { useReduxDispatch } from "./../../redux/redux-hook";
+import { useReduxDispatch } from "../../redux/redux-hook";
 import StepOne from "./StepOne/StepOne";
 import StepTwo from "./StepTwo/StepTwo";
 import StepThree from "./StepThree/StepThree";

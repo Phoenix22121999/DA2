@@ -10,6 +10,7 @@ import { BaseReponseType } from "src/types/ApiType";
 import { FileTypeUploadReponese } from "src/types/UploadType";
 import { CallbackFunction } from "src/types/UtilType";
 import { ButtonCommon, InputCommon } from "src/common";
+import SuspenseLoading from "../../../components/SuspenseLoading/SuspenseLoading";
 
 type Props = {
 	onClose: () => void;
@@ -105,71 +106,80 @@ const AddCVModal = ({ onClose }: Props) => {
 		}
 	};
 	return (
-		<div className="add-cv-modal">
-			<Form form={form} layout="vertical">
-				<Form.Item
-					label="CV name"
-					name={"file_name"}
-					rules={[
-						{ required: true, message: "Please input name for CV" },
-					]}
-				>
-					<InputCommon />
-				</Form.Item>
-				<Form.Item
-					label="Upload Pdf"
-					name={"files"}
-					valuePropName="fileList"
-					getValueFromEvent={normFile}
-					rules={[
-						({ getFieldValue }) => ({
-							validator(_, value) {
-								if (value) {
-									if (isPdfOk) {
-										return Promise.resolve();
-									}
-
-									return Promise.reject(
-										new Error("Cannot upload pdf")
-									);
-								}
-								return Promise.resolve();
+		<React.Suspense fallback={<SuspenseLoading size="medium" />}>
+			<div className="add-cv-modal">
+				<Form form={form} layout="vertical">
+					<Form.Item
+						label="CV name"
+						name={"file_name"}
+						rules={[
+							{
+								required: true,
+								message: "Please input name for CV",
 							},
-						}),
-						{ required: true, message: "Need upload pdf" },
-					]}
-				>
-					<Upload
-						maxCount={1}
-						customRequest={customRequest}
-						beforeUpload={beforeUpload}
-						onChange={handleChange}
-						showUploadList={{
-							showPreviewIcon: true,
-							showRemoveIcon: true,
-							showDownloadIcon: false,
-						}}
+						]}
 					>
-						<ButtonCommon
-							icon={<UploadOutlined />}
-							size="small"
-							type="secondary"
-							ghost
+						<InputCommon />
+					</Form.Item>
+					<Form.Item
+						label="Upload Pdf"
+						name={"files"}
+						valuePropName="fileList"
+						getValueFromEvent={normFile}
+						rules={[
+							({ getFieldValue }) => ({
+								validator(_, value) {
+									if (value) {
+										if (isPdfOk) {
+											return Promise.resolve();
+										}
+
+										return Promise.reject(
+											new Error("Cannot upload pdf")
+										);
+									}
+									return Promise.resolve();
+								},
+							}),
+							{ required: true, message: "Need upload pdf" },
+						]}
+					>
+						<Upload
+							maxCount={1}
+							customRequest={customRequest}
+							beforeUpload={beforeUpload}
+							onChange={handleChange}
+							showUploadList={{
+								showPreviewIcon: true,
+								showRemoveIcon: true,
+								showDownloadIcon: false,
+							}}
 						>
-							Click to Upload
-						</ButtonCommon>
-					</Upload>
-				</Form.Item>
-			</Form>
-			<div className="button-form">
-				<ButtonCommon onClick={handleOnclose} size="small" type="info">
-					close
-				</ButtonCommon>
-				<ButtonCommon onClick={onAdd} size="small">
-					Add CV
-				</ButtonCommon>
+							<ButtonCommon
+								icon={<UploadOutlined />}
+								size="small"
+								type="secondary"
+								ghost
+							>
+								Click to Upload
+							</ButtonCommon>
+						</Upload>
+					</Form.Item>
+				</Form>
+				<div className="button-form">
+					<ButtonCommon
+						onClick={handleOnclose}
+						size="small"
+						type="info"
+					>
+						close
+					</ButtonCommon>
+					<ButtonCommon onClick={onAdd} size="small">
+						Add CV
+					</ButtonCommon>
+				</div>
 			</div>
-		</div>
+		</React.Suspense>
 	);
 };
 

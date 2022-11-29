@@ -17,6 +17,7 @@ import {
 	InputPasswordCommon,
 	SelectCommon,
 } from "src/common";
+import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
 type Props = {};
 type SignUpStepOneForm = {
 	user_name: string;
@@ -43,82 +44,86 @@ const SignUpStepOne = (props: Props) => {
 	};
 
 	return (
-		<div className="step-one">
-			<Form form={form} layout="vertical" initialValues={data}>
-				<Form.Item
-					label="Username"
-					name={"user_name"}
-					hasFeedback
-					rules={[
-						{
-							required: true,
-							message: "Please input your username!",
-						},
-					]}
-				>
-					<InputCommon />
-				</Form.Item>
-				<Form.Item label="Password" name={"password"} hasFeedback>
-					<InputPasswordCommon />
-				</Form.Item>
-				<Form.Item
-					label="Confirm Password"
-					name={"confirmPassword"}
-					dependencies={["password"]}
-					hasFeedback
-					rules={[
-						{
-							required: true,
-							message: "Please confirm your password!",
-						},
-						({ getFieldValue }) => ({
-							validator(_, value) {
-								if (
-									!value ||
-									getFieldValue("password") === value
-								) {
-									return Promise.resolve();
-								}
-								return Promise.reject(
-									new Error(
-										"The two passwords that you entered do not match!"
-									)
-								);
+		<React.Suspense fallback={<SuspenseLoading size="medium" />}>
+			<div className="step-one">
+				<Form form={form} layout="vertical" initialValues={data}>
+					<Form.Item
+						label="Username"
+						name={"user_name"}
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: "Please input your username!",
 							},
-						}),
-					]}
-				>
-					<InputPasswordCommon />
-				</Form.Item>
-				<Form.Item label="Role" name={"user_type_id"} hasFeedback>
-					<SelectCommon
-						data={USER_TYPE_OPTION}
-						placeholder="Select your role"
-					/>
-				</Form.Item>
-				<Form.Item
-					name={"agree"}
-					valuePropName="checked"
-					rules={[
-						{
-							validator: (_, value) =>
-								value
-									? Promise.resolve()
-									: Promise.reject(
-											new Error("Should accept agreement")
-									  ),
-						},
-					]}
-				>
-					<Checkbox>I agree to terms and conditions</Checkbox>
-				</Form.Item>
-			</Form>
-			<div>
-				<ButtonCommon onClick={next} size="medium">
-					Next
-				</ButtonCommon>
+						]}
+					>
+						<InputCommon />
+					</Form.Item>
+					<Form.Item label="Password" name={"password"} hasFeedback>
+						<InputPasswordCommon />
+					</Form.Item>
+					<Form.Item
+						label="Confirm Password"
+						name={"confirmPassword"}
+						dependencies={["password"]}
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: "Please confirm your password!",
+							},
+							({ getFieldValue }) => ({
+								validator(_, value) {
+									if (
+										!value ||
+										getFieldValue("password") === value
+									) {
+										return Promise.resolve();
+									}
+									return Promise.reject(
+										new Error(
+											"The two passwords that you entered do not match!"
+										)
+									);
+								},
+							}),
+						]}
+					>
+						<InputPasswordCommon />
+					</Form.Item>
+					<Form.Item label="Role" name={"user_type_id"} hasFeedback>
+						<SelectCommon
+							data={USER_TYPE_OPTION}
+							placeholder="Select your role"
+						/>
+					</Form.Item>
+					<Form.Item
+						name={"agree"}
+						valuePropName="checked"
+						rules={[
+							{
+								validator: (_, value) =>
+									value
+										? Promise.resolve()
+										: Promise.reject(
+												new Error(
+													"Should accept agreement"
+												)
+										  ),
+							},
+						]}
+					>
+						<Checkbox>I agree to terms and conditions</Checkbox>
+					</Form.Item>
+				</Form>
+				<div>
+					<ButtonCommon onClick={next} size="medium">
+						Next
+					</ButtonCommon>
+				</div>
 			</div>
-		</div>
+		</React.Suspense>
 	);
 };
 

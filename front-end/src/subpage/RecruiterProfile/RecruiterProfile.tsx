@@ -3,12 +3,13 @@ import { Form } from "antd";
 import React from "react";
 import { useReduxSelector } from "src/redux/redux-hook";
 import { selectUserData, updateAccount } from "src/redux/slice/UserSilce";
-import ProfileAvatar from "../ProfileAvatar/ProfileAvatar";
+import ProfileAvatar from "../../components/ProfileAvatar/ProfileAvatar";
 import "./RecruiterProfile.scss";
 import { UserAccount } from "src/types/Type";
-import { useReduxDispatch } from "./../../redux/redux-hook";
+import { useReduxDispatch } from "../../redux/redux-hook";
 import { ButtonCommon, InputCommon, SelectCommon } from "src/common";
 import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
+import SuspenseLoading from "../../components/SuspenseLoading/SuspenseLoading";
 const test: SelectOptionValue[] = [
 	{
 		key: "HCM",
@@ -45,33 +46,42 @@ const RecruiterProfile = (props: Props) => {
 				<div className="avatar">
 					<ProfileAvatar />
 				</div>
-				<div className="profile-form">
-					<Form form={form} layout="vertical" initialValues={data}>
-						<Form.Item label="Company Name" name={"full_name"}>
-							<InputCommon />
-						</Form.Item>
-						<Form.Item label="Email" name={"email"}>
-							<InputCommon />
-						</Form.Item>
-						<Form.Item label="Numberphone" name={"number_phone"}>
-							<InputCommon />
-						</Form.Item>
-						<Form.Item label="Address" name={"address"}>
-							<InputCommon />
-						</Form.Item>
-						<Form.Item label="City">
-							<SelectCommon data={test} />
-						</Form.Item>
-						<Form.Item label="District">
-							<SelectCommon data={test} />
-						</Form.Item>
-					</Form>
-					<div className="button-form">
-						<ButtonCommon size="small" onClick={onUpdate}>
-							Update
-						</ButtonCommon>
+				<React.Suspense fallback={<SuspenseLoading size="medium" />}>
+					<div className="profile-form">
+						<Form
+							form={form}
+							layout="vertical"
+							initialValues={data}
+						>
+							<Form.Item label="Company Name" name={"full_name"}>
+								<InputCommon />
+							</Form.Item>
+							<Form.Item label="Email" name={"email"}>
+								<InputCommon />
+							</Form.Item>
+							<Form.Item
+								label="Numberphone"
+								name={"number_phone"}
+							>
+								<InputCommon />
+							</Form.Item>
+							<Form.Item label="Address" name={"address"}>
+								<InputCommon />
+							</Form.Item>
+							<Form.Item label="City">
+								<SelectCommon data={test} />
+							</Form.Item>
+							<Form.Item label="District">
+								<SelectCommon data={test} />
+							</Form.Item>
+						</Form>
+						<div className="button-form">
+							<ButtonCommon size="small" onClick={onUpdate}>
+								Update
+							</ButtonCommon>
+						</div>
 					</div>
-				</div>
+				</React.Suspense>
 			</div>
 		</div>
 	);

@@ -27,6 +27,7 @@ import {
 	RangeSliderCommon,
 	SelectCommon,
 } from "src/common";
+import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
 type Props = {};
 
 const EditPost = (props: Props) => {
@@ -97,87 +98,98 @@ const EditPost = (props: Props) => {
 	}, [editPost, form]);
 
 	return (
-		<div className="edit-post">
-			<LoadingCommon loading={status === "loading"}>
-				<Form<NewPostFormStepOne>
-					form={form}
-					layout="vertical"
-					// initialValues={{
-					// 	title: editPost?.title,
-					// 	salary: [editPost?.from_value, editPost?.to_value],
-					// 	gender: editPost?.gender,
-					// }}
-				>
-					<Form.Item
-						label="Title"
-						name={"title"}
-						rules={[
-							{ required: true, message: "Title is required" },
-						]}
+		<React.Suspense fallback={<SuspenseLoading size="medium" />}>
+			<div className="edit-post">
+				<LoadingCommon loading={status === "loading"}>
+					<Form<NewPostFormStepOne>
+						form={form}
+						layout="vertical"
+						// initialValues={{
+						// 	title: editPost?.title,
+						// 	salary: [editPost?.from_value, editPost?.to_value],
+						// 	gender: editPost?.gender,
+						// }}
 					>
-						<InputCommon />
-					</Form.Item>
-					<Form.Item
-						label="Job Type"
-						name="jobTypeList"
-						rules={[
-							{ required: true, message: "Job type is required" },
-						]}
-					>
-						<SelectCommon
-							placeholder="Please select job type"
-							mode="multiple"
-							data={jobTypeOption}
-							allowClear
-						/>
-					</Form.Item>
-					<Form.Item
-						label="Major"
-						name="majorList"
-						rules={[
-							{ required: true, message: "Major is required" },
-						]}
-					>
-						<SelectCommon
-							placeholder="Please select majors"
-							mode="multiple"
-							data={majorOption}
-							allowClear
-						/>
-					</Form.Item>
-					<Form.Item label="Gender" name="gender">
-						<SelectCommon data={GENDER_OPTION} />
-					</Form.Item>
-
-					<Form.Item name="salary" label="Salary">
-						<RangeSliderCommon
-							marks={salaryMarks}
-							min={0}
-							max={50000000}
-							range
-							step={500000}
-							tooltip={{ formatter: sliderFormatter }}
-						/>
-					</Form.Item>
-
-					<Form.Item label="Content">
-						<div className="editor">
-							<ReactQuill
-								ref={ref}
-								modules={quillModules}
-								theme="snow"
-								defaultValue={editPost?.content}
+						<Form.Item
+							label="Title"
+							name={"title"}
+							rules={[
+								{
+									required: true,
+									message: "Title is required",
+								},
+							]}
+						>
+							<InputCommon />
+						</Form.Item>
+						<Form.Item
+							label="Job Type"
+							name="jobTypeList"
+							rules={[
+								{
+									required: true,
+									message: "Job type is required",
+								},
+							]}
+						>
+							<SelectCommon
+								placeholder="Please select job type"
+								mode="multiple"
+								data={jobTypeOption}
+								allowClear
 							/>
-						</div>
-					</Form.Item>
-				</Form>
-				<div className="button-form">
-					<ButtonCommon size="small" onClick={handleUpdate}>
-						Update
-					</ButtonCommon>
-				</div>
-			</LoadingCommon>
-		</div>
+						</Form.Item>
+						<Form.Item
+							label="Major"
+							name="majorList"
+							rules={[
+								{
+									required: true,
+									message: "Major is required",
+								},
+							]}
+						>
+							<SelectCommon
+								placeholder="Please select majors"
+								mode="multiple"
+								data={majorOption}
+								allowClear
+							/>
+						</Form.Item>
+						<Form.Item label="Gender" name="gender">
+							<SelectCommon data={GENDER_OPTION} />
+						</Form.Item>
+
+						<Form.Item name="salary" label="Salary">
+							<RangeSliderCommon
+								marks={salaryMarks}
+								min={0}
+								max={50000000}
+								range
+								step={500000}
+								tooltip={{ formatter: sliderFormatter }}
+							/>
+						</Form.Item>
+
+						<Form.Item label="Content">
+							<div className="editor">
+								<ReactQuill
+									ref={ref}
+									modules={quillModules}
+									theme="snow"
+									defaultValue={editPost?.content}
+								/>
+							</div>
+						</Form.Item>
+					</Form>
+					<div className="button-form">
+						<ButtonCommon size="small" onClick={handleUpdate}>
+							Update
+						</ButtonCommon>
+					</div>
+				</LoadingCommon>
+			</div>
+		</React.Suspense>
 	);
 };
 
