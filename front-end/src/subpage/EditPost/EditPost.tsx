@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import useGetStatictisOption from "src/hooks/useGetStatictisOption";
 import {
 	ButtonCommon,
+	FormCommon,
 	InputCommon,
 	LoadingCommon,
 	RangeSliderCommon,
@@ -101,7 +102,7 @@ const EditPost = (props: Props) => {
 		<React.Suspense fallback={<SuspenseLoading size="medium" />}>
 			<div className="edit-post">
 				<LoadingCommon loading={status === "loading"}>
-					<Form<NewPostFormStepOne>
+					<FormCommon<NewPostFormStepOne>
 						form={form}
 						layout="vertical"
 						// initialValues={{
@@ -181,7 +182,7 @@ const EditPost = (props: Props) => {
 								/>
 							</div>
 						</Form.Item>
-					</Form>
+					</FormCommon>
 					<div className="button-form">
 						<ButtonCommon size="small" onClick={handleUpdate}>
 							Update

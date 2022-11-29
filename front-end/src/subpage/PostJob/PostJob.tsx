@@ -1,11 +1,7 @@
 import { StepProps } from "antd";
 import React from "react";
 import { useReduxSelector } from "src/redux/redux-hook";
-import {
-	selectNewPostCurentStep,
-	setCurrent,
-} from "src/redux/slice/NewPostSlice";
-import { useReduxDispatch } from "../../redux/redux-hook";
+import { selectNewPostCurentStep } from "src/redux/slice/NewPostSlice";
 import StepOne from "./StepOne/StepOne";
 import StepTwo from "./StepTwo/StepTwo";
 import StepThree from "./StepThree/StepThree";
@@ -33,24 +29,10 @@ const itemsa: StepProps[] = steps.map((item) => ({
 
 const PostJob = (props: Props) => {
 	const currentStep = useReduxSelector(selectNewPostCurentStep);
-	const dispatch = useReduxDispatch();
-
-	const onChange = (value: number) => {
-		dispatch(setCurrent(value));
-	};
-
-	// const a: StepsProps = {
-	// 	items: itemsa,
-	// 	current: currentStep,
-	// };
 
 	return (
 		<div className="post-job">
-			<StepsCommon
-				items={itemsa}
-				current={currentStep}
-				onChange={onChange}
-			/>
+			<StepsCommon items={itemsa} current={currentStep} />
 
 			<div className="steps-content">{steps[currentStep].content}</div>
 		</div>

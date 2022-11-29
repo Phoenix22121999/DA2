@@ -47,7 +47,7 @@ const RenameJobTypeModal = ({ edited, onClose }: Props) => {
 		}
 	};
 	return (
-		<div className="reanme-cv-modal">
+		<div className="rename-modal">
 			<Form.Item label="New Name">
 				<InputCommon value={name} onChange={onChane} />
 			</Form.Item>

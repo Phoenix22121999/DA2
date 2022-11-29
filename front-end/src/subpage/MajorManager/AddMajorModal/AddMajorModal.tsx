@@ -4,7 +4,7 @@ import { useReduxDispatch } from "src/redux/redux-hook";
 import { createMajor } from "src/redux/slice/MajorSlide";
 import { CallbackFunction } from "src/types/UtilType";
 import { CreateMajorParameters } from "src/types/MajorType";
-import { ButtonCommon, InputCommon } from "src/common";
+import { ButtonCommon, FormCommon, InputCommon } from "src/common";
 import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
 
 type Props = {
@@ -42,7 +42,7 @@ const AddMajorModal = ({ onClose }: Props) => {
 		<React.Suspense fallback={<SuspenseLoading size="medium" />}>
 			<div>
 				{" "}
-				<Form form={form} layout="vertical">
+				<FormCommon form={form} layout="vertical">
 					<Form.Item
 						label="Major name"
 						name={"majors_name"}
@@ -55,17 +55,17 @@ const AddMajorModal = ({ onClose }: Props) => {
 					>
 						<InputCommon />
 					</Form.Item>
-				</Form>
+				</FormCommon>
 				<div className="button-form">
 					<ButtonCommon
 						onClick={handleOnclose}
 						size="small"
 						type="info"
 					>
-						close
+						Close
 					</ButtonCommon>
 					<ButtonCommon onClick={onAdd} size="small">
-						Add CV
+						Add
 					</ButtonCommon>
 				</div>{" "}
 			</div>

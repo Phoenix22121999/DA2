@@ -4,7 +4,7 @@ import { useReduxDispatch } from "src/redux/redux-hook";
 import { createJobType } from "src/redux/slice/JobTypeSlide";
 import { CallbackFunction } from "src/types/UtilType";
 import { CreateJobTypeParameters } from "src/types/JobTypeType";
-import { ButtonCommon, InputCommon } from "src/common";
+import { ButtonCommon, FormCommon, InputCommon } from "src/common";
 import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
 
 type Props = {
@@ -41,7 +41,7 @@ const AddJobTypeModal = ({ onClose }: Props) => {
 		<React.Suspense fallback={<SuspenseLoading size="medium" />}>
 			<div>
 				{" "}
-				<Form form={form} layout="vertical">
+				<FormCommon form={form} layout="vertical">
 					<Form.Item
 						label="Job type name"
 						name={"job_type_name"}
@@ -54,17 +54,17 @@ const AddJobTypeModal = ({ onClose }: Props) => {
 					>
 						<InputCommon />
 					</Form.Item>
-				</Form>
+				</FormCommon>
 				<div className="button-form">
 					<ButtonCommon
 						onClick={handleOnclose}
 						size="small"
 						type="info"
 					>
-						close
+						Close
 					</ButtonCommon>
 					<ButtonCommon onClick={onAdd} size="small">
-						Add CV
+						Add
 					</ButtonCommon>
 				</div>{" "}
 			</div>

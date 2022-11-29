@@ -43,7 +43,7 @@ const JobTypeManager = (props: Props) => {
 	return (
 		<div>
 			<div className="dashboard-title">Job Type Manager</div>
-			<div>
+			<div className="button-add-action">
 				<ButtonCommon size="small" onClick={open}>
 					Add Job Type
 				</ButtonCommon>

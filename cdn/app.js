@@ -15,13 +15,16 @@ const router = require("./app.router");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(helmet());
+app.use(
+	helmet({
+		crossOriginResourcePolicy: false,
+		crossOriginEmbedderPolicy: false,
+	})
+);
 app.use("/cdn", router);
 
-// Static file     
-app.use(express.static(path.join(__dirname, 'Upload/file'), { index: false }));
-
-
+// Static file
+app.use(express.static(path.join(__dirname, "Upload/file"), { index: false }));
 
 app.get("/", (req, res) => {
 	res.send("WELCOME TO MY CDN");

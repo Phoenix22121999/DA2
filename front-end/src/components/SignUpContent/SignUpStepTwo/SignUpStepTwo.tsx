@@ -13,6 +13,7 @@ import { OptionalSignUpParameters } from "src/types/AuthType";
 import { signUp } from "src/redux/slice/UserSilce";
 import {
 	ButtonCommon,
+	FormCommon,
 	InputCommon,
 	InputNumberCommon,
 	SelectCommon,
@@ -70,7 +71,7 @@ const SignUpStepTwo = (props: Props) => {
 	return (
 		<React.Suspense fallback={<SuspenseLoading size="medium" />}>
 			<div className="sign-up-step-two">
-				<Form form={form} layout="vertical" initialValues={data}>
+				<FormCommon form={form} layout="vertical" initialValues={data}>
 					{isRecruiter ? (
 						<Form.Item
 							label="Company Name"
@@ -199,7 +200,7 @@ const SignUpStepTwo = (props: Props) => {
 					>
 						<InputCommon />
 					</Form.Item>
-				</Form>
+				</FormCommon>
 				<div className="button-group">
 					<ButtonCommon onClick={prev} size="medium">
 						Back

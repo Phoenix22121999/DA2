@@ -13,6 +13,7 @@ import { OptionalSignUpParameters } from "src/types/AuthType";
 import { USER_TYPE_OPTION } from "src/utils/contants";
 import {
 	ButtonCommon,
+	FormCommon,
 	InputCommon,
 	InputPasswordCommon,
 	SelectCommon,
@@ -46,7 +47,7 @@ const SignUpStepOne = (props: Props) => {
 	return (
 		<React.Suspense fallback={<SuspenseLoading size="medium" />}>
 			<div className="step-one">
-				<Form form={form} layout="vertical" initialValues={data}>
+				<FormCommon form={form} layout="vertical" initialValues={data}>
 					<Form.Item
 						label="Username"
 						name={"user_name"}
@@ -116,7 +117,7 @@ const SignUpStepOne = (props: Props) => {
 					>
 						<Checkbox>I agree to terms and conditions</Checkbox>
 					</Form.Item>
-				</Form>
+				</FormCommon>
 				<div>
 					<ButtonCommon onClick={next} size="medium">
 						Next
