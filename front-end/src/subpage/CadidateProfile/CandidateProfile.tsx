@@ -2,43 +2,25 @@ import { Form, message } from "antd";
 
 import React from "react";
 import "./CandidateProfile.scss";
-import ProfileAvatar from "../ProfileAvatar/ProfileAvatar";
+import ProfileAvatar from "../../components/ProfileAvatar/ProfileAvatar";
 import { UserAccount } from "src/types/Type";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import { selectUserData, updateAccount } from "src/redux/slice/UserSilce";
 import { CallbackFunction } from "src/types/UtilType";
-import SelectCommon, {
-	SelectOptionValue,
-} from "src/common/SelectCommon/SelectCommon";
+
 // import {
 // 	ButtonCommon,
 // 	InputCommon,
 // 	InputNumberCommon,
 // 	SelectCommon,
 // } from "src/common";
-import SelectLocation from "../SelectLocation/SelectLocation";
+import SelectLocation from "../../components/SelectLocation/SelectLocation";
 import { GENDER_OPTION } from "src/utils/contants";
 import InputCommon from "src/common/InputCommon/InputCommon";
 import InputNumberCommon from "src/common/InputNumberCommon/InputNumberCommon";
-import { ButtonCommon, TagCommon } from "src/common";
-const test: SelectOptionValue[] = [
-	{
-		key: "HCM",
-		value: "Hồ Chí MInh",
-	},
-	{
-		key: "HN",
-		value: "Hà Nội",
-	},
-	{
-		key: "TG",
-		value: "Tiền Giang",
-	},
-	{
-		key: "H",
-		value: "Huế",
-	},
-];
+import { ButtonCommon, SelectCommon } from "src/common";
+import SuspenseLoading from "../../components/SuspenseLoading/SuspenseLoading";
+
 type Props = {};
 
 const CadidateProfile = (props: Props) => {
@@ -57,6 +39,8 @@ const CadidateProfile = (props: Props) => {
 	};
 	const onUpdate = async () => {
 		const value: Partial<UserAccount> = await form.validateFields();
+		// console.log(value);
+
 		dispatch(updateAccount({ payload: value, callback }));
 	};
 	return (
@@ -66,13 +50,12 @@ const CadidateProfile = (props: Props) => {
 				<div className="avatar">
 					<ProfileAvatar />
 				</div>
-				<React.Suspense fallback={<div>loading</div>}>
+				<React.Suspense fallback={<SuspenseLoading size="medium" />}>
 					<div className="profile-form">
 						<Form<UserAccount>
 							form={form}
 							layout="vertical"
 							initialValues={data}
-							// onValuesChange={handleOnValuesChange}
 						>
 							<Form.Item
 								label="First Name"

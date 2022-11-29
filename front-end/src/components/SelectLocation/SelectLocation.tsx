@@ -12,7 +12,7 @@ type Props = {
 	};
 };
 
-const SelectLocation = (props: Props) => {
+const SelectLocation = ({ initialValue }: Props) => {
 	const {
 		provinceId,
 		provincesOption,
@@ -24,6 +24,15 @@ const SelectLocation = (props: Props) => {
 		wardsOption,
 		onWardChange,
 	} = useGetLocation();
+
+	// useEffect(() => {
+	// 	console.log(initialValue);
+
+	// 	onProvinceChange(initialValue?.city_id?.toString() || "1");
+	// 	onDistrictChange(initialValue?.district_id?.toString() || "1");
+	// 	onWardChange(initialValue?.ward_id?.toString() || "1");
+	// }, [initialValue, onProvinceChange, onDistrictChange, onWardChange]);
+
 	// const [form] = Form.useForm();
 	return (
 		<>

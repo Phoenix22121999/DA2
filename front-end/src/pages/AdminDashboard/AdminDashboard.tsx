@@ -5,7 +5,7 @@ import { useCheckUserAuth } from "src/hooks/useCheckUserAuth";
 import "./AdminDashboard.scss";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import AdminDashboardSidebar from "src/components/AdminDashboardSidebar/AdminDashboardSidebar";
-import LoadingCommon from "src/common/LoadingCommon/LoadingCommon";
+import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
 type Props = {};
 const { Sider, Content } = Layout;
 const AdminDashboard = (props: Props) => {
@@ -85,11 +85,7 @@ const AdminDashboard = (props: Props) => {
 							</div>
 							<div className="admin-dashboard-content dashboard-content-common">
 								<React.Suspense
-									fallback={
-										<div className="loading-page">
-											<LoadingCommon loading />
-										</div>
-									}
+									fallback={<SuspenseLoading size="medium" />}
 								>
 									{" "}
 									<Outlet />

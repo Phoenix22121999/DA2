@@ -5,7 +5,7 @@ import CandidateDashboardSidebar from "src/components/CandidateDashboardSidebar/
 import { useCheckUserAuth } from "src/hooks/useCheckUserAuth";
 import "./CandidateDashboard.scss";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import LoadingCommon from "src/common/LoadingCommon/LoadingCommon";
+import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
 type Props = {};
 const { Sider, Content } = Layout;
 const CandidateDashboard = (props: Props) => {
@@ -87,11 +87,7 @@ const CandidateDashboard = (props: Props) => {
 							</div>
 							<div className="candidate-dashboard-content dashboard-content-common">
 								<React.Suspense
-									fallback={
-										<div className="loading-page">
-											<LoadingCommon loading />
-										</div>
-									}
+									fallback={<SuspenseLoading size="medium" />}
 								>
 									{" "}
 									<Outlet />

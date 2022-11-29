@@ -18,6 +18,7 @@ import {
 	SelectCommon,
 } from "src/common";
 import SelectLocation from "src/components/SelectLocation/SelectLocation";
+import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
 type Props = {};
 
 type SignInStepTwoForm = {
@@ -67,27 +68,13 @@ const SignUpStepTwo = (props: Props) => {
 		dispatch(prevSignUpStep());
 	};
 	return (
-		<div className="sign-up-step-two">
-			<Form form={form} layout="vertical" initialValues={data}>
-				{isRecruiter ? (
-					<Form.Item
-						label="Company Name"
-						name={"full_name"}
-						hasFeedback
-						rules={[
-							{
-								required: true,
-								message: "Please input your first name!",
-							},
-						]}
-					>
-						<InputCommon />
-					</Form.Item>
-				) : (
-					<>
+		<React.Suspense fallback={<SuspenseLoading size="medium" />}>
+			<div className="sign-up-step-two">
+				<Form form={form} layout="vertical" initialValues={data}>
+					{isRecruiter ? (
 						<Form.Item
-							label="First Name"
-							name={"first_name"}
+							label="Company Name"
+							name={"full_name"}
 							hasFeedback
 							rules={[
 								{
@@ -98,114 +85,131 @@ const SignUpStepTwo = (props: Props) => {
 						>
 							<InputCommon />
 						</Form.Item>
-						<Form.Item
-							label="Last Name"
-							name={"last_name"}
-							hasFeedback
-							rules={[
-								{
-									required: true,
-									message: "Please input your last name!",
-								},
-							]}
-						>
-							<InputCommon />
-						</Form.Item>
-					</>
-				)}
+					) : (
+						<>
+							<Form.Item
+								label="First Name"
+								name={"first_name"}
+								hasFeedback
+								rules={[
+									{
+										required: true,
+										message:
+											"Please input your first name!",
+									},
+								]}
+							>
+								<InputCommon />
+							</Form.Item>
+							<Form.Item
+								label="Last Name"
+								name={"last_name"}
+								hasFeedback
+								rules={[
+									{
+										required: true,
+										message: "Please input your last name!",
+									},
+								]}
+							>
+								<InputCommon />
+							</Form.Item>
+						</>
+					)}
 
-				<Form.Item
-					label="Email"
-					name={"email"}
-					hasFeedback
-					rules={[
-						{
-							required: true,
-							message: "Please input your email!",
-						},
-						{
-							pattern: new RegExp(
-								"([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \\t]|(\\[\\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\\t -Z^-~]*])"
-							),
-							message: "Please input validate email!",
-						},
-					]}
-				>
-					<InputCommon />
-				</Form.Item>
-				<Form.Item
-					label="Number Phone"
-					name={"number_phone"}
-					hasFeedback
-					rules={[
-						{
-							required: true,
-							message: "Please input your number phone!",
-						},
-					]}
-				>
-					<InputCommon />
-				</Form.Item>
-				{!isRecruiter && (
-					<>
-						<Form.Item
-							label="Age"
-							name={"age"}
-							hasFeedback
-							rules={[
-								{
-									required: true,
-									message: "Please input your age!",
-								},
-							]}
-						>
-							<InputNumberCommon min={1} />
-						</Form.Item>
-						<Form.Item
-							label="Gender"
-							name={"gender"}
-							hasFeedback
-							rules={[
-								{
-									required: true,
-									message: "Please input your gender!",
-								},
-							]}
-						>
-							<SelectCommon data={GENDER_OPTION} />
-						</Form.Item>
-					</>
-				)}
-				<SelectLocation
-					initialValue={{
-						city_id: data.city_id,
-						district_id: data.district_id,
-						ward_id: data.ward_id,
-					}}
-				/>
-				<Form.Item
-					label="Address"
-					name={"address"}
-					hasFeedback
-					rules={[
-						{
-							required: true,
-							message: "Please input your address!",
-						},
-					]}
-				>
-					<InputCommon />
-				</Form.Item>
-			</Form>
-			<div className="button-group">
-				<ButtonCommon onClick={prev} size="medium">
-					Back
-				</ButtonCommon>
-				<ButtonCommon onClick={next} size="medium">
-					Next
-				</ButtonCommon>
+					<Form.Item
+						label="Email"
+						name={"email"}
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: "Please input your email!",
+							},
+							{
+								pattern: new RegExp(
+									"([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \\t]|(\\[\\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\\t -Z^-~]*])"
+								),
+								message: "Please input validate email!",
+							},
+						]}
+					>
+						<InputCommon />
+					</Form.Item>
+					<Form.Item
+						label="Number Phone"
+						name={"number_phone"}
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: "Please input your number phone!",
+							},
+						]}
+					>
+						<InputCommon />
+					</Form.Item>
+					{!isRecruiter && (
+						<>
+							<Form.Item
+								label="Age"
+								name={"age"}
+								hasFeedback
+								rules={[
+									{
+										required: true,
+										message: "Please input your age!",
+									},
+								]}
+							>
+								<InputNumberCommon min={1} />
+							</Form.Item>
+							<Form.Item
+								label="Gender"
+								name={"gender"}
+								hasFeedback
+								rules={[
+									{
+										required: true,
+										message: "Please input your gender!",
+									},
+								]}
+							>
+								<SelectCommon data={GENDER_OPTION} />
+							</Form.Item>
+						</>
+					)}
+					<SelectLocation
+						initialValue={{
+							city_id: data.city_id,
+							district_id: data.district_id,
+							ward_id: data.ward_id,
+						}}
+					/>
+					<Form.Item
+						label="Address"
+						name={"address"}
+						hasFeedback
+						rules={[
+							{
+								required: true,
+								message: "Please input your address!",
+							},
+						]}
+					>
+						<InputCommon />
+					</Form.Item>
+				</Form>
+				<div className="button-group">
+					<ButtonCommon onClick={prev} size="medium">
+						Back
+					</ButtonCommon>
+					<ButtonCommon onClick={next} size="medium">
+						Next
+					</ButtonCommon>
+				</div>
 			</div>
-		</div>
+		</React.Suspense>
 	);
 };
 

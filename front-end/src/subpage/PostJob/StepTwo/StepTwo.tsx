@@ -10,7 +10,7 @@ import {
 } from "src/redux/slice/NewPostSlice";
 // import parse from "html-react-parser";
 import "./StepTwo.scss";
-import { createPost } from "./../../../redux/slice/PostSlide";
+import { createPost } from "../../../redux/slice/PostSlide";
 import { quillModules } from "src/utils/contants";
 import { ButtonCommon } from "src/common";
 
