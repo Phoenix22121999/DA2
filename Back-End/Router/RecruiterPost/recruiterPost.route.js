@@ -16,7 +16,6 @@ router.post("/delete" , checkToken ,recruiterPostService.deletePost)
 router.get("/get-detail" ,recruiterPostService.getDetail)
 
 
-//getDetail
 
 
 module.exports = router;

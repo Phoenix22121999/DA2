@@ -207,7 +207,7 @@ const deleteCV = async (req, res) => {
 		return res.json({
 			code: 400,
 			status_resposse: false,
-			message: "Tài khoản không tồn tại , vui lòng thử lại sau !",
+			message: error.message,
 		});
 	}
 };
@@ -254,10 +254,283 @@ const downloadCV = async (req, res) => {
 	}
 };
 
+const applyCV = async (req , res) => {
+	try{
+		let { cv_id , post_id} = req.body;
+		let { user_id, user_type_id = null } = req;
+		let isExists = await prisma.history_Apply_Job.findFirst({
+			where : {
+				AND : [{
+					is_active : true,
+					is_delete : false,
+					post_id : Number(post_id),
+					cv_id : Number(cv),
+					user_id : Number(user_id)
+
+			}]}
+		})
+
+
+
+		const result = await prisma.history_Apply_Job.upsert({
+			where : {
+				user_id : Number(user_id),
+				cv_id : Number(cv_id),
+				post_id : Number(post_id),
+			},
+			update : {
+				is_delete : true,
+				is_active: false,
+			},
+			create : {
+				user_id : Number(user_id),
+				post_id : Number(post_id),
+				cv_id : Number(cv_id),
+				create_date : new Date(moment(new Date()).format("YYYY-MM-DD")),
+				create_user : user_id
+			}
+		})
+		if(!result){
+			return res.json({
+				code : 400 ,
+				status_resposse: false,
+				message : "Quá trình ứng tuyển xảy ra vấn đề vui lòng thử lại sau"
+			})
+		}
+		return res.json({
+			code : 200 ,
+			status_resposse: true,
+			message : "Quá trình ứng tuyển thành công"
+		})
+
+	}catch(error){
+		console.log(error.message);
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+}
+
+const unApplyCV = async(req , res) =>{
+	try{
+		let { cv_id , post_id} = req.body;
+		let { user_id, user_type_id = null } = req;
+		let isExists = await prisma.history_Apply_Job.findFirst({
+			where : {
+				AND : [{
+					cv_id : Number(cv_id),
+					post_id : Number(post_id),
+					user_id : Number(user_id),
+					is_active : true,
+					is_delete : false
+				}]
+			},
+			include : {
+				user_account : {
+					select : {
+						id: true,
+						full_name: true,
+						user_type_id: true,
+						email: true,
+						number_phone: true,
+						logo: true,
+						address: true,
+						province_code: true,
+						district_code: true,
+						ward_code: true,
+					},
+					where : {
+						is_delete : false,
+						is_active : true
+					}
+				},
+				Recruitment_Post : {
+					select : {
+						id : true,
+						content : true,
+						title : true
+					},
+					where : {
+						is_active : true,
+						is_delete : false
+					}
+				},
+				cv : {
+					select : {
+						id : true,
+						file_name_hash : true,
+						file_name : true,
+						extname : true,
+					},
+					where : {
+						is_active : true,
+						is_delete : false
+					}
+				}
+			}
+		})
+
+		if(!isExists){
+			return res.json({
+				code : 400 ,
+				status_resposse : false,
+				message : "Không tìm thấy lịch sử "
+			})
+		}
+		const resulUnApplyCv = await prisma.history_Apply_Job.update({
+			where : {
+				cv_id : Number(cv_id),
+				post_id : Number(post_id),
+				user_id : Number(user_id),
+			}
+		})
+
+		if(!resulUnApplyCv){
+			return res.json({
+				code : 400,
+				status_resposse : false,
+				message : "Rút hồ sơ ứng tuyển không thành công"
+			})
+		}
+
+		return res.json({
+			code : 200,
+			status_resposse : true,
+			message : "Rút hồ sơ ứng tuyển thành công",
+			data : resulUnApplyCv
+		})		
+	}catch(error){
+		
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			messsage: error.message,
+		});
+	}
+}
+
+const getHistory = async (req ,res ) => {
+	try{
+		let {
+			key_word,
+			item_per_page = 10,
+			page = 1,
+			from_value,
+			to_value,
+			gender,
+			is_content = false,
+		} = req.query;
+		let { user_id, user_type_id = null } = req;
+		const result =  await prisma.history_Apply_Job.findMany({
+			where : {
+				AND : [{
+					is_active : {equals : true},
+					is_delete : {equals : false},
+				}]
+			},
+			take: Number(item_per_page),
+			skip: Number(item_per_page * (page - 1)),
+			include : {
+				user_account : {
+					select : {
+						id: true,
+						full_name: true,
+						user_type_id: true,
+						email: true,
+						number_phone: true,
+						logo: true,
+						address: true,
+						province_code: true,
+						district_code: true,
+						ward_code: true,
+					},
+					where : {
+						is_delete : false,
+						is_active : true
+					}
+				},
+				Recruitment_Post : {
+					select : {
+						id : true,
+						content : true,
+						title : true,
+					},
+					where : {
+						is_active : true,
+						is_delete : false
+					},
+					include : {
+						post_job_types: {
+							select: {
+								id: true,
+								job_type: {
+									select: {
+										id: true,
+										job_type_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+						post_majors: {
+							select: {
+								id: true,
+								majors: {
+									select: {
+										id: true,
+										majors_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+					}
+				},
+				cv : {
+					select : {
+						id : true,
+						file_name_hash : true,
+						file_name : true,
+						extname : true,
+					},
+					where : {
+						is_active : true,
+						is_delete : false
+					}
+				}
+
+			}
+
+		})
+
+
+
+	}catch(error){
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+}
+
+
+
 module.exports = {
 	getListResume,
 	createCV,
 	updateCV,
 	deleteCV,
 	downloadCV,
+	applyCV,
+	unApplyCV,
+	getHistory
 };
