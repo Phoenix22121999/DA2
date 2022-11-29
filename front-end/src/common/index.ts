@@ -1,4 +1,5 @@
 import React from "react";
+import { FormCommonType } from "./FormCommon/FormCommon";
 import { ColumnCommonType } from "./TableCommon/ColumnCommon";
 import { TableCommonType } from "./TableCommon/TableCommon";
 
@@ -73,3 +74,7 @@ export const TooltipCommon = React.lazy(
 export const InputPasswordCommon = React.lazy(
 	() => import("./InputCommon/InputPasswordCommon")
 );
+
+export const FormCommon = React.lazy(
+	() => import("./FormCommon/FormCommon")
+) as FormCommonType;

@@ -9,7 +9,7 @@ import { createCV } from "src/redux/slice/CVSlide";
 import { BaseReponseType } from "src/types/ApiType";
 import { FileTypeUploadReponese } from "src/types/UploadType";
 import { CallbackFunction } from "src/types/UtilType";
-import { ButtonCommon, InputCommon } from "src/common";
+import { ButtonCommon, FormCommon, InputCommon } from "src/common";
 import SuspenseLoading from "../../../components/SuspenseLoading/SuspenseLoading";
 
 type Props = {
@@ -108,7 +108,7 @@ const AddCVModal = ({ onClose }: Props) => {
 	return (
 		<React.Suspense fallback={<SuspenseLoading size="medium" />}>
 			<div className="add-cv-modal">
-				<Form form={form} layout="vertical">
+				<FormCommon form={form} layout="vertical">
 					<Form.Item
 						label="CV name"
 						name={"file_name"}
@@ -165,7 +165,7 @@ const AddCVModal = ({ onClose }: Props) => {
 							</ButtonCommon>
 						</Upload>
 					</Form.Item>
-				</Form>
+				</FormCommon>
 				<div className="button-form">
 					<ButtonCommon
 						onClick={handleOnclose}

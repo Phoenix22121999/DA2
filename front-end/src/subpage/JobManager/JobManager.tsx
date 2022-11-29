@@ -32,7 +32,7 @@ const JobManager = (props: Props) => {
 	return (
 		<div className="job-manager">
 			<div className="dashboard-title">Post Manager</div>
-			<div>
+			<div className="button-add-action">
 				<ButtonCommon size="small" onClick={onAddClick}>
 					Add new job
 				</ButtonCommon>

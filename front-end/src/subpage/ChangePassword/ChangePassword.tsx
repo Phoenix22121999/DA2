@@ -4,7 +4,7 @@ import { ChangePasswordParameters } from "src/types/AuthType";
 import { useReduxDispatch } from "../../redux/redux-hook";
 import { changePasswordAction } from "../../redux/slice/UserSilce";
 import { CallbackFunction } from "src/types/UtilType";
-import { ButtonCommon, InputPasswordCommon } from "src/common";
+import { ButtonCommon, FormCommon, InputPasswordCommon } from "src/common";
 import SuspenseLoading from "../../components/SuspenseLoading/SuspenseLoading";
 
 type Props = {};
@@ -32,7 +32,7 @@ const ChangePassword = (props: Props) => {
 			<div className="inner-content">
 				<React.Suspense fallback={<SuspenseLoading size="medium" />}>
 					<div className="profile=form">
-						<Form form={form} layout="vertical">
+						<FormCommon form={form} layout="vertical">
 							<Form.Item
 								label="Old Password"
 								name="password"
@@ -108,7 +108,7 @@ const ChangePassword = (props: Props) => {
 							>
 								<InputPasswordCommon />
 							</Form.Item>
-						</Form>
+						</FormCommon>
 						<div className="button-form">
 							<ButtonCommon
 								size="small"

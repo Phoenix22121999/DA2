@@ -2,7 +2,12 @@ import { Checkbox, Form, message } from "antd";
 import React from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { ButtonCommon, InputCommon, InputPasswordCommon } from "src/common";
+import {
+	ButtonCommon,
+	FormCommon,
+	InputCommon,
+	InputPasswordCommon,
+} from "src/common";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { signIn } from "src/redux/slice/UserSilce";
 import { BaseReponseType } from "src/types/ApiType";
@@ -53,7 +58,7 @@ const SignInContent = (props: Props) => {
 			<div className="container">
 				<React.Suspense fallback={<SuspenseLoading size="medium" />}>
 					<div className="sign-in-content-inner">
-						<Form form={form} layout="vertical">
+						<FormCommon form={form} layout="vertical">
 							<Form.Item
 								label="Username"
 								name={"user_name"}
@@ -81,7 +86,7 @@ const SignInContent = (props: Props) => {
 							<Form.Item name={"agree"} valuePropName="checked">
 								<Checkbox>Remember me</Checkbox>
 							</Form.Item>
-						</Form>
+						</FormCommon>
 						<div className="button-sign-in">
 							<ButtonCommon onClick={handleSignIn} size="small">
 								Sign In

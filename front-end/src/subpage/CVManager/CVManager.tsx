@@ -47,7 +47,7 @@ const CVManager = (props: Props) => {
 	return (
 		<div className="cv-manager">
 			<div className="dashboard-title">CV Manager</div>
-			<div>
+			<div className="button-add-action">
 				<ButtonCommon size="small" onClick={open}>
 					Add cv
 				</ButtonCommon>

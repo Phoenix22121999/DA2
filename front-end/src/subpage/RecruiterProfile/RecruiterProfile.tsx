@@ -7,7 +7,12 @@ import ProfileAvatar from "../../components/ProfileAvatar/ProfileAvatar";
 import "./RecruiterProfile.scss";
 import { UserAccount } from "src/types/Type";
 import { useReduxDispatch } from "../../redux/redux-hook";
-import { ButtonCommon, InputCommon, SelectCommon } from "src/common";
+import {
+	ButtonCommon,
+	FormCommon,
+	InputCommon,
+	SelectCommon,
+} from "src/common";
 import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
 import SuspenseLoading from "../../components/SuspenseLoading/SuspenseLoading";
 const test: SelectOptionValue[] = [
@@ -48,7 +53,7 @@ const RecruiterProfile = (props: Props) => {
 				</div>
 				<React.Suspense fallback={<SuspenseLoading size="medium" />}>
 					<div className="profile-form">
-						<Form
+						<FormCommon
 							form={form}
 							layout="vertical"
 							initialValues={data}
@@ -74,7 +79,7 @@ const RecruiterProfile = (props: Props) => {
 							<Form.Item label="District">
 								<SelectCommon data={test} />
 							</Form.Item>
-						</Form>
+						</FormCommon>
 						<div className="button-form">
 							<ButtonCommon size="small" onClick={onUpdate}>
 								Update
