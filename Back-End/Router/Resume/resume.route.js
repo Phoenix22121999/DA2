@@ -15,4 +15,13 @@ router.post("/delete" , checkToken ,ResumeService.deleteCV)
 router.get("/download/:file_id(\\d+)", checkToken , ResumeService.downloadCV)
 
 
+router.post("/apply-cv" , checkToken ,ResumeService.applyCV)
+
+
+router.post("/un-apply-CV" , checkToken ,ResumeService.unApplyCV)
+
+
+router.get("/history-apply" , checkToken ,ResumeService.getHistory)
+
+
 module.exports = router;
