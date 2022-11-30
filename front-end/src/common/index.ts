@@ -1,5 +1,6 @@
 import React from "react";
 import { FormCommonType } from "./FormCommon/FormCommon";
+import { FormItemCommonType } from "./FormCommon/FormItemCommon";
 import { ColumnCommonType } from "./TableCommon/ColumnCommon";
 import { TableCommonType } from "./TableCommon/TableCommon";
 
@@ -64,6 +65,10 @@ export const TableCommon = React.lazy(
 export const ColumnCommon = React.lazy(
 	() => import("./TableCommon/ColumnCommon")
 ) as ColumnCommonType;
+
+export const FormItemCommon = React.lazy(
+	() => import("./FormCommon/FormItemCommon")
+) as FormItemCommonType;
 
 export const TagCommon = React.lazy(() => import("./TagCommon/TagCommon"));
 

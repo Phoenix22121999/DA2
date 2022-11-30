@@ -35,6 +35,23 @@ body {
 	}
 }
 
+.dashboard-layout {
+	position: relative;
+	background: none;
+}
+.dashboard-drawer {
+	position: "absolute";
+	z-index: 5;
+	.ant-drawer-content-wrapper {
+		width: 100% !important;
+	}
+}
+
+.dashboard-sider {
+	background: variables.$default-background;
+	border-right: 1px solid variables.$secondary-background;
+}
+
 .primary-text {
 	color: variables.$primary-background;
 }

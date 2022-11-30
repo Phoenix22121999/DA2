@@ -19,6 +19,7 @@ import { GENDER_OPTION } from "src/utils/contants";
 import {
 	ButtonCommon,
 	FormCommon,
+	FormItemCommon,
 	InputCommon,
 	InputNumberCommon,
 	SelectCommon,
@@ -43,10 +44,10 @@ const CadidateProfile = (props: Props) => {
 	};
 	const onUpdate = async () => {
 		const value: Partial<UserAccount> = await form.validateFields();
-		// console.log(value);
 
 		dispatch(updateAccount({ payload: value, callback }));
 	};
+
 	return (
 		<div className="cadidate-profile">
 			<div className="dashboard-title">Profile</div>
@@ -62,9 +63,16 @@ const CadidateProfile = (props: Props) => {
 							<FormCommon<UserAccount>
 								form={form}
 								layout="vertical"
-								initialValues={data}
+								initialValues={{
+									...data,
+									province_code:
+										data.province_code?.toString(),
+									district_code:
+										data.district_code?.toString(),
+									ward_code: data.ward_code?.toString(),
+								}}
 							>
-								<Form.Item
+								<FormItemCommon
 									label="First Name"
 									name={"first_name"}
 									hasFeedback
@@ -77,8 +85,8 @@ const CadidateProfile = (props: Props) => {
 									]}
 								>
 									<InputCommon />
-								</Form.Item>
-								<Form.Item
+								</FormItemCommon>
+								<FormItemCommon
 									label="Last Name"
 									name={"last_name"}
 									hasFeedback
@@ -91,8 +99,8 @@ const CadidateProfile = (props: Props) => {
 									]}
 								>
 									<InputCommon />
-								</Form.Item>
-								<Form.Item
+								</FormItemCommon>
+								<FormItemCommon
 									label="Email"
 									name={"email"}
 									hasFeedback
@@ -111,8 +119,8 @@ const CadidateProfile = (props: Props) => {
 									]}
 								>
 									<InputCommon />
-								</Form.Item>
-								<Form.Item
+								</FormItemCommon>
+								<FormItemCommon
 									label="Number Phone"
 									name={"number_phone"}
 									hasFeedback
@@ -122,11 +130,25 @@ const CadidateProfile = (props: Props) => {
 											message:
 												"Please input your number phone!",
 										},
+										{
+											validator(_, value) {
+												var re =
+													/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+
+												return re.test(value)
+													? Promise.resolve()
+													: Promise.reject(
+															new Error(
+																"Please input validate email!"
+															)
+													  );
+											},
+										},
 									]}
 								>
 									<InputCommon />
-								</Form.Item>
-								<Form.Item
+								</FormItemCommon>
+								<FormItemCommon
 									label="Age"
 									name={"age"}
 									hasFeedback
@@ -138,8 +160,8 @@ const CadidateProfile = (props: Props) => {
 									]}
 								>
 									<InputNumberCommon min={1} />
-								</Form.Item>
-								<Form.Item
+								</FormItemCommon>
+								<FormItemCommon
 									label="Gender"
 									name={"gender"}
 									hasFeedback
@@ -152,17 +174,28 @@ const CadidateProfile = (props: Props) => {
 									]}
 								>
 									<SelectCommon data={GENDER_OPTION} />
-								</Form.Item>
+								</FormItemCommon>
 								<SelectLocation
+									form={form}
 									initialValue={{
-										city_id: data.city_id,
-										district_id: data.district_id,
-										ward_id: data.ward_id,
+										province_code: data.province_code,
+										district_code: data.district_code,
+										ward_code: data.ward_code,
 									}}
 								/>
-								<Form.Item label="Address" name={"address"}>
+								<FormItemCommon
+									label="Address"
+									name={"address"}
+									rules={[
+										{
+											required: true,
+											message:
+												"Please input your address!",
+										},
+									]}
+								>
 									<InputCommon />
-								</Form.Item>
+								</FormItemCommon>
 							</FormCommon>
 						</React.Suspense>
 

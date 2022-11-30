@@ -1,8 +1,11 @@
 .cadidate-profile {
 	.inner-content {
 		.avatar {
-			width: 20rem;
-			height: 20rem;
+			width: 100%;
+			padding: 2rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 			padding: 2rem;
 			img {
 				border-radius: 50%;

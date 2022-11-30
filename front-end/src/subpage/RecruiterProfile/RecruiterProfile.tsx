@@ -7,32 +7,10 @@ import ProfileAvatar from "../../components/ProfileAvatar/ProfileAvatar";
 import "./RecruiterProfile.scss";
 import { UserAccount } from "src/types/Type";
 import { useReduxDispatch } from "../../redux/redux-hook";
-import {
-	ButtonCommon,
-	FormCommon,
-	InputCommon,
-	SelectCommon,
-} from "src/common";
-import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
+import { ButtonCommon, FormCommon, InputCommon } from "src/common";
 import SuspenseLoading from "../../components/SuspenseLoading/SuspenseLoading";
-const test: SelectOptionValue[] = [
-	{
-		key: "HCM",
-		value: "Hồ Chí MInh",
-	},
-	{
-		key: "HN",
-		value: "Hà Nội",
-	},
-	{
-		key: "TG",
-		value: "Tiền Giang",
-	},
-	{
-		key: "H",
-		value: "Huế",
-	},
-];
+import SelectLocation from "src/components/SelectLocation/SelectLocation";
+
 type Props = {};
 
 const RecruiterProfile = (props: Props) => {
@@ -56,30 +34,93 @@ const RecruiterProfile = (props: Props) => {
 						<FormCommon
 							form={form}
 							layout="vertical"
-							initialValues={data}
+							initialValues={{
+								...data,
+								province_code: data.province_code?.toString(),
+								district_code: data.district_code?.toString(),
+								ward_code: data.ward_code?.toString(),
+							}}
 						>
-							<Form.Item label="Company Name" name={"full_name"}>
+							<Form.Item
+								label="Company Name"
+								name={"full_name"}
+								rules={[
+									{
+										required: true,
+										message:
+											"Please input your company name!",
+									},
+								]}
+							>
 								<InputCommon />
 							</Form.Item>
-							<Form.Item label="Email" name={"email"}>
+							<Form.Item
+								label="Email"
+								name={"email"}
+								rules={[
+									{
+										required: true,
+										message: "Please input your email!",
+									},
+									{
+										pattern: new RegExp(
+											"([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \\t]|(\\[\\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\\t -Z^-~]*])"
+										),
+										message: "Please input validate email!",
+									},
+								]}
+							>
 								<InputCommon />
 							</Form.Item>
 							<Form.Item
 								label="Numberphone"
 								name={"number_phone"}
+								rules={[
+									{
+										required: true,
+										message:
+											"Please input your number phone!",
+									},
+									{
+										validator(_, value) {
+											var re =
+												/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+
+											return re.test(value)
+												? Promise.resolve()
+												: Promise.reject(
+														new Error(
+															"Please input validate email!"
+														)
+												  );
+										},
+									},
+								]}
 							>
 								<InputCommon />
 							</Form.Item>
-							<Form.Item label="Address" name={"address"}>
-								<InputCommon />
-							</Form.Item>
-							<Form.Item label="City">
-								<SelectCommon data={test} />
-							</Form.Item>
-							<Form.Item label="District">
-								<SelectCommon data={test} />
-							</Form.Item>
+
+							<SelectLocation
+								form={form}
+								initialValue={{
+									province_code: data.province_code,
+									district_code: data.district_code,
+									ward_code: data.ward_code,
+								}}
+							/>
 						</FormCommon>
+						<Form.Item
+							label="Address"
+							name={"address"}
+							rules={[
+								{
+									required: true,
+									message: "Please input your address!",
+								},
+							]}
+						>
+							<InputCommon />
+						</Form.Item>
 						<div className="button-form">
 							<ButtonCommon size="small" onClick={onUpdate}>
 								Update

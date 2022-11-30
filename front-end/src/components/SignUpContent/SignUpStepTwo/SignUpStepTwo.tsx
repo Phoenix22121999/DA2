@@ -146,6 +146,20 @@ const SignUpStepTwo = (props: Props) => {
 								required: true,
 								message: "Please input your number phone!",
 							},
+							{
+								validator(_, value) {
+									var re =
+										/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
+
+									return re.test(value)
+										? Promise.resolve()
+										: Promise.reject(
+												new Error(
+													"Please input validate email!"
+												)
+										  );
+								},
+							},
 						]}
 					>
 						<InputCommon />
@@ -181,10 +195,11 @@ const SignUpStepTwo = (props: Props) => {
 						</>
 					)}
 					<SelectLocation
+						form={form}
 						initialValue={{
-							city_id: data.city_id,
-							district_id: data.district_id,
-							ward_id: data.ward_id,
+							province_code: data.province_code,
+							district_code: data.district_code,
+							ward_code: data.ward_code,
 						}}
 					/>
 					<Form.Item

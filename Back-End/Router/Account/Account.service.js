@@ -28,6 +28,9 @@ const formatObj = (result) => {
 		avartar: result.avartar,
 		address: result.address,
 		gender: result.gender,
+		province_code: result.province_code,
+		district_code: result.district_code,
+		ward_code: result.ward_code,
 	};
 	return obj;
 };
@@ -257,9 +260,9 @@ const update = async (req, res) => {
 			age,
 			gender,
 			address,
-			city_id,
-			district_id,
-			ward_id,
+			province_code,
+			district_code,
+			ward_code,
 			logo,
 			avartar,
 		} = req.body;
@@ -284,9 +287,9 @@ const update = async (req, res) => {
 					age: age && Number(age),
 					gender: gender && Number(gender),
 					address: address,
-					city_id: city_id && Number(city_id),
-					district_id: district_id && Number(district_id),
-					ward_id: ward_id && Number(ward_id),
+					province_code: province_code && Number(province_code),
+					district_code: district_code && Number(district_code),
+					ward_code: ward_code && Number(ward_code),
 					avartar: avartar,
 					logo: logo,
 				},

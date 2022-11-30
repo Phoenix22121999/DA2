@@ -34,18 +34,3 @@
 		cursor: pointer;
 	}
 }
-.dashboard-layout {
-	position: relative;
-	background: none;
-}
-.dashboard-drawer {
-	position: "absolute";
-	z-index: 5;
-	.ant-drawer-content-wrapper {
-		width: 100% !important;
-	}
-}
-
-.dashboard-sider {
-	background: v.$default-background;
-}

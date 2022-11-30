@@ -1,44 +1,74 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 // import { SelectCommon } from "src/common";
 import useGetLocation from "src/hooks/useGetLocation";
-import { Form } from "antd";
+import { Form, FormInstance } from "antd";
 import "./SelectLocation.scss";
 import SelectCommon from "src/common/SelectCommon/SelectCommon";
+import { LocationCode } from "src/types/LocationType";
 type Props = {
-	initialValue?: {
-		city_id?: number | null;
-		district_id?: number | null;
-		ward_id?: number | null;
-	};
+	initialValue?: LocationCode;
+	onSetFormValue?: (name: string, value: any) => void;
+	form: FormInstance;
 };
 
-const SelectLocation = ({ initialValue }: Props) => {
+const SelectLocation = ({ initialValue, form }: Props) => {
+	const onSetFormValue = (name: string, value: any) => {
+		form.setFieldValue(name, value);
+	};
+
 	const {
-		provinceId,
 		provincesOption,
 		onProvinceChange,
-		districtId,
 		districtsOption,
 		onDistrictChange,
-		wardId,
 		wardsOption,
 		onWardChange,
-	} = useGetLocation();
+	} = useGetLocation(initialValue);
 
-	// useEffect(() => {
-	// 	console.log(initialValue);
+	const onInitProvince = useCallback(() => {
+		if (initialValue && initialValue?.province_code) {
+			onProvinceChange(initialValue.province_code.toString());
+		}
+	}, [onProvinceChange, initialValue]);
 
-	// 	onProvinceChange(initialValue?.city_id?.toString() || "1");
-	// 	onDistrictChange(initialValue?.district_id?.toString() || "1");
-	// 	onWardChange(initialValue?.ward_id?.toString() || "1");
-	// }, [initialValue, onProvinceChange, onDistrictChange, onWardChange]);
+	const onInitDistrict = useCallback(() => {
+		if (initialValue && initialValue?.district_code) {
+			onDistrictChange(initialValue.district_code.toString());
+		}
+	}, [onDistrictChange, initialValue]);
 
-	// const [form] = Form.useForm();
+	const onInitWard = useCallback(() => {
+		if (initialValue && initialValue?.ward_code) {
+			onWardChange(initialValue.ward_code.toString());
+		}
+	}, [onWardChange, initialValue]);
+
+	useEffect(() => {
+		onInitProvince();
+		onInitDistrict();
+		onInitWard();
+	}, [initialValue, onInitProvince, onInitDistrict, onInitWard]);
+
+	const handleProvinceChange = (e: string) => {
+		onSetFormValue && onSetFormValue("district_code", undefined);
+		onSetFormValue && onSetFormValue("ward_code", undefined);
+		onProvinceChange(e);
+
+		// form.setFieldValue("district_code", undefined);
+	};
+
+	const handleDictrictChange = (e: string) => {
+		onSetFormValue && onSetFormValue("ward_code", undefined);
+		onDistrictChange(e);
+
+		// form.setFieldValue("district_code", undefined);
+	};
+
 	return (
 		<>
 			<Form.Item
 				label="Province"
-				name="city_id"
+				name="province_code"
 				rules={[
 					{
 						required: true,
@@ -51,14 +81,13 @@ const SelectLocation = ({ initialValue }: Props) => {
 					allowClear
 					disabled={provincesOption.length < 1}
 					data={provincesOption}
-					onChange={onProvinceChange}
-					value={provinceId}
+					onChange={handleProvinceChange}
 					placeholder="Province"
 				/>
 			</Form.Item>
 			<Form.Item
 				label="Dictrict"
-				name="district_id"
+				name="district_code"
 				rules={[
 					{
 						required: true,
@@ -71,14 +100,13 @@ const SelectLocation = ({ initialValue }: Props) => {
 					allowClear
 					disabled={districtsOption.length < 1}
 					data={districtsOption}
-					onChange={onDistrictChange}
-					value={districtId}
+					onChange={handleDictrictChange}
 					placeholder="Dictrict"
 				/>
 			</Form.Item>
 			<Form.Item
 				label="Ward"
-				name="ward_id"
+				name="ward_code"
 				rules={[
 					{
 						required: true,
@@ -92,7 +120,6 @@ const SelectLocation = ({ initialValue }: Props) => {
 					disabled={wardsOption.length < 1}
 					data={wardsOption}
 					onChange={onWardChange}
-					value={wardId}
 					placeholder="Ward"
 				/>
 			</Form.Item>

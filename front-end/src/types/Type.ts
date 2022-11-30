@@ -36,9 +36,9 @@ export type UserAccount = {
 	age: number | null;
 	gender: number | null;
 	address: string | null;
-	city_id: number | null;
-	district_id: number | null;
-	ward_id: number | null;
+	province_code: number | null;
+	district_code: number | null;
+	ward_code: number | null;
 	avartar: string | null;
 	logo: string | null;
 };
@@ -117,10 +117,6 @@ export type ApplyProfile = {
  * Model Recruitment_Post
  *
  */
-/**
- * Model Recruitment_Post
- *
- */
 export type RecruitmentPost = {
 	id: number;
 	content: string;
@@ -147,11 +143,11 @@ export type HistoryApplyJob = {
 	id: number;
 	user_id: number;
 	post_id: number;
-	profile_id: number;
+	cv_id: number;
 	create_date: Date;
 	create_user: string;
 	update_date: Date | null;
-	update_user: string;
+	update_user: string | null;
 	delete_date: Date | null;
 	delete_user: string | null;
 	is_delete: boolean;

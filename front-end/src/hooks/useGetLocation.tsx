@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 
@@ -10,12 +10,13 @@ import {
 	selectProvinces,
 	selectWard,
 } from "src/redux/slice/LocationSlide";
+import { LocationCode } from "src/types/LocationType";
 
-function useGetLocation() {
+function useGetLocation(initialValue?: LocationCode) {
 	const [first, setFirst] = useState(true);
-	const [provinceId, setProvinceId] = useState<string>();
-	const [districtId, setDistrictId] = useState<string>();
-	const [wardId, setWardId] = useState<string>();
+	const [provinceCode, setProvinceCode] = useState<string>();
+	const [districtCode, setDistrictCode] = useState<string>();
+	const [wardCode, setWardCode] = useState<string>();
 
 	const provinceList = useReduxSelector(selectProvinces);
 	const districtList = useReduxSelector(selectDistrict);
@@ -29,6 +30,11 @@ function useGetLocation() {
 			setFirst(false);
 		}
 	}, [dispatch, first, provinceList]);
+
+	// useEffect(() => {
+	// 	if (initialValue) {
+	// 	}
+	// }, [initialValue]);
 
 	const provincesOption: SelectOptionValue[] = useMemo(() => {
 		return provinceList.map((province) => {
@@ -58,30 +64,41 @@ function useGetLocation() {
 	}, [wardList]);
 
 	useEffect(() => {
-		if (provinceId) {
-			dispatch(getDistrict({ payload: provinceId }));
+		if (provinceCode) {
+			dispatch(getDistrict({ payload: provinceCode }));
 		}
-	}, [provinceId, dispatch]);
+	}, [provinceCode, dispatch]);
 
 	useEffect(() => {
-		if (districtId) {
-			dispatch(getWard({ payload: districtId }));
+		console.log({ districtCode });
+
+		if (districtCode) {
+			dispatch(getWard({ payload: districtCode }));
 		}
-	}, [districtId, dispatch]);
+	}, [districtCode, dispatch]);
 
-	const onProvinceChange = (provinceId: string) => {
-		console.log(provinceId);
+	const onProvinceChange = useCallback(
+		(provinceCode: string) => {
+			setProvinceCode(provinceCode);
+			if (
+				initialValue &&
+				initialValue.province_code &&
+				initialValue.province_code.toString() !== provinceCode
+			) {
+				setDistrictCode(undefined);
+				setWardCode(undefined);
+			}
+		},
+		[initialValue]
+	);
 
-		setProvinceId(provinceId);
-	};
+	const onDistrictChange = useCallback((districtCode: string) => {
+		setDistrictCode(districtCode);
+	}, []);
 
-	const onDistrictChange = (districtId: string) => {
-		setDistrictId(districtId);
-	};
-
-	const onWardChange = (wardId: string) => {
-		setWardId(wardId);
-	};
+	const onWardChange = useCallback((wardCode: string) => {
+		setWardCode(wardCode);
+	}, []);
 
 	return {
 		provincesOption,
@@ -90,9 +107,9 @@ function useGetLocation() {
 		onProvinceChange,
 		onDistrictChange,
 		onWardChange,
-		provinceId,
-		districtId,
-		wardId,
+		provinceCode,
+		districtCode,
+		wardCode,
 	};
 }
 

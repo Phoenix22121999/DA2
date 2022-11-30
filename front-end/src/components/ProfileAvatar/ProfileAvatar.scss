@@ -1,6 +1,8 @@
 @use "../../styles/variables" as v;
 .avatar-inner {
 	position: relative;
+	width: 20rem;
+	height: 20rem;
 	.uploader {
 		position: absolute;
 		bottom: 0;
