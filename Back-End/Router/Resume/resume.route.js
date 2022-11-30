@@ -24,4 +24,8 @@ router.post("/un-apply-CV" , checkToken ,ResumeService.unApplyCV)
 router.get("/history-apply" , checkToken ,ResumeService.getHistory)
 
 
+router.get("/history-applier-post" , checkToken ,ResumeService.getHistoryApplier) //getHistoryApplier
+
+
+
 module.exports = router;
