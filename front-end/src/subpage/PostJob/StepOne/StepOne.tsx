@@ -18,6 +18,8 @@ import {
 	SelectCommon,
 } from "src/common";
 import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
+import SelectLocation from "src/components/SelectLocation/SelectLocation";
+import { FormCommon } from "./../../../common/index";
 type Props = {};
 
 export const salaryMarks: SliderMarks = {
@@ -33,6 +35,10 @@ export type NewPostFormStepOne = {
 	gender: number;
 	jobTypeList: number[];
 	majorList: number[];
+	province_code: string;
+	district_code: string;
+	ward_code: string;
+	address: string;
 };
 
 const StepOne = (props: Props) => {
@@ -54,7 +60,7 @@ const StepOne = (props: Props) => {
 	return (
 		<React.Suspense fallback={<SuspenseLoading size="large" />}>
 			<div className="step-one">
-				<Form<NewPostFormStepOne>
+				<FormCommon<NewPostFormStepOne>
 					form={form}
 					layout="vertical"
 					initialValues={{
@@ -121,7 +127,17 @@ const StepOne = (props: Props) => {
 							tooltip={{ formatter: sliderFormatter }}
 						/>
 					</Form.Item>
-				</Form>
+					<SelectLocation form={form} />
+					<Form.Item
+						name="address"
+						label="Address"
+						rules={[
+							{ required: true, message: "Address is required" },
+						]}
+					>
+						<InputCommon />
+					</Form.Item>
+				</FormCommon>
 				<div className="button-form">
 					<ButtonCommon type="primary" onClick={next} size="small">
 						Next

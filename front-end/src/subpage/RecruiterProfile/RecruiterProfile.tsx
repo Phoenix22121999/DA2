@@ -10,6 +10,7 @@ import { useReduxDispatch } from "../../redux/redux-hook";
 import { ButtonCommon, FormCommon, InputCommon } from "src/common";
 import SuspenseLoading from "../../components/SuspenseLoading/SuspenseLoading";
 import SelectLocation from "src/components/SelectLocation/SelectLocation";
+import { FormItemCommon } from "./../../common/index";
 
 type Props = {};
 
@@ -41,7 +42,7 @@ const RecruiterProfile = (props: Props) => {
 								ward_code: data.ward_code?.toString(),
 							}}
 						>
-							<Form.Item
+							<FormItemCommon
 								label="Company Name"
 								name={"full_name"}
 								rules={[
@@ -53,8 +54,8 @@ const RecruiterProfile = (props: Props) => {
 								]}
 							>
 								<InputCommon />
-							</Form.Item>
-							<Form.Item
+							</FormItemCommon>
+							<FormItemCommon
 								label="Email"
 								name={"email"}
 								rules={[
@@ -71,8 +72,8 @@ const RecruiterProfile = (props: Props) => {
 								]}
 							>
 								<InputCommon />
-							</Form.Item>
-							<Form.Item
+							</FormItemCommon>
+							<FormItemCommon
 								label="Numberphone"
 								name={"number_phone"}
 								rules={[
@@ -98,7 +99,7 @@ const RecruiterProfile = (props: Props) => {
 								]}
 							>
 								<InputCommon />
-							</Form.Item>
+							</FormItemCommon>
 
 							<SelectLocation
 								form={form}
@@ -108,19 +109,19 @@ const RecruiterProfile = (props: Props) => {
 									ward_code: data.ward_code,
 								}}
 							/>
+							<FormItemCommon
+								label="Address"
+								name={"address"}
+								rules={[
+									{
+										required: true,
+										message: "Please input your address!",
+									},
+								]}
+							>
+								<InputCommon />
+							</FormItemCommon>
 						</FormCommon>
-						<Form.Item
-							label="Address"
-							name={"address"}
-							rules={[
-								{
-									required: true,
-									message: "Please input your address!",
-								},
-							]}
-						>
-							<InputCommon />
-						</Form.Item>
 						<div className="button-form">
 							<ButtonCommon size="small" onClick={onUpdate}>
 								Update

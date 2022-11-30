@@ -12,6 +12,10 @@ export type CreatePostParameters = {
 	from_value: number;
 	is_active: boolean;
 	is_delete: boolean;
+	province_code: string;
+	district_code: string;
+	ward_code: string;
+	address: string;
 	list_job_type: ListJobType[];
 	list_major: ListMajor[];
 	gender: number;

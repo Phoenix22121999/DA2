@@ -2,13 +2,14 @@ import React from "react";
 import { SwitchCommon } from "src/common";
 import "./JobTypeItem.scss";
 export type JobTypeItemProps = {
-	name: string;
-	onChange?: (name: string, checked: boolean) => void;
+	itemKey: string | number;
+	value: string;
+	onChange?: (name: string | number, checked: boolean) => void;
 };
 
-const JobTypeItem = ({ name, onChange }: JobTypeItemProps) => {
+const JobTypeItem = ({ itemKey, value, onChange }: JobTypeItemProps) => {
 	const handleChange = (checked: boolean) => {
-		onChange && onChange(name, checked);
+		onChange && onChange(itemKey, checked);
 	};
 
 	return (
@@ -16,7 +17,7 @@ const JobTypeItem = ({ name, onChange }: JobTypeItemProps) => {
 			<div className="job-type-item-switch">
 				<SwitchCommon onChange={handleChange} />
 			</div>
-			<div className="job-type-item-name">{name}</div>
+			<div className="job-type-item-name">{value}</div>
 		</div>
 	);
 };

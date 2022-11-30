@@ -1,8 +1,11 @@
 import React from "react";
 import { SelectCommon } from "src/common";
 import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
+import useGetStatictisOption from "src/hooks/useGetStatictisOption";
 
-type Props = {};
+type Props = {
+	handleChange: (value: string[]) => void;
+};
 
 const test: SelectOptionValue[] = [
 	{
@@ -23,12 +26,21 @@ const test: SelectOptionValue[] = [
 	},
 ];
 
-const SearchCategory = (props: Props) => {
+const SearchCategory = ({ handleChange }: Props) => {
+	const { majorOption } = useGetStatictisOption();
+
 	return (
 		<div className="search-category">
-			<div className="search-filter-title">category</div>
+			<div className="search-filter-title">Major</div>
 			<div className="search-filter-input">
-				<SelectCommon data={test} size="large" showSearch allowClear />
+				<SelectCommon
+					mode="multiple"
+					data={majorOption}
+					size="large"
+					showSearch
+					allowClear
+					onChange={handleChange}
+				/>
 			</div>
 		</div>
 	);

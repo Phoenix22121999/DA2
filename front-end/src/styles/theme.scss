@@ -47,6 +47,20 @@ body {
 	}
 }
 
+.sidebar-toggle {
+	width: 100%;
+	height: 6rem;
+	display: flex;
+	padding: 0 2rem;
+	justify-content: flex-start;
+	align-items: center;
+	@include variables.text-2xl;
+	color: variables.$primary-background;
+	.sidebar-toggle-icon {
+		cursor: pointer;
+	}
+}
+
 .dashboard-sider {
 	background: variables.$default-background;
 	border-right: 1px solid variables.$secondary-background;

@@ -1,0 +1,15 @@
+@use "../../../styles/variables" as v;
+.search-location {
+	.search-filter-sub-title {
+		@include v.text-base;
+		margin: 1rem 0;
+		color: v.$light-gray-color;
+		&:first-child {
+			margin-top: 0;
+		}
+		// &:last-child {
+		// 	margin-bottom: 0;
+		// }
+		// font-weight: 500;
+	}
+}

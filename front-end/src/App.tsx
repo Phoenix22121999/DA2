@@ -2,6 +2,7 @@ import React from "react";
 import { RouterProvider } from "react-router-dom";
 import "./App.css";
 import "./styles/theme.scss";
+import "react-quill/dist/quill.snow.css";
 
 import { pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";

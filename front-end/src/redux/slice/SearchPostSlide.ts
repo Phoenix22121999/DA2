@@ -24,6 +24,7 @@ export const searchPost = createAsyncThunk(
 	async (action: ActionPayload, { getState }) => {
 		const searchParameter =
 			selectSearchParameter(getState() as RootState) || "";
+
 		const response = await api.postApi.getListPost(searchParameter);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, null);

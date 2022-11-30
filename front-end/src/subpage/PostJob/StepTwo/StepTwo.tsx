@@ -1,7 +1,6 @@
 import { QuillDeltaToHtmlConverter } from "quill-delta-to-html";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import {
 	nextStep,
@@ -17,7 +16,7 @@ import { ButtonCommon } from "src/common";
 type Props = {};
 
 const StepTwo = (props: Props) => {
-	// const [value, setValue] = useState("");
+	const [error, setError] = useState(false);
 	const ref = useRef<ReactQuill>(null);
 	const dispatch = useReduxDispatch();
 	const next = () => {
@@ -33,18 +32,30 @@ const StepTwo = (props: Props) => {
 
 			var html = converter.convert();
 
-			dispatch(
-				updateNewPost({
-					content: html,
-				})
-			);
+			if (html !== "<p><br/></p>") {
+				dispatch(
+					updateNewPost({
+						content: html,
+					})
+				);
+				dispatch(createPost({}));
+				dispatch(nextStep());
+			} else {
+				setError(true);
+			}
 		}
-		dispatch(createPost({}));
-		dispatch(nextStep());
 	};
 
 	const prev = () => {
 		dispatch(prevStep());
+	};
+	const onChange = (value: string) => {
+		if (value === "<p><br/></p>" && error === false) {
+			setError(true);
+		}
+		if (value !== "<p><br/></p>" && error === true) {
+			setError(false);
+		}
 	};
 
 	return (
@@ -55,9 +66,10 @@ const StepTwo = (props: Props) => {
 					modules={quillModules}
 					theme="snow"
 					// value={value}
-					// onChange={setValue}
+					onChange={onChange}
 				/>
 			</div>
+			{error && <div className="editor-error">Please input content</div>}
 			<div className="button-form">
 				<ButtonCommon onClick={prev} size="small">
 					Previous

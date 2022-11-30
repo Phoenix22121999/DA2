@@ -1,6 +1,5 @@
 import { NewPostFormStepOne } from "src/subpage/PostJob/StepOne/StepOne";
 import { CreatePostParameters, UpdatePostParameters } from "src/types/PostType";
-import { SearchParameter } from "src/types/SearchType";
 
 export const serializeForm = (data: any) => {
 	let rs = "";
@@ -46,10 +45,18 @@ export function inputNumberParser(
 			.replace(new RegExp("\\" + decimalSeparator), ".")
 	);
 }
-export const searchParameterBuilder = (
-	searchParameter: SearchParameter | { [key: string]: any } | Object
-) => {
-	const searchParams = new URLSearchParams(searchParameter as any);
+export const searchParameterBuilder = (searchParameter: {
+	[key: string]: any;
+}) => {
+	const parameter = { ...searchParameter };
+
+	Object.entries(parameter).forEach(([key, value]) => {
+		if (value === undefined) {
+			delete parameter[key];
+		}
+	});
+
+	const searchParams = new URLSearchParams(parameter as any);
 	return searchParams.toString();
 };
 
@@ -61,6 +68,10 @@ export const formValueToCreatePostParameters = (
 		from_value: value.salary[0],
 		to_value: value.salary[1],
 		gender: Number(value.gender),
+		province_code: value.province_code,
+		district_code: value.district_code,
+		ward_code: value.ward_code,
+		address: value.address,
 		list_job_type: value.jobTypeList.map((id) => {
 			return { job_type_id: id };
 		}),
@@ -81,6 +92,10 @@ export const formValueToUpdatePostParameters = (
 		title: value.title,
 		from_value: value.salary[0],
 		to_value: value.salary[1],
+		province_code: value.province_code,
+		district_code: value.district_code,
+		ward_code: value.ward_code,
+		address: value.address,
 		gender: Number(value.gender),
 		list_job_type: value.jobTypeList.map((id) => {
 			return { job_type_id: id };

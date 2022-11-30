@@ -23,6 +23,10 @@ const initialState: NewPostState = {
 		gender: 1,
 		is_active: true,
 		is_delete: false,
+		province_code: "",
+		district_code: "",
+		ward_code: "",
+		address: "",
 	},
 	editID: null,
 	currentStep: 0,
@@ -66,6 +70,10 @@ export const newPostSlice = createSlice({
 					gender: 1,
 					is_active: true,
 					is_delete: false,
+					province_code: "",
+					district_code: "",
+					ward_code: "",
+					address: "",
 				};
 				state.status = "idle";
 			})

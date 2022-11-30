@@ -36,9 +36,9 @@ export type UserAccount = {
 	age: number | null;
 	gender: number | null;
 	address: string | null;
-	province_code: number | null;
-	district_code: number | null;
-	ward_code: number | null;
+	province_code: string | null;
+	district_code: string | null;
+	ward_code: string | null;
 	avartar: string | null;
 	logo: string | null;
 };
@@ -125,6 +125,10 @@ export type RecruitmentPost = {
 	to_value: number;
 	from_value: number | null;
 	gender: number | null;
+	address: string | null;
+	province_code: string | null;
+	district_code: string | null;
+	ward_code: string | null;
 	create_date: Date | null;
 	create_user: string | null;
 	update_date: Date | null;

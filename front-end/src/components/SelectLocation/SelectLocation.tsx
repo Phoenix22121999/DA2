@@ -60,7 +60,6 @@ const SelectLocation = ({ initialValue, form }: Props) => {
 	const handleDictrictChange = (e: string) => {
 		onSetFormValue && onSetFormValue("ward_code", undefined);
 		onDistrictChange(e);
-
 		// form.setFieldValue("district_code", undefined);
 	};
 

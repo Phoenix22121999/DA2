@@ -11,6 +11,7 @@ import { SearchParameter } from "src/types/SearchType";
 import useDebounce from "src/hooks/useDebounce";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { updatePrameterAndSearchPost } from "src/redux/slice/SearchPostSlide";
+import { LocationCode } from "src/types/LocationType";
 type Props = {
 	isOpen: boolean;
 };
@@ -24,11 +25,51 @@ const SearchFilter = ({ isOpen }: Props) => {
 	const handleKeyWordChange = (value: string) => {
 		setSearchParams({ ...searchParams, key_word: value });
 	};
+
 	const handleSalaryChange = (value: [number, number]) => {
 		setSearchParams({
 			...searchParams,
 			from_value: value[0],
 			to_value: value[1],
+		});
+	};
+
+	const handleLocationChange = (value: LocationCode) => {
+		setSearchParams({
+			...searchParams,
+			...(value.province_code
+				? {
+						province_code: value.province_code.toString(),
+				  }
+				: {
+						province_code: undefined,
+				  }),
+			...(value.district_code
+				? {
+						district_code: value.district_code.toString(),
+				  }
+				: {
+						district_code: undefined,
+				  }),
+			...(value.ward_code
+				? { ward_code: value.ward_code.toString() }
+				: {
+						ward_code: undefined,
+				  }),
+		});
+	};
+
+	const handleMajorChange = (value: string[]) => {
+		setSearchParams({
+			...searchParams,
+			list_major: value,
+		});
+	};
+
+	const handleJobTypeChange = (value: string[]) => {
+		setSearchParams({
+			...searchParams,
+			list_job_type: value,
 		});
 	};
 
@@ -50,13 +91,13 @@ const SearchFilter = ({ isOpen }: Props) => {
 				<SearchKeyWord handleChange={handleKeyWordChange} />
 			</div>
 			<div className="search-filter-item">
-				<SearchLocation />
+				<SearchLocation handleChange={handleLocationChange} />
 			</div>
 			<div className="search-filter-item">
-				<SearchCategory />
+				<SearchCategory handleChange={handleMajorChange} />
 			</div>
 			<div className="search-filter-item">
-				<SearchJobType />
+				<SearchJobType handleChange={handleJobTypeChange} />
 			</div>
 			<div className="search-filter-item">
 				<SearchDatePost />

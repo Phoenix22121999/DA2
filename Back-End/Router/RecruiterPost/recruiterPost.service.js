@@ -5,27 +5,19 @@ BigInt.prototype.toJSON = function () {
 	return this.toString();
 };
 
-const prisma = new PrismaClient();
-// {
-// 	log: [
-// 		{
-// 			emit: "stdout",
-// 			level: "query",
-// 		},
-// 		{
-// 			emit: "stdout",
-// 			level: "error",
-// 		},
-// 		{
-// 			emit: "stdout",
-// 			level: "info",
-// 		},
-// 		{
-// 			emit: "stdout",
-// 			level: "warn",
-// 		},
-// 	],
-// }
+const prisma = new PrismaClient({
+	// log: [
+	// 	{
+	// 		emit: "event",
+	// 		level: "query",
+	// 	},
+	// ],
+});
+prisma.$on("query", (e) => {
+	console.log("Query: " + e.query);
+	console.log("Params: " + e.params);
+	console.log("Duration: " + e.duration + "ms");
+});
 
 function exclude(obj, keys) {
 	for (let key of keys) {
@@ -93,40 +85,85 @@ const getListPost = async (req, res) => {
 		from_value,
 		to_value,
 		gender,
+		province_code,
+		district_code,
+		ward_code,
+		list_job_type,
+		list_major,
 		is_content = false,
 	} = req.query;
 	try {
+		const list_job_type_array = list_job_type
+			? list_job_type.split(",").map(Number)
+			: undefined;
+		const list_major_array = list_major
+			? list_major.split(",").map(Number)
+			: undefined;
+
+		const andArr = [
+			{
+				is_active: {
+					equals: true,
+				},
+			},
+			{
+				is_delete: {
+					equals: false,
+				},
+			},
+			{
+				title: { contains: key_word },
+			},
+			{
+				from_value: {
+					gte: from_value && Number(from_value),
+				},
+			},
+			{
+				to_value: {
+					lte: to_value && Number(to_value),
+				},
+			},
+			{
+				gender: gender && Number(gender),
+			},
+			{
+				province_code: { contains: province_code },
+			},
+			{
+				district_code: { contains: district_code },
+			},
+			{
+				ward_code: { contains: ward_code },
+			},
+			// from_value : from_value <
+			{
+				post_job_types: {
+					some: {
+						job_type_id: {
+							in: list_job_type_array,
+						},
+						is_active: true,
+						is_delete: false,
+					},
+				},
+			},
+			{
+				post_majors: {
+					some: {
+						majors_id: {
+							in: list_major_array,
+						},
+						is_active: true,
+						is_delete: false,
+					},
+				},
+			},
+		];
+
 		let resultList = await prisma.Recruitment_Post.findMany({
 			where: {
-				AND: [
-					{
-						is_active: {
-							equals: true,
-						},
-					},
-					{
-						is_delete: {
-							equals: false,
-						},
-					},
-					{
-						title: { contains: key_word },
-					},
-					{
-						from_value: {
-							gte: from_value && Number(from_value),
-						},
-					},
-					{
-						to_value: {
-							lte: to_value && Number(to_value),
-						},
-					},
-					{
-						gender: gender && Number(gender),
-					},
-					// from_value : from_value <
-				],
+				AND: andArr,
 			},
 			take: Number(item_per_page),
 			skip: Number(item_per_page * (page - 1)),
@@ -179,31 +216,7 @@ const getListPost = async (req, res) => {
 		});
 		let total = await prisma.Recruitment_Post.count({
 			where: {
-				AND: [
-					{
-						is_active: {
-							equals: true,
-						},
-					},
-					{
-						is_delete: {
-							equals: false,
-						},
-					},
-					{
-						title: { contains: key_word },
-					},
-					{
-						from_value: {
-							gte: from_value && Number(from_value),
-						},
-					},
-					{
-						to_value: {
-							lte: to_value && Number(to_value),
-						},
-					},
-				],
+				AND: andArr,
 			},
 		});
 		if (resultList && resultList.length < 0) {
@@ -247,6 +260,10 @@ const createPost = async (req, res) => {
 			is_active,
 			is_delete,
 			gender,
+			province_code,
+			district_code,
+			ward_code,
+			address,
 			list_job_type = [],
 			list_major = [],
 		} = req.body;
@@ -293,6 +310,10 @@ const createPost = async (req, res) => {
 				recuiter_id: Number(user_id),
 				to_value: Number(to_value),
 				from_value: Number(from_value),
+				province_code: province_code,
+				district_code: district_code,
+				ward_code: ward_code,
+				address: address,
 				create_date: new Date(moment(new Date()).format("YYYY-MM-DD")),
 				gender: Number(gender),
 				is_active: is_active,
@@ -341,6 +362,10 @@ const update = async (req, res) => {
 			is_active,
 			is_delete,
 			gender,
+			province_code,
+			district_code,
+			ward_code,
+			address,
 			list_job_type = [],
 			list_major = [],
 		} = req.body;
@@ -407,8 +432,10 @@ const update = async (req, res) => {
 		const upsertMajor = updateOrCreateMajor.map((majors_id) => {
 			return {
 				where: {
-					majors_id: Number(majors_id),
-					post_id: Number(post_id),
+					post_id_majors_id: {
+						majors_id: Number(majors_id),
+						post_id: Number(post_id),
+					},
 				},
 				update: {
 					is_delete: false,
@@ -438,8 +465,10 @@ const update = async (req, res) => {
 		const upsertJobType = updateOrCreateJobType.map((job_type_id) => {
 			return {
 				where: {
-					job_type_id: Number(job_type_id),
-					post_id: Number(post_id),
+					post_id_job_type_id: {
+						job_type_id: Number(job_type_id),
+						post_id: Number(post_id),
+					},
 				},
 				update: {
 					is_delete: false,
@@ -470,6 +499,10 @@ const update = async (req, res) => {
 				update_date: new Date(moment(new Date()).format("YYYY-MM-DD")),
 				update_user: user_id,
 				gender: Number(gender),
+				province_code: province_code,
+				district_code: district_code,
+				ward_code: ward_code,
+				address: address,
 				post_job_types: {
 					updateMany: {
 						where: {
@@ -556,17 +589,17 @@ const deletePost = async (req, res) => {
 				is_delete: true,
 				delete_date: new Date(moment(new Date()).format("YYYY-MM-DD")),
 				delete_user: user_id,
-				History_Apply_Job : {
-					updateMany : {
-						where : {
-							post_id : Number(post_id)
+				History_Apply_Job: {
+					updateMany: {
+						where: {
+							post_id: Number(post_id),
 						},
-						data : {
-							is_delete : true,
-							is_active : false
-						}
-					}
-				}
+						data: {
+							is_delete: true,
+							is_active: false,
+						},
+					},
+				},
 			},
 		});
 		if (!resultDelete) {

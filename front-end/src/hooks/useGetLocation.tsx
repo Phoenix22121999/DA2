@@ -70,33 +70,20 @@ function useGetLocation(initialValue?: LocationCode) {
 	}, [provinceCode, dispatch]);
 
 	useEffect(() => {
-		console.log({ districtCode });
-
 		if (districtCode) {
 			dispatch(getWard({ payload: districtCode }));
 		}
 	}, [districtCode, dispatch]);
 
-	const onProvinceChange = useCallback(
-		(provinceCode: string) => {
-			setProvinceCode(provinceCode);
-			if (
-				initialValue &&
-				initialValue.province_code &&
-				initialValue.province_code.toString() !== provinceCode
-			) {
-				setDistrictCode(undefined);
-				setWardCode(undefined);
-			}
-		},
-		[initialValue]
-	);
+	const onProvinceChange = useCallback((provinceCode: string | undefined) => {
+		setProvinceCode(provinceCode);
+	}, []);
 
-	const onDistrictChange = useCallback((districtCode: string) => {
+	const onDistrictChange = useCallback((districtCode: string | undefined) => {
 		setDistrictCode(districtCode);
 	}, []);
 
-	const onWardChange = useCallback((wardCode: string) => {
+	const onWardChange = useCallback((wardCode: string | undefined) => {
 		setWardCode(wardCode);
 	}, []);
 

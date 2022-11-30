@@ -23,12 +23,14 @@ import useGetStatictisOption from "src/hooks/useGetStatictisOption";
 import {
 	ButtonCommon,
 	FormCommon,
+	FormItemCommon,
 	InputCommon,
 	LoadingCommon,
 	RangeSliderCommon,
 	SelectCommon,
 } from "src/common";
 import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
+import SelectLocation from "src/components/SelectLocation/SelectLocation";
 type Props = {};
 
 const EditPost = (props: Props) => {
@@ -68,6 +70,7 @@ const EditPost = (props: Props) => {
 			const delta = editor.getContents();
 			var converter = new QuillDeltaToHtmlConverter(delta.ops as any);
 			var html = converter.convert();
+
 			formValueToCreatePostParameters(value);
 			if (editPost?.id) {
 				dispatch(
@@ -95,6 +98,10 @@ const EditPost = (props: Props) => {
 			majorList: editPost?.post_majors.map(
 				(post_majors) => post_majors.majors.id
 			),
+			province_code: editPost?.province_code || undefined,
+			district_code: editPost?.district_code || undefined,
+			ward_code: editPost?.ward_code || undefined,
+			address: editPost?.address || undefined,
 		});
 	}, [editPost, form]);
 
@@ -172,7 +179,34 @@ const EditPost = (props: Props) => {
 							/>
 						</Form.Item>
 
-						<Form.Item label="Content">
+						<SelectLocation
+							form={form}
+							initialValue={
+								editPost
+									? {
+											province_code:
+												editPost.province_code,
+											district_code:
+												editPost.district_code,
+											ward_code: editPost.ward_code,
+									  }
+									: undefined
+							}
+						/>
+						<FormItemCommon
+							label="Address"
+							name={"address"}
+							rules={[
+								{
+									required: true,
+									message: "Please input your address!",
+								},
+							]}
+						>
+							<InputCommon />
+						</FormItemCommon>
+
+						<Form.Item label="Content" required>
 							<div className="editor">
 								<ReactQuill
 									ref={ref}

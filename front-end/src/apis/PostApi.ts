@@ -25,6 +25,7 @@ export class PostApi extends BaseApi {
 	}
 	async getListPost(searchParameter: SearchParameter) {
 		const params = searchParameterBuilder(searchParameter);
+		console.log(params, searchParameter);
 
 		return this.baseGet<{}, SearchReponse>(`?${params}`, {});
 	}

@@ -1,33 +1,35 @@
-import React from "react";
-import JobTypeItem, { JobTypeItemProps } from "./JobTypeItem/JobTypeItem";
+import React, { useState } from "react";
+import JobTypeItem from "./JobTypeItem/JobTypeItem";
+import useGetStatictisOption from "./../../../hooks/useGetStatictisOption";
 
-type Props = {};
+type Props = {
+	handleChange: (value: string[]) => void;
+};
 
-const JOB_TYPE: JobTypeItemProps[] = [
-	{
-		name: "Freelance",
-	},
-	{
-		name: "Full Time",
-	},
-	{
-		name: "Part Time",
-	},
-	{
-		name: "Intership",
-	},
-	{
-		name: "Temporary",
-	},
-];
-
-const SearchJobType = (props: Props) => {
+const SearchJobType = ({ handleChange }: Props) => {
+	const { jobTypeOption } = useGetStatictisOption();
+	const [list, setList] = useState<string[]>([]);
+	const onToggleitem = (name: string | number, checked: boolean) => {
+		const newList = list.filter((item) => item !== name);
+		if (checked) {
+			newList.push(name.toString());
+		}
+		setList(newList);
+		handleChange(newList);
+	};
 	return (
 		<div className="search-job-type">
 			<div className="search-filter-title">Job Type</div>
 			<div className="search-filter-input">
-				{JOB_TYPE.map((type) => {
-					return <JobTypeItem key={type.name} {...type} />;
+				{jobTypeOption.map((type) => {
+					return (
+						<JobTypeItem
+							key={type.key}
+							itemKey={type.key}
+							value={type.value}
+							onChange={onToggleitem}
+						/>
+					);
 				})}
 			</div>
 		</div>

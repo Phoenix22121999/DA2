@@ -1,10 +1,14 @@
+@use "../../../styles/variables" as v;
 .step-one {
 	padding: 2rem;
 }
 .step-two {
+	.editor-error {
+		color: v.$danger-background;
+	}
 }
 .editor {
-	margin: 4rem 0;
+	margin: 4rem 0 1rem 0;
 	border: 1px solid black;
 	padding: 2px;
 	height: 400px;
