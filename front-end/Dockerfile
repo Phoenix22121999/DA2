@@ -10,7 +10,8 @@ RUN yarn build
 
 FROM nginx:stable-alpine
 COPY --from=da2frontend /app/build /usr/share/nginx/html
-COPY --from=da2frontend /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+RUN rm /etc/nginx/conf.d/default.conf
+COPY --from=da2frontend /app/nginx/nginx.conf /etc/nginx/conf.d
 # Containers run nginx with global directives and daemon off
 EXPOSE 80
 
