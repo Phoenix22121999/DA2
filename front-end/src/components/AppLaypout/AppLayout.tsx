@@ -7,9 +7,11 @@ import { Outlet } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 import ScrollToTop from "../ScrollToTop/ScrollToTop";
 import SuspenseLoading from "../SuspenseLoading/SuspenseLoading";
+import useGetStatictisOption from "src/hooks/useGetStatictisOption";
 export interface HeaderProps {}
 
 export function AppLayout(props: HeaderProps) {
+	useGetStatictisOption();
 	return (
 		<div className="app-layout">
 			<React.Suspense fallback={<SuspenseLoading size="large" />}>

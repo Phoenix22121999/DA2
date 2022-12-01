@@ -13,9 +13,13 @@ import { inputNumberFormatter } from "./../../../utils/function";
 import { ButtonCommon, TagCommon } from "src/common";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "src/utils/contants";
+import classNames from "classnames";
 
 export interface SearchListItemProps
-	extends DetailRecruitmentPostWithoutContent {}
+	extends DetailRecruitmentPostWithoutContent {
+	selected: number;
+	onClick: (id: number) => void;
+}
 
 const SearchListItem = ({
 	title,
@@ -25,24 +29,33 @@ const SearchListItem = ({
 	post_majors,
 	post_job_types,
 	id,
+	provinces,
+	districts,
+	wards,
+	selected,
+	onClick,
 	user: { full_name },
 }: SearchListItemProps) => {
 	const natigate = useNavigate();
 	const onViewClick = () => {
 		natigate(`${ROUTE.POST_DETAIL}${id}`);
 	};
+	const handleClick = () => {
+		onClick(id);
+	};
 	return (
-		<div className="search-list-item">
-			<div className="left">
-				<div className="logo">
-					<img src={TEST_LOGO} alt="" />
-				</div>
-			</div>
+		<div className="search-list-item" onClick={handleClick}>
+			<div className="left"></div>
 			<div className="right">
 				<div className="top">
 					<div className="top-left">
-						<div className="title">{title}</div>
-						<div className="company">{full_name}</div>
+						<div className="logo">
+							<img src={TEST_LOGO} alt="" />
+						</div>
+						<div className="top-left-content">
+							<div className="title">{title}</div>
+							<div className="company">{full_name}</div>
+						</div>
 					</div>
 					<div className="top-right">
 						<ButtonCommon size="small" onClick={onViewClick}>
@@ -50,39 +63,66 @@ const SearchListItem = ({
 						</ButtonCommon>
 					</div>
 				</div>
-				<div className="content">
+				<div
+					className={classNames("content", {
+						"content-open": selected === id,
+					})}
+				>
 					<div className="major">
-						<TagCommon
-							color="orange"
-							size="medium"
-							icon={<BookOutlined />}
-						>
-							Marketing
-						</TagCommon>
+						{post_majors.map((major) => {
+							return (
+								<TagCommon
+									key={major.id}
+									color="orange"
+									size="small"
+									icon={<BookOutlined />}
+								>
+									{major.majors.majors_name}
+								</TagCommon>
+							);
+						})}
 					</div>
 					<div className="time">
-						{" "}
-						<TagCommon
-							color="yellow"
-							size="medium"
-							icon={<ClockCircleOutlined />}
-						>
-							Full time
-						</TagCommon>
+						{post_job_types.map((jt) => {
+							return (
+								<TagCommon
+									key={jt.id}
+									color="yellow"
+									size="small"
+									icon={<ClockCircleOutlined />}
+								>
+									{jt.job_type.job_type_name}
+								</TagCommon>
+							);
+						})}
 					</div>
 					<div className="address">
 						<TagCommon
 							color="red"
-							size="medium"
+							size="small"
 							icon={<EnvironmentOutlined />}
 						>
-							{address}
+							{wards.full_name}
+						</TagCommon>
+						<TagCommon
+							color="red"
+							size="small"
+							icon={<EnvironmentOutlined />}
+						>
+							{districts.full_name}
+						</TagCommon>
+						<TagCommon
+							color="red"
+							size="small"
+							icon={<EnvironmentOutlined />}
+						>
+							{provinces.full_name}
 						</TagCommon>
 					</div>
 					<div className="salary">
 						<TagCommon
 							color="green"
-							size="medium"
+							size="small"
 							icon={<DollarOutlined />}
 						>
 							{inputNumberFormatter(from_value || 0)} -{" "}

@@ -34,6 +34,16 @@ function arrayDifference(arr1, arr2) {
 	return arr1.filter((x) => !arr2.includes(x));
 }
 
+function getDateLast(last) {
+	const now = new Date();
+
+	return new Date(
+		now.getFullYear(),
+		now.getMonth(),
+		now.getDate() - Number(last)
+	);
+}
+
 const getListPostOfUser = async (req, res) => {
 	try {
 		let { user_id = null, user_type_id = null } = req;
@@ -90,6 +100,7 @@ const getListPost = async (req, res) => {
 		ward_code,
 		list_job_type,
 		list_major,
+		date_post,
 		is_content = false,
 	} = req.query;
 	try {
@@ -136,7 +147,11 @@ const getListPost = async (req, res) => {
 			{
 				ward_code: { contains: ward_code },
 			},
-			// from_value : from_value <
+			{
+				create_date: {
+					gte: date_post && getDateLast(date_post),
+				},
+			},
 			{
 				post_job_types: {
 					some: {
@@ -210,6 +225,39 @@ const getListPost = async (req, res) => {
 					where: {
 						is_delete: false,
 						is_active: true,
+					},
+				},
+				provinces: {
+					select: {
+						id: true,
+						code: true,
+						name: true,
+						name_en: true,
+						full_name: true,
+						full_name_en: true,
+						code_name: true,
+					},
+				},
+				districts: {
+					select: {
+						id: true,
+						code: true,
+						name: true,
+						name_en: true,
+						full_name: true,
+						full_name_en: true,
+						code_name: true,
+					},
+				},
+				wards: {
+					select: {
+						id: true,
+						code: true,
+						name: true,
+						name_en: true,
+						full_name: true,
+						full_name_en: true,
+						code_name: true,
 					},
 				},
 			},
@@ -683,39 +731,39 @@ const getDetail = async (req, res) => {
 						is_active: true,
 					},
 				},
-				provinces : {
-					select : {
-						id : true,
-						code : true,
-						name : true,
-						name_en : true,
-						full_name : true,
-						full_name_en : true,
-						code_name : true
-					}
+				provinces: {
+					select: {
+						id: true,
+						code: true,
+						name: true,
+						name_en: true,
+						full_name: true,
+						full_name_en: true,
+						code_name: true,
+					},
 				},
-				districts : {
-					select : {
-						id : true,
-						code : true,
-						name : true,
-						name_en : true,
-						full_name : true,
-						full_name_en : true,
-						code_name : true
-					}
+				districts: {
+					select: {
+						id: true,
+						code: true,
+						name: true,
+						name_en: true,
+						full_name: true,
+						full_name_en: true,
+						code_name: true,
+					},
 				},
-				wards : {
-					select : {
-						id : true,
-						code : true,
-						name : true,
-						name_en : true,
-						full_name : true,
-						full_name_en : true,
-						code_name : true
-					}
-				}
+				wards: {
+					select: {
+						id: true,
+						code: true,
+						name: true,
+						name_en: true,
+						full_name: true,
+						full_name_en: true,
+						code_name: true,
+					},
+				},
 			},
 		});
 		if (!isExists) {
@@ -740,7 +788,6 @@ const getDetail = async (req, res) => {
 		});
 	}
 };
-
 
 module.exports = {
 	update,

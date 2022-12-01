@@ -10,6 +10,7 @@ import { jobTypeReducer } from "./slice/JobTypeSlide";
 import { majorReducer } from "./slice/MajorSlide";
 import { accountTypeReducer } from "./slice/AccountTypeSlide";
 import { locationReducer } from "./slice/LocationSlide";
+import { applyHistoryReducer } from "./slice/ApplyHistorySlide";
 
 export const store = configureStore({
 	reducer: {
@@ -24,6 +25,7 @@ export const store = configureStore({
 		jobType: jobTypeReducer,
 		major: majorReducer,
 		location: locationReducer,
+		applyHistory: applyHistoryReducer,
 	},
 });
 

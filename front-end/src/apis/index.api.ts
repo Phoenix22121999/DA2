@@ -9,6 +9,7 @@ import { JobTypeApi } from "./JobTypeApi";
 import { MajorApi } from "./MajorApi";
 import { LocationApi } from "./LocationApi";
 import { ApplyApi } from "./ApplyApi";
+import { ApplyHistoryApi } from "./ApplyHistoryApi";
 
 class api {
 	static authApi = new AuthApi();
@@ -22,6 +23,7 @@ class api {
 	static majorApi = new MajorApi();
 	static locationApi = new LocationApi();
 	static applyApi = new ApplyApi();
+	static applyHistoryApi = new ApplyHistoryApi();
 }
 
 export default api;

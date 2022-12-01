@@ -74,7 +74,7 @@ const CVManager = (props: Props) => {
 					<ColumnCommon<CV>
 						title="Action"
 						key="action"
-						width={"30%"}
+						width={"20%"}
 						render={(_, record) => {
 							return (
 								<CVActions

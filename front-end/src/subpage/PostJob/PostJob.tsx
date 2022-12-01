@@ -6,6 +6,7 @@ import StepOne from "./StepOne/StepOne";
 import StepTwo from "./StepTwo/StepTwo";
 import StepThree from "./StepThree/StepThree";
 import { StepsCommon } from "src/common";
+import { useScrollToTop } from "src/hooks/useScrollToTop";
 type Props = {};
 const steps = [
 	{
@@ -29,6 +30,7 @@ const itemsa: StepProps[] = steps.map((item) => ({
 
 const PostJob = (props: Props) => {
 	const currentStep = useReduxSelector(selectNewPostCurentStep);
+	useScrollToTop(currentStep);
 
 	return (
 		<div className="post-job">

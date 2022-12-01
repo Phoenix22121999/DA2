@@ -9,6 +9,7 @@ import useGetCVList from "./../../hooks/useGetCVList";
 import "./SelectCVModal.scss";
 import { CallbackFunction } from "src/types/UtilType";
 import { message } from "antd";
+import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
 type Props = {
 	postId?: number;
 	onClose: () => void;
@@ -42,6 +43,7 @@ const SelectCVModal = ({ postId, onClose }: Props) => {
 		}
 		onClose();
 	};
+
 	const onApply = () => {
 		if (postId && cv) {
 			dispatch(
@@ -54,54 +56,56 @@ const SelectCVModal = ({ postId, onClose }: Props) => {
 	};
 	return (
 		<div className="select-cv-modal">
-			{!isCandidate && (
-				<div className="select-cv-noti select-cv-not-candidate">
-					Please sign in with candidate account
-					<div className="button-group">
-						<ButtonCommon size="small" onClick={onSignIn}>
-							Sign in
-						</ButtonCommon>{" "}
-						<ButtonCommon size="small" onClick={onSignUp}>
-							Sign up
-						</ButtonCommon>
+			<React.Suspense fallback={<SuspenseLoading size="xsmall" />}>
+				{!isCandidate && (
+					<div className="select-cv-noti select-cv-not-candidate">
+						Please sign in with candidate account
+						<div className="button-group">
+							<ButtonCommon size="small" onClick={onSignIn}>
+								Sign in
+							</ButtonCommon>{" "}
+							<ButtonCommon size="small" onClick={onSignUp}>
+								Sign up
+							</ButtonCommon>
+						</div>
 					</div>
-				</div>
-			)}
+				)}
 
-			{isCandidate && cvsOption.length < 1 && (
-				<div className="select-cv-noti select-cv-not-have-cv">
-					You don't have any CV. Please add one!
-					<div className="button-group">
-						<ButtonCommon size="small" onClick={onAddCV}>
-							Go to CV manager
-						</ButtonCommon>{" "}
+				{isCandidate && cvsOption.length < 1 && (
+					<div className="select-cv-noti select-cv-not-have-cv">
+						You don't have any CV. Please add one!
+						<div className="button-group">
+							<ButtonCommon size="small" onClick={onAddCV}>
+								Go to CV manager
+							</ButtonCommon>{" "}
+						</div>
 					</div>
-				</div>
-			)}
+				)}
 
-			{isCandidate && cvsOption.length > 0 ? (
-				<div className="select-cv-content">
-					<div className="select-cv-title">Choose CV:</div>
-					<SelectCommon
-						data={cvsOption}
-						placeholder="Please choose cv"
-						value={cv}
-						onChange={setCv}
-					/>
-					<div className="button-group">
-						<ButtonCommon
-							size="small"
-							onClick={onAddCV}
-							type="secondary"
-						>
-							Go to CV manager
-						</ButtonCommon>{" "}
-						<ButtonCommon size="small" onClick={onApply}>
-							Apply
-						</ButtonCommon>
+				{isCandidate && cvsOption.length > 0 ? (
+					<div className="select-cv-content">
+						<div className="select-cv-title">Choose CV:</div>
+						<SelectCommon
+							data={cvsOption}
+							placeholder="Please choose cv"
+							value={cv}
+							onChange={setCv}
+						/>
+						<div className="button-group">
+							<ButtonCommon
+								size="small"
+								onClick={onAddCV}
+								type="secondary"
+							>
+								Go to CV manager
+							</ButtonCommon>{" "}
+							<ButtonCommon size="small" onClick={onApply}>
+								Apply
+							</ButtonCommon>
+						</div>
 					</div>
-				</div>
-			) : null}
+				) : null}
+			</React.Suspense>
 		</div>
 	);
 };

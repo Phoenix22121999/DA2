@@ -11,9 +11,12 @@ import { ButtonCommon, ModalCommon, TagCommon } from "src/common";
 import { DetailRecruitmentPost } from "src/types/CombineType";
 import SelectCVModal from "../SelectCVModal/SelectCVModal";
 import { useModal } from "src/hooks/useModal";
+import useCheckIsApplied from "./../../hooks/useCheckIsApplied";
 interface Props extends Partial<DetailRecruitmentPost> {}
 
 const JobDetailBanner = ({ title, user, id }: Props) => {
+	const isApplied = useCheckIsApplied(id!);
+
 	const { open, isOpen, close } = useModal(false);
 	const onApply = () => {
 		open();
@@ -40,48 +43,10 @@ const JobDetailBanner = ({ title, user, id }: Props) => {
 									<ButtonCommon
 										size="large"
 										onClick={onApply}
+										disabled={isApplied}
 									>
-										Apply
+										{isApplied ? "Applied" : "Apply"}
 									</ButtonCommon>
-								</div>
-							</div>
-							<div className="content">
-								<div className="major">
-									<TagCommon
-										color="orange"
-										size="large"
-										icon={<BookOutlined />}
-									>
-										Marketing
-									</TagCommon>
-								</div>
-								<div className="time">
-									{" "}
-									<TagCommon
-										color="yellow"
-										size="large"
-										icon={<ClockCircleOutlined />}
-									>
-										Full time
-									</TagCommon>
-								</div>
-								<div className="address">
-									<TagCommon
-										color="red"
-										size="large"
-										icon={<EnvironmentOutlined />}
-									>
-										Ha Noi
-									</TagCommon>
-								</div>
-								<div className="salary">
-									<TagCommon
-										color="green"
-										size="large"
-										icon={<DollarOutlined />}
-									>
-										15k - 25k
-									</TagCommon>
 								</div>
 							</div>
 						</div>

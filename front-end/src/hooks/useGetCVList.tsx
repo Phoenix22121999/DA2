@@ -1,8 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
-import { selectCVList } from "src/redux/slice/CVSlide";
-import { getListJobType } from "src/redux/slice/JobTypeSlide";
+import { getListCV, selectCVList } from "src/redux/slice/CVSlide";
 
 function useGetCVList() {
 	const [first, setFirst] = useState(true);
@@ -11,7 +10,9 @@ function useGetCVList() {
 	useEffect(() => {
 		if (first) {
 			if (cvList.length === 0) {
-				dispatch(getListJobType({ payload: {} }));
+				console.log("call");
+
+				dispatch(getListCV({}));
 			}
 			setFirst(false);
 		}

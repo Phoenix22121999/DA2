@@ -12,6 +12,7 @@ import useDebounce from "src/hooks/useDebounce";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import { updatePrameterAndSearchPost } from "src/redux/slice/SearchPostSlide";
 import { LocationCode } from "src/types/LocationType";
+import SuspenseLoading from "../SuspenseLoading/SuspenseLoading";
 type Props = {
 	isOpen: boolean;
 };
@@ -73,6 +74,13 @@ const SearchFilter = ({ isOpen }: Props) => {
 		});
 	};
 
+	const handleDatePostChange = (value: string) => {
+		setSearchParams({
+			...searchParams,
+			date_post: value,
+		});
+	};
+
 	useEffect(() => {
 		dispatch(
 			updatePrameterAndSearchPost({
@@ -87,24 +95,26 @@ const SearchFilter = ({ isOpen }: Props) => {
 				"is-open": isOpen,
 			})}
 		>
-			<div className="search-filter-item">
-				<SearchKeyWord handleChange={handleKeyWordChange} />
-			</div>
-			<div className="search-filter-item">
-				<SearchLocation handleChange={handleLocationChange} />
-			</div>
-			<div className="search-filter-item">
-				<SearchCategory handleChange={handleMajorChange} />
-			</div>
-			<div className="search-filter-item">
-				<SearchJobType handleChange={handleJobTypeChange} />
-			</div>
-			<div className="search-filter-item">
-				<SearchDatePost />
-			</div>
-			<div className="search-filter-item">
-				<SearchSalary handleChange={handleSalaryChange} />
-			</div>
+			<React.Suspense fallback={<SuspenseLoading size="medium" />}>
+				<div className="search-filter-item">
+					<SearchKeyWord handleChange={handleKeyWordChange} />
+				</div>
+				<div className="search-filter-item">
+					<SearchLocation handleChange={handleLocationChange} />
+				</div>
+				<div className="search-filter-item">
+					<SearchCategory handleChange={handleMajorChange} />
+				</div>
+				<div className="search-filter-item">
+					<SearchJobType handleChange={handleJobTypeChange} />
+				</div>
+				<div className="search-filter-item">
+					<SearchDatePost handleChange={handleDatePostChange} />
+				</div>
+				<div className="search-filter-item">
+					<SearchSalary handleChange={handleSalaryChange} />
+				</div>
+			</React.Suspense>
 		</div>
 	);
 };

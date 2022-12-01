@@ -11,6 +11,7 @@ export type SearchParameter = {
 	list_major?: string[];
 	page?: number;
 	item_per_page?: number;
+	date_post?: string;
 };
 
 export type SearchReponse = {

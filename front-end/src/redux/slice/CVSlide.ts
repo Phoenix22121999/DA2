@@ -98,7 +98,6 @@ export const downloadCV = createAsyncThunk(
 
 			fileDownload(rawResponse, `${file_name}.${ext}`);
 		} catch (err) {
-			console.log(err);
 			// return err;
 		}
 		// The value we return becomes the `fulfilled` action payload

@@ -1,5 +1,6 @@
 import React from "react";
 import { SelectCommon } from "src/common";
+import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
 import useGetStatictisOption from "src/hooks/useGetStatictisOption";
 
 type Props = {
@@ -13,14 +14,16 @@ const SearchCategory = ({ handleChange }: Props) => {
 		<div className="search-category">
 			<div className="search-filter-title">Major</div>
 			<div className="search-filter-input">
-				<SelectCommon
-					mode="multiple"
-					data={majorOption}
-					size="large"
-					showSearch
-					allowClear
-					onChange={handleChange}
-				/>
+				<React.Suspense fallback={<SuspenseLoading size="xsmall" />}>
+					<SelectCommon
+						mode="multiple"
+						data={majorOption}
+						size="large"
+						showSearch
+						allowClear
+						onChange={handleChange}
+					/>
+				</React.Suspense>
 			</div>
 		</div>
 	);

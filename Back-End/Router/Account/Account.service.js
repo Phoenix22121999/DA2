@@ -120,7 +120,6 @@ const signInWithToken = async (req, res) => {
 				id: Number(user_id),
 			},
 		});
-		console.log(resultSignIn[0]);
 		// Nếu không có kết quả trả về là không tồn tại tài khoản này
 		if (!resultSignIn && !resultSignIn.length) {
 			return res.json({
