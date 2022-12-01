@@ -683,6 +683,39 @@ const getDetail = async (req, res) => {
 						is_active: true,
 					},
 				},
+				provinces : {
+					select : {
+						id : true,
+						code : true,
+						name : true,
+						name_en : true,
+						full_name : true,
+						full_name_en : true,
+						code_name : true
+					}
+				},
+				districts : {
+					select : {
+						id : true,
+						code : true,
+						name : true,
+						name_en : true,
+						full_name : true,
+						full_name_en : true,
+						code_name : true
+					}
+				},
+				wards : {
+					select : {
+						id : true,
+						code : true,
+						name : true,
+						name_en : true,
+						full_name : true,
+						full_name_en : true,
+						code_name : true
+					}
+				}
 			},
 		});
 		if (!isExists) {
@@ -707,6 +740,8 @@ const getDetail = async (req, res) => {
 		});
 	}
 };
+
+
 module.exports = {
 	update,
 	createPost,

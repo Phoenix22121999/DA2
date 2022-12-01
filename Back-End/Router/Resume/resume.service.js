@@ -454,6 +454,7 @@ const getHistory = async (req ,res ) => {
 				AND : [{
 					is_active : {equals : true},
 					is_delete : {equals : false},
+					user_id : Number(user_id)
 				}]
 			},
 			take: Number(item_per_page),
@@ -544,6 +545,140 @@ const getHistory = async (req ,res ) => {
 }
 
 
+const getHistoryApplier = async (req ,res ) => {
+	try{
+		let {
+			key_word,
+			item_per_page = 10,
+			page = 1,
+			from_value,
+			to_value,
+			gender,
+			post_id,
+			is_content = false,
+		} = req.query;
+		let { user_id, user_type_id = null } = req;
+		const is_view_history = await prisma.recruitment_Post.findMany({
+			where : {
+				AND : [{
+					is_active : true,
+					is_delete : false,
+					user : {
+						id :  Number(user_id)
+					}
+				}]
+			}
+		})
+
+		if(!is_view_history){
+			return res.json({
+				code: 400,
+				status_resposse : false,
+				message : "Bạn không thể xem lịch sử của bài tuyển dụng này"
+			})
+		}
+		// is_view_history
+
+		const result =  await prisma.history_Apply_Job.findMany({
+			where : {
+				AND : [{
+					is_active : {equals : true},
+					is_delete : {equals : false},
+					Recruitment_Post : {
+						user : {
+							id :  Number(user_id)
+						}
+					}
+				}]
+			},
+			take: Number(item_per_page),
+			skip: Number(item_per_page * (page - 1)),
+			include: {
+				user_account : {
+					select : {
+						id: true,
+						full_name: true,
+						user_type_id: true,
+						email: true,
+						number_phone: true,
+						logo: true,
+						address: true,
+						province_code: true,
+						district_code: true,
+						ward_code: true,
+					},
+				},
+				Recruitment_Post : {
+					select : {
+						id : true,
+						content : true,
+						title : true,
+					},
+					select : {
+						post_job_types: {
+							select: {
+								id: true,
+								job_type: {
+									select: {
+										id: true,
+										job_type_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+						post_majors: {
+							select: {
+								id: true,
+								majors: {
+									select: {
+										id: true,
+										majors_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+					},
+				},
+				cv : {
+					select : {
+						id : true,
+						file_name_hash : true,
+						file_name : true,
+						extname : true,
+						is_active : true,
+						is_delete : true
+					},
+				}
+				
+			}
+		})
+
+		return res.json({
+			code : 200,
+			message : "Lấy dữ liệu thành công",
+			status_resposse : true,
+			data : result
+		})
+
+	}catch(error){
+		console.log(error.message);
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+}
+
+
 
 module.exports = {
 	getListResume,
@@ -553,5 +688,6 @@ module.exports = {
 	downloadCV,
 	applyCV,
 	unApplyCV,
-	getHistory
+	getHistory,
+	getHistoryApplier
 };
