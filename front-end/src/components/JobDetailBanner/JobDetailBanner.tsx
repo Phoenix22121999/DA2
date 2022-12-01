@@ -7,10 +7,20 @@ import {
 	DollarOutlined,
 	BookOutlined,
 } from "@ant-design/icons";
-import { ButtonCommon, TagCommon } from "src/common";
-type Props = {};
+import { ButtonCommon, ModalCommon, TagCommon } from "src/common";
+import { DetailRecruitmentPost } from "src/types/CombineType";
+import SelectCVModal from "../SelectCVModal/SelectCVModal";
+import { useModal } from "src/hooks/useModal";
+import useCheckIsApplied from "./../../hooks/useCheckIsApplied";
+interface Props extends Partial<DetailRecruitmentPost> {}
 
-const JobDetailBanner = (props: Props) => {
+const JobDetailBanner = ({ title, user, id }: Props) => {
+	const isApplied = useCheckIsApplied(id!);
+
+	const { open, isOpen, close } = useModal(false);
+	const onApply = () => {
+		open();
+	};
 	return (
 		<div className="job-detail-banner-warpper">
 			<div className="job-detail-banner-inner">
@@ -24,62 +34,28 @@ const JobDetailBanner = (props: Props) => {
 						<div className="right">
 							<div className="top">
 								<div className="top-left">
-									<div className="title">
-										Creative Art Designer
-									</div>
+									<div className="title">{title}</div>
 									<div className="company">
-										Premium Labels Limited
+										{user?.full_name}
 									</div>
 								</div>
 								<div className="top-right">
-									<ButtonCommon size="medium">
-										Apply
+									<ButtonCommon
+										size="large"
+										onClick={onApply}
+										disabled={isApplied}
+									>
+										{isApplied ? "Applied" : "Apply"}
 									</ButtonCommon>
-								</div>
-							</div>
-							<div className="content">
-								<div className="major">
-									<TagCommon
-										color="orange"
-										size="large"
-										icon={<BookOutlined />}
-									>
-										Marketing
-									</TagCommon>
-								</div>
-								<div className="time">
-									{" "}
-									<TagCommon
-										color="yellow"
-										size="large"
-										icon={<ClockCircleOutlined />}
-									>
-										Full time
-									</TagCommon>
-								</div>
-								<div className="address">
-									<TagCommon
-										color="red"
-										size="large"
-										icon={<EnvironmentOutlined />}
-									>
-										Ha Noi
-									</TagCommon>
-								</div>
-								<div className="salary">
-									<TagCommon
-										color="green"
-										size="large"
-										icon={<DollarOutlined />}
-									>
-										15k - 25k
-									</TagCommon>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<ModalCommon open={isOpen} onCancel={close} footer={null} centered>
+				<SelectCVModal postId={id} onClose={close} />
+			</ModalCommon>
 		</div>
 	);
 };

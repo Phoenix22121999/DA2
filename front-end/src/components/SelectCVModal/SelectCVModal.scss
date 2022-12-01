@@ -1,0 +1,53 @@
+@use "../../styles/variables" as v;
+.select-cv-modal {
+	padding: 2rem;
+	.select-cv-noti {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		color: v.$danger-background;
+		@include v.text-base;
+	}
+	.select-cv-not-have-cv {
+		.button-group {
+			margin-top: 2rem;
+			width: 100%;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+		}
+	}
+	.select-cv-not-candidate {
+		.button-group {
+			margin-top: 2rem;
+			width: 100%;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			button {
+				&:first-child {
+					margin-right: 1rem;
+				}
+			}
+		}
+	}
+	.select-cv-content {
+		.select-cv-title {
+			@include v.text-base;
+			margin-bottom: 2rem;
+		}
+		.button-group {
+			margin-top: 2rem;
+			width: 100%;
+			display: flex;
+			justify-content: flex-end;
+			align-items: center;
+			button {
+				&:first-child {
+					margin-right: 1rem;
+				}
+			}
+		}
+	}
+}

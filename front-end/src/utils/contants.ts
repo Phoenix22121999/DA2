@@ -89,6 +89,15 @@ export const USER_TYPE_OPTION: SelectOptionValue[] = [
 	},
 ];
 
+export const USER_TYPE = {
+	ADMIN: 1,
+	CANDIDATE: 2,
+	RECRUITER: 3,
+} as const;
+
+type USER_TYPE_KEY = keyof typeof USER_TYPE;
+export type USER_TYPE_ITEMS = typeof USER_TYPE[USER_TYPE_KEY];
+
 export const COOKIES_NAME = {
 	ACCESS_TOKEN: "accessToken",
 	USER: "user",

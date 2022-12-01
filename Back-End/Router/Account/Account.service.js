@@ -120,7 +120,6 @@ const signInWithToken = async (req, res) => {
 				id: Number(user_id),
 			},
 		});
-		console.log(resultSignIn[0]);
 		// Nếu không có kết quả trả về là không tồn tại tài khoản này
 		if (!resultSignIn && !resultSignIn.length) {
 			return res.json({
@@ -287,9 +286,9 @@ const update = async (req, res) => {
 					age: age && Number(age),
 					gender: gender && Number(gender),
 					address: address,
-					province_code: province_code && Number(province_code),
-					district_code: district_code && Number(district_code),
-					ward_code: ward_code && Number(ward_code),
+					province_code: province_code,
+					district_code: district_code,
+					ward_code: ward_code,
 					avartar: avartar,
 					logo: logo,
 				},

@@ -3,6 +3,7 @@ import { SelectCommon } from "src/common";
 import useGetLocation from "src/hooks/useGetLocation";
 import "./SearchLocation.scss";
 import { LocationCode } from "src/types/LocationType";
+import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
 type Props = {
 	handleChange: (value: LocationCode) => void;
 };
@@ -57,37 +58,39 @@ const SearchLocation = ({ handleChange }: Props) => {
 		<div className="search-location">
 			<div className="search-filter-title">Location</div>
 			<div className="search-filter-input">
-				<div className="search-filter-sub-title">Province</div>
-				<SelectCommon
-					showSearch
-					allowClear
-					disabled={provincesOption.length < 1}
-					data={provincesOption}
-					onChange={handleProvinceChange}
-					placeholder="Province"
-					value={provinceCode}
-				/>
-				<div className="search-filter-sub-title">District</div>
-				<SelectCommon
-					showSearch
-					allowClear
-					disabled={districtsOption.length < 1}
-					data={districtsOption}
-					onChange={handleDictrictChange}
-					placeholder="Dictrict"
-					value={districtCode}
-				/>
+				<React.Suspense fallback={<SuspenseLoading size="small" />}>
+					<div className="search-filter-sub-title">Province</div>
+					<SelectCommon
+						showSearch
+						allowClear
+						disabled={provincesOption.length < 1}
+						data={provincesOption}
+						onChange={handleProvinceChange}
+						placeholder="Province"
+						value={provinceCode}
+					/>
+					<div className="search-filter-sub-title">District</div>
+					<SelectCommon
+						showSearch
+						allowClear
+						disabled={districtsOption.length < 1}
+						data={districtsOption}
+						onChange={handleDictrictChange}
+						placeholder="Dictrict"
+						value={districtCode}
+					/>
 
-				<div className="search-filter-sub-title">Ward</div>
-				<SelectCommon
-					showSearch
-					allowClear
-					disabled={wardsOption.length < 1}
-					data={wardsOption}
-					onChange={handleWardChange}
-					placeholder="Ward"
-					value={wardCode}
-				/>
+					<div className="search-filter-sub-title">Ward</div>
+					<SelectCommon
+						showSearch
+						allowClear
+						disabled={wardsOption.length < 1}
+						data={wardsOption}
+						onChange={handleWardChange}
+						placeholder="Ward"
+						value={wardCode}
+					/>
+				</React.Suspense>
 			</div>
 		</div>
 	);

@@ -1,5 +1,5 @@
 import { StepProps } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { useReduxSelector } from "src/redux/redux-hook";
 import { selectSignUpCurentStep } from "src/redux/slice/SignUpSlice";
 import SignUpStepOne from "./SignUpStepOne/SignUpStepOne";
@@ -7,6 +7,7 @@ import SignUpStepTwo from "./SignUpStepTwo/SignUpStepTwo";
 import "./SignUpContent.scss";
 import SignUpStepThree from "./SignUpStepThree/SignUpStepThree";
 import { StepsCommon } from "src/common";
+import { useScrollToTop } from "src/hooks/useScrollToTop";
 type Props = {};
 const steps = [
 	{
@@ -29,6 +30,8 @@ const itemsa: StepProps[] = steps.map((item) => ({
 }));
 const SignUpContent = (props: Props) => {
 	const currentStep = useReduxSelector(selectSignUpCurentStep);
+	useScrollToTop(currentStep);
+
 	// const dispatch = useReduxDispatch();
 
 	// const onChange = (value: number) => {

@@ -1,72 +1,55 @@
-import { Space } from "antd";
-import { ColumnsType } from "antd/lib/table";
 import React from "react";
-import { TableCommon } from "src/common";
-interface DataType {
-	key: string;
-	name: string;
-	cv: string;
-	time: string;
-}
-
-const columns: ColumnsType<DataType> = [
-	{
-		title: "Name",
-		dataIndex: "name",
-		key: "name",
-		// render: (text) => <a>{text}</a>,
-	},
-	{
-		title: "CV",
-		dataIndex: "cv",
-		key: "cv",
-	},
-	{
-		title: "Time",
-		dataIndex: "time",
-		key: "time",
-	},
-	{
-		title: "Action",
-		key: "action",
-		width: 300,
-		render: (_, record) => (
-			<Space size="middle">
-				<div>Delete</div>
-			</Space>
-		),
-	},
-];
-const data: DataType[] = [
-	{
-		key: "1",
-		name: "Job 1",
-		cv: "Cv 1",
-		time: "now",
-	},
-	{
-		key: "2",
-		name: "job 2",
-		cv: "cv 2",
-		time: "now",
-	},
-	{
-		key: "3",
-		name: "job 3",
-		cv: "cv 3",
-		time: "now",
-	},
-];
+import { ColumnCommon, TableCommon } from "src/common";
+import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
+import { DetailHistoryApplyJob } from "src/types/CombineType";
+import useGetApplyHistory from "../../hooks/useGetApplyHistory";
+import AppliedJobActions from "./AppliedJobActions/AppliedJobActions";
 
 type Props = {};
 
 const AppliedJobs = (props: Props) => {
+	const { applyHistory } = useGetApplyHistory();
 	return (
 		<div className="applied-jobs">
 			<div className="dashboard-title">Applied Job</div>
-			<div className="inner-content">
-				<TableCommon columns={columns} dataSource={data} />
-			</div>
+			<React.Suspense fallback={<SuspenseLoading size="medium" />}>
+				<div className="inner-content">
+					<TableCommon dataSource={applyHistory}>
+						<ColumnCommon
+							title="Post"
+							dataIndex={["Recruitment_Post", "title"]}
+							key="title"
+						/>
+						<ColumnCommon
+							title="CV"
+							dataIndex={["cv", "file_name"]}
+							key="file_name"
+						/>
+						<ColumnCommon
+							title="Create Date"
+							dataIndex="create_date"
+							key="create_date"
+							render={(value: string) => {
+								const event = new Date(value);
+
+								return (
+									<div>
+										{event.toLocaleDateString("vi-VI")}
+									</div>
+								);
+							}}
+						/>
+						<ColumnCommon<DetailHistoryApplyJob>
+							title="Action"
+							key="action"
+							width={"10%"}
+							render={(_, record) => {
+								return <AppliedJobActions record={record} />;
+							}}
+						/>
+					</TableCommon>
+				</div>
+			</React.Suspense>
 		</div>
 	);
 };

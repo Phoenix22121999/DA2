@@ -5,6 +5,7 @@ import { FilterOutlined } from "@ant-design/icons";
 import "./Search.scss";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
+import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
 type Props = {};
 
 const Search = (props: Props) => {
@@ -22,23 +23,29 @@ const Search = (props: Props) => {
 				</div>
 			</div>
 			<div className="container">
-				<div className="search-page-inner">
-					<div className={classNames("search-page-filter")}>
-						<div
-							className="toogle-search-filter"
-							onClick={toggleFilter}
-						>
-							<span className="filter-test">
-								{isFilterOpen ? "Close Filter" : "Open Filter"}
-							</span>
-							<FilterOutlined rotate={isFilterOpen ? 180 : 0} />
+				<React.Suspense fallback={<SuspenseLoading size="large" />}>
+					<div className="search-page-inner">
+						<div className={classNames("search-page-filter")}>
+							<div
+								className="toogle-search-filter"
+								onClick={toggleFilter}
+							>
+								<span className="filter-test">
+									{isFilterOpen
+										? "Close Filter"
+										: "Open Filter"}
+								</span>
+								<FilterOutlined
+									rotate={isFilterOpen ? 180 : 0}
+								/>
+							</div>
+							<SearchFilter isOpen={isFilterOpen} />
 						</div>
-						<SearchFilter isOpen={isFilterOpen} />
+						<div className="search-page-list">
+							<SearchList />
+						</div>
 					</div>
-					<div className="search-page-list">
-						<SearchList />
-					</div>
-				</div>
+				</React.Suspense>
 			</div>
 		</div>
 	);

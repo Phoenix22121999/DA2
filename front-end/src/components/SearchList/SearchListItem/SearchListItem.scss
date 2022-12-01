@@ -4,7 +4,7 @@
 	justify-content: space-between;
 	align-items: flex-start;
 	width: 100%;
-
+	cursor: pointer;
 	border-radius: v.$border-radius-xsm;
 	max-width: 103rem;
 	margin-bottom: 4rem;
@@ -17,50 +17,37 @@
 	@include v.mq("tablet") {
 		flex-direction: row;
 	}
-	.left {
-		height: 100%;
-		width: 6rem;
-		display: flex;
-		flex-direction: row;
-		justify-content: flex-start;
-		align-items: flex-start;
-		.logo {
-			display: none;
-			width: 6rem;
-			height: 6rem;
-			margin-right: 2rem;
-			margin-bottom: 0;
-			img {
-				width: 100%;
-				height: 100%;
-			}
-			@include v.mq("tablet") {
-				display: block;
-			}
-		}
-		.major {
-			width: 100%;
-			.ant-tag {
-				width: 100%;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				margin: 0;
-			}
-			// padding: 0.2rem;
-			// background-color: white;
-			// @include v.text-sm;
-			// font-weight: 600;
-		}
-		@include v.mq("tablet") {
-			flex-direction: column;
-			.logo {
-				margin-right: 0;
-				// width: 8rem;
-				// height: 8rem;
-			}
-		}
-	}
+	// .left {
+	// 	height: 100%;
+	// 	width: 6rem;
+	// 	display: flex;
+	// 	flex-direction: row;
+	// 	justify-content: flex-start;
+	// 	align-items: flex-start;
+
+	// 	.major {
+	// 		width: 100%;
+	// 		.ant-tag {
+	// 			width: 100%;
+	// 			display: flex;
+	// 			justify-content: center;
+	// 			align-items: center;
+	// 			margin: 0;
+	// 		}
+	// 		// padding: 0.2rem;
+	// 		// background-color: white;
+	// 		// @include v.text-sm;
+	// 		// font-weight: 600;
+	// 	}
+	// 	@include v.mq("tablet") {
+	// 		flex-direction: column;
+	// 		.logo {
+	// 			margin-right: 0;
+	// 			// width: 8rem;
+	// 			// height: 8rem;
+	// 		}
+	// 	}
+	// }
 	.right {
 		padding: 0;
 		width: 100%;
@@ -76,20 +63,51 @@
 			justify-content: space-between;
 			align-items: center;
 			.top-left {
-				.title {
-					@include v.text-2xl;
-					font-weight: bold;
-					color: v.$dark-blue;
+				display: flex;
+				justify-content: flex-start;
+				align-items: flex-start;
+				.logo {
+					display: none;
+					width: 6rem;
+					height: 6rem;
+					margin-bottom: 0;
+					flex-basis: 6rem;
+					flex-grow: 0;
+					flex-shrink: 0;
+
+					img {
+						width: 100%;
+						height: 100%;
+					}
+					@include v.mq("tablet") {
+						display: flex;
+					}
 				}
-				.company {
-					@include v.text-lg;
-					font-weight: 500;
+				.top-left-content {
+					// width: 30rem;
+					margin: 0 2rem;
+					.title {
+						@include v.text-2xl;
+						font-weight: bold;
+						color: v.$dark-blue;
+					}
+					.company {
+						@include v.text-lg;
+						font-weight: 500;
+					}
 				}
 			}
 		}
 		.content {
+			transition: all 0.5s;
+			max-height: 0;
+			overflow: hidden;
+			&.content-open {
+				max-height: 12rem;
+			}
 			display: flex;
-			flex-wrap: wrap;
+			flex-direction: column;
+			// flex-wrap: wrap;
 			@include v.text-lg;
 			.icon {
 				padding: 0.5rem 2rem 0.5rem 0;
@@ -97,10 +115,12 @@
 			}
 			.salary,
 			.address,
+			.major,
 			.time {
 				display: flex;
 				justify-content: flex-start;
 				align-items: center;
+				flex-wrap: wrap;
 			}
 		}
 		@include v.mq("tablet") {

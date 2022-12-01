@@ -1,11 +1,12 @@
 import React from "react";
-import LoadingCommon from "src/common/LoadingCommon/LoadingCommon";
 import classNames from "classnames";
 import "./SuspenseLoading.scss";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 type Props = {
-	size: "xsmall" | "small" | "medium" | "large";
+	size: "2xs" | "xsmall" | "small" | "medium" | "large";
 };
-
+const indicator = <LoadingOutlined spin />;
 const SuspenseLoading = ({ size }: Props) => {
 	return (
 		<div
@@ -13,7 +14,7 @@ const SuspenseLoading = ({ size }: Props) => {
 				[`suspense-loading-${size}`]: size,
 			})}
 		>
-			<LoadingCommon loading />
+			<Spin spinning indicator={indicator} />
 		</div>
 	);
 };

@@ -105,3 +105,8 @@ export const formValueToUpdatePostParameters = (
 		}),
 	};
 };
+
+export const formatDate = (dateString: Date) => {
+	const date = new Date(dateString);
+	return date.toLocaleDateString("vi-VI");
+};
