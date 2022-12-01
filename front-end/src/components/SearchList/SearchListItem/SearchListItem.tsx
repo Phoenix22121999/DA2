@@ -8,18 +8,29 @@ import {
 	DollarOutlined,
 	BookOutlined,
 } from "@ant-design/icons";
-import { RecruitmentPostWithUser } from "src/types/CombineType";
+import { DetailRecruitmentPostWithoutContent } from "src/types/CombineType";
 import { inputNumberFormatter } from "./../../../utils/function";
 import { ButtonCommon, TagCommon } from "src/common";
+import { useNavigate } from "react-router-dom";
+import { ROUTE } from "src/utils/contants";
 
-export interface SearchListItemProps extends RecruitmentPostWithUser {}
+export interface SearchListItemProps
+	extends DetailRecruitmentPostWithoutContent {}
 
 const SearchListItem = ({
 	title,
 	from_value,
 	to_value,
-	user: { full_name, address },
+	address,
+	post_majors,
+	post_job_types,
+	id,
+	user: { full_name },
 }: SearchListItemProps) => {
+	const natigate = useNavigate();
+	const onViewClick = () => {
+		natigate(`${ROUTE.POST_DETAIL}${id}`);
+	};
 	return (
 		<div className="search-list-item">
 			<div className="left">
@@ -34,7 +45,9 @@ const SearchListItem = ({
 						<div className="company">{full_name}</div>
 					</div>
 					<div className="top-right">
-						<ButtonCommon size="small">Apply</ButtonCommon>
+						<ButtonCommon size="small" onClick={onViewClick}>
+							View Job
+						</ButtonCommon>
 					</div>
 				</div>
 				<div className="content">

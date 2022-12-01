@@ -7,10 +7,17 @@ import {
 	DollarOutlined,
 	BookOutlined,
 } from "@ant-design/icons";
-import { ButtonCommon, TagCommon } from "src/common";
-type Props = {};
+import { ButtonCommon, ModalCommon, TagCommon } from "src/common";
+import { DetailRecruitmentPost } from "src/types/CombineType";
+import SelectCVModal from "../SelectCVModal/SelectCVModal";
+import { useModal } from "src/hooks/useModal";
+interface Props extends Partial<DetailRecruitmentPost> {}
 
-const JobDetailBanner = (props: Props) => {
+const JobDetailBanner = ({ title, user, id }: Props) => {
+	const { open, isOpen, close } = useModal(false);
+	const onApply = () => {
+		open();
+	};
 	return (
 		<div className="job-detail-banner-warpper">
 			<div className="job-detail-banner-inner">
@@ -24,15 +31,16 @@ const JobDetailBanner = (props: Props) => {
 						<div className="right">
 							<div className="top">
 								<div className="top-left">
-									<div className="title">
-										Creative Art Designer
-									</div>
+									<div className="title">{title}</div>
 									<div className="company">
-										Premium Labels Limited
+										{user?.full_name}
 									</div>
 								</div>
 								<div className="top-right">
-									<ButtonCommon size="medium">
+									<ButtonCommon
+										size="large"
+										onClick={onApply}
+									>
 										Apply
 									</ButtonCommon>
 								</div>
@@ -80,6 +88,9 @@ const JobDetailBanner = (props: Props) => {
 					</div>
 				</div>
 			</div>
+			<ModalCommon open={isOpen} onCancel={close} footer={null} centered>
+				<SelectCVModal postId={id} onClose={close} />
+			</ModalCommon>
 		</div>
 	);
 };

@@ -1,30 +1,10 @@
 import React from "react";
 import { SelectCommon } from "src/common";
-import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
 import useGetStatictisOption from "src/hooks/useGetStatictisOption";
 
 type Props = {
 	handleChange: (value: string[]) => void;
 };
-
-const test: SelectOptionValue[] = [
-	{
-		key: "it",
-		value: "Information Technology",
-	},
-	{
-		key: "pharmacy",
-		value: "Pharmacy",
-	},
-	{
-		key: "accountant",
-		value: "Accountant",
-	},
-	{
-		key: "marketing",
-		value: "Marketing",
-	},
-];
 
 const SearchCategory = ({ handleChange }: Props) => {
 	const { majorOption } = useGetStatictisOption();

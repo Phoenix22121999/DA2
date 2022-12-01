@@ -1,4 +1,4 @@
-import { RecruitmentPostWithUser } from "./CombineType";
+import { DetailRecruitmentPostWithoutContent } from "./CombineType";
 
 export type SearchParameter = {
 	key_word?: string;
@@ -14,6 +14,6 @@ export type SearchParameter = {
 };
 
 export type SearchReponse = {
-	result: RecruitmentPostWithUser[];
+	result: DetailRecruitmentPostWithoutContent[];
 	total: number;
 };

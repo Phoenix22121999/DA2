@@ -35,9 +35,11 @@ const SearchList = (props: Props) => {
 					return <SearchListItem key={post.id} {...post} />;
 				})}
 			</div>
-			<div className="search-list-pagination">
-				<PaginationCommon total={total} showSizeChanger={false} />
-			</div>
+			{postList.length > 0 && (
+				<div className="search-list-pagination">
+					<PaginationCommon total={total} showSizeChanger={false} />
+				</div>
+			)}
 		</div>
 	);
 };
