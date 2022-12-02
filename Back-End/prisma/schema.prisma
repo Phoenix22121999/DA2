@@ -31,7 +31,7 @@ model User_Account {
   password          String
   username          String
   // user_type_id Int
-  google_id         Int?
+  google_id         String?
   is_active         Boolean             @default(true)
   is_delete         Boolean             @default(false)
   create_date       DateTime            @default(now())

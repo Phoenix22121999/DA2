@@ -19,4 +19,6 @@ router.post("/account-update", checkToken, AccoutService.update);
 // Thay đổi mật khẩu
 router.post("/change-password", checkToken, AccoutService.changePassword);
 
+router.post('/sign-in-google',  AccoutService.signInWithGoogle);
+
 module.exports = router;

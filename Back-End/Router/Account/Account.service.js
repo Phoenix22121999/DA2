@@ -4,12 +4,15 @@ const jwt = require("jsonwebtoken");
 const { createPassHash } = require("../../Middleware/config");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
+const { OAuth2Client } = require('google-auth-library');
 
 BigInt.prototype.toJSON = function () {
 	return this.toString();
 };
 
 const prisma = new PrismaClient();
+
+
 
 const formatObj = (result) => {
 	let obj = {
@@ -433,6 +436,106 @@ const getDetailAccount = async (req, res) => {
 	}
 };
 
+const signInWithGoogle = async (req, res)=>{
+	let {token = null , is_tdtu = false , googleId = 0 , user_type,} = req.body;
+	const client = new OAuth2Client( is_tdtu = true ? process.env.CLIENT_ID_TDTU : process.env.CLIENT_ID_NORMAL );
+	try{
+		if(!token){
+			return res.json({
+				code : 400,
+				message : "Vui lòng cung cấp token hợp lệ",
+				status_resposse : false
+			})
+		}
+		const ticket = await client.verifyIdToken({
+			idToken : token,
+			audience: (is_tdtu = true ? process.env.CLIENT_ID_TDTU : process.env.CLIENT_ID_NORMAL)
+		})
+		// dùng getPayload để lấy thông từ gmail
+		const payload = ticket.getPayload();
+
+		const email = payload['email'];
+		let first_name = payload['given_name'];
+		let last_name = payload['family_name'];
+		let avartar = is_tdtu = true ? picture = payload['picture'] : null;
+		let logo = is_tdtu = false ? picture = payload['picture'] : null;
+
+
+
+		let isExists = await  prisma.user_Account.findFirst({
+			where : {
+				username : email
+			}
+		})
+
+		if(isExists){
+			let obj = formatObj(isExists)
+			const AccessToken = jwt.sign(
+				// { UserId: obj.id, role: obj.user_type_id },
+				obj,
+				process.env.ACCESS_TOKEN
+			);
+
+			return res.json({
+				code: 200,
+				status_resposse: true,
+				message: "Đăng nhập thành công",
+				data: obj,
+				AccessToken: AccessToken,
+			});
+
+		}
+		const passHash = createPassHash(googleId);
+		let user_type_id = is_tdtu = true ? 2 : 3;
+		const resultCreate = await prisma.user_Account.create({
+			data: {
+				username: email,
+				password: passHash,
+				is_active: true,
+				is_delete: false,
+				// user_type_id : user_type.user_type_id,
+				user_type: {
+					id: Number(user_type_id),
+				},
+				// // user_type:
+				user_type_id: Number(user_type_id),
+				first_name: (first_name || ''),
+				last_name: (last_name || '' ),
+				google_id : googleId,
+				email: email,
+				avartar: avartar,
+				user_type: user_type,
+				logo: logo,
+			},
+		})
+		if (!resultCreate) {
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Đăng kí/Đăng nhập với gmail thất bại vui lòng thử lại !",
+			});
+		}
+		let obj = formatObj(resultCreate || {});
+		const AccessToken = jwt.sign(obj, process.env.ACCESS_TOKEN);
+
+		return res.json({
+			code: 200,
+			status_resposse: true,
+			message: "Đăng kí và đăng nhập thành công với gmail",
+			data: obj,
+			AccessToken: AccessToken,
+		});
+	}catch(error){
+		return res.json({
+			code : 400,
+			status_resposse : false,
+			message : error.message,
+
+		})
+	}
+
+}
+
 module.exports = {
 	getListAcccount,
 	signIn,
@@ -441,4 +544,5 @@ module.exports = {
 	update,
 	changePassword,
 	getDetailAccount,
+	signInWithGoogle
 };
