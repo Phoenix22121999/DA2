@@ -438,7 +438,7 @@ const getDetailAccount = async (req, res) => {
 
 const signInWithGoogle = async (req, res)=>{
 	let {token = null , is_tdtu = false , googleId = 0 , user_type,} = req.body;
-	const client = new OAuth2Client( is_tdtu = true ? process.env.CLIENT_ID_TDTU : process.env.CLIENT_ID_NORMAL );
+	const client = new OAuth2Client(process.env.CLIENT_ID_NORMAL);
 	try{
 		if(!token){
 			return res.json({
@@ -449,7 +449,7 @@ const signInWithGoogle = async (req, res)=>{
 		}
 		const ticket = await client.verifyIdToken({
 			idToken : token,
-			audience: (is_tdtu = true ? process.env.CLIENT_ID_TDTU : process.env.CLIENT_ID_NORMAL)
+			audience:  process.env.CLIENT_ID_NORMAL
 		})
 		// dùng getPayload để lấy thông từ gmail
 		const payload = ticket.getPayload();
