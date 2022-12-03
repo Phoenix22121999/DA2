@@ -9,10 +9,22 @@
 		padding: 4rem;
 		max-width: 36rem;
 		width: 100%;
+		.button-common {
+			width: 100%;
+		}
 		.button-sign-in {
 			display: flex;
 			justify-content: center;
 			align-items: center;
+		}
+		.login-with-gg {
+			.button-common {
+				margin-top: 2rem;
+			}
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
 		}
 	}
 }

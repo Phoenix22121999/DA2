@@ -1,7 +1,6 @@
 import { BaseApi } from "./base.api";
 
 import { ApplyParameter, UnApplyParameter } from "src/types/ApplyType";
-import { PaginationParameters } from "src/types/UtilType";
 import { DetailHistoryApplyJob } from "./../types/CombineType";
 
 // user is admin

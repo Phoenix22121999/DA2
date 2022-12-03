@@ -1,6 +1,7 @@
 import { BaseApi } from "./base.api";
 import {
 	AuthUser,
+	SignInGGParameters,
 	SignInParameters,
 	SignUpParameters,
 } from "src/types/AuthType";
@@ -17,6 +18,10 @@ export class AuthApi extends BaseApi {
 
 	async signInWithToken(token: string) {
 		return this.authPost<{}, AuthUser>("sign-in-with-token", token, {});
+	}
+
+	async signInWithGoogle(data: SignInGGParameters) {
+		return this.basePost<{}, AuthUser>("sign-in-google", data);
 	}
 
 	async signUp(data: SignUpParameters) {

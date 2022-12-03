@@ -1,4 +1,3 @@
-import { RadioChangeEvent } from "antd";
 import React from "react";
 import {
 	ButtonRadioGroupCommon,

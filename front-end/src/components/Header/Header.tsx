@@ -10,7 +10,7 @@ import "./Header.scss";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 import { Link, useNavigate } from "react-router-dom";
-import { COOKIES_NAME, ROUTE } from "src/utils/contants";
+import { COOKIES_NAME, GGAPI_NORMAL, ROUTE } from "src/utils/contants";
 import { useCookies } from "react-cookie";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import {
@@ -22,6 +22,8 @@ import { useUserAuth } from "src/hooks/useUserAuth";
 import { resetSignUp } from "src/redux/slice/SignUpSlice";
 import { CallbackFunction } from "src/types/UtilType";
 import { ButtonCommon } from "src/common";
+import { useGoogleLogout } from "react-google-login";
+
 type HeaderProps = {};
 const HEADER_ITEM = [
 	{
@@ -46,7 +48,10 @@ export const AppHeader = (props: HeaderProps) => {
 	const { isAuth, user, accessToken } = useUserAuth();
 	const navidate = useNavigate();
 	const dispatch = useReduxDispatch();
-
+	const { signOut: signOutGG } = useGoogleLogout({
+		clientId: GGAPI_NORMAL || "",
+		onLogoutSuccess: () => {},
+	});
 	const itemList = useMemo(() => {
 		if (user.user_type_id === 2 && isAuth) {
 			return [
@@ -118,6 +123,8 @@ export const AppHeader = (props: HeaderProps) => {
 	const signOut = () => {
 		removeCookie(COOKIES_NAME.ACCESS_TOKEN);
 		removeCookie(COOKIES_NAME.USER);
+
+		signOutGG();
 		dispatch(resetUser());
 	};
 

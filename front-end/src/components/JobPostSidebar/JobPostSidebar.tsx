@@ -18,39 +18,6 @@ import { DetailRecruitmentPost } from "./../../types/CombineType";
 import { formatDate, inputNumberFormatter } from "src/utils/function";
 interface Props extends Partial<DetailRecruitmentPost> {}
 
-const TEST: JobOverviewItemProps[] = [
-	{
-		icon: <CalendarOutlined />,
-		name: "Date Posted",
-		content: "Posted 1 hours ago",
-	},
-	{
-		icon: <FieldTimeOutlined />,
-		name: "Expiration date",
-		content: "April 06, 2021",
-	},
-	{
-		icon: <EnvironmentOutlined />,
-		name: "Location",
-		content: "London, UK",
-	},
-	{
-		icon: <SnippetsOutlined />,
-		name: "Job Category",
-		content: "Designer",
-	},
-	{
-		icon: <DollarCircleOutlined />,
-		name: "Salary",
-		content: "Posted 1 hours ago",
-	},
-	{
-		icon: <GenderIcon />,
-		name: "Gender",
-		content: "Male",
-	},
-];
-
 const TEST2: CompanyOverviewItemProps[] = [
 	{
 		name: "Company size",

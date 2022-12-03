@@ -9,8 +9,8 @@ export const CDN_URL =
 	process.env.NODE_ENV === "production"
 		? "http://159.223.54.199:3002"
 		: "http://localhost:3002";
-export const GGAPI_TDTU = process.env.REACT_APP_GGAPI_TDT;
-export const GGAPI_NORMAL = process.env.REACT_APP_GGAPI_NORMAL;
+export const GGAPI_TDTU = process.env.REACT_APP_GGAPI_TDT || "";
+export const GGAPI_NORMAL = process.env.REACT_APP_GGAPI_NORMAL || "";
 export const METHOD_AXIOS = {
 	GET: "get",
 	POST: "post",
