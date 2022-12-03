@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./SearchList.scss";
 import SearchListSort from "./SearchListSort/SearchListSort";
 import SearchListItem from "./SearchListItem/SearchListItem";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import {
-	searchPost,
 	selectSearchPostList,
 	selectSearchTotal,
 	updatePrameterAndSearchPost,

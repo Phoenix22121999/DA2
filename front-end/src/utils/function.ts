@@ -110,3 +110,9 @@ export const formatDate = (dateString: Date) => {
 	const date = new Date(dateString);
 	return date.toLocaleDateString("vi-VI");
 };
+
+export const checkIsTDTEmail = (email: string) => {
+	let regex = new RegExp("[a-z0-9]+@student.tdtu.edu.vn");
+	if (email.match(regex)) return true;
+	return false;
+};
