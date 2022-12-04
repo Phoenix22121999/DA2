@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import api from "src/apis/index.api";
-import { ChangePasswordParameters, SignInParameters } from "src/types/AuthType";
+import {
+	ChangePasswordParameters,
+	SignInGGParameters,
+	SignInParameters,
+} from "src/types/AuthType";
 import { UserAccount } from "src/types/Type";
 import { ActionPayload } from "src/types/UtilType";
 import { RootState } from "../store";
@@ -44,6 +48,26 @@ export const signIn = createAsyncThunk(
 			throw new Error("need payload");
 		}
 		const response = await api.authApi.signIn(action.payload);
+		if (response.code !== 200) {
+			action.callback && action.callback(false, response);
+		} else {
+			response.data!.user_type_id = Number(
+				response.data?.user_type_id || 0
+			);
+			action.callback && action.callback(true, response);
+		}
+		return response;
+		// The value we return becomes the `fulfilled` action payload
+	}
+);
+
+export const signInGG = createAsyncThunk(
+	"user/sign-in-gg",
+	async (action: ActionPayload<SignInGGParameters>) => {
+		if (!action.payload) {
+			throw new Error("need payload");
+		}
+		const response = await api.authApi.signInWithGoogle(action.payload);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, response);
 		} else {
@@ -148,6 +172,16 @@ export const userSlice = createSlice({
 				state.AccessToken = action.payload.AccessToken;
 			})
 			.addCase(signIn.rejected, (state) => {
+				state.status = "failed";
+			})
+			.addCase(signInGG.pending, (state) => {
+				state.status = "loading";
+			})
+			.addCase(signInGG.fulfilled, (state, action) => {
+				state.data = { ...state.data, ...action.payload.data };
+				state.AccessToken = action.payload.AccessToken;
+			})
+			.addCase(signInGG.rejected, (state) => {
 				state.status = "failed";
 			})
 			.addCase(signInWithToken.fulfilled, (state, action) => {

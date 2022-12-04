@@ -1,6 +1,10 @@
 import { Checkbox, Form, message } from "antd";
 import React from "react";
 import { useCookies } from "react-cookie";
+import {
+	GoogleLoginResponse,
+	GoogleLoginResponseOffline,
+} from "react-google-login";
 import { useNavigate } from "react-router-dom";
 import {
 	ButtonCommon,
@@ -9,12 +13,15 @@ import {
 	InputPasswordCommon,
 } from "src/common";
 import { useReduxDispatch } from "src/redux/redux-hook";
-import { signIn } from "src/redux/slice/UserSilce";
+import { signIn, signInGG } from "src/redux/slice/UserSilce";
 import { BaseReponseType } from "src/types/ApiType";
-import { AuthUser } from "src/types/AuthType";
 import { COOKIES_NAME } from "src/utils/contants";
 import SuspenseLoading from "../SuspenseLoading/SuspenseLoading";
 import "./SignInContent.scss";
+import { GGAPI_NORMAL } from "./../../utils/contants";
+import { checkIsTDTEmail } from "src/utils/function";
+import { GoogleLogin } from "react-google-login";
+import { UserAccount } from "src/types/Type";
 type Props = {};
 type SignUpForm = {
 	user_name: string;
@@ -30,10 +37,66 @@ const SignInContent = (props: Props) => {
 	]);
 	const natigate = useNavigate();
 
-	const callback = (isSuccess: boolean, data: BaseReponseType<AuthUser>) => {
+	const loginWithNormalGGSuccess = (
+		response: GoogleLoginResponse | GoogleLoginResponseOffline
+	) => {
+		if ("code" in response) {
+			message.error("Sign in fail");
+			return;
+		}
+		if (checkIsTDTEmail(response.profileObj.email)) {
+			message.error(
+				"you are sign in with tdtu google account please choose Sign In With TDT"
+			);
+			return;
+		}
+		dispatch(
+			signInGG({
+				payload: {
+					token: response.tokenId,
+					googleId: response.googleId,
+					is_tdtu: true,
+				},
+				callback,
+			})
+		);
+	};
+
+	const loginWithTDTGGSuccess = (
+		response: GoogleLoginResponse | GoogleLoginResponseOffline
+	) => {
+		if ("code" in response) {
+			message.error("Sign in fail");
+			return;
+		}
+		if (!checkIsTDTEmail(response.profileObj.email)) {
+			message.error("Please sign in with TDTU google account");
+			return;
+		}
+		dispatch(
+			signInGG({
+				payload: {
+					token: response.tokenId,
+					googleId: response.googleId,
+					is_tdtu: true,
+				},
+				callback,
+			})
+		);
+	};
+
+	const loginWithGGFail = (res: any) => {
+		console.log(res);
+		message.error("Sign in fail");
+	};
+
+	const callback = (
+		isSuccess: boolean,
+		data: BaseReponseType<UserAccount>
+	) => {
 		const remember: boolean = form.getFieldValue("agree");
 		if (isSuccess) {
-			if (remember) {
+			if (remember || data.data?.google_id) {
 				var expires = new Date();
 				expires.setDate(expires.getDate() + 3);
 				setCookies(COOKIES_NAME.ACCESS_TOKEN, data.AccessToken, {
@@ -53,6 +116,29 @@ const SignInContent = (props: Props) => {
 
 		dispatch(signIn({ payload: value, callback }));
 	};
+
+	const onSignInNomal = (renderProps: any) => (
+		<ButtonCommon
+			onClick={renderProps.onClick}
+			disabled={renderProps.disabled}
+			size="small"
+			type="secondary"
+		>
+			Sign In With Google
+		</ButtonCommon>
+	);
+
+	const onSignInTDT = (renderProps: any) => (
+		<ButtonCommon
+			onClick={renderProps.onClick}
+			disabled={renderProps.disabled}
+			size="small"
+			type="secondary"
+		>
+			Sign In With TDTU Google Account
+		</ButtonCommon>
+	);
+
 	return (
 		<div className="sign-in-content">
 			<div className="container">
@@ -91,6 +177,24 @@ const SignInContent = (props: Props) => {
 							<ButtonCommon onClick={handleSignIn} size="small">
 								Sign In
 							</ButtonCommon>
+						</div>
+						<div className="login-with-gg">
+							<GoogleLogin
+								clientId={GGAPI_NORMAL}
+								buttonText="Login"
+								onSuccess={loginWithNormalGGSuccess}
+								onFailure={loginWithGGFail}
+								cookiePolicy={"single_host_origin"}
+								render={onSignInNomal}
+							/>
+							<GoogleLogin
+								clientId={GGAPI_NORMAL}
+								buttonText="Login TDT"
+								onSuccess={loginWithTDTGGSuccess}
+								onFailure={loginWithGGFail}
+								cookiePolicy={"single_host_origin"}
+								render={onSignInTDT}
+							/>
 						</div>
 					</div>
 				</React.Suspense>

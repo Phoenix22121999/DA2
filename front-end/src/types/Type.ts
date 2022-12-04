@@ -23,7 +23,7 @@ export type UserAccount = {
 	id: number;
 	password: string;
 	username: string;
-	google_id: number | null;
+	google_id: string | null;
 	is_active: boolean;
 	is_delete: boolean;
 	create_date: Date;

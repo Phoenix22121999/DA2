@@ -1,13 +1,8 @@
 import React from "react";
 import "./JobDetailBanner.scss";
 import TEST_LOGO from "../../assets/images/logo.png";
-import {
-	ClockCircleOutlined,
-	EnvironmentOutlined,
-	DollarOutlined,
-	BookOutlined,
-} from "@ant-design/icons";
-import { ButtonCommon, ModalCommon, TagCommon } from "src/common";
+
+import { ButtonCommon, ModalCommon } from "src/common";
 import { DetailRecruitmentPost } from "src/types/CombineType";
 import SelectCVModal from "../SelectCVModal/SelectCVModal";
 import { useModal } from "src/hooks/useModal";

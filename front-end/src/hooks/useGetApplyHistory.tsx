@@ -5,7 +5,6 @@ import {
 	getRecruiterApplyHistory,
 	selectApplyHistory,
 } from "src/redux/slice/ApplyHistorySlide";
-import { getListCV } from "src/redux/slice/CVSlide";
 import { USER_TYPE } from "src/utils/contants";
 import { useUserAuth } from "./useUserAuth";
 

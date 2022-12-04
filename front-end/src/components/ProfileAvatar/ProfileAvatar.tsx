@@ -54,10 +54,18 @@ const customRequest: UploadProps["customRequest"] = async ({
 
 const ProfileAvatar = ({ initialValue }: Props) => {
 	const [avatar, setAvatar] = useState<string>(
-		initialValue ? `${CDN_URL}/${initialValue}` : FakeAvatar
+		initialValue
+			? initialValue.includes("https")
+				? initialValue
+				: `${CDN_URL}/${initialValue}`
+			: FakeAvatar
 	);
 	const [changeAvatar, setChangeAvatar] = useState<string>(
-		initialValue ? `${CDN_URL}/${initialValue}` : FakeAvatar
+		initialValue
+			? initialValue.includes("https")
+				? initialValue
+				: `${CDN_URL}/${initialValue}`
+			: FakeAvatar
 	);
 	const [fileName, setFileName] = useState<string>("");
 	const { open, isOpen, close } = useModal(false);

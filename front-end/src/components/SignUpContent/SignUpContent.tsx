@@ -1,5 +1,5 @@
 import { StepProps } from "antd";
-import React, { useEffect } from "react";
+import React from "react";
 import { useReduxSelector } from "src/redux/redux-hook";
 import { selectSignUpCurentStep } from "src/redux/slice/SignUpSlice";
 import SignUpStepOne from "./SignUpStepOne/SignUpStepOne";
