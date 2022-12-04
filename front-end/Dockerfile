@@ -2,7 +2,7 @@
 FROM node:14.17.3-alpine AS da2frontendDeploy
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 COPY . /app
 CMD [ "npm", "start" ]
 
