@@ -1,20 +1,24 @@
-# 1. For build React app
-FROM node:14.17.3-alpine AS da2frontend
+# 1. Deploy 
+FROM node:14.17.3-alpine AS da2frontendDeploy
 WORKDIR /app
 COPY package*.json ./
-RUN yarn install
-COPY . .
+RUN npm install
+COPY . /app
+CMD [ "npm", "start" ]
 
-RUN yarn
-RUN yarn build
+# 2 . Build
+FROM da2frontendDeploy AS da2frontend
+RUN npm run build
 
+# 3 Config nginx 
 FROM nginx:stable-alpine
-COPY --from=da2frontend /app/build /usr/share/nginx/html
-RUN rm /etc/nginx/conf.d/default.conf
-COPY --from=da2frontend /app/nginx/nginx.conf /etc/nginx/conf.d
-# Containers run nginx with global directives and daemon off
+COPY --from=da2frontend /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /usr/share/nginx/html
+
+RUN rm -rf ./*
+
+COPY --from=da2frontend /app/build .
+
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
-
-
