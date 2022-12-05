@@ -1,36 +1,16 @@
-import React, { ChangeEvent, EventHandler, useState } from "react";
+import React, { ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { ButtonCommon, InputCommon, SelectCommon } from "src/common";
-import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
-import useDebounce from "src/hooks/useDebounce";
 import useGetStatictisOption from "src/hooks/useGetStatictisOption";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import {
 	searchPost,
-	updatePrameterAndSearchPost,
 	updateSearchParameter,
 } from "src/redux/slice/SearchPostSlide";
-import { SearchParameter } from "src/types/SearchType";
 import { CallbackFunction } from "src/types/UtilType";
-import { ROUTE } from "src/utils/contants";
 import "./SearchBar.scss";
 
 type SearchBarProps = {};
-
-const Test: SelectOptionValue[] = [
-	{
-		key: "it",
-		value: "IT11111111111111111111111111111",
-	},
-	{
-		key: "it1",
-		value: "IT111",
-	},
-	{
-		key: "it2",
-		value: "IT2",
-	},
-];
 
 function SearchBar(props: SearchBarProps) {
 	const dispatch = useReduxDispatch();

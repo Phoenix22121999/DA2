@@ -97,27 +97,35 @@ const SearchListItem = ({
 						})}
 					</div>
 					<div className="address">
-						<TagCommon
-							color="red"
-							size="small"
-							icon={<EnvironmentOutlined />}
-						>
-							{wards.full_name}
-						</TagCommon>
-						<TagCommon
-							color="red"
-							size="small"
-							icon={<EnvironmentOutlined />}
-						>
-							{districts.full_name}
-						</TagCommon>
-						<TagCommon
-							color="red"
-							size="small"
-							icon={<EnvironmentOutlined />}
-						>
-							{provinces.full_name}
-						</TagCommon>
+						{wards && (
+							<TagCommon
+								color="red"
+								size="small"
+								icon={<EnvironmentOutlined />}
+							>
+								{wards.full_name}
+							</TagCommon>
+						)}
+
+						{districts && (
+							<TagCommon
+								color="red"
+								size="small"
+								icon={<EnvironmentOutlined />}
+							>
+								{districts.full_name}
+							</TagCommon>
+						)}
+
+						{provinces && (
+							<TagCommon
+								color="red"
+								size="small"
+								icon={<EnvironmentOutlined />}
+							>
+								{provinces.full_name}
+							</TagCommon>
+						)}
 					</div>
 					<div className="salary">
 						<TagCommon

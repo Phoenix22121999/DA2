@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import FeaturesJobItem, {
-	FeaturesJobItemProps,
-} from "./FeaturesJobItem/FeaturesJobItem";
-import TEST_LOGO from "../../assets/images/logo.png";
+
 import "./FeaturesJob.scss";
 import { Link } from "react-router-dom";
 import { ROUTE } from "src/utils/contants";
@@ -12,38 +9,6 @@ import api from "src/apis/index.api";
 import { DetailRecruitmentPostWithoutContent } from "src/types/CombineType";
 import SearchListItem from "../SearchList/SearchListItem/SearchListItem";
 type Props = {};
-const FEATURES_JOB: FeaturesJobItemProps[] = [
-	{
-		logo: TEST_LOGO,
-		major: "string",
-		title: "string",
-		company: "string",
-		description: "string",
-		time: "string",
-		address: "string",
-		salary: "string",
-	},
-	{
-		logo: TEST_LOGO,
-		major: "string",
-		title: "string",
-		company: "string",
-		description: "string",
-		time: "string",
-		address: "string",
-		salary: "string",
-	},
-	{
-		logo: TEST_LOGO,
-		major: "string",
-		title: "string",
-		company: "string",
-		description: "string",
-		time: "string",
-		address: "string",
-		salary: "string",
-	},
-];
 
 const FeaturesJob = (props: Props) => {
 	const [postList, setPostList] = useState<

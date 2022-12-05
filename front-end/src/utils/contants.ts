@@ -1,8 +1,8 @@
 import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
-
+// export const API_URL = "http://159.223.54.199:4000/api"
 export const API_URL =
 	process.env.NODE_ENV === "production"
-		? "http://159.223.54.199:3000/api"
+		? "http://159.223.54.199:4000/api"
 		: "http://localhost:4000/api";
 // export const CDN_URL = "http://159.223.54.199:3002";
 export const CDN_URL =
@@ -77,10 +77,10 @@ export const GENDER_OPTION: SelectOptionValue[] = [
 	},
 ];
 export const USER_TYPE_OPTION: SelectOptionValue[] = [
-	{
-		key: 1,
-		value: "Admin",
-	},
+	// {
+	// 	key: 1,
+	// 	value: "Admin",
+	// },
 	{
 		key: 2,
 		value: "Candidate",
