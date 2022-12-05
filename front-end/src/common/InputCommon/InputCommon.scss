@@ -2,6 +2,7 @@
 .input-common {
 	// border-radius: 1rem;
 	.ant-input {
+		@include v.border-radius-sm;
 	}
 	.ant-input-affix-wrapper {
 		@include v.border-radius-sm;

@@ -10,8 +10,10 @@ export interface IHeaderItemProps {
 
 export function HeaderItem({ title, link, onClick }: IHeaderItemProps) {
 	return (
-		<li className="header-item" onClick={onClick}>
-			<Link to={link}>{title}</Link>
-		</li>
+		<Link to={link} className="header-item">
+			<li className="header-item-inner" onClick={onClick}>
+				{title}
+			</li>
+		</Link>
 	);
 }

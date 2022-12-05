@@ -1,3 +1,4 @@
+import { SORT_ORDER_ITEMS, SORT_TYPE_ITEMS } from "src/utils/contants";
 import { DetailRecruitmentPostWithoutContent } from "./CombineType";
 
 export type SearchParameter = {
@@ -12,6 +13,8 @@ export type SearchParameter = {
 	page?: number;
 	item_per_page?: number;
 	date_post?: string;
+	sort_by?: SORT_TYPE_ITEMS;
+	sort_order?: SORT_ORDER_ITEMS;
 };
 
 export type SearchReponse = {

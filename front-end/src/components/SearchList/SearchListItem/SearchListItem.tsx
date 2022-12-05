@@ -18,7 +18,7 @@ import classNames from "classnames";
 export interface SearchListItemProps
 	extends DetailRecruitmentPostWithoutContent {
 	selected: number;
-	onClick: (id: number) => void;
+	onClick?: (id: number) => void;
 }
 
 const SearchListItem = ({
@@ -41,7 +41,7 @@ const SearchListItem = ({
 		natigate(`${ROUTE.POST_DETAIL}${id}`);
 	};
 	const handleClick = () => {
-		onClick(id);
+		onClick && onClick(id);
 	};
 	return (
 		<div className="search-list-item" onClick={handleClick}>

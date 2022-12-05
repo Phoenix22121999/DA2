@@ -2,6 +2,8 @@ import React from "react";
 import { SelectCommon } from "src/common";
 import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
 import useGetStatictisOption from "src/hooks/useGetStatictisOption";
+import { useReduxSelector } from "src/redux/redux-hook";
+import { selectSearchParameter } from "src/redux/slice/SearchPostSlide";
 
 type Props = {
 	handleChange: (value: string[]) => void;
@@ -9,6 +11,7 @@ type Props = {
 
 const SearchCategory = ({ handleChange }: Props) => {
 	const { majorOption } = useGetStatictisOption();
+	const s = useReduxSelector(selectSearchParameter);
 
 	return (
 		<div className="search-category">
@@ -22,6 +25,7 @@ const SearchCategory = ({ handleChange }: Props) => {
 						showSearch
 						allowClear
 						onChange={handleChange}
+						defaultValue={s.list_major}
 					/>
 				</React.Suspense>
 			</div>

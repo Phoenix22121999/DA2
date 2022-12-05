@@ -1,6 +1,15 @@
+@use "../../styles/variables" as v;
 .input-number-common {
+	width: 100%;
 	.ant-input-number {
-		width: 100%;
 		border-radius: 1rem;
+	}
+	.ant-input-number-affix-wrapper {
+		@include v.border-radius-sm;
+		width: 100%;
+	}
+	.ant-input-number-handler-wrap {
+		border-top-right-radius: v.$border-radius-sm;
+		border-bottom-right-radius: v.$border-radius-sm;
 	}
 }
