@@ -17,37 +17,6 @@
 	@include v.mq("tablet") {
 		flex-direction: row;
 	}
-	// .left {
-	// 	height: 100%;
-	// 	width: 6rem;
-	// 	display: flex;
-	// 	flex-direction: row;
-	// 	justify-content: flex-start;
-	// 	align-items: flex-start;
-
-	// 	.major {
-	// 		width: 100%;
-	// 		.ant-tag {
-	// 			width: 100%;
-	// 			display: flex;
-	// 			justify-content: center;
-	// 			align-items: center;
-	// 			margin: 0;
-	// 		}
-	// 		// padding: 0.2rem;
-	// 		// background-color: white;
-	// 		// @include v.text-sm;
-	// 		// font-weight: 600;
-	// 	}
-	// 	@include v.mq("tablet") {
-	// 		flex-direction: column;
-	// 		.logo {
-	// 			margin-right: 0;
-	// 			// width: 8rem;
-	// 			// height: 8rem;
-	// 		}
-	// 	}
-	// }
 	.right {
 		padding: 0;
 		width: 100%;
@@ -61,7 +30,7 @@
 			width: 100%;
 			display: flex;
 			justify-content: space-between;
-			align-items: center;
+			align-items: flex-start;
 			.top-left {
 				display: flex;
 				justify-content: flex-start;
@@ -97,6 +66,12 @@
 					}
 				}
 			}
+			.top-right {
+				height: 100%;
+				display: flex;
+				align-items: flex-start;
+				justify-content: flex-start;
+			}
 		}
 		.content {
 			transition: all 0.5s;
@@ -121,6 +96,12 @@
 				justify-content: flex-start;
 				align-items: center;
 				flex-wrap: wrap;
+				.content-item-title {
+					width: 6rem;
+					margin-right: 2rem;
+					color: v.$dark-blue;
+					@include v.text-sm;
+				}
 			}
 		}
 		@include v.mq("tablet") {

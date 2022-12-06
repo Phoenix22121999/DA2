@@ -69,6 +69,7 @@ const SearchListItem = ({
 					})}
 				>
 					<div className="major">
+						<div className="content-item-title">Major:</div>
 						{post_majors.map((major) => {
 							return (
 								<TagCommon
@@ -83,6 +84,8 @@ const SearchListItem = ({
 						})}
 					</div>
 					<div className="time">
+						<div className="content-item-title">Job Type:</div>
+
 						{post_job_types.map((jt) => {
 							return (
 								<TagCommon
@@ -97,6 +100,7 @@ const SearchListItem = ({
 						})}
 					</div>
 					<div className="address">
+						<div className="content-item-title">Location:</div>
 						{wards && (
 							<TagCommon
 								color="red"
@@ -128,6 +132,7 @@ const SearchListItem = ({
 						)}
 					</div>
 					<div className="salary">
+						<div className="content-item-title">Salary:</div>
 						<TagCommon
 							color="green"
 							size="small"
