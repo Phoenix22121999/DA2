@@ -12,12 +12,14 @@ const SearchJobType = ({ handleChange }: Props) => {
 	const [list, setList] = useState<string[]>([]);
 	const onToggleitem = (name: string | number, checked: boolean) => {
 		const newList = list.filter((item) => item !== name);
+
 		if (checked) {
 			newList.push(name.toString());
 		}
 		setList(newList);
 		handleChange(newList);
 	};
+
 	return (
 		<div className="search-job-type">
 			<div className="search-filter-title">Job Type</div>

@@ -12,12 +12,17 @@ import {
 	CV,
 } from "./Type";
 
+export interface DetailUserAccount extends UserAccount {
+	provinces: Provinces;
+	districts: Districts;
+	wards: Wards;
+}
 export interface RecruitmentPostWithUser extends RecruitmentPost {
-	user: UserAccount;
+	user: DetailUserAccount;
 }
 
 export interface DetailRecruitmentPost extends RecruitmentPost {
-	user: UserAccount;
+	user: DetailUserAccount;
 	post_majors: RecruitmentPostMajorsWithMajors[];
 	post_job_types: RecruitmentPostJobTypeWithJobType[];
 	provinces: Provinces;
@@ -44,7 +49,7 @@ export interface RecruitmentPostJobTypeWithJobTypeAndMajor
 }
 
 export interface DetailHistoryApplyJob extends HistoryApplyJob {
-	user_account: UserAccount;
+	user_account: DetailUserAccount;
 	Recruitment_Post: RecruitmentPostJobTypeWithJobTypeAndMajor;
 	cv: CV;
 }

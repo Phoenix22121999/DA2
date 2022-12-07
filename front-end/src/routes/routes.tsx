@@ -10,6 +10,7 @@ import {
 	SignInPage,
 	SignUpPage,
 } from "src/pages";
+import Error from "src/pages/Error/Error";
 import Test from "src/pages/Test/Test";
 import {
 	AccountTypeManagerPage,
@@ -30,6 +31,7 @@ export const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <AppLayout />,
+		errorElement: <Error />,
 		children: [
 			{ path: "/", element: <HomePage />, index: true },
 			{ path: "test", element: <Test /> },

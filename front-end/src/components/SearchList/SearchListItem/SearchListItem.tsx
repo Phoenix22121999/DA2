@@ -18,7 +18,7 @@ import classNames from "classnames";
 export interface SearchListItemProps
 	extends DetailRecruitmentPostWithoutContent {
 	selected: number;
-	onClick: (id: number) => void;
+	onClick?: (id: number) => void;
 }
 
 const SearchListItem = ({
@@ -41,7 +41,7 @@ const SearchListItem = ({
 		natigate(`${ROUTE.POST_DETAIL}${id}`);
 	};
 	const handleClick = () => {
-		onClick(id);
+		onClick && onClick(id);
 	};
 	return (
 		<div className="search-list-item" onClick={handleClick}>
@@ -69,6 +69,7 @@ const SearchListItem = ({
 					})}
 				>
 					<div className="major">
+						<div className="content-item-title">Major:</div>
 						{post_majors.map((major) => {
 							return (
 								<TagCommon
@@ -83,6 +84,8 @@ const SearchListItem = ({
 						})}
 					</div>
 					<div className="time">
+						<div className="content-item-title">Job Type:</div>
+
 						{post_job_types.map((jt) => {
 							return (
 								<TagCommon
@@ -97,29 +100,39 @@ const SearchListItem = ({
 						})}
 					</div>
 					<div className="address">
-						<TagCommon
-							color="red"
-							size="small"
-							icon={<EnvironmentOutlined />}
-						>
-							{wards.full_name}
-						</TagCommon>
-						<TagCommon
-							color="red"
-							size="small"
-							icon={<EnvironmentOutlined />}
-						>
-							{districts.full_name}
-						</TagCommon>
-						<TagCommon
-							color="red"
-							size="small"
-							icon={<EnvironmentOutlined />}
-						>
-							{provinces.full_name}
-						</TagCommon>
+						<div className="content-item-title">Location:</div>
+						{wards && (
+							<TagCommon
+								color="red"
+								size="small"
+								icon={<EnvironmentOutlined />}
+							>
+								{wards.full_name}
+							</TagCommon>
+						)}
+
+						{districts && (
+							<TagCommon
+								color="red"
+								size="small"
+								icon={<EnvironmentOutlined />}
+							>
+								{districts.full_name}
+							</TagCommon>
+						)}
+
+						{provinces && (
+							<TagCommon
+								color="red"
+								size="small"
+								icon={<EnvironmentOutlined />}
+							>
+								{provinces.full_name}
+							</TagCommon>
+						)}
 					</div>
 					<div className="salary">
+						<div className="content-item-title">Salary:</div>
 						<TagCommon
 							color="green"
 							size="small"

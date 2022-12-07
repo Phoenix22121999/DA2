@@ -17,7 +17,8 @@
 	&:hover {
 		border-bottom: 1px v.$primary-color solid;
 	}
-	a {
+	.header-item-inner {
+		list-style-type: none;
 		color: v.$primary-color;
 	}
 }

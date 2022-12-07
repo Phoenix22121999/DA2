@@ -1,5 +1,6 @@
 import { NewPostFormStepOne } from "src/subpage/PostJob/StepOne/StepOne";
 import { CreatePostParameters, UpdatePostParameters } from "src/types/PostType";
+import { Districts, Provinces, Wards } from "src/types/Type";
 
 export const serializeForm = (data: any) => {
 	let rs = "";
@@ -109,6 +110,17 @@ export const formValueToUpdatePostParameters = (
 export const formatDate = (dateString: Date) => {
 	const date = new Date(dateString);
 	return date.toLocaleDateString("vi-VI");
+};
+
+export const formatLocation = (
+	address?: string,
+	ward?: Wards,
+	district?: Districts,
+	province?: Provinces
+) => {
+	return `${address ? address : ""}${ward ? `, ${ward.full_name}` : ""}${
+		district ? `, ${district.full_name}` : ""
+	}${province ? `, ${province.full_name}` : ""}`;
 };
 
 export const checkIsTDTEmail = (email: string) => {

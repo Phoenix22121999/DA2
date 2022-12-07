@@ -92,6 +92,8 @@ const getListPost = async (req, res) => {
 		key_word,
 		item_per_page = 10,
 		page = 1,
+		sort_by = "create_date",
+		sort_order = "asc",
 		from_value,
 		to_value,
 		gender,
@@ -175,11 +177,18 @@ const getListPost = async (req, res) => {
 				},
 			},
 		];
+		const sortArr = [];
+		if (sort_by === "create_date") {
+			sortArr.push({
+				create_date: sort_order,
+			});
+		}
 
 		let resultList = await prisma.Recruitment_Post.findMany({
 			where: {
 				AND: andArr,
 			},
+			orderBy: sortArr,
 			take: Number(item_per_page),
 			skip: Number(item_per_page * (page - 1)),
 			include: {

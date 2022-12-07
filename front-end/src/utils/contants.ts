@@ -1,8 +1,8 @@
 import { SelectOptionValue } from "src/common/SelectCommon/SelectCommon";
-
+// export const API_URL = "http://159.223.54.199:4000/api"
 export const API_URL =
 	process.env.NODE_ENV === "production"
-		? "http://159.223.54.199:3000/api"
+		? "http://159.223.54.199:4000/api"
 		: "http://localhost:4000/api";
 // export const CDN_URL = "http://159.223.54.199:3002";
 export const CDN_URL =
@@ -77,10 +77,10 @@ export const GENDER_OPTION: SelectOptionValue[] = [
 	},
 ];
 export const USER_TYPE_OPTION: SelectOptionValue[] = [
-	{
-		key: 1,
-		value: "Admin",
-	},
+	// {
+	// 	key: 1,
+	// 	value: "Admin",
+	// },
 	{
 		key: 2,
 		value: "Candidate",
@@ -99,6 +99,23 @@ export const USER_TYPE = {
 
 type USER_TYPE_KEY = keyof typeof USER_TYPE;
 export type USER_TYPE_ITEMS = typeof USER_TYPE[USER_TYPE_KEY];
+
+export const SORT_TYPE = {
+	create_date: "create_date",
+} as const;
+
+type SORT_TYPE_KEY = keyof typeof SORT_TYPE;
+export type SORT_TYPE_ITEMS = typeof SORT_TYPE[SORT_TYPE_KEY];
+
+export const SORT_ORDER = {
+	asc: "asc",
+	desc: "desc",
+} as const;
+
+type SORT_ORDER_KEY = keyof typeof SORT_ORDER;
+export type SORT_ORDER_ITEMS = typeof SORT_ORDER[SORT_ORDER_KEY];
+
+export type SORT_OPTION_TYPE = `${SORT_TYPE_ITEMS}-${SORT_ORDER_ITEMS}`;
 
 export const COOKIES_NAME = {
 	ACCESS_TOKEN: "accessToken",

@@ -20,6 +20,7 @@ const SearchList = (props: Props) => {
 	useScrollToTop(postList);
 
 	const [selected, setSelected] = useState<number>(0);
+	const [currentPage, setCurrentPage] = useState<number>(1);
 	const onClick = (id: number) => {
 		if (id === selected) {
 			setSelected(0);
@@ -28,6 +29,7 @@ const SearchList = (props: Props) => {
 		setSelected(id);
 	};
 	const onChangePagination = (page: number, pageSize: number) => {
+		setCurrentPage(page);
 		dispatch(
 			updatePrameterAndSearchPost({
 				payload: {
@@ -36,13 +38,20 @@ const SearchList = (props: Props) => {
 			})
 		);
 	};
+
 	return (
 		<div className="search-list">
 			<React.Suspense fallback={<SuspenseLoading size="large" />}>
 				<div className="search-list-head">
 					<div className="search-list-head-showed">
-						Showing <span className="primary-text">41-60</span> of{" "}
-						<span className="primary-text">{total}</span> posts
+						Showing{" "}
+						<span className="primary-text">
+							{(currentPage - 1) * 10 + 1}-
+							{currentPage * 10 > total
+								? total
+								: currentPage * 10}
+						</span>{" "}
+						of <span className="primary-text">{total}</span> posts
 					</div>
 					<div className="search-list-head-sort">
 						<SearchListSort />

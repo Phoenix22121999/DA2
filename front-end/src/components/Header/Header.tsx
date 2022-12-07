@@ -139,7 +139,9 @@ export const AppHeader = (props: HeaderProps) => {
 
 	return (
 		<div className="app-header" ref={ref}>
-			<div className="app-logo">TDT Job Finder</div>
+			<Link to={"/"}>
+				<div className="app-logo">TDT Job Finder</div>
+			</Link>
 			<ul
 				className={classNames("app-menu", {
 					"is-menu-open": isMenuOpen,

@@ -5,7 +5,6 @@ import JobOverviewItem, {
 import "./JobPostSidebar.scss";
 import {
 	CalendarOutlined,
-	FieldTimeOutlined,
 	EnvironmentOutlined,
 	DollarCircleOutlined,
 	SnippetsOutlined,
@@ -15,31 +14,12 @@ import CompanyOverviewItem, {
 } from "./CompanyOverviewItem/CompanyOverviewItem";
 import { GenderIcon } from "../icons/Gender/Gender";
 import { DetailRecruitmentPost } from "./../../types/CombineType";
-import { formatDate, inputNumberFormatter } from "src/utils/function";
+import {
+	formatDate,
+	formatLocation,
+	inputNumberFormatter,
+} from "src/utils/function";
 interface Props extends Partial<DetailRecruitmentPost> {}
-
-const TEST2: CompanyOverviewItemProps[] = [
-	{
-		name: "Company size",
-		content: "501-1,000",
-	},
-	{
-		name: "Founded in",
-		content: "2011",
-	},
-	{
-		name: "Phone",
-		content: "123 456 7890",
-	},
-	{
-		name: "Email",
-		content: "info@joio.com",
-	},
-	{
-		name: "Location",
-		content: "London, UK",
-	},
-];
 
 const JobPostSidebar = (props: Props) => {
 	const jobOverview: JobOverviewItemProps[] = useMemo(() => {
@@ -50,14 +30,14 @@ const JobPostSidebar = (props: Props) => {
 				content: formatDate(props.create_date!),
 			},
 			{
-				icon: <FieldTimeOutlined />,
-				name: "Expiration date",
-				content: "April 06, 2021",
-			},
-			{
 				icon: <EnvironmentOutlined />,
 				name: "Location",
-				content: "London, UK",
+				content: formatLocation(
+					props.address || "",
+					props.wards,
+					props.districts,
+					props.provinces
+				),
 			},
 			{
 				icon: <SnippetsOutlined />,
@@ -90,6 +70,32 @@ const JobPostSidebar = (props: Props) => {
 		];
 		return overview;
 	}, [props]);
+	const companyOverview: CompanyOverviewItemProps[] = useMemo(() => {
+		const overview = [
+			{
+				name: "Name",
+				content: props.user?.full_name || "",
+			},
+			{
+				name: "Phone",
+				content: props.user?.number_phone || "",
+			},
+			{
+				name: "Email",
+				content: props.user?.email || "",
+			},
+			{
+				name: "Location",
+				content: formatLocation(
+					props.user?.address || "",
+					props.user?.wards,
+					props.user?.districts,
+					props.user?.provinces
+				),
+			},
+		];
+		return overview;
+	}, [props]);
 
 	return (
 		<div className="job-post-sidebar">
@@ -104,7 +110,7 @@ const JobPostSidebar = (props: Props) => {
 			<div className="company-overview">
 				<div className="job-sidebar-title">Company Overview</div>
 				<div className="company-overview-content">
-					{TEST2.map((item) => (
+					{companyOverview.map((item) => (
 						<CompanyOverviewItem key={item.name} {...item} />
 					))}
 				</div>
