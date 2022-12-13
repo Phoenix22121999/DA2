@@ -39,7 +39,11 @@ const formatObj = (result) => {
 
 const getListAcccount = async (req, res) => {
 	try {
-		const listAccount = await prisma.user_Account.findMany();
+		const listAccount = await prisma.user_Account.findMany({
+			include: {
+				user_type: true,
+			},
+		});
 		res.json({
 			code: 200,
 			status_resposse: true,
@@ -411,6 +415,56 @@ const getDetailAccount = async (req, res) => {
 			where: {
 				id: Number(user_id),
 			},
+			include: {
+				user_type: true,
+				provinces: true,
+				districts: true,
+				wards: true,
+			},
+		});
+		if (!result) {
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Lấy thông tin tài khoản thất bại",
+			});
+		}
+		let obj = formatObj(result || {});
+		return res.json({
+			code: 200,
+			status_resposse: true,
+			message: "Lấy thông tin tài khoản",
+			data: obj,
+		});
+	} catch (error) {
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+};
+
+const getDetailAccountWithId = async (req, res) => {
+	let { user_id } = req.query;
+	try {
+		if (!user_id) {
+			return res.json({
+				code: 400,
+				message: "Người dùng không hợp lệ",
+				status_resposse: false,
+			});
+		}
+		const result = await prisma.user_Account.findFirst({
+			where: {
+				id: Number(user_id),
+			},
+			include: {
+				user_type: true,
+				provinces: true,
+				districts: true,
+				wards: true,
+			},
 		});
 		if (!result) {
 			return res.json({
@@ -539,4 +593,5 @@ module.exports = {
 	changePassword,
 	getDetailAccount,
 	signInWithGoogle,
+	getDetailAccountWithId,
 };

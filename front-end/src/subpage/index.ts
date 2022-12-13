@@ -41,3 +41,11 @@ export const PostJobPage = React.lazy(() => import("./PostJob/PostJob"));
 export const RecruiterProfilePage = React.lazy(
 	() => import("./RecruiterProfile/RecruiterProfile")
 );
+
+export const AccountManagerPage = React.lazy(
+	() => import("./AccountManager/AccountManager")
+);
+
+export const AccountDetailPage = React.lazy(
+	() => import("./AccountDetail/AccountDetail")
+);

@@ -4,13 +4,19 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import RecruiterDashboardSidebar from "src/components/RecruiterDashboardSidebar/RecruiterDashboardSidebar";
 import { useCheckUserAuth } from "src/hooks/useCheckUserAuth";
 import "./RecruiterDashboard.scss";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import {
+	MenuFoldOutlined,
+	MenuUnfoldOutlined,
+	LeftOutlined,
+} from "@ant-design/icons";
 import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
+import { useGoBack } from "src/hooks/useGoBack";
 type Props = {};
 const { Sider, Content } = Layout;
 
 const RecruiterDashboard = (props: Props) => {
 	const navigate = useNavigate();
+	const onGoBack = useGoBack();
 
 	const isAuth = useCheckUserAuth(3);
 	useEffect(() => {
@@ -84,6 +90,12 @@ const RecruiterDashboard = (props: Props) => {
 									) : (
 										<MenuFoldOutlined />
 									)}
+								</div>
+								<div
+									className="go-back-button"
+									onClick={onGoBack}
+								>
+									<LeftOutlined /> <div>Back</div>
 								</div>
 							</div>
 							<div className="recruiter-dashboard-content dashboard-content-common">

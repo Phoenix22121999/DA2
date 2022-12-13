@@ -11,6 +11,7 @@ import { ActionPayload } from "src/types/UtilType";
 import { RootState } from "../store";
 import { selectUserToken } from "./UserSilce";
 import fileDownload from "js-file-download";
+import { BaseReponseType } from "src/types/ApiType";
 export interface CVType {
 	cvName: string;
 	fileName: string;
@@ -113,6 +114,27 @@ export const getListCV = createAsyncThunk(
 			action.callback && action.callback(false, null);
 		} else {
 			action.callback && action.callback(true, null);
+		}
+		return response;
+		// The value we return becomes the `fulfilled` action payload
+	}
+);
+
+export const getListCVById = createAsyncThunk(
+	"cv/get-list-by-id",
+	async (
+		action: ActionPayload<number, BaseReponseType<CV[]>>,
+		{ getState }
+	) => {
+		if (!action.payload) {
+			throw new Error("need payload");
+		}
+		const token = selectUserToken(getState() as RootState) || "";
+		const response = await api.cvApi.getListById(action.payload, token);
+		if (response.code !== 200) {
+			action.callback && action.callback(false, null);
+		} else {
+			action.callback && action.callback(true, response);
 		}
 		return response;
 		// The value we return becomes the `fulfilled` action payload

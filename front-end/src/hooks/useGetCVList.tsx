@@ -10,8 +10,6 @@ function useGetCVList() {
 	useEffect(() => {
 		if (first) {
 			if (cvList.length === 0) {
-				console.log("call");
-
 				dispatch(getListCV({}));
 			}
 			setFirst(false);

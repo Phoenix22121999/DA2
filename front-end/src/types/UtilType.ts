@@ -5,7 +5,7 @@ export type ActionPayload<T = null, K = any> = {
 
 export type CallbackFunction<T = null> = (
 	isSuccess: boolean,
-	result?: T
+	result?: T | null
 ) => void;
 
 export type IsDirtyObject<T> = {

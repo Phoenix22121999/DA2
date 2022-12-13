@@ -13,6 +13,8 @@ import {
 import Error from "src/pages/Error/Error";
 import Test from "src/pages/Test/Test";
 import {
+	AccountDetailPage,
+	AccountManagerPage,
 	AccountTypeManagerPage,
 	AllApplicantPage,
 	AppliedJobsPage,
@@ -55,6 +57,14 @@ export const router = createBrowserRouter([
 				path: "admin",
 				element: <AdminDashboardPage />,
 				children: [
+					{
+						path: "account-detail",
+						element: <AccountDetailPage />,
+					},
+					{
+						path: "accounts",
+						element: <AccountManagerPage />,
+					},
 					{
 						path: "account-type",
 						element: <AccountTypeManagerPage />,

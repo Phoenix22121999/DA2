@@ -51,12 +51,23 @@ export const ROUTE = {
 	ADMIN_ACCOUNT_TYPE: "/admin/account-type",
 	ADMIN_JOB_TYPE: "/admin/job-type",
 	ADMIN_MAJOR: "/admin/major",
+	ADMIN_ACCOUNT: "/admin/accounts",
+	ADMIN_ACCOUNT_DETAIL: "/admin/account-detail",
 } as const;
 
 type ROUTE_KEY = keyof typeof ROUTE;
 export type ROUTE_ITEMS = typeof ROUTE[ROUTE_KEY];
 
 export const GGMAP_API_KEY = "AIzaSyDb0Fl2qgtLb38R85bK6k59qwtt5YOj4Z0";
+
+export const GENDER = {
+	1: "Male",
+	2: "Female",
+	3: "Both",
+	4: "Other",
+} as const;
+
+export type GENDER_KEY = keyof typeof GENDER;
 
 export const GENDER_OPTION: SelectOptionValue[] = [
 	{

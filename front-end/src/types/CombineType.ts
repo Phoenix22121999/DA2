@@ -10,12 +10,17 @@ import {
 	Wards,
 	HistoryApplyJob,
 	CV,
+	UserType,
 } from "./Type";
 
 export interface DetailUserAccount extends UserAccount {
 	provinces: Provinces;
 	districts: Districts;
 	wards: Wards;
+	user_type: UserType;
+}
+export interface UserAccountWithUserType extends UserAccount {
+	user_type: UserType;
 }
 export interface RecruitmentPostWithUser extends RecruitmentPost {
 	user: DetailUserAccount;

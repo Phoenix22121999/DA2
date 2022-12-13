@@ -10,6 +10,7 @@ import { ActionPayload } from "src/types/UtilType";
 import { RootState } from "../store";
 import { selectUserToken } from "./UserSilce";
 import { selectNewPostData } from "./NewPostSlice";
+import { BaseReponseType } from "src/types/ApiType";
 export interface PostType {
 	postName: string;
 	fileName: string;
@@ -107,6 +108,30 @@ export const getListPostByUser = createAsyncThunk(
 			action.callback && action.callback(false, null);
 		} else {
 			action.callback && action.callback(true, null);
+		}
+		return response;
+		// The value we return becomes the `fulfilled` action payload
+	}
+);
+
+export const getListPostByUserById = createAsyncThunk(
+	"post/get-list-by-user-by-id",
+	async (
+		action: ActionPayload<number, BaseReponseType<RecruitmentPost[]>>,
+		{ getState }
+	) => {
+		const token = selectUserToken(getState() as RootState) || "";
+		if (!action.payload) {
+			throw new Error("need payload");
+		}
+		const response = await api.postApi.getListPostByUserById(
+			action.payload,
+			token
+		);
+		if (response.code !== 200) {
+			action.callback && action.callback(false, null);
+		} else {
+			action.callback && action.callback(true, response);
 		}
 		return response;
 		// The value we return becomes the `fulfilled` action payload

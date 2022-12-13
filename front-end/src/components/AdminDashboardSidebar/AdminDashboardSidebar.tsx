@@ -4,6 +4,7 @@ import DashboardSidebarItem, {
 } from "../DashboardSidebarItem/DashboardSidebarItem";
 import "./AdminDashboardSidebar.scss";
 import {
+	UserOutlined,
 	SnippetsOutlined,
 	FieldTimeOutlined,
 	BookOutlined,
@@ -14,6 +15,11 @@ type Props = {
 	collapsed?: boolean;
 };
 const ITEMS: DashboardSidebarItemProps[] = [
+	{
+		icon: <UserOutlined />,
+		title: "Account Manager",
+		path: ROUTE.ADMIN_ACCOUNT,
+	},
 	{
 		icon: <SnippetsOutlined />,
 		title: "User Type",

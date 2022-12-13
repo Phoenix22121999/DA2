@@ -8,21 +8,36 @@ import JobActions from "./JobActions/JobActions";
 import { RecruitmentPost } from "src/types/Type";
 import { ButtonCommon, TableCommon } from "src/common";
 import { ColumnCommon } from "src/common/TableCommon/TableCommon";
-type Props = {};
+type Props = {
+	isHideAdd?: boolean;
+	isHideTitle?: boolean;
+	isHideAction?: boolean;
+	isUseCustomData?: boolean;
+	customData?: RecruitmentPost[];
+};
 
-const JobManager = (props: Props) => {
+const JobManager = ({
+	isHideAction = false,
+	isHideAdd = false,
+	isHideTitle = false,
+	isUseCustomData = false,
+	customData = [],
+}: Props) => {
 	const dispatch = useReduxDispatch();
 	const postList = useReduxSelector(selectPostList);
 	const navigate = useNavigate();
 	const [first, setFirst] = useState(true);
 	useEffect(() => {
+		if (isUseCustomData) {
+			return;
+		}
 		if (postList) {
 			if (first && postList.length < 1) {
 				dispatch(getListPostByUser({}));
 			}
 			setFirst(false);
 		}
-	}, [dispatch, first, postList]);
+	}, [dispatch, first, postList, isUseCustomData]);
 
 	const onAddClick = (e: React.MouseEvent<HTMLElement>) => {
 		e.preventDefault();
@@ -31,14 +46,21 @@ const JobManager = (props: Props) => {
 
 	return (
 		<div className="job-manager">
-			<div className="dashboard-title">Post Manager</div>
-			<div className="button-add-action">
-				<ButtonCommon size="small" onClick={onAddClick}>
-					Add new job
-				</ButtonCommon>
-			</div>
+			{!isHideTitle && (
+				<div className="dashboard-title">Post Manager</div>
+			)}
+			{!isHideAdd && (
+				<div className="button-add-action">
+					<ButtonCommon size="small" onClick={onAddClick}>
+						Add new job
+					</ButtonCommon>
+				</div>
+			)}
 			<div className="inner-content">
-				<TableCommon dataSource={postList} rowKey="id">
+				<TableCommon
+					dataSource={isUseCustomData ? customData : postList}
+					rowKey="id"
+				>
 					<ColumnCommon
 						title="Post Title"
 						dataIndex="title"
@@ -56,14 +78,16 @@ const JobManager = (props: Props) => {
 							);
 						}}
 					/>
-					<ColumnCommon<RecruitmentPost>
-						title="Action"
-						key="action"
-						width={"30%"}
-						render={(_, record) => {
-							return <JobActions record={record} />;
-						}}
-					/>
+					{!isHideAction && (
+						<ColumnCommon<RecruitmentPost>
+							title="Action"
+							key="action"
+							width={"30%"}
+							render={(_, record) => {
+								return <JobActions record={record} />;
+							}}
+						/>
+					)}
 				</TableCommon>
 			</div>
 		</div>

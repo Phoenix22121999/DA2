@@ -83,3 +83,11 @@ export const InputPasswordCommon = React.lazy(
 export const FormCommon = React.lazy(
 	() => import("./FormCommon/FormCommon")
 ) as FormCommonType;
+
+export const CollapseCommon = React.lazy(
+	() => import("./CollapseCommon/CollapseCommon")
+);
+
+export const PanelCommon = React.lazy(
+	() => import("./CollapseCommon/PanelCommon")
+);

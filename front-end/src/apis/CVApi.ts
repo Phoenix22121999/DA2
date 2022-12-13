@@ -20,6 +20,10 @@ export class CVApi extends BaseApi {
 	async getList(token: string) {
 		return this.authGet<{}, CV[]>("", token, {});
 	}
+
+	async getListById(id: number, token: string) {
+		return this.authGet<{}, CV[]>(`by-id?user_id=${id}`, token, {});
+	}
 	async updateCV(data: UpdateCVParameters, token: string) {
 		return this.authPut<UpdateCVParameters, CV>("", token, data);
 	}

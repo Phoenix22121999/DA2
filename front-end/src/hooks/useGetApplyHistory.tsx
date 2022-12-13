@@ -4,13 +4,17 @@ import {
 	getCandidateApplyHistory,
 	getRecruiterApplyHistory,
 	selectApplyHistory,
+	selectHistoryUserType,
+	setHistoryUserTypeId,
 } from "src/redux/slice/ApplyHistorySlide";
 import { USER_TYPE } from "src/utils/contants";
 import { useUserAuth } from "./useUserAuth";
 
-function useGetApplyHistory() {
+function useGetApplyHistory(isDisable: boolean = false) {
 	const [first, setFirst] = useState(true);
 	const applyHistory = useReduxSelector(selectApplyHistory);
+	const lastID = useReduxSelector(selectHistoryUserType);
+
 	const {
 		user: { user_type_id },
 	} = useUserAuth();
@@ -19,10 +23,14 @@ function useGetApplyHistory() {
 		if (!first) {
 			return;
 		}
-		setFirst(first);
-		if (applyHistory.length > 0) {
+		if (isDisable) {
 			return;
 		}
+		setFirst(first);
+		if (lastID === user_type_id && applyHistory.length > 0) {
+			return;
+		}
+		dispatch(setHistoryUserTypeId(user_type_id || 0));
 		if (user_type_id === USER_TYPE.CANDIDATE) {
 			dispatch(getCandidateApplyHistory({}));
 			return;
@@ -31,9 +39,9 @@ function useGetApplyHistory() {
 			dispatch(getRecruiterApplyHistory({}));
 			return;
 		}
-	}, [dispatch, first, applyHistory, user_type_id]);
+	}, [dispatch, first, applyHistory, user_type_id, isDisable, lastID]);
 
-	return { applyHistory };
+	return { applyHistory: isDisable ? [] : applyHistory };
 }
 
 export default useGetApplyHistory;

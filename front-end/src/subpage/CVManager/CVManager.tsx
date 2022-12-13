@@ -11,9 +11,22 @@ import { ColumnCommon } from "src/common/TableCommon/TableCommon";
 import ShowCVModal from "./ShowCVModal/ShowCVModal";
 import AddCVModal from "./AddCVModal/AddCVModal";
 import RenameCVModal from "./RenameCVModal/RenameCVModal";
-type Props = {};
+import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
+type Props = {
+	isHideAdd?: boolean;
+	isHideTitle?: boolean;
+	isHideAction?: boolean;
+	isUseCustomData?: boolean;
+	customData?: CV[];
+};
 
-const CVManager = (props: Props) => {
+const CVManager = ({
+	isHideAction = false,
+	isHideAdd = false,
+	isHideTitle = false,
+	isUseCustomData = false,
+	customData = [],
+}: Props) => {
 	const { isOpen, close, open } = useModal(false);
 	const {
 		isOpen: isRenameOpen,
@@ -30,8 +43,11 @@ const CVManager = (props: Props) => {
 	const [viewed, setViewed] = useState<CV>();
 	const dispatch = useReduxDispatch();
 	useEffect(() => {
+		if (isUseCustomData) {
+			return;
+		}
 		dispatch(getListCV({}));
-	}, [dispatch]);
+	}, [dispatch, isUseCustomData]);
 	useEffect(() => {}, [cvList]);
 
 	const handleRenameClick = (record: CV) => {
@@ -46,67 +62,82 @@ const CVManager = (props: Props) => {
 
 	return (
 		<div className="cv-manager">
-			<div className="dashboard-title">CV Manager</div>
-			<div className="button-add-action">
-				<ButtonCommon size="small" onClick={open}>
-					Add cv
-				</ButtonCommon>
-			</div>
-			<div className="inner-content">
-				<TableCommon dataSource={cvList} rowKey="id">
-					<ColumnCommon
-						title="CV Name"
-						dataIndex="file_name"
-						key="file_name"
-					/>
-					<ColumnCommon
-						title="Create Date"
-						dataIndex="create_date"
-						key="create_date"
-						render={(value: string) => {
-							const event = new Date(value);
+			<React.Suspense fallback={<SuspenseLoading size="medium" />}>
+				{!isHideTitle && (
+					<div className="dashboard-title">CV Manager</div>
+				)}
+				{!isHideAdd && (
+					<div className="button-add-action">
+						<ButtonCommon size="small" onClick={open}>
+							Add cv
+						</ButtonCommon>
+					</div>
+				)}
+				<div className="inner-content">
+					<TableCommon
+						dataSource={isUseCustomData ? customData : cvList}
+						rowKey="id"
+					>
+						<ColumnCommon
+							title="CV Name"
+							dataIndex="file_name"
+							key="file_name"
+						/>
+						<ColumnCommon
+							title="Create Date"
+							dataIndex="create_date"
+							key="create_date"
+							render={(value: string) => {
+								const event = new Date(value);
 
-							return (
-								<div>{event.toLocaleDateString("vi-VI")}</div>
-							);
-						}}
-					/>
-					<ColumnCommon<CV>
-						title="Action"
-						key="action"
-						width={"20%"}
-						render={(_, record) => {
-							return (
-								<CVActions
-									record={record}
-									handleRenameClick={handleRenameClick}
-									handleViewPdf={handleViewPdf}
-								/>
-							);
-						}}
-					/>
-				</TableCommon>
-			</div>
-			<ModalCommon open={isOpen} onCancel={close} footer={null}>
-				<AddCVModal onClose={close} />
-			</ModalCommon>
-			<ModalCommon
-				centered
-				open={isRenameOpen}
-				onCancel={renameClose}
-				footer={null}
-			>
-				<RenameCVModal onClose={renameClose} edited={edited} />
-			</ModalCommon>
-			<ModalCommon
-				centered
-				open={isViewOpen}
-				onCancel={viewClose}
-				footer={null}
-				width="auto"
-			>
-				<ShowCVModal record={viewed} />
-			</ModalCommon>
+								return (
+									<div>
+										{event.toLocaleDateString("vi-VI")}
+									</div>
+								);
+							}}
+						/>
+						{!isHideAction && (
+							<ColumnCommon<CV>
+								title="Action"
+								key="action"
+								width={"20%"}
+								render={(_, record) => {
+									return (
+										<CVActions
+											record={record}
+											handleRenameClick={
+												handleRenameClick
+											}
+											handleViewPdf={handleViewPdf}
+										/>
+									);
+								}}
+							/>
+						)}
+					</TableCommon>
+				</div>
+				<ModalCommon open={isOpen} onCancel={close} footer={null}>
+					<AddCVModal onClose={close} />
+				</ModalCommon>
+				<ModalCommon
+					centered
+					open={isRenameOpen}
+					onCancel={renameClose}
+					footer={null}
+				>
+					<RenameCVModal onClose={renameClose} edited={edited} />
+				</ModalCommon>
+				<ModalCommon
+					centered
+					open={isViewOpen}
+					onCancel={viewClose}
+					footer={null}
+					width="auto"
+				>
+					<ShowCVModal record={viewed} />
+				</ModalCommon>
+			</React.Suspense>
 		</div>
 	);
 };

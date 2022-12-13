@@ -52,12 +52,22 @@ body {
 	height: 6rem;
 	display: flex;
 	padding: 0 4rem;
-	justify-content: flex-start;
+	justify-content: space-between;
 	align-items: center;
 	@include variables.text-2xl;
 	color: variables.$primary-background;
 	.sidebar-toggle-icon {
 		cursor: pointer;
+	}
+	.go-back-button {
+		cursor: pointer;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-weight: bold;
+		> div {
+			@include variables.text-base;
+		}
 	}
 }
 

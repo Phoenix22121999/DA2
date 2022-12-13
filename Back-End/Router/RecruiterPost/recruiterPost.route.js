@@ -3,19 +3,21 @@ const router = express.Router();
 const recruiterPostService = require("./recruiterPost.service");
 const { checkToken } = require("../../Middleware/Middleware");
 
-router.get("/" , recruiterPostService.getListPost);
+router.get("/", recruiterPostService.getListPost);
 
-router.get("/list-of-user", checkToken , recruiterPostService.getListPostOfUser);
+router.get("/list-of-user", checkToken, recruiterPostService.getListPostOfUser);
+router.get(
+	"/list-of-user-by-id",
+	checkToken,
+	recruiterPostService.getListPostOfUserById
+);
 
-router.post("/", checkToken , recruiterPostService.createPost);
+router.post("/", checkToken, recruiterPostService.createPost);
 
-router.put("/", checkToken , recruiterPostService.update);
+router.put("/", checkToken, recruiterPostService.update);
 
-router.post("/delete" , checkToken ,recruiterPostService.deletePost)
+router.post("/delete", checkToken, recruiterPostService.deletePost);
 
-router.get("/get-detail" ,recruiterPostService.getDetail)
-
-
-
+router.get("/get-detail", recruiterPostService.getDetail);
 
 module.exports = router;

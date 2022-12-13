@@ -10,6 +10,7 @@ import { MajorApi } from "./MajorApi";
 import { LocationApi } from "./LocationApi";
 import { ApplyApi } from "./ApplyApi";
 import { ApplyHistoryApi } from "./ApplyHistoryApi";
+import { AccountApi } from "./AccountApi";
 
 class api {
 	static authApi = new AuthApi();
@@ -24,6 +25,7 @@ class api {
 	static locationApi = new LocationApi();
 	static applyApi = new ApplyApi();
 	static applyHistoryApi = new ApplyHistoryApi();
+	static accountApi = new AccountApi();
 }
 
 export default api;

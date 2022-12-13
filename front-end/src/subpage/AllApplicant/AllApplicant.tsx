@@ -7,10 +7,20 @@ import { CV } from "src/types/Type";
 import ShowCVModal from "../CVManager/ShowCVModal/ShowCVModal";
 import AllApplicantActions from "./AllApplicantActions/AppliedJobActionsActions";
 
-type Props = {};
+type Props = {
+	isHideTitle?: boolean;
+	isHideAction?: boolean;
+	isUseCustomData?: boolean;
+	customData?: DetailHistoryApplyJob[];
+};
 
-const AllApplicant = (props: Props) => {
-	const { applyHistory } = useGetApplyHistory();
+const AllApplicant = ({
+	isHideAction = false,
+	isHideTitle = false,
+	isUseCustomData = false,
+	customData = [],
+}: Props) => {
+	const { applyHistory } = useGetApplyHistory(isUseCustomData);
 	const {
 		isOpen: isViewOpen,
 		close: viewClose,
@@ -26,9 +36,14 @@ const AllApplicant = (props: Props) => {
 
 	return (
 		<div className="applied-jobs">
-			<div className="dashboard-title">All Applicant</div>
+			{!isHideTitle && (
+				<div className="dashboard-title">All Applicant</div>
+			)}
 			<div className="inner-content">
-				<TableCommon dataSource={applyHistory}>
+				<TableCommon
+					dataSource={isUseCustomData ? customData : applyHistory}
+					rowKey="id"
+				>
 					<ColumnCommon
 						title="Post"
 						dataIndex={["Recruitment_Post", "title"]}
@@ -51,19 +66,21 @@ const AllApplicant = (props: Props) => {
 							);
 						}}
 					/>
-					<ColumnCommon<DetailHistoryApplyJob>
-						title="Action"
-						key="action"
-						width={"30%"}
-						render={(_, record) => {
-							return (
-								<AllApplicantActions
-									record={record}
-									handleViewPdf={handleViewPdf}
-								/>
-							);
-						}}
-					/>
+					{!isHideAction && (
+						<ColumnCommon<DetailHistoryApplyJob>
+							title="Action"
+							key="action"
+							width={"30%"}
+							render={(_, record) => {
+								return (
+									<AllApplicantActions
+										record={record}
+										handleViewPdf={handleViewPdf}
+									/>
+								);
+							}}
+						/>
+					)}
 				</TableCommon>
 			</div>
 			<ModalCommon
