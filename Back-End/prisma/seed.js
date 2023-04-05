@@ -29,6 +29,7 @@ async function seed() {
 			password: createPassHash("admin"),
 			is_active: true,
 			is_delete: false,
+			email : "admin@gmail.com",
 			// user_type_id : user_type.user_type_id,
 			user_type: {
 				connect: {
@@ -46,6 +47,7 @@ async function seed() {
 			password: createPassHash("candidate"),
 			is_active: true,
 			is_delete: false,
+			email : "candidate@gmail.com",
 			// user_type_id : user_type.user_type_id,
 			user_type: {
 				connect: {
@@ -62,6 +64,7 @@ async function seed() {
 			username: "recruiter",
 			password: createPassHash("recruiter"),
 			is_active: true,
+			email : "recruiter@gmail.com",
 			is_delete: false,
 			// user_type_id : user_type.user_type_id,
 			user_type: {

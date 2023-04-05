@@ -12,7 +12,7 @@ const AccountTypeActions = ({ handleRenameClick, record }: Props) => {
 	// const dispatch = useReduxDispatch();
 
 	// const onDeleteConfirm = () => {
-	// 	dispatch(delete({ payload: { id_cv: record.id } }));
+	// 	dispatch(delete({ payload: { cv_id: record.id } }));
 	// };
 
 	const onRenameClick = () => {

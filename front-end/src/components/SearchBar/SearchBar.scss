@@ -11,11 +11,11 @@
 	@include v.border-radius-sm;
 
 	.search-bar-item {
-		padding: 1.4rem;
+		padding: 1rem;
 		width: 100%;
 		.button-common {
 			width: 100%;
-			padding: 0;
+			// height: 4.2rem;
 		}
 	}
 	@include v.mq("lap") {
@@ -23,6 +23,9 @@
 		.search-bar-item {
 			padding: 1.4rem;
 			width: 25%;
+			// .button-common {
+			// 	height: initial;
+			// }
 		}
 	}
 }

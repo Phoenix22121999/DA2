@@ -3,6 +3,7 @@ import api from "src/apis/index.api";
 import {
 	CreateMajorParameters,
 	DeleteMajorParameters,
+	GetMajorListParameters,
 	UpdateMajorParameters,
 } from "src/types/MajorType";
 import { Majors } from "src/types/Type";
@@ -22,9 +23,12 @@ const initialState: MajorState = {
 
 export const getListMajor = createAsyncThunk(
 	"major/git-list-major",
-	async (action: ActionPayload<null>, { getState }) => {
+	async (action: ActionPayload<GetMajorListParameters>, { getState }) => {
+		if (!action.payload) {
+			throw new Error("need payload");
+		}
 		const token = selectUserToken(getState() as RootState) || "";
-		const response = await api.majorApi.getListMajor(token);
+		const response = await api.majorApi.getListMajor(action.payload, token);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, null);
 		} else {

@@ -5,7 +5,7 @@ export type ActionPayload<T = null, K = any> = {
 
 export type CallbackFunction<T = null> = (
 	isSuccess: boolean,
-	result?: T
+	result?: T | null
 ) => void;
 
 export type IsDirtyObject<T> = {
@@ -15,4 +15,7 @@ export type IsDirtyObject<T> = {
 export type PaginationParameters = {
 	item_per_page?: number;
 	page?: number;
+};
+export type KeyWordParameters = {
+	key_word?: string;
 };

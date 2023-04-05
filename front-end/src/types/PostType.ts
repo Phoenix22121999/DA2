@@ -1,4 +1,4 @@
-import { RecruitmentPost } from "./Type";
+import { KeyWordParameters, PaginationParameters } from "./UtilType";
 export interface ListJobType {
 	job_type_id: number;
 }
@@ -33,3 +33,11 @@ export type DeletePostParameters = {
 export type GetPostDetailParameters = {
 	post_id: number;
 };
+export interface GetPostByUserParameters
+	extends PaginationParameters,
+		KeyWordParameters {}
+export interface GetPostByUserIdParameters
+	extends PaginationParameters,
+		KeyWordParameters {
+	user_id: number;
+}

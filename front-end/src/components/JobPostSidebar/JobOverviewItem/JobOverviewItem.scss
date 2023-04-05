@@ -6,13 +6,19 @@
 	align-items: center;
 	margin-bottom: 2rem;
 	.job-overview-item-icon {
-		display: 30%;
 		@include v.text-4xl;
 		margin-right: 2rem;
 		color: v.$primary-background;
 	}
 	.job-overview-item-left {
-		display: 70%;
+		&.horizontal {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			.job-overview-item-name {
+				margin-right: 1rem;
+			}
+		}
 		.job-overview-item-name {
 			color: v.$black-blue;
 			@include v.text-lg;

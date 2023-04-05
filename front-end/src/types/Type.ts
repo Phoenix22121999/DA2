@@ -31,7 +31,7 @@ export type UserAccount = {
 	first_name: string | null;
 	last_name: string | null;
 	full_name: string | null;
-	email: string | null;
+	email: string;
 	number_phone: string | null;
 	age: number | null;
 	gender: number | null;
@@ -41,6 +41,10 @@ export type UserAccount = {
 	ward_code: string | null;
 	avartar: string | null;
 	logo: string | null;
+	birthday: string | null;
+	birthday_month: string | null;
+	birthday_year: string | null;
+	description: string | null;
 };
 
 /**
@@ -295,4 +299,114 @@ export type Wards = {
 	code_name: string | null;
 	district_code: string;
 	administrative_unit_id: number;
+};
+
+/**
+ * Model Recruitment_Post_User_Like
+ *
+ */
+export type RecruitmentPostUserLike = {
+	id: number;
+	user_id: number;
+	post_id: number;
+	create_date: Date | null;
+	create_user: string | null;
+	update_date: Date | null;
+	update_user: string | null;
+	delete_date: Date | null;
+	delete_user: string | null;
+	is_delete: boolean;
+	is_active: boolean;
+};
+
+/**
+ * Model User_Education
+ *
+ */
+export type UserEducation = {
+	id: number;
+	name_school: string;
+	year_start: string | null;
+	year_end: string | null;
+	month_start: string | null;
+	month_end: string | null;
+	description: string | null;
+	create_date: Date | null;
+	create_user: string | null;
+	update_date: Date | null;
+	update_user: string | null;
+	delete_date: Date | null;
+	delete_user: string | null;
+	is_delete: boolean;
+	is_active: boolean;
+	user_id: number;
+	majors: string | null;
+};
+
+/**
+ * Model User_Experience
+ *
+ */
+export type UserExperience = {
+	id: number;
+	name_company: string;
+	year_start: string;
+	year_end: string | null;
+	month_start: string | null;
+	month_end: string | null;
+	description: string | null;
+	create_date: Date | null;
+	create_user: string | null;
+	update_date: Date | null;
+	update_user: string | null;
+	delete_date: Date | null;
+	position: string | null;
+	delete_user: string | null;
+	is_delete: boolean;
+	is_active: boolean;
+	user_id: number;
+};
+
+/**
+ * Model User_Achievement
+ *
+ */
+export type UserAchievement = {
+	id: number;
+	name_achievement: string;
+	year: string | null;
+	month: string | null;
+	description: string | null;
+	create_date: Date | null;
+	create_user: string | null;
+	update_date: Date | null;
+	update_user: string | null;
+	delete_date: Date | null;
+	delete_user: string | null;
+	is_delete: boolean;
+	is_active: boolean;
+	user_id: number;
+};
+
+/**
+ * Model User_Project
+ *
+ */
+export type UserProject = {
+	id: number;
+	name_project: string;
+	year_start: string | null;
+	year_end: string | null;
+	month_start: string | null;
+	month_end: string | null;
+	description: string | null;
+	create_date: Date | null;
+	create_user: string | null;
+	update_date: Date | null;
+	update_user: string | null;
+	delete_date: Date | null;
+	delete_user: string | null;
+	is_delete: boolean;
+	is_active: boolean;
+	user_id: number;
 };

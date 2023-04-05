@@ -4,9 +4,12 @@
 	width: 100%;
 	.job-post-detail-inner {
 		display: flex;
-
+		flex-direction: column;
 		width: 100%;
-		@include v.mq("tablet") {
+		.job-post-detail-content {
+			padding: 4rem 2rem;
+		}
+		@include v.mq("desk") {
 			flex-direction: row;
 			.job-post-detail-sidebar {
 				position: relative;

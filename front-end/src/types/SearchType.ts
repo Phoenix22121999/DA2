@@ -10,6 +10,7 @@ export type SearchParameter = {
 	ward_code?: string;
 	list_job_type?: string[];
 	list_major?: string[];
+	gender?: number;
 	page?: number;
 	item_per_page?: number;
 	date_post?: string;

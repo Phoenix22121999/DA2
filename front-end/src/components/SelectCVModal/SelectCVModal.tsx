@@ -59,7 +59,9 @@ const SelectCVModal = ({ postId, onClose }: Props) => {
 			<React.Suspense fallback={<SuspenseLoading size="xsmall" />}>
 				{!isCandidate && (
 					<div className="select-cv-noti select-cv-not-candidate">
-						Please sign in with candidate account
+						<div className="select-cv-noti-message">
+							Please sign in with candidate account
+						</div>
 						<div className="button-group">
 							<ButtonCommon size="small" onClick={onSignIn}>
 								Sign in

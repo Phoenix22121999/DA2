@@ -14,6 +14,10 @@ const Major = require('./Major/Major.route');
 
 const Address = require('./Address/Address.route');
 
+const Mail = require('./Mail/mail.route');
+
+const Feature = require('./UserFeature/userfeature.route');
+
 const routers = [
     {
         prefix : '/account',
@@ -42,9 +46,15 @@ const routers = [
     {
         prefix : '/address',
         router : Address
+    },
+    {
+        prefix : '/mail',
+        router : Mail
+    },
+    {
+        prefix : '/feature',
+        router : Feature
     }
-
-
 ]
 
 module.exports = {

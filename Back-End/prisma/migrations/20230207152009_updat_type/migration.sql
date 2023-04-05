@@ -1,0 +1,30 @@
+BEGIN TRY
+
+BEGIN TRAN;
+
+-- AlterTable
+ALTER TABLE [dbo].[User_Achievement] ALTER COLUMN [year] NVARCHAR(1000) NOT NULL;
+
+-- AlterTable
+ALTER TABLE [dbo].[User_Education] ALTER COLUMN [year_start] NVARCHAR(1000) NOT NULL;
+ALTER TABLE [dbo].[User_Education] ALTER COLUMN [year_end] NVARCHAR(1000) NOT NULL;
+
+-- AlterTable
+ALTER TABLE [dbo].[User_Experience] ALTER COLUMN [year_start] NVARCHAR(1000) NOT NULL;
+ALTER TABLE [dbo].[User_Experience] ALTER COLUMN [year_end] NVARCHAR(1000) NULL;
+
+-- AlterTable
+ALTER TABLE [dbo].[User_Project] ALTER COLUMN [year] NVARCHAR(1000) NOT NULL;
+
+COMMIT TRAN;
+
+END TRY
+BEGIN CATCH
+
+IF @@TRANCOUNT > 0
+BEGIN
+    ROLLBACK TRAN;
+END;
+THROW
+
+END CATCH

@@ -11,6 +11,7 @@
 		align-items: center;
 		flex-direction: column;
 		background-color: v.$info-background;
+		text-align: center;
 		@include v.border-radius-md;
 		// background-color: v.$default-background;
 		.sign-up-icon {

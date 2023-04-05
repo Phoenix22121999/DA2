@@ -9,3 +9,7 @@ export type BaseReponseType<T> = {
 	status_resposse: true;
 	AccessToken?: string;
 };
+export type ReponseWithTotal<T> = {
+	result: T;
+	total: number;
+};

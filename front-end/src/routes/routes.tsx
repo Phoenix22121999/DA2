@@ -3,6 +3,7 @@ import { AppLayout } from "src/components/AppLaypout/AppLayout";
 import {
 	AdminDashboardPage,
 	CandidateDashboardPage,
+	ForgotPasswordPage,
 	HomePage,
 	JobPostDetailPage,
 	RecruiterDashboardPage,
@@ -13,9 +14,14 @@ import {
 import Error from "src/pages/Error/Error";
 import Test from "src/pages/Test/Test";
 import {
+	AccountDetailPage,
+	AccountManagerPage,
 	AccountTypeManagerPage,
+	AdminPostDetailPage,
 	AllApplicantPage,
+	AllPostPage,
 	AppliedJobsPage,
+	BookmarkManagerPage,
 	CandidateProfilePage,
 	ChangePasswordPage,
 	CVManagerPage,
@@ -25,7 +31,9 @@ import {
 	MajorManagerPage,
 	PostJobPage,
 	RecruiterProfilePage,
+	StatisticPage,
 } from "src/subpage";
+import RequestManager from "src/subpage/RequestManager/RequestManager";
 
 export const router = createBrowserRouter([
 	{
@@ -48,13 +56,37 @@ export const router = createBrowserRouter([
 				element: <SignInPage />,
 			},
 			{
+				path: "forgot-password",
+				element: <ForgotPasswordPage />,
+			},
+			{
 				path: "post-detail/:postID",
 				element: <JobPostDetailPage />,
+			},
+			{
+				path: "account-detail",
+				element: <AccountDetailPage />,
 			},
 			{
 				path: "admin",
 				element: <AdminDashboardPage />,
 				children: [
+					{
+						path: "accounts",
+						element: <AccountManagerPage />,
+					},
+					{
+						path: "dashboard",
+						element: <StatisticPage />,
+					},
+					{
+						path: "all-post",
+						element: <AllPostPage />,
+					},
+					{
+						path: "detail-post/:postId",
+						element: <AdminPostDetailPage />,
+					},
 					{
 						path: "account-type",
 						element: <AccountTypeManagerPage />,
@@ -66,6 +98,10 @@ export const router = createBrowserRouter([
 					{
 						path: "major",
 						element: <MajorManagerPage />,
+					},
+					{
+						path: "request",
+						element: <RequestManager />,
 					},
 				],
 			},
@@ -80,6 +116,10 @@ export const router = createBrowserRouter([
 					{
 						path: "cv-manager",
 						element: <CVManagerPage />,
+					},
+					{
+						path: "bookmark-manager",
+						element: <BookmarkManagerPage />,
 					},
 					{
 						path: "applied-jobs",

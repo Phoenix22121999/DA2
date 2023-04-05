@@ -1,0 +1,6 @@
+@use "../../styles/variables" as v;
+.text-area-common {
+	textarea.ant-input {
+		@include v.border-radius-sm;
+	}
+}

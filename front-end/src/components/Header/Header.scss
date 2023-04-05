@@ -72,15 +72,7 @@
 			}
 		}
 	}
-	.header-username {
-		height: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 4rem;
-		@include v.text-base;
-		color: v.$info-background;
-	}
+
 	.signup,
 	.login {
 		// padding: 0.6rem 1rem;

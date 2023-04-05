@@ -4,9 +4,11 @@ import DashboardSidebarItem, {
 } from "../DashboardSidebarItem/DashboardSidebarItem";
 import "./AdminDashboardSidebar.scss";
 import {
+	UserOutlined,
 	SnippetsOutlined,
 	FieldTimeOutlined,
 	BookOutlined,
+	FileOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "src/utils/contants";
@@ -14,6 +16,26 @@ type Props = {
 	collapsed?: boolean;
 };
 const ITEMS: DashboardSidebarItemProps[] = [
+	{
+		icon: <UserOutlined />,
+		title: "Dashboard",
+		path: ROUTE.ADMIN_DASHBOARD,
+	},
+	{
+		icon: <UserOutlined />,
+		title: "Account Manager",
+		path: ROUTE.ADMIN_ACCOUNT,
+	},
+	{
+		icon: <UserOutlined />,
+		title: "Request Manager",
+		path: ROUTE.ADMIN_REQUEST,
+	},
+	{
+		icon: <FileOutlined />,
+		title: "All Post",
+		path: ROUTE.ADMIN_ALL_POST,
+	},
 	{
 		icon: <SnippetsOutlined />,
 		title: "User Type",

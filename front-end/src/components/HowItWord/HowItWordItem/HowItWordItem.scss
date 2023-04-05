@@ -19,8 +19,8 @@
 		flex-direction: column;
 
 		width: initial;
-		max-width: 34rem;
-		min-height: 50rem;
+		max-width: 28rem;
+		min-height: 35rem;
 	}
 
 	.how-it-word-icon {
@@ -50,6 +50,16 @@
 		.how-it-word-item-title {
 			margin-bottom: 2rem;
 			@include v.text-3xl;
+			justify-content: flex-start;
+			align-items: center;
+			display: flex;
+			@include v.mq("lap") {
+				min-height: 8rem;
+				text-align: center;
+				justify-content: center;
+			}
+		}
+		.how-it-word-content {
 			@include v.mq("lap") {
 				text-align: center;
 			}

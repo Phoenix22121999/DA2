@@ -1,3 +1,5 @@
+import { PaginationParameters } from "./UtilType";
+
 export type CreateMajorParameters = {
 	majors_name: string;
 };
@@ -10,3 +12,5 @@ export interface UpdateMajorParameters {
 export type DeleteMajorParameters = {
 	majors_id: number;
 };
+
+export interface GetMajorListParameters extends PaginationParameters {}

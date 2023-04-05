@@ -1,0 +1,563 @@
+@api_local = http://localhost:4000/api
+
+GET {{api_local}}
+Content-Type: application/json
+
+###
+
+# Sign In
+POST {{api_local}}/account/sign-in  HTTP/1.1
+Content-Type: application/json
+
+{
+    "user_name" : "admin",
+    "password" : "admin@123"
+} 
+
+###
+
+GET {{api_local}}/account?is_active=0&item_per_page=25&page=1&key_word=  HTTP/1.1
+Content-Type: application/json
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIwIiwidXNlcm5hbWUiOiJhZG1pbiIsInVzZXJfdHlwZV9pZCI6IjEiLCJmaXJzdF9uYW1lIjoiYWRtaW5pc3RyYXRvciIsImxhc3RfbmFtZSI6IkFjY291bnQiLCJmdWxsX25hbWUiOm51bGwsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjoiMDk2MTIwMjc2MCIsImFnZSI6MTIsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOiIyMEIvMSDEkMaw4budbmcgUGjDuiBUaHXhuq1uIiwiZ2VuZGVyIjo0LCJwcm92aW5jZV9jb2RlIjpudWxsLCJkaXN0cmljdF9jb2RlIjpudWxsLCJ3YXJkX2NvZGUiOm51bGwsImdvb2dsZV9pZCI6bnVsbCwiaXNfYWN0aXZlIjp0cnVlLCJkZXNjcmlwdGlvbiI6bnVsbCwiYmlydGhkYXkiOm51bGwsImJpcnRoZGF5X21vbnRoIjpudWxsLCJiaXJ0aGRheV95ZWFyIjpudWxsLCJpYXQiOjE2NzYyOTUyMjksImV4cCI6MTY3NjM4MTYyOX0.5dzfngcT49Ot0MbOtjA9DrCP2sJHfIzlIIu_0QOtPU8
+
+
+###
+
+# Sign Upa
+POST {{api_local}}/account/sign-up HTTP/1.1
+Content-Type: application/json
+
+{
+    "username" : "nhatuyendung2",
+    "password" : "1234567",
+    "user_type_id" : 3,
+    "first_name" : "Administrator",
+    "last_name" : "administrator",
+    "full_name" : "Administrator Account",
+    "email" : "admin1775@gmail.com"
+}
+
+###
+
+# Cập nhật tài khoản
+POST {{api_local}}/account/account-update HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlzX2FjdGl2ZSI6dHJ1ZSwiaWF0IjoxNjc1ODQxOTEyLCJleHAiOjE2NzU5MjgzMTJ9.n47KZNMKjBr8M_uCvBycQrpmfHzndRyvEkQyFA5euKc
+
+{
+    "first_name" : "Administrator 5 update",
+    "last_name" : "Account update",
+    "full_name" : "Administrator  update",
+    "email" : "apolo9220@gmail.com",
+    "avartar" : "http://159.223.54.199:3002/827d6c64-6c28-490e-8aeb-db87d44f582f.jpg"
+}
+
+###
+POST {{api_local}}/account/change-password HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjU2NTU0MH0.dqboW2wx3PWou3sztUfpVnB54ou7xR7jCo9tKshL65s
+
+{
+    "current_password" : "admin@123",
+    "new_password" : "654321"
+}
+
+###
+
+# Lấy danh sách loại tài khoản
+GET {{api_local}}/account-type
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjU2NTU0MH0.dqboW2wx3PWou3sztUfpVnB54ou7xR7jCo9tKshL65s
+
+###
+
+# Tạo loại tài khoản
+
+POST {{api_local}}/account-type
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjU2NTI0MX0.jNC-0JNQoMDC5R9uUttssVEEI_zUbwuDadmhvhby4l0
+
+{
+    "user_type_name" : "Nhóm test tạo",
+    "is_active" : true,
+    "is_delete" : false
+}
+
+###
+
+# Xóa loại tài khoản
+POST {{api_local}}/account-type/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjU2NTI0MX0.jNC-0JNQoMDC5R9uUttssVEEI_zUbwuDadmhvhby4l0
+
+{
+    "user_type_id" : 4
+}
+
+
+###
+
+# Cập nhật loại tài khoản
+PUT {{api_local}}/account-type/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjU2NTI0MX0.jNC-0JNQoMDC5R9uUttssVEEI_zUbwuDadmhvhby4l0
+
+{
+    "user_type_id" : 5,
+    "user_type_name" : "Cập nhật nè 2",
+    "is_active" : true,
+    "is_delete" : false 
+}
+
+###
+
+# Tạo CV
+
+POST {{api_local}}/cv
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3I1IiwidXNlcl90eXBlX2lkIjoiMiIsImZpcnN0X25hbWUiOiJBZG1pbmlzdHJhdG9yIiwibGFzdF9uYW1lIjoiYWRtaW5pc3RyYXRvciIsImZ1bGxfbmFtZSI6IkFkbWluaXN0cmF0b3IgQWNjb3VudCIsImVtYWlsIjoiYWRtaW4xNzc1QGdtYWlsLmNvbSIsIm51bWJlcl9waG9uZSI6bnVsbCwiYWdlIjpudWxsLCJhdmFydGFyIjpudWxsLCJhZGRyZXNzIjpudWxsLCJnZW5kZXIiOm51bGwsInByb3ZpbmNlX2NvZGUiOm51bGwsImRpc3RyaWN0X2NvZGUiOm51bGwsIndhcmRfY29kZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJpYXQiOjE2NzI3NTUzMTN9.IbM6OOTTvrxkQlWfHEdygMEmGr5RQrVQz3N63fE1T1s
+
+{
+    "file_name_hash": "ef6062e0-c2c1-4ced-9ff3-895e91d9f4f5.pdf",
+    "file_name" : "hieunm.pdf",
+    "is_active" : true,
+    "is_delete" : false
+}
+
+
+###
+
+# Cập nhật tên CV
+PUT {{api_local}}/cv
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjU2NTI0MX0.jNC-0JNQoMDC5R9uUttssVEEI_zUbwuDadmhvhby4l0
+
+{
+    "id_cv" : 3,
+    "file_name_new" : "Tập tin mới này 3"
+}
+
+
+###
+
+# Xóa CV
+POST {{api_local}}/cv/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjU2NTI0MX0.jNC-0JNQoMDC5R9uUttssVEEI_zUbwuDadmhvhby4l0
+
+{
+    "cv_id" : "3"
+}
+
+###
+
+# Lấy danh sách CV của ứng viên /get-all
+GET {{api_local}}/cv
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3I1IiwidXNlcl90eXBlX2lkIjoiMiIsImZpcnN0X25hbWUiOiJBZG1pbmlzdHJhdG9yIiwibGFzdF9uYW1lIjoiYWRtaW5pc3RyYXRvciIsImZ1bGxfbmFtZSI6IkFkbWluaXN0cmF0b3IgQWNjb3VudCIsImVtYWlsIjoiYWRtaW4xNzc1QGdtYWlsLmNvbSIsIm51bWJlcl9waG9uZSI6bnVsbCwiYWdlIjpudWxsLCJhdmFydGFyIjpudWxsLCJhZGRyZXNzIjpudWxsLCJnZW5kZXIiOm51bGwsInByb3ZpbmNlX2NvZGUiOm51bGwsImRpc3RyaWN0X2NvZGUiOm51bGwsIndhcmRfY29kZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJpYXQiOjE2NzI3NTU0Mzd9.eyObudc4wdhJHOPvso4N9XZb6l-Fic-Gu8ZxVHGY5nk
+
+###
+# Lấy danh sách CV của ứng viên /get-all
+GET {{api_local}}/cv/get-all
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIwIiwidXNlcm5hbWUiOiJhZG1pbiIsInVzZXJfdHlwZV9pZCI6IjEiLCJmaXJzdF9uYW1lIjoiYWRtaW5pc3RyYXRvciIsImxhc3RfbmFtZSI6IkFjY291bnQiLCJmdWxsX25hbWUiOm51bGwsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjoiMDk2MTIwMjc2MCIsImFnZSI6MTIsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOiIyMEIvMSDEkMaw4budbmcgUGjDuiBUaHXhuq1uIiwiZ2VuZGVyIjo0LCJwcm92aW5jZV9jb2RlIjpudWxsLCJkaXN0cmljdF9jb2RlIjpudWxsLCJ3YXJkX2NvZGUiOm51bGwsImdvb2dsZV9pZCI6bnVsbCwiaWF0IjoxNjc1ODAxNDkzLCJleHAiOjE2NzU4ODc4OTN9.p-45sx3_Is75EQd7MvsY2G4hMxn6zcB4vq3HJWGfqA4
+
+###
+
+# Tải CV 
+GET {{api_local}}/cv/download/4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjU2NTI0MX0.jNC-0JNQoMDC5R9uUttssVEEI_zUbwuDadmhvhby4l0
+
+###
+
+# Tạo bài tuyển dụng
+POST {{api_local}}/recruiter-post
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjkyOTc0NX0.logFwz4wncFOr9YR5vuyGs1GQRUq0dJ6mGqGaO9h5q4
+
+{
+    "title" : "Tuyển dụng vị trí Front-end",
+    "content" : "Front-end",
+    "to_value" : 103000,
+    "from_value" : 2400000,
+    "is_active" : true,
+    "is_delete" : false,
+    "gender" : 1,
+    "list_job_type" : [
+        {
+            "job_type_id" : 1
+        },
+        {
+            "job_type_id" : 2
+        }
+    ],
+    "list_major" : [
+        {
+            "majors_id" : 2
+        }
+    ]
+}
+
+###
+
+# Lấy danh sách bài đăng tuyển dụng
+GET {{api_local}}/recruiter-post?page=1&item_per_page=2
+Content-Type: application/json
+
+###
+
+# Lấy danh sách bài tuyển dụng của nhà tuyển dụng
+
+GET {{api_local}}/recruiter-post/list-of-user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3I1IiwidXNlcl90eXBlX2lkIjoiMiIsImZpcnN0X25hbWUiOiJBZG1pbmlzdHJhdG9yIDUgdXBkYXRlIiwibGFzdF9uYW1lIjoiQWNjb3VudCB1cGRhdGUiLCJmdWxsX25hbWUiOiJBZG1pbmlzdHJhdG9yICB1cGRhdGUiLCJlbWFpbCI6ImFkbWluLkRBMjc3U2FhYWFhYUBnbWFpbC5jb20iLCJudW1iZXJfcGhvbmUiOm51bGwsImFnZSI6bnVsbCwiYXZhcnRhciI6Ijc0ZjYyMzY0LTcyYzEtNDk2MC1iYWZmLTBkZTdkMDk0NWUyYy5qcGciLCJhZGRyZXNzIjpudWxsLCJnZW5kZXIiOm51bGwsInByb3ZpbmNlX2NvZGUiOm51bGwsImRpc3RyaWN0X2NvZGUiOm51bGwsIndhcmRfY29kZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJpYXQiOjE2NzI1Njk0MDN9.ZYVpWFy51vKOOae9prT6B-Yw0n3EzRQtpxMDECK1yMM
+
+###
+
+# Cập nhật bài tuyển dụng
+PUT {{api_local}}/recruiter-post
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3I1IiwidXNlcl90eXBlX2lkIjoiMiIsImZpcnN0X25hbWUiOiJBZG1pbmlzdHJhdG9yIDUgdXBkYXRlIiwibGFzdF9uYW1lIjoiQWNjb3VudCB1cGRhdGUiLCJmdWxsX25hbWUiOiJBZG1pbmlzdHJhdG9yICB1cGRhdGUiLCJlbWFpbCI6ImFkbWluLkRBMjc3U2FhYWFhYUBnbWFpbC5jb20iLCJudW1iZXJfcGhvbmUiOm51bGwsImFnZSI6bnVsbCwiYXZhcnRhciI6Ijc0ZjYyMzY0LTcyYzEtNDk2MC1iYWZmLTBkZTdkMDk0NWUyYy5qcGciLCJhZGRyZXNzIjpudWxsLCJnZW5kZXIiOm51bGwsInByb3ZpbmNlX2NvZGUiOm51bGwsImRpc3RyaWN0X2NvZGUiOm51bGwsIndhcmRfY29kZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJpYXQiOjE2NzI1Njk0MDN9.ZYVpWFy51vKOOae9prT6B-Yw0n3EzRQtpxMDECK1yMM
+
+{
+    "post_id" : "5",
+    "title" : "title update",
+    "content" : "contentddđsssssss",
+    "to_value" : 11111323211,
+    "from_value" : 22221122222,
+    "is_active" : true,
+    "gender" : 1,
+    "list_job_type" : [
+        {
+            "job_type_id" : 2
+        }
+    ],
+    "list_major" : [
+        {
+            "majors_id" : 2
+        }
+    ]
+}
+
+###
+
+# Xóa bài tuyển dụng
+POST {{api_local}}/recruiter-post/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjgiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3I1IiwidXNlcl90eXBlX2lkIjoiMiIsImZpcnN0X25hbWUiOiJBZG1pbmlzdHJhdG9yIDUgdXBkYXRlIiwibGFzdF9uYW1lIjoiQWNjb3VudCB1cGRhdGUiLCJmdWxsX25hbWUiOiJBZG1pbmlzdHJhdG9yICB1cGRhdGUiLCJlbWFpbCI6ImFkbWluLkRBMjc3U2FhYWFhYUBnbWFpbC5jb20iLCJudW1iZXJfcGhvbmUiOm51bGwsImFnZSI6bnVsbCwiYXZhcnRhciI6Ijc0ZjYyMzY0LTcyYzEtNDk2MC1iYWZmLTBkZTdkMDk0NWUyYy5qcGciLCJhZGRyZXNzIjpudWxsLCJnZW5kZXIiOm51bGwsInByb3ZpbmNlX2NvZGUiOm51bGwsImRpc3RyaWN0X2NvZGUiOm51bGwsIndhcmRfY29kZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJpYXQiOjE2NzI1Njk0MDN9.ZYVpWFy51vKOOae9prT6B-Yw0n3EzRQtpxMDECK1yMM
+
+{
+    "post_id" : 5
+}
+
+###
+
+POST {{api_local}}/job-type 
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjY2NzM4NX0.BmcPey3gxkF1CAAAQHtBJmH833lGM-1yxbyhji3uyJI
+
+{
+    "job_type_name" : "Bán thời gian"
+}
+
+
+###
+GET {{api_local}}/job-type?item_per_page=10&page=1&key_word=
+Content-Type: application/json
+
+###
+
+PUT {{api_local}}/job-type
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjY2ODAxNH0.wWsKLVCIVqxF0MdY0HB3HS3UHyAPC_7oTWeMxy29O-k
+
+{
+    "job_type_id" : 1,
+    "job_type_name" : "Bán thời gian cập nhật"
+}
+
+###
+
+POST {{api_local}}/job-type/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjY2ODAxNH0.wWsKLVCIVqxF0MdY0HB3HS3UHyAPC_7oTWeMxy29O-k
+
+{
+    "job_type_id" : 1
+}
+
+
+###
+
+POST {{api_local}}/majors
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjY2ODAxNH0.wWsKLVCIVqxF0MdY0HB3HS3UHyAPC_7oTWeMxy29O-k
+
+{
+    "majors_name" : "Quản Trị Nhà Hàng"
+}
+
+###
+PUT {{api_local}}/majors
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjY2ODAxNH0.wWsKLVCIVqxF0MdY0HB3HS3UHyAPC_7oTWeMxy29O-k
+
+{
+    "majors_id" : 1,
+    "majors_name" : "Kế Toán cập nhật"
+}
+
+###
+
+POST {{api_local}}/majors/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3MjY2ODAxNH0.wWsKLVCIVqxF0MdY0HB3HS3UHyAPC_7oTWeMxy29O-k
+
+{
+    "majors_id" : 1
+}
+
+###
+GET {{api_local}}/majors
+Content-Type: application/json
+
+
+###
+GET {{api_local}}/account/get-detail
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI3IiwidXNlcm5hbWUiOiJ1bmd2aWVuMSIsInVzZXJfdHlwZV9pZCI6IjIiLCJmaXJzdF9uYW1lIjoiTmfDtCIsImxhc3RfbmFtZSI6Ikhp4bq_dSIsImZ1bGxfbmFtZSI6bnVsbCwiZW1haWwiOiJ1bmd2aWVuMUBnbWFpbC5jb20iLCJudW1iZXJfcGhvbmUiOiIwOTYxMjAyNzYxIiwiYWdlIjoxNSwiYXZhcnRhciI6IjgyN2Q2YzY0LTZjMjgtNDkwZS04YWViLWRiODdkNDRmNTgyZi5qcGciLCJhZGRyZXNzIjoixJHDomNzZGMiLCJnZW5kZXIiOjEsInByb3ZpbmNlX2NvZGUiOiIzMSIsImRpc3RyaWN0X2NvZGUiOiIzMDYiLCJ3YXJkX2NvZGUiOiIxMTQxMyIsImdvb2dsZV9pZCI6bnVsbCwiaXNfYWN0aXZlIjp0cnVlLCJpYXQiOjE2NzU4NTQ4MjgsImV4cCI6MTY3NTk0MTIyOH0.ntOSrcedAWAAMsuOt1Fpd-oJugoZYquBIbmV_3d98Hs
+
+
+###
+
+###
+GET {{api_local}}/account/get-detail-with-id?user_id=27
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI3IiwidXNlcm5hbWUiOiJ1bmd2aWVuMSIsInVzZXJfdHlwZV9pZCI6IjIiLCJmaXJzdF9uYW1lIjoiTmfDtCIsImxhc3RfbmFtZSI6Ikhp4bq_dSIsImZ1bGxfbmFtZSI6bnVsbCwiZW1haWwiOiJ1bmd2aWVuMUBnbWFpbC5jb20iLCJudW1iZXJfcGhvbmUiOiIwOTYxMjAyNzYxIiwiYWdlIjoxNSwiYXZhcnRhciI6IjgyN2Q2YzY0LTZjMjgtNDkwZS04YWViLWRiODdkNDRmNTgyZi5qcGciLCJhZGRyZXNzIjoixJHDomNzZGMiLCJnZW5kZXIiOjEsInByb3ZpbmNlX2NvZGUiOiIzMSIsImRpc3RyaWN0X2NvZGUiOiIzMDYiLCJ3YXJkX2NvZGUiOiIxMTQxMyIsImdvb2dsZV9pZCI6bnVsbCwiaXNfYWN0aXZlIjp0cnVlLCJpYXQiOjE2NzU4NTQ4MjgsImV4cCI6MTY3NTk0MTIyOH0.ntOSrcedAWAAMsuOt1Fpd-oJugoZYquBIbmV_3d98Hs
+
+###
+
+GET {{api_local}}/address/provinces
+Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3Mjc1MzU4OX0.5kDnFvsbiUSPncjjx8sWPBncIfTzffBqfNPQRx7SPM0
+
+
+###
+GET {{api_local}}/address/district?province_code=79
+Content-Type: application/json
+
+###
+
+GET {{api_local}}/address/ward?district_code=760
+Content-Type: application/json
+
+
+###
+POST {{api_local}}/cv/apply-cv
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3I1IiwidXNlcl90eXBlX2lkIjoiMiIsImZpcnN0X25hbWUiOiJBZG1pbmlzdHJhdG9yIDUgdXBkYXRlIiwibGFzdF9uYW1lIjoiQWNjb3VudCB1cGRhdGUiLCJmdWxsX25hbWUiOiJBZG1pbmlzdHJhdG9yICB1cGRhdGUiLCJlbWFpbCI6ImFwb2xvOTIyMEBnbWFpbC5jb20iLCJudW1iZXJfcGhvbmUiOm51bGwsImFnZSI6bnVsbCwiYXZhcnRhciI6Ijc0ZjYyMzY0LTcyYzEtNDk2MC1iYWZmLTBkZTdkMDk0NWUyYy5qcGciLCJhZGRyZXNzIjpudWxsLCJnZW5kZXIiOm51bGwsInByb3ZpbmNlX2NvZGUiOm51bGwsImRpc3RyaWN0X2NvZGUiOm51bGwsIndhcmRfY29kZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJpYXQiOjE2NzI5Mjk3MTd9.FW8JW_NzrasdlPzK1zZdssxjPcDyCtWUHq53hhxEekM
+
+{
+    "cv_id" : 2,
+    "post_id" : 3
+}
+
+
+###
+POST {{api_local}}/cv/un-apply-cv
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3I1IiwidXNlcl90eXBlX2lkIjoiMiIsImZpcnN0X25hbWUiOiJBZG1pbmlzdHJhdG9yIDUgdXBkYXRlIiwibGFzdF9uYW1lIjoiQWNjb3VudCB1cGRhdGUiLCJmdWxsX25hbWUiOiJBZG1pbmlzdHJhdG9yICB1cGRhdGUiLCJlbWFpbCI6ImFwb2xvOTIyMEBnbWFpbC5jb20iLCJudW1iZXJfcGhvbmUiOm51bGwsImFnZSI6bnVsbCwiYXZhcnRhciI6Ijc0ZjYyMzY0LTcyYzEtNDk2MC1iYWZmLTBkZTdkMDk0NWUyYy5qcGciLCJhZGRyZXNzIjpudWxsLCJnZW5kZXIiOm51bGwsInByb3ZpbmNlX2NvZGUiOm51bGwsImRpc3RyaWN0X2NvZGUiOm51bGwsIndhcmRfY29kZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJpYXQiOjE2NzI4NDU3MDh9.CZQwUXRI8iyIOHPE--NDlU7rynwOQ8hrPZsDivDYJRY
+
+{
+    "cv_id" : 2,
+    "post_id" : 2
+}
+
+###
+
+GET {{api_local}}/cv/history-apply
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3I1IiwidXNlcl90eXBlX2lkIjoiMiIsImZpcnN0X25hbWUiOiJBZG1pbmlzdHJhdG9yIiwibGFzdF9uYW1lIjoiYWRtaW5pc3RyYXRvciIsImZ1bGxfbmFtZSI6IkFkbWluaXN0cmF0b3IgQWNjb3VudCIsImVtYWlsIjoiYWRtaW4xNzc1QGdtYWlsLmNvbSIsIm51bWJlcl9waG9uZSI6bnVsbCwiYWdlIjpudWxsLCJhdmFydGFyIjpudWxsLCJhZGRyZXNzIjpudWxsLCJnZW5kZXIiOm51bGwsInByb3ZpbmNlX2NvZGUiOm51bGwsImRpc3RyaWN0X2NvZGUiOm51bGwsIndhcmRfY29kZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJpYXQiOjE2NzI3NTU0Mzd9.eyObudc4wdhJHOPvso4N9XZb6l-Fic-Gu8ZxVHGY5nk
+
+###
+
+GET {{api_local}}/cv//history-applier-post
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjUiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3Mjc1ODQyMX0.mWTQiR3p897c4011Gf-pPz2_O-Lq_1VPNYTrnxNR1eU
+
+
+###
+
+POST {{api_local}}/recruiter-post/bookmark-post
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3I1IiwidXNlcl90eXBlX2lkIjoiMiIsImZpcnN0X25hbWUiOiJBZG1pbmlzdHJhdG9yIiwibGFzdF9uYW1lIjoiYWRtaW5pc3RyYXRvciIsImZ1bGxfbmFtZSI6IkFkbWluaXN0cmF0b3IgQWNjb3VudCIsImVtYWlsIjoiYWRtaW4xNzc1QGdtYWlsLmNvbSIsIm51bWJlcl9waG9uZSI6bnVsbCwiYWdlIjpudWxsLCJhdmFydGFyIjpudWxsLCJhZGRyZXNzIjpudWxsLCJnZW5kZXIiOm51bGwsInByb3ZpbmNlX2NvZGUiOm51bGwsImRpc3RyaWN0X2NvZGUiOm51bGwsIndhcmRfY29kZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJpYXQiOjE2NzI3NTkyNjN9.As6Ru4WDF8EnJMrJGKv9kf7vOYtGSHJGqIkEneOeC34
+
+{
+    "post_id" : 1
+}
+
+
+###
+
+POST {{api_local}}/recruiter-post/un-bookmark-post
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3I1IiwidXNlcl90eXBlX2lkIjoiMiIsImZpcnN0X25hbWUiOiJBZG1pbmlzdHJhdG9yIiwibGFzdF9uYW1lIjoiYWRtaW5pc3RyYXRvciIsImZ1bGxfbmFtZSI6IkFkbWluaXN0cmF0b3IgQWNjb3VudCIsImVtYWlsIjoiYWRtaW4xNzc1QGdtYWlsLmNvbSIsIm51bWJlcl9waG9uZSI6bnVsbCwiYWdlIjpudWxsLCJhdmFydGFyIjpudWxsLCJhZGRyZXNzIjpudWxsLCJnZW5kZXIiOm51bGwsInByb3ZpbmNlX2NvZGUiOm51bGwsImRpc3RyaWN0X2NvZGUiOm51bGwsIndhcmRfY29kZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJpYXQiOjE2NzI3NTkyNjN9.As6Ru4WDF8EnJMrJGKv9kf7vOYtGSHJGqIkEneOeC34
+
+{
+    "post_id" : 1
+}
+
+###
+
+
+GET {{api_local}}/recruiter-post/list-bookmark?item_per_page=10&page=1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3I1IiwidXNlcl90eXBlX2lkIjoiMiIsImZpcnN0X25hbWUiOiJBZG1pbmlzdHJhdG9yIiwibGFzdF9uYW1lIjoiYWRtaW5pc3RyYXRvciIsImZ1bGxfbmFtZSI6IkFkbWluaXN0cmF0b3IgQWNjb3VudCIsImVtYWlsIjoiYWRtaW4xNzc1QGdtYWlsLmNvbSIsIm51bWJlcl9waG9uZSI6bnVsbCwiYWdlIjpudWxsLCJhdmFydGFyIjpudWxsLCJhZGRyZXNzIjpudWxsLCJnZW5kZXIiOm51bGwsInByb3ZpbmNlX2NvZGUiOm51bGwsImRpc3RyaWN0X2NvZGUiOm51bGwsIndhcmRfY29kZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJpYXQiOjE2NzI3NTkyNjN9.As6Ru4WDF8EnJMrJGKv9kf7vOYtGSHJGqIkEneOeC34
+
+###
+
+POST {{api_local}}/account/forgot-password
+Content-Type: application/json
+
+{
+    "email" : "apolo9220@gmail.com",
+    "user_name" : "administrator5"
+}
+
+
+###
+POST {{api_local}}/account/reset-password
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3I1IiwidXNlcl90eXBlX2lkIjoiMiIsImZpcnN0X25hbWUiOiJBZG1pbmlzdHJhdG9yIDUgdXBkYXRlIiwibGFzdF9uYW1lIjoiQWNjb3VudCB1cGRhdGUiLCJmdWxsX25hbWUiOiJBZG1pbmlzdHJhdG9yICB1cGRhdGUiLCJlbWFpbCI6ImFwb2xvOTIyMEBnbWFpbC5jb20iLCJudW1iZXJfcGhvbmUiOm51bGwsImFnZSI6bnVsbCwiYXZhcnRhciI6Ijc0ZjYyMzY0LTcyYzEtNDk2MC1iYWZmLTBkZTdkMDk0NWUyYy5qcGciLCJhZGRyZXNzIjpudWxsLCJnZW5kZXIiOm51bGwsInByb3ZpbmNlX2NvZGUiOm51bGwsImRpc3RyaWN0X2NvZGUiOm51bGwsIndhcmRfY29kZSI6bnVsbCwiZ29vZ2xlX2lkIjpudWxsLCJpYXQiOjE2NzMwMjA0NDMsImV4cCI6MTY3MzAyMTA0M30.rduq3SDsBbpn_Yodk3eur9gnb1f5gC8KYOiORXF_c8U
+
+{
+    "new_password" : "12345678"
+}
+
+
+###
+
+
+POST {{api_local}}/account/forgot-username
+Content-Type: application/json
+
+{
+    "email" : "apolo92202@gmail.com"
+}
+
+###
+
+POST {{api_local}}/feature/user-education
+Content-Type: application/json
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3NTc4NzQ4MywiZXhwIjoxNjc1ODczODgzfQ.no8nShCpEPVaxGg41MrC2KaayJfvOAYGrWpsj17mykE
+
+{
+    "name_school" : "TDTU",
+    "year_start" : "2017",
+    "year_end" : "2022",
+    "month_start" : "09",
+    "month_end" : "09",
+    "description" : "Đạt loại khá với GPA là 6.5",
+    "majors" : "Kế Toán"
+
+}
+
+###
+
+PUT {{api_local}}/feature/user-education/
+Content-Type: application/json
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3NTc4NzQ4MywiZXhwIjoxNjc1ODczODgzfQ.no8nShCpEPVaxGg41MrC2KaayJfvOAYGrWpsj17mykE
+
+{
+    "use_education_id" : "5",
+    "name_school" : "TDTU",
+    "year_start" : "2017",
+    "year_end" : "2022",
+    "month_start" : "06",
+    "month_end" : "09",
+    "description" : "Đạt loại khá với GPA là 7.4",
+    "majors" : "Kĩ thuật phần mềm"
+
+}
+
+###
+
+post {{api_local}}/feature/user-education/delete
+Content-Type: application/json
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3NTc4NzQ4MywiZXhwIjoxNjc1ODczODgzfQ.no8nShCpEPVaxGg41MrC2KaayJfvOAYGrWpsj17mykE
+
+{
+    "use_education_id" : "2"
+
+}
+
+###
+
+POST {{api_local}}/feature/user-experience
+Content-Type: application/json
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3NTc4NzQ4MywiZXhwIjoxNjc1ODczODgzfQ.no8nShCpEPVaxGg41MrC2KaayJfvOAYGrWpsj17mykE
+
+{
+    "name_company" : "Công ty A",
+    "year_start" : "2017",
+    "year_end" : "2022",
+    "month_start" : "09",
+    "month_end" : "09",
+    "description" : "Đạt loại khá với GPA là 6.5",
+    "position" : "Kế Toán"
+
+}
+
+###
+
+PUT {{api_local}}/feature/user-experience
+Content-Type: application/json
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3NTc4NzQ4MywiZXhwIjoxNjc1ODczODgzfQ.no8nShCpEPVaxGg41MrC2KaayJfvOAYGrWpsj17mykE
+
+{
+    "use_experience_id" : "1",
+    "name_company" : "Công ty B",
+    "year_start" : "2017",
+    "year_end" : "2022",
+    "month_start" : "09",
+    "month_end" : "09",
+    "description" : "Đạt loại khá với GPA là 6.5",
+    "position" : "Kế Toán"
+
+}
+
+###
+post {{api_local}}/feature/user-experience/delete
+Content-Type: application/json
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJ1c2VybmFtZSI6ImFkbWluaXN0cmF0b3IiLCJ1c2VyX3R5cGVfaWQiOiIxIiwiZmlyc3RfbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJsYXN0X25hbWUiOiJhZG1pbmlzdHJhdG9yIiwiZnVsbF9uYW1lIjoiQWRtaW5pc3RyYXRvciBBY2NvdW50IiwiZW1haWwiOiJhZG1pbjE3NzVAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjpudWxsLCJhZ2UiOm51bGwsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOm51bGwsImdlbmRlciI6bnVsbCwicHJvdmluY2VfY29kZSI6bnVsbCwiZGlzdHJpY3RfY29kZSI6bnVsbCwid2FyZF9jb2RlIjpudWxsLCJnb29nbGVfaWQiOm51bGwsImlhdCI6MTY3NTc5Njk4NywiZXhwIjoxNjc1ODgzMzg3fQ.KXEKw2bbeiqfwUeE1xGYfxbHzqRTkbzbgNV1del2D5k
+
+{
+    "use_experience_id" : "2"
+
+}
+
+###
+
+post {{api_local}}/account/review
+Content-Type: application/json
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIwIiwidXNlcm5hbWUiOiJhZG1pbiIsInVzZXJfdHlwZV9pZCI6IjEiLCJmaXJzdF9uYW1lIjoiYWRtaW5pc3RyYXRvciIsImxhc3RfbmFtZSI6IkFjY291bnQiLCJmdWxsX25hbWUiOm51bGwsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjoiMDk2MTIwMjc2MCIsImFnZSI6MTIsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOiIyMEIvMSDEkMaw4budbmcgUGjDuiBUaHXhuq1uIiwiZ2VuZGVyIjo0LCJwcm92aW5jZV9jb2RlIjpudWxsLCJkaXN0cmljdF9jb2RlIjpudWxsLCJ3YXJkX2NvZGUiOm51bGwsImdvb2dsZV9pZCI6bnVsbCwiaWF0IjoxNjc1Nzk4MTI4LCJleHAiOjE2NzU4ODQ1Mjh9._a9JOH7ewknZjVnJltjNrDWvpIEmSSg0541C7v--A_U
+
+{
+    "user_id" : 25,
+    "is_active" : false
+
+}
+
+
+###
+get {{api_local}}/feature/all
+Content-Type: application/json
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIwIiwidXNlcm5hbWUiOiJhZG1pbiIsInVzZXJfdHlwZV9pZCI6IjEiLCJmaXJzdF9uYW1lIjoiYWRtaW5pc3RyYXRvciIsImxhc3RfbmFtZSI6IkFjY291bnQiLCJmdWxsX25hbWUiOm51bGwsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjoiMDk2MTIwMjc2MCIsImFnZSI6MTIsImF2YXJ0YXIiOm51bGwsImFkZHJlc3MiOiIyMEIvMSDEkMaw4budbmcgUGjDuiBUaHXhuq1uIiwiZ2VuZGVyIjo0LCJwcm92aW5jZV9jb2RlIjpudWxsLCJkaXN0cmljdF9jb2RlIjpudWxsLCJ3YXJkX2NvZGUiOm51bGwsImdvb2dsZV9pZCI6bnVsbCwiaWF0IjoxNjc1Nzk4MTI4LCJleHAiOjE2NzU4ODQ1Mjh9._a9JOH7ewknZjVnJltjNrDWvpIEmSSg0541C7v--A_U
+
+###
+
+
+get {{api_local}}/cv/export-pdf?name_cv="nameneeeeeeeee"
+Content-Type: application/json
+Authorization : Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI3IiwidXNlcm5hbWUiOiJ1bmd2aWVuMSIsInVzZXJfdHlwZV9pZCI6IjIiLCJmaXJzdF9uYW1lIjoidW5nIHZpZW4gMSIsImxhc3RfbmFtZSI6InVuZyB2aWVuIDEiLCJmdWxsX25hbWUiOm51bGwsImVtYWlsIjoidW5ndmllbjFAZ21haWwuY29tIiwibnVtYmVyX3Bob25lIjoiMDk2MTIwMjc2MSIsImFnZSI6MTUsImF2YXJ0YXIiOiI4MjdkNmM2NC02YzI4LTQ5MGUtOGFlYi1kYjg3ZDQ0ZjU4MmYuanBnIiwiYWRkcmVzcyI6IsSRw6Jjc2RjIiwiZ2VuZGVyIjoxLCJwcm92aW5jZV9jb2RlIjpudWxsLCJkaXN0cmljdF9jb2RlIjpudWxsLCJ3YXJkX2NvZGUiOm51bGwsImdvb2dsZV9pZCI6bnVsbCwiaXNfYWN0aXZlIjp0cnVlLCJpYXQiOjE2NzU4NDIzMDQsImV4cCI6MTY3NTkyODcwNH0.r-Mx41Os1iYxShVQ4WHjAY1-QD6_5m9koFDQuM_gxLw

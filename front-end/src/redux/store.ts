@@ -11,6 +11,9 @@ import { majorReducer } from "./slice/MajorSlide";
 import { accountTypeReducer } from "./slice/AccountTypeSlide";
 import { locationReducer } from "./slice/LocationSlide";
 import { applyHistoryReducer } from "./slice/ApplyHistorySlide";
+import { accountReducer } from "./slice/AccountSilce";
+import { bookmarkReducer } from "./slice/BookmarkSlide";
+import { userResumeReducer } from "./slice/UserResumeSilce";
 
 export const store = configureStore({
 	reducer: {
@@ -26,6 +29,9 @@ export const store = configureStore({
 		major: majorReducer,
 		location: locationReducer,
 		applyHistory: applyHistoryReducer,
+		account: accountReducer,
+		bookmark: bookmarkReducer,
+		useResume: userResumeReducer,
 	},
 });
 

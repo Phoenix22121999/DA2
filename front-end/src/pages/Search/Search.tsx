@@ -6,10 +6,12 @@ import "./Search.scss";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
+import useGetBookmarkList from "src/hooks/useGetBookmarkList";
 type Props = {};
 
 const Search = (props: Props) => {
 	const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
+	useGetBookmarkList();
 	const toggleFilter = () => {
 		setIsFilterOpen(!isFilterOpen);
 	};

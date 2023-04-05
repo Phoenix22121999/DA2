@@ -14,22 +14,19 @@ const RecuiterItem: HowItWordItemProps[] = [
 		number: 1,
 		icon: <UserAddOutlined />,
 		title: "Create Account",
-		content:
-			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, nihil dolores. Dicta?",
+		content: "Create your account and provide basic information",
 	},
 	{
 		number: 2,
 		icon: <FileSearchOutlined />,
 		title: "Post Job",
-		content:
-			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, nihil dolores. Dicta?",
+		content: "Create and publish job postings",
 	},
 	{
 		number: 3,
 		icon: <SolutionOutlined />,
 		title: "Wait For Resume",
-		content:
-			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, nihil dolores. Dicta?",
+		content: "Waiting for candidates to apply",
 	},
 ];
 

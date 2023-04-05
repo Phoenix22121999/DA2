@@ -45,6 +45,15 @@ export const updatePrameterAndSearchPost = createAsyncThunk(
 		}
 	}
 );
+export const resetPrameterAndSearchPost = createAsyncThunk(
+	"search-post/update-and-get-list",
+	async (action: ActionPayload<SearchParameter>, { getState, dispatch }) => {
+		if (action.payload) {
+			dispatch(resetSearchParameter({}));
+			return await dispatch(searchPost({}));
+		}
+	}
+);
 
 export const SeachPostSlice = createSlice({
 	name: "search-post",
@@ -59,6 +68,18 @@ export const SeachPostSlice = createSlice({
 				...action.payload,
 			};
 		},
+		resetSearchParameter: (
+			state,
+			action: PayloadAction<SearchParameter>
+		) => {
+			state.searchParameter = {};
+		},
+		resetSearch: (state) => {
+			state.data = [];
+			state.searchParameter = {};
+			state.total = 0;
+			state.status = "idle";
+		},
 		// Use the PayloadAction type to declare the contents of `action.payload`
 	},
 	extraReducers: (buider) => {
@@ -69,8 +90,11 @@ export const SeachPostSlice = createSlice({
 	},
 });
 
-export const { updateSearchParameter } = SeachPostSlice.actions;
+export const { updateSearchParameter, resetSearchParameter, resetSearch } =
+	SeachPostSlice.actions;
 export const selectSearchPostList = (state: RootState) => state.searchPost.data;
+export const selectSearchPageList = (state: RootState) =>
+	state.searchPost.searchParameter.page;
 export const selectSearchTotal = (state: RootState) => state.searchPost.total;
 export const selectSearchParameter = (state: RootState) =>
 	state.searchPost.searchParameter;

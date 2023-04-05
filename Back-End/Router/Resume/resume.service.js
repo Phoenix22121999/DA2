@@ -9,7 +9,10 @@ const bcrypt = require("bcrypt");
 const { response } = require("express");
 const path = require("path");
 const http = require("http");
-const { resolveSoa } = require("dns");
+const { sendMail, write } = require("../Mail/mail.service");
+const AccountService = require("../Account/Account.service");
+const fs = require("fs");
+const uuidv1 = require("uuid");
 
 BigInt.prototype.toJSON = function () {
 	return this.toString();
@@ -17,9 +20,117 @@ BigInt.prototype.toJSON = function () {
 
 const prisma = new PrismaClient();
 
+const getListResumeAll = async (req, res) => {
+	try {
+		let { user_id = null, user_type_id = null } = req;
+		let resultListResume = await prisma.cv.findMany({
+			where: {
+				AND: [
+					{
+						is_active: true,
+						is_delete: false,
+					},
+				],
+			},
+			include: {
+				user: {
+					select: {
+						id: true,
+						full_name: true,
+						user_type_id: true,
+						email: true,
+						number_phone: true,
+						logo: true,
+						address: true,
+						avartar: true,
+						province_code: true,
+						district_code: true,
+						ward_code: true,
+					},
+				},
+			},
+		});
+
+		const total = await prisma.cv.count({
+			where: {
+				AND: [
+					{
+						is_active: true,
+						is_delete: false,
+					},
+				],
+			},
+		});
+
+		if (resultListResume && resultListResume.length < 0) {
+			return res.json({
+				code: 400,
+				message: "Bạn chưa có danh sách CV",
+				status_resposse: false,
+			});
+		}
+		return res.json({
+			code: 200,
+			message: "Lấy danh sách thành công",
+			status_resposse: true,
+			total: total,
+			data: resultListResume,
+		});
+	} catch (error) {
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+};
+
 const getListResume = async (req, res) => {
 	try {
 		let { user_id = null, user_type_id = null } = req;
+		if(!user_id){
+			return res.json({
+				code: 400,
+				message: "Người dùng không hợp lệ",
+				status_resposse: false,
+			});
+		}
+		let resultListResume = await prisma.cv.findMany({
+			where: {
+				AND: [
+					{
+						is_active: true,
+						is_delete: false,
+						user_id : Number(user_id)
+					},
+				],
+			},
+		});
+		if (resultListResume && resultListResume.length < 0) {
+			return res.json({
+				code: 400,
+				message: "Bạn chưa có danh sách CV",
+				status_resposse: false,
+			});
+		}
+		return res.json({
+			code: 200,
+			message: "Lấy danh sách thành công",
+			status_resposse: true,
+			data: resultListResume,
+		});
+	} catch (error) {
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+};
+
+const getListResumeById = async (req, res) => {
+	try {
+		let { user_id } = req.query;
 		if (!user_id) {
 			return res.json({
 				code: 400,
@@ -289,6 +400,7 @@ const applyCV = async (req, res) => {
 		if (!iscvTrue) {
 			return res.json({
 				code: 400,
+				status_resposse: false,
 				message: "Bạn không sử dụng cv này được",
 			});
 		}
@@ -385,6 +497,23 @@ const applyCV = async (req, res) => {
 						},
 					},
 				});
+
+				// Lấy thông tin của user
+				const { user_account } = resultUpdate;
+				// Lấy thông tin bài tuyển dụng
+				const { Recruitment_Post } = resultUpdate;
+				// Lấy thông tin của hồ sơ ứng tuyển
+				const { cv } = resultUpdate;
+
+				sendMail("template-mail", {
+					to_mail: user_account.email,
+					subject: "Nộp đơn ứng tuyển thành công",
+					data: {
+						title: Recruitment_Post.title,
+						cv_name: cv.file_name,
+					},
+				});
+
 				return res.json({
 					code: 200,
 					status_resposse: true,
@@ -473,6 +602,23 @@ const applyCV = async (req, res) => {
 					"Quá trình ứng tuyển xảy ra vấn đề vui lòng thử lại sau",
 			});
 		}
+
+		// Lấy thông tin của user
+		const { user_account } = resultCreate;
+		// Lấy thông tin bài tuyển dụng
+		const { Recruitment_Post } = resultCreate;
+		// Lấy thông tin của hồ sơ ứng tuyển
+		const { cv } = resultCreate;
+
+		sendMail("template-mail", {
+			to_mail: user_account.email,
+			subject: "Nộp đơn ứng tuyển thành công",
+			data: {
+				title: Recruitment_Post.title,
+				cv_name: cv.file_name,
+			},
+		});
+
 		return res.json({
 			code: 200,
 			status_resposse: true,
@@ -657,6 +803,115 @@ const getHistory = async (req, res) => {
 				user_account: {
 					select: {
 						id: true,
+						last_name: true,
+						username: true,
+						first_name: true,
+						full_name: true,
+						user_type_id: true,
+						email: true,
+						number_phone: true,
+						logo: true,
+						address: true,
+						province_code: true,
+						district_code: true,
+						ward_code: true,
+					},
+				},
+				Recruitment_Post: {
+					select: {
+						id: true,
+						content: is_content,
+						title: true,
+						post_job_types: {
+							select: {
+								id: true,
+								job_type: {
+									select: {
+										id: true,
+										job_type_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+						post_majors: {
+							select: {
+								id: true,
+								majors: {
+									select: {
+										id: true,
+										majors_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+					},
+				},
+				cv: {
+					select: {
+						id: true,
+						file_name_hash: true,
+						file_name: true,
+						extname: true,
+						is_active: true,
+						is_delete: true,
+					},
+				},
+			},
+		});
+
+		return res.json({
+			code: 200,
+			message: "Lấy dữ liệu thành công",
+			status_resposse: true,
+			data: result,
+		});
+	} catch (error) {
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+};
+const getHistoryById = async (req, res) => {
+	try {
+		let {
+			key_word,
+			item_per_page = 10,
+			page = 1,
+			from_value,
+			to_value,
+			gender,
+			is_content = false,
+			user_id,
+		} = req.query;
+		const result = await prisma.history_Apply_Job.findMany({
+			where: {
+				AND: [
+					{
+						is_active: { equals: true },
+						is_delete: { equals: false },
+						user_id: Number(user_id),
+					},
+				],
+			},
+			take: Number(item_per_page),
+			skip: Number(item_per_page * (page - 1)),
+			include: {
+				user_account: {
+					select: {
+						id: true,
+						last_name: true,
+						username: true,
+						first_name: true,
 						full_name: true,
 						user_type_id: true,
 						email: true,
@@ -791,6 +1046,145 @@ const getHistoryApplier = async (req, res) => {
 					select: {
 						id: true,
 						full_name: true,
+						last_name: true,
+						username: true,
+						first_name: true,
+						user_type_id: true,
+						email: true,
+						number_phone: true,
+						logo: true,
+						avartar: true,
+						address: true,
+						province_code: true,
+						district_code: true,
+						ward_code: true,
+					},
+				},
+				Recruitment_Post: {
+					select: {
+						id: true,
+						content: is_content,
+						title: true,
+						post_job_types: {
+							select: {
+								id: true,
+								job_type: {
+									select: {
+										id: true,
+										job_type_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+						post_majors: {
+							select: {
+								id: true,
+								majors: {
+									select: {
+										id: true,
+										majors_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+					},
+				},
+				cv: {
+					select: {
+						id: true,
+						file_name_hash: true,
+						file_name: true,
+						extname: true,
+						is_active: true,
+						is_delete: true,
+					},
+				},
+			},
+		});
+
+		return res.json({
+			code: 200,
+			message: "Lấy dữ liệu thành công",
+			status_resposse: true,
+			data: result,
+		});
+	} catch (error) {
+		console.log(error.message);
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+};
+const getHistoryApplierById = async (req, res) => {
+	try {
+		let {
+			key_word,
+			item_per_page = 10,
+			page = 1,
+			from_value,
+			to_value,
+			gender,
+			post_id,
+			is_content = false,
+			user_id,
+		} = req.query;
+		const is_view_history = await prisma.recruitment_Post.findMany({
+			where: {
+				AND: [
+					{
+						is_active: true,
+						is_delete: false,
+						user: {
+							id: Number(user_id),
+						},
+					},
+				],
+			},
+		});
+
+		if (!is_view_history) {
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Bạn không thể xem lịch sử của bài tuyển dụng này",
+			});
+		}
+		// is_view_history
+
+		const result = await prisma.history_Apply_Job.findMany({
+			where: {
+				AND: [
+					{
+						is_active: { equals: true },
+						is_delete: { equals: false },
+						Recruitment_Post: {
+							user: {
+								id: Number(user_id),
+							},
+						},
+					},
+				],
+			},
+			take: Number(item_per_page),
+			skip: Number(item_per_page * (page - 1)),
+			include: {
+				user_account: {
+					select: {
+						id: true,
+						last_name: true,
+						username: true,
+						first_name: true,
+						full_name: true,
 						user_type_id: true,
 						email: true,
 						number_phone: true,
@@ -867,6 +1261,147 @@ const getHistoryApplier = async (req, res) => {
 	}
 };
 
+const exportPDF = async (req, res) => {
+	let { name_cv } = req.query;
+	let { user_id } = req;
+	try {
+		if (!user_id) {
+			return res.json({
+				code: 400,
+				message: "Người dùng không hợp lệ",
+				status_resposse: false,
+			});
+		}
+
+		const result = await prisma.user_Account.findFirst({
+			where: {
+				id: Number(user_id),
+			},
+			include: {
+				user_type: true,
+				provinces: true,
+				districts: true,
+				wards: true,
+				user_education: {
+					select: {
+						id: true,
+						name_school: true,
+						year_start: true,
+						year_end: true,
+						month_start: true,
+						month_end: true,
+						description: true,
+						majors: true,
+						is_active: true,
+						is_delete: true,
+					},
+					where: {
+						is_active: true,
+						is_delete: false,
+					},
+				},
+				user_experience: {
+					select: {
+						id: true,
+						name_company: true,
+						year_start: true,
+						year_end: true,
+						month_start: true,
+						month_end: true,
+						description: true,
+						position: true,
+						is_active: true,
+						is_delete: true,
+					},
+					where: {
+						is_active: true,
+						is_delete: false,
+					},
+				},
+				user_achievement: {
+					select: {
+						id: true,
+						name_achievement: true,
+						year: true,
+						month: true,
+						description: true,
+						is_active: true,
+						is_delete: true,
+					},
+					where: {
+						is_active: true,
+						is_delete: false,
+					},
+				},
+				user_project: {
+					select: {
+						id: true,
+						name_project: true,
+						year_start: true,
+						year_end: true,
+						month_start: true,
+						month_end: true,
+						description: true,
+						is_active: true,
+						is_delete: true,
+					},
+					where: {
+						is_active: true,
+						is_delete: false,
+					},
+				},
+			},
+		});
+		if (!result) {
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Lấy thông tin tài khoản thất bại",
+			});
+		}
+		// let obj = formatObj(result || {});
+		// delete result.password;
+
+		console.log(result);
+
+		if (!name_cv) {
+			let id = uuidv1.v1();
+			name_cv = `cv_${moment().format("DDMMYYYY")}_${id}`;
+		}
+
+		let html = await write(
+			"template-cv",
+			{
+				data: {
+					...result,
+					avatar: `${process.env.CDN_URL}/${result.avartar}`,
+				},
+			},
+			name_cv
+		);
+
+		res.setHeader(
+			"Content-Disposition",
+			"attachment;filename=" + `${name_cv}.pdf`
+		);
+		res.setHeader("Content-Type", `application/pdf`);
+
+		let pathURL = `${process.env.API_URL}${html}`;
+		http.get(pathURL, (stream) => {
+			stream.pipe(res);
+			stream.pipe(res).on('error', function(e) {
+				console.log('rs.pipe has error: ' + e.message)
+			  });
+		});
+	} catch (error) {
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+};
+
 module.exports = {
 	getListResume,
 	createCV,
@@ -877,4 +1412,9 @@ module.exports = {
 	unApplyCV,
 	getHistory,
 	getHistoryApplier,
+	getListResumeById,
+	getHistoryApplierById,
+	getHistoryById,
+	getListResumeAll,
+	exportPDF,
 };

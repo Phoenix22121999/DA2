@@ -1,24 +1,34 @@
-import React from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./SearchListItem.scss";
-import TEST_LOGO from "../../../assets/images/logo.png";
+import FAKE_LOGO from "../../../assets/images/logo.png";
 
 import {
 	ClockCircleOutlined,
 	EnvironmentOutlined,
 	DollarOutlined,
 	BookOutlined,
+	HeartOutlined,
 } from "@ant-design/icons";
 import { DetailRecruitmentPostWithoutContent } from "src/types/CombineType";
 import { inputNumberFormatter } from "./../../../utils/function";
 import { ButtonCommon, TagCommon } from "src/common";
 import { useNavigate } from "react-router-dom";
-import { ROUTE } from "src/utils/contants";
+import { CDN_URL, ROUTE, USER_TYPE } from "src/utils/contants";
 import classNames from "classnames";
+import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
+import {
+	bookmark,
+	selectBookmarkList,
+	unBookmark,
+} from "src/redux/slice/BookmarkSlide";
+import { message } from "antd";
+import { useCheckUserAuth } from "src/hooks/useCheckUserAuth";
 
 export interface SearchListItemProps
 	extends DetailRecruitmentPostWithoutContent {
 	selected: number;
 	onClick?: (id: number) => void;
+	isDisableCollapse?: boolean;
 }
 
 const SearchListItem = ({
@@ -34,14 +44,76 @@ const SearchListItem = ({
 	wards,
 	selected,
 	onClick,
-	user: { full_name },
+	isDisableCollapse,
+	user: { full_name, avartar },
 }: SearchListItemProps) => {
 	const natigate = useNavigate();
+	const dispatch = useReduxDispatch();
+	const ref = useRef<HTMLDivElement>(null);
+	const [isBookmark, setIsBookmark] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const bookmarkList = useReduxSelector(selectBookmarkList);
+	const isAuth = useCheckUserAuth(USER_TYPE.CANDIDATE);
+	const avatarMemo = useMemo(() => {
+		if (!avartar) {
+			return FAKE_LOGO;
+		}
+		if (avartar.includes("https")) {
+			return avartar;
+		}
+		return `${CDN_URL}/${avartar}`;
+	}, [avartar]);
+	useEffect(() => {
+		setIsBookmark(bookmarkList.some((bookmark) => bookmark.post_id === id));
+	}, [bookmarkList, id]);
+
 	const onViewClick = () => {
 		natigate(`${ROUTE.POST_DETAIL}${id}`);
 	};
-	const handleClick = () => {
+	const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+		if (ref.current?.contains(e.target as Node)) {
+			return;
+		}
+
 		onClick && onClick(id);
+	};
+	const callback = (isSuccess: boolean) => {
+		if (isSuccess) {
+			message.success(
+				isBookmark ? "un bookmark successfull" : "bookmark successfull"
+			);
+			setIsBookmark(!isBookmark);
+		} else {
+			message.error(isBookmark ? "un bookmark fail" : "bookmark fail");
+		}
+		setIsLoading(false);
+	};
+	const onBookmarkClick = () => {
+		if (!isAuth) {
+			message.error("please sign in to bookmark");
+
+			return;
+		}
+		setIsLoading(true);
+		if (!isBookmark) {
+			dispatch(
+				bookmark({
+					payload: {
+						post_id: id,
+					},
+					callback,
+				})
+			);
+		} else {
+			dispatch(
+				unBookmark({
+					payload: {
+						post_id: id,
+					},
+					callback,
+				})
+			);
+		}
 	};
 	return (
 		<div className="search-list-item" onClick={handleClick}>
@@ -50,14 +122,26 @@ const SearchListItem = ({
 				<div className="top">
 					<div className="top-left">
 						<div className="logo">
-							<img src={TEST_LOGO} alt="" />
+							<img
+								src={avatarMemo ? avatarMemo : FAKE_LOGO}
+								alt=""
+							/>
 						</div>
 						<div className="top-left-content">
 							<div className="title">{title}</div>
 							<div className="company">{full_name}</div>
 						</div>
 					</div>
-					<div className="top-right">
+					<div className="top-right" ref={ref}>
+						{isAuth && (
+							<ButtonCommon
+								loading={isLoading}
+								size="small"
+								onClick={onBookmarkClick}
+								type={isBookmark ? "outstanding" : "success"}
+								icon={<HeartOutlined />}
+							/>
+						)}
 						<ButtonCommon size="small" onClick={onViewClick}>
 							View Job
 						</ButtonCommon>
@@ -66,6 +150,7 @@ const SearchListItem = ({
 				<div
 					className={classNames("content", {
 						"content-open": selected === id,
+						"is-disable-collapse": isDisableCollapse,
 					})}
 				>
 					<div className="major">

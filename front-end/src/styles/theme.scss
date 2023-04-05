@@ -52,12 +52,22 @@ body {
 	height: 6rem;
 	display: flex;
 	padding: 0 4rem;
-	justify-content: flex-start;
+	justify-content: space-between;
 	align-items: center;
 	@include variables.text-2xl;
-	color: variables.$primary-background;
+	color: variables.$dark-blue;
 	.sidebar-toggle-icon {
 		cursor: pointer;
+	}
+	.go-back-button {
+		cursor: pointer;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-weight: bold;
+		> div {
+			@include variables.text-base;
+		}
 	}
 }
 
@@ -69,6 +79,18 @@ body {
 
 .primary-text {
 	color: variables.$primary-background;
+}
+.dashboard-sub-title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 1rem 0;
+}
+.total-number {
+	@include variables.text-base;
+	text-transform: capitalize;
+	color: variables.$info-background;
+	font-weight: 500;
 }
 
 .u__text--small {
@@ -165,3 +187,61 @@ body {
 	align-items: center;
 	margin-bottom: 2rem;
 }
+.dashboard-sub-title {
+	.button-add-action {
+		margin-bottom: 0;
+	}
+}
+
+.user-resume-title {
+	color: variables.$dark-blue;
+	@include variables.text-3xl;
+	font-weight: bold;
+	margin-bottom: 1rem;
+}
+.user-resume-item {
+	padding: 1rem 0;
+}
+.user-resume-item {
+	&:not(:last-child) {
+		border-bottom: 1px solid variables.$black-blue;
+	}
+}
+.user-resume-title-warper {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+.user-resume-add-button {
+	margin-left: 1rem;
+	display: "flex";
+}
+.user-resume-item-title-warper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.user-resume-item-title {
+	@include variables.text-base;
+	font-weight: bold;
+}
+.user-resume-item-subtitle {
+	@include variables.text-sm;
+	color: variables.$gray-color;
+}
+.user-resume-item-time {
+	display: flex;
+}
+.user-resume {
+	margin: 2rem 0;
+	padding: 2rem;
+	box-shadow: variables.$box-shadow;
+}
+// .candidate-resume-view {
+// 	.user-resume {
+// 		padding: 2rem 0;
+// 	}
+// 	.user-resume-item {
+// 		padding: 1rem 2rem;
+// 	}
+// }

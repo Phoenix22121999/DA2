@@ -39,6 +39,7 @@ export type NewPostFormStepOne = {
 	district_code: string;
 	ward_code: string;
 	address: string;
+	is_active?: boolean;
 };
 
 const StepOne = (props: Props) => {

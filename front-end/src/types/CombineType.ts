@@ -10,12 +10,26 @@ import {
 	Wards,
 	HistoryApplyJob,
 	CV,
+	UserType,
+	RecruitmentPostUserLike,
+	UserEducation,
+	UserExperience,
+	UserAchievement,
+	UserProject,
 } from "./Type";
 
 export interface DetailUserAccount extends UserAccount {
 	provinces: Provinces;
 	districts: Districts;
 	wards: Wards;
+	user_type: UserType;
+	user_education: UserEducation[];
+	user_experience: UserExperience[];
+	user_achievement: UserAchievement[];
+	user_project: UserProject[];
+}
+export interface UserAccountWithUserType extends UserAccount {
+	user_type: UserType;
 }
 export interface RecruitmentPostWithUser extends RecruitmentPost {
 	user: DetailUserAccount;
@@ -52,4 +66,9 @@ export interface DetailHistoryApplyJob extends HistoryApplyJob {
 	user_account: DetailUserAccount;
 	Recruitment_Post: RecruitmentPostJobTypeWithJobTypeAndMajor;
 	cv: CV;
+}
+
+export interface DetailRecruitmentPostUserLike extends RecruitmentPostUserLike {
+	user_account: DetailUserAccount;
+	Recruitment_Post: RecruitmentPostJobTypeWithJobTypeAndMajor;
 }

@@ -20,6 +20,9 @@ import {
 } from "src/common";
 import SelectLocation from "src/components/SelectLocation/SelectLocation";
 import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
+import BirthdaySelect, {
+	BirthdayValue,
+} from "src/components/BirthdaySelect/BirthdaySelect";
 type Props = {};
 
 type SignInStepTwoForm = {
@@ -30,6 +33,7 @@ type SignInStepTwoForm = {
 	age: number;
 	gender: string;
 	address: string;
+	birthday?: BirthdayValue;
 };
 
 const SignUpStepTwo = (props: Props) => {
@@ -44,22 +48,13 @@ const SignUpStepTwo = (props: Props) => {
 		}
 	}, [data]);
 
-	// const callback: CallbackFunction<null> = (issuccess: boolean) => {
-	// 	if (issuccess) {
-	// 		message.success("Sign up success");
-	// 	} else {
-	// 		message.error("Sign up erroe");
-	// 	}
-	// 	navigate("/");
-	// };
-
 	const next = async () => {
 		const value: SignInStepTwoForm = await form.validateFields();
-
 		const payload: OptionalSignUpParameters = {
 			...value,
 			gender: Number(value.gender),
-		};
+			...value.birthday,
+		} as any;
 		dispatch(updateSignUp(payload));
 		dispatch(nextSignUpStep());
 		dispatch(signUp({}));
@@ -143,10 +138,6 @@ const SignUpStepTwo = (props: Props) => {
 						hasFeedback
 						rules={[
 							{
-								required: true,
-								message: "Please input your number phone!",
-							},
-							{
 								validator(_, value) {
 									var re =
 										/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/;
@@ -155,7 +146,7 @@ const SignUpStepTwo = (props: Props) => {
 										? Promise.resolve()
 										: Promise.reject(
 												new Error(
-													"Please input validate email!"
+													"Please input validate numberphone!"
 												)
 										  );
 								},
@@ -164,31 +155,21 @@ const SignUpStepTwo = (props: Props) => {
 					>
 						<InputCommon />
 					</Form.Item>
+					<Form.Item
+						name="birthday"
+						label={isRecruiter ? "Founded Date" : "Birthday"}
+					>
+						<BirthdaySelect isRecruiter={isRecruiter} />
+					</Form.Item>
 					{!isRecruiter && (
 						<>
-							<Form.Item
-								label="Age"
-								name={"age"}
-								hasFeedback
-								rules={[
-									{
-										required: true,
-										message: "Please input your age!",
-									},
-								]}
-							>
+							<Form.Item label="Age" name={"age"} hasFeedback>
 								<InputNumberCommon min={1} />
 							</Form.Item>
 							<Form.Item
 								label="Gender"
 								name={"gender"}
 								hasFeedback
-								rules={[
-									{
-										required: true,
-										message: "Please input your gender!",
-									},
-								]}
 							>
 								<SelectCommon data={GENDER_OPTION} />
 							</Form.Item>
@@ -206,12 +187,12 @@ const SignUpStepTwo = (props: Props) => {
 						label="Address"
 						name={"address"}
 						hasFeedback
-						rules={[
-							{
-								required: true,
-								message: "Please input your address!",
-							},
-						]}
+						// rules={[
+						// 	{
+						// 		required: true,
+						// 		message: "Please input your address!",
+						// 	},
+						// ]}
 					>
 						<InputCommon />
 					</Form.Item>

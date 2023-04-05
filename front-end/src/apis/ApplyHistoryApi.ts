@@ -1,7 +1,13 @@
 import { BaseApi } from "./base.api";
 
-import { PaginationParameters } from "src/types/UtilType";
 import { DetailHistoryApplyJob } from "src/types/CombineType";
+import {
+	GetCandidateHistoryListByIdParameters,
+	GetCandidateHistoryListParameters,
+	GetRecruiterHistoryListByIdParameters,
+	GetRecruiterHistoryListParameters,
+} from "src/types/ApplyHistoryType";
+import { searchParameterBuilder } from "src/utils/function";
 
 // user is admin
 export class ApplyHistoryApi extends BaseApi {
@@ -9,22 +15,45 @@ export class ApplyHistoryApi extends BaseApi {
 		super("cv/");
 	}
 
-	async getCandidateApplyHistory(data: PaginationParameters, token: string) {
-		return this.authGet<PaginationParameters, DetailHistoryApplyJob[]>(
-			"history-apply",
-			token,
-			data
-		);
+	async getCandidateApplyHistory(
+		data: GetCandidateHistoryListParameters,
+		token: string
+	) {
+		return this.authGet<
+			GetCandidateHistoryListParameters,
+			DetailHistoryApplyJob[]
+		>("history-apply", token, data);
 	}
 
 	async getRecruiterApplicantHistory(
-		data: PaginationParameters,
+		data: GetRecruiterHistoryListParameters,
 		token: string
 	) {
-		return this.authGet<PaginationParameters, DetailHistoryApplyJob[]>(
-			"history-applier-post",
-			token,
-			data
-		);
+		return this.authGet<
+			GetRecruiterHistoryListParameters,
+			DetailHistoryApplyJob[]
+		>("history-applier-post", token, data);
+	}
+	async getCandidateApplyHistoryById(
+		data: GetCandidateHistoryListByIdParameters,
+		token: string
+	) {
+		const params = searchParameterBuilder(data);
+		return this.authGet<
+			GetCandidateHistoryListParameters,
+			DetailHistoryApplyJob[]
+		>(`history-apply-by-id?${params}`, token, data);
+	}
+
+	async getRecruiterApplicantHistoryById(
+		data: GetRecruiterHistoryListByIdParameters,
+		token: string
+	) {
+		const params = searchParameterBuilder(data);
+
+		return this.authGet<
+			GetRecruiterHistoryListParameters,
+			DetailHistoryApplyJob[]
+		>(`history-applier-post-by-id?${params}`, token, data);
 	}
 }

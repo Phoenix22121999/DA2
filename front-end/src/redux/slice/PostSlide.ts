@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "src/apis/index.api";
 import {
 	DeletePostParameters,
+	GetPostByUserIdParameters,
+	GetPostByUserParameters,
 	GetPostDetailParameters,
 	UpdatePostParameters,
 } from "src/types/PostType";
@@ -17,12 +19,14 @@ export interface PostType {
 
 export interface PostState {
 	data: RecruitmentPost[];
+	total: number;
 	currentStep: number;
 	status: "idle" | "loading" | "failed";
 }
 
 const initialState: PostState = {
 	data: [],
+	total: 0,
 	currentStep: 0,
 	status: "idle",
 };
@@ -90,7 +94,7 @@ export const getPostDetail = createAsyncThunk(
 		if (response.code !== 200) {
 			action.callback && action.callback(false, null);
 		} else {
-			action.callback && action.callback(true, null);
+			action.callback && action.callback(true, response);
 		}
 		return response;
 		// The value we return becomes the `fulfilled` action payload
@@ -99,14 +103,44 @@ export const getPostDetail = createAsyncThunk(
 
 export const getListPostByUser = createAsyncThunk(
 	"post/get-list-by-user",
-	async (action: ActionPayload, { getState }) => {
+	async (action: ActionPayload<GetPostByUserParameters>, { getState }) => {
 		const token = selectUserToken(getState() as RootState) || "";
-
-		const response = await api.postApi.getListPostByUser(token);
+		if (!action.payload) {
+			throw new Error("need payload");
+		}
+		const response = await api.postApi.getListPostByUser(
+			action.payload,
+			token
+		);
 		if (response.code !== 200) {
 			action.callback && action.callback(false, null);
 		} else {
 			action.callback && action.callback(true, null);
+		}
+		return response;
+		// The value we return becomes the `fulfilled` action payload
+	}
+);
+
+export const getListPostByUserById = createAsyncThunk(
+	"post/get-list-by-user-by-id",
+	async (
+		action: ActionPayload<GetPostByUserIdParameters>,
+		// BaseReponseType<RecruitmentPost[]>
+		{ getState }
+	) => {
+		const token = selectUserToken(getState() as RootState) || "";
+		if (!action.payload) {
+			throw new Error("need payload");
+		}
+		const response = await api.postApi.getListPostByUserById(
+			action.payload,
+			token
+		);
+		if (response.code !== 200) {
+			action.callback && action.callback(false, null);
+		} else {
+			action.callback && action.callback(true, response);
 		}
 		return response;
 		// The value we return becomes the `fulfilled` action payload
@@ -118,12 +152,21 @@ export const PostSlice = createSlice({
 	initialState,
 	reducers: {
 		// Use the PayloadAction type to declare the contents of `action.payload`
+		resetPost: (state) => {
+			console.log("resetPost");
+
+			state.data = [];
+			state.total = 0;
+			state.currentStep = 0;
+			state.status = "idle";
+		},
 	},
 	extraReducers: (buider) => {
 		buider
 			.addCase(createPost.fulfilled, (state, action) => {
 				if (action.payload.data) {
 					state.data = [...state.data, action.payload.data];
+					state.total = state.total + 1;
 				}
 			})
 			.addCase(updatePost.fulfilled, (state, { payload }) => {
@@ -140,16 +183,23 @@ export const PostSlice = createSlice({
 						if (Post.id === payload.data?.id) return false;
 						else return true;
 					});
+					state.total = state.total - 1;
 				}
 			})
 
 			.addCase(getListPostByUser.fulfilled, (state, action) => {
-				state.data = action.payload.data!;
+				state.data = action.payload.data?.result!;
+				state.total = action.payload.data?.total!;
+			})
+			.addCase(getListPostByUserById.fulfilled, (state, action) => {
+				state.data = action.payload.data?.result!;
+				state.total = action.payload.data?.total!;
 			});
 	},
 });
 
-// export const {} = PostSlice.actions;
+export const { resetPost } = PostSlice.actions;
 export const selectPostList = (state: RootState) => state.post.data;
+export const selectPostTotal = (state: RootState) => state.post.total;
 
 export const postReducer = PostSlice.reducer;

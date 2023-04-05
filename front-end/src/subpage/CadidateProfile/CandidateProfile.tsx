@@ -1,6 +1,6 @@
 import { Form, message } from "antd";
 
-import React from "react";
+import React, { useEffect } from "react";
 import "./CandidateProfile.scss";
 import ProfileAvatar from "../../components/ProfileAvatar/ProfileAvatar";
 import { UserAccount } from "src/types/Type";
@@ -22,9 +22,20 @@ import {
 	FormItemCommon,
 	InputCommon,
 	InputNumberCommon,
+	ModalCommon,
 	SelectCommon,
+	TextAreaCommon,
 } from "src/common";
 import SuspenseLoading from "../../components/SuspenseLoading/SuspenseLoading";
+import UserEducation from "src/components/UserEducation/UserEducation";
+import UserExperience from "src/components/UserExperience/UserExperience";
+import useEffectOnce from "./../../hooks/useEffectOne";
+import { getAccountDetailByToken } from "src/redux/slice/AccountSilce";
+import UserProject from "src/components/UserProject/UserProject";
+import UserAchievement from "src/components/UserAchievement/UserAchievement";
+import BirthdaySelect from "src/components/BirthdaySelect/BirthdaySelect";
+import { useModal } from "src/hooks/useModal";
+import CreateCVFromProfileModal from "./CreateCVFromProfileModal/CreateCVFromProfileModal";
 
 type Props = {};
 
@@ -43,11 +54,33 @@ const CadidateProfile = (props: Props) => {
 		}
 	};
 	const onUpdate = async () => {
-		const value: Partial<UserAccount> = await form.validateFields();
-
-		dispatch(updateAccount({ payload: value, callback }));
+		const value = await form.validateFields();
+		const payload = {
+			...value,
+			gender: Number(value.gender) || undefined,
+			...value.birthday,
+		} as any;
+		dispatch(updateAccount({ payload, callback }));
 	};
 
+	useEffectOnce(() => {
+		dispatch(getAccountDetailByToken({ payload: null }));
+	});
+	const { isOpen, close, open } = useModal(false);
+	useEffect(() => {
+		form.setFieldsValue({
+			...data,
+			province_code: data.province_code?.toString(),
+			district_code: data.district_code?.toString(),
+			ward_code: data.ward_code?.toString(),
+			birthday: {
+				birthday: data.birthday,
+				birthday_month: data.birthday_month,
+				birthday_year: data.birthday_year,
+			},
+		});
+	}, [data, form]);
+	//createCVFromProfile
 	return (
 		<div className="cadidate-profile">
 			<div className="dashboard-title">Profile</div>
@@ -56,6 +89,11 @@ const CadidateProfile = (props: Props) => {
 					<ProfileAvatar initialValue={data.avartar || undefined} />
 				</div>
 				<React.Suspense fallback={<SuspenseLoading size="medium" />}>
+					<div className="button-add-action">
+						<ButtonCommon size="small" onClick={open}>
+							Create CV form profile
+						</ButtonCommon>
+					</div>
 					<div className="profile-form">
 						<React.Suspense
 							fallback={<SuspenseLoading size="medium" />}
@@ -70,6 +108,11 @@ const CadidateProfile = (props: Props) => {
 									district_code:
 										data.district_code?.toString(),
 									ward_code: data.ward_code?.toString(),
+									birthday: {
+										birthday: data.birthday,
+										birthday_month: data.birthday_month,
+										birthday_year: data.birthday_year,
+									},
 								}}
 							>
 								<FormItemCommon
@@ -125,11 +168,11 @@ const CadidateProfile = (props: Props) => {
 									name={"number_phone"}
 									hasFeedback
 									rules={[
-										{
-											required: true,
-											message:
-												"Please input your number phone!",
-										},
+										// {
+										// 	required: true,
+										// 	message:
+										// 		"Please input your number phone!",
+										// },
 										{
 											validator(_, value) {
 												var re =
@@ -139,7 +182,7 @@ const CadidateProfile = (props: Props) => {
 													? Promise.resolve()
 													: Promise.reject(
 															new Error(
-																"Please input validate email!"
+																"Please input validate numberphone!"
 															)
 													  );
 											},
@@ -148,16 +191,19 @@ const CadidateProfile = (props: Props) => {
 								>
 									<InputCommon />
 								</FormItemCommon>
+								<Form.Item name="birthday" label={"Birthday"}>
+									<BirthdaySelect isRecruiter={false} />
+								</Form.Item>
 								<FormItemCommon
 									label="Age"
 									name={"age"}
 									hasFeedback
-									rules={[
-										{
-											required: true,
-											message: "Please input your age!",
-										},
-									]}
+									// rules={[
+									// 	{
+									// 		required: true,
+									// 		message: "Please input your age!",
+									// 	},
+									// ]}
 								>
 									<InputNumberCommon min={1} />
 								</FormItemCommon>
@@ -165,13 +211,13 @@ const CadidateProfile = (props: Props) => {
 									label="Gender"
 									name={"gender"}
 									hasFeedback
-									rules={[
-										{
-											required: true,
-											message:
-												"Please input your gender!",
-										},
-									]}
+									// rules={[
+									// 	{
+									// 		required: true,
+									// 		message:
+									// 			"Please input your gender!",
+									// 	},
+									// ]}
 								>
 									<SelectCommon data={GENDER_OPTION} />
 								</FormItemCommon>
@@ -186,15 +232,27 @@ const CadidateProfile = (props: Props) => {
 								<FormItemCommon
 									label="Address"
 									name={"address"}
-									rules={[
-										{
-											required: true,
-											message:
-												"Please input your address!",
-										},
-									]}
+									// rules={[
+									// 	{
+									// 		required: true,
+									// 		message:
+									// 			"Please input your address!",
+									// 	},
+									// ]}
 								>
 									<InputCommon />
+								</FormItemCommon>
+								<FormItemCommon
+									label="Description"
+									name={"description"}
+									// rules={[
+									// 	{
+									// 		required: true,
+									// 		message: "Please input your address!",
+									// 	},
+									// ]}
+								>
+									<TextAreaCommon rows={10} />
 								</FormItemCommon>
 							</FormCommon>
 						</React.Suspense>
@@ -206,7 +264,16 @@ const CadidateProfile = (props: Props) => {
 						</div>
 					</div>
 				</React.Suspense>
+				<div className="candidate-resume">
+					<UserEducation />
+					<UserExperience />
+					<UserProject />
+					<UserAchievement />
+				</div>
 			</div>
+			<ModalCommon open={isOpen} onCancel={close} footer={null}>
+				<CreateCVFromProfileModal onClose={close} />
+			</ModalCommon>
 		</div>
 	);
 };

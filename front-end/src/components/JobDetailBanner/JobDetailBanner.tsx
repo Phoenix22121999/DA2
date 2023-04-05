@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import "./JobDetailBanner.scss";
 import TEST_LOGO from "../../assets/images/logo.png";
 
@@ -7,6 +7,7 @@ import { DetailRecruitmentPost } from "src/types/CombineType";
 import SelectCVModal from "../SelectCVModal/SelectCVModal";
 import { useModal } from "src/hooks/useModal";
 import useCheckIsApplied from "./../../hooks/useCheckIsApplied";
+import { CDN_URL } from "src/utils/contants";
 interface Props extends Partial<DetailRecruitmentPost> {}
 
 const JobDetailBanner = ({ title, user, id }: Props) => {
@@ -16,6 +17,15 @@ const JobDetailBanner = ({ title, user, id }: Props) => {
 	const onApply = () => {
 		open();
 	};
+	const avatarMemo = useMemo(() => {
+		if (!user?.avartar) {
+			return TEST_LOGO;
+		}
+		if (user?.avartar.includes("https")) {
+			return user?.avartar;
+		}
+		return `${CDN_URL}/${user?.avartar}`;
+	}, [user]);
 	return (
 		<div className="job-detail-banner-warpper">
 			<div className="job-detail-banner-inner">
@@ -23,7 +33,10 @@ const JobDetailBanner = ({ title, user, id }: Props) => {
 					<div className="banner-item">
 						<div className="left">
 							<div className="logo">
-								<img src={TEST_LOGO} alt="" />
+								<img
+									src={avatarMemo ? avatarMemo : TEST_LOGO}
+									alt=""
+								/>
 							</div>
 						</div>
 						<div className="right">

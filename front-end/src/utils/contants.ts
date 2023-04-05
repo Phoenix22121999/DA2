@@ -9,7 +9,9 @@ export const CDN_URL =
 	process.env.NODE_ENV === "production"
 		? "http://159.223.54.199:3002"
 		: "http://localhost:3002";
-export const GGAPI_TDTU = process.env.REACT_APP_GGAPI_TDT || "";
+export const GGAPI_TDTU =
+	process.env.REACT_APP_GGAPI_TDT ||
+	"454375430021-ins1u408up6msulgvnffrl4f9hn1nlt5.apps.googleusercontent.com";
 export const GGAPI_NORMAL = process.env.REACT_APP_GGAPI_NORMAL || "";
 export const METHOD_AXIOS = {
 	GET: "get",
@@ -34,12 +36,14 @@ export const ROUTE = {
 	SEARCH: "/search/",
 	SIGN_UP: "/sign-up/",
 	SIGN_IN: "/sign-in/",
+	FORGOT_PASSWORD: "/forgot-password/",
 	POST_DETAIL: "/post-detail/",
 	CADIDATE: "/cadidate/",
 	CADIDATE_PROFILE: "/cadidate/profile",
 	CADIDATE_CV_MANAGER: "/cadidate/cv-manager",
 	CADIDATE_APPLIED_JOBS: "/cadidate/applied-jobs",
 	CADIDATE_CHANGE_PASSWORD: "/cadidate/change-password",
+	CANDIDATE_BOOKMARK: "/candidate/bookmark-manager",
 	RECRUITER: "/recruiter/",
 	RECRUITER_PROFILE: "/recruiter/profile",
 	RECRUITER_JOB_MANAGER: "/recruiter/job-manager",
@@ -47,16 +51,31 @@ export const ROUTE = {
 	RECRUITER_CHANGE_PASSWORD: "/recruiter/change-password",
 	RECRUITER_POST_NEW_JOB: "/recruiter/job-manager/post-new-job",
 	RECRUITER_EDIT_JOB: "/recruiter/job-manager/edit-job",
-	ADMIN: "/admin/",
+	ADMIN: "/admin/dashboard",
 	ADMIN_ACCOUNT_TYPE: "/admin/account-type",
 	ADMIN_JOB_TYPE: "/admin/job-type",
 	ADMIN_MAJOR: "/admin/major",
+	ADMIN_ACCOUNT: "/admin/accounts",
+	ADMIN_ACCOUNT_DETAIL: "/account-detail",
+	ADMIN_ALL_POST: "/admin/all-post",
+	ADMIN_REQUEST: "/admin/request",
+	ADMIN_DASHBOARD: "/admin/dashboard",
+	ADMIN_POST_DETAIL: "/admin/detail-post",
 } as const;
 
 type ROUTE_KEY = keyof typeof ROUTE;
 export type ROUTE_ITEMS = typeof ROUTE[ROUTE_KEY];
 
 export const GGMAP_API_KEY = "AIzaSyDb0Fl2qgtLb38R85bK6k59qwtt5YOj4Z0";
+
+export const GENDER = {
+	1: "Male",
+	2: "Female",
+	3: "Both",
+	4: "Other",
+} as const;
+
+export type GENDER_KEY = keyof typeof GENDER;
 
 export const GENDER_OPTION: SelectOptionValue[] = [
 	{
@@ -76,6 +95,70 @@ export const GENDER_OPTION: SelectOptionValue[] = [
 		value: "Other",
 	},
 ];
+export const MONTH_OPTION: SelectOptionValue[] = [
+	{
+		key: 1,
+		value: "1",
+	},
+	{
+		key: 2,
+		value: "2",
+	},
+	{
+		key: 3,
+		value: "3",
+	},
+	{
+		key: 4,
+		value: "4",
+	},
+	{
+		key: 5,
+		value: "5",
+	},
+	{
+		key: 6,
+		value: "6",
+	},
+	{
+		key: 7,
+		value: "7",
+	},
+	{
+		key: 8,
+		value: "8",
+	},
+	{
+		key: 9,
+		value: "9",
+	},
+	{
+		key: 10,
+		value: "10",
+	},
+	{
+		key: 11,
+		value: "11",
+	},
+	{
+		key: 12,
+		value: "12",
+	},
+];
+const arrYear = Array.from(Array(80).keys());
+export const YEAR_OPTION: SelectOptionValue[] = arrYear.map((value) => {
+	return {
+		key: 2023 - Number(value),
+		value: (2023 - Number(value)).toString(),
+	};
+});
+const arrDate = Array.from(Array(31).keys());
+export const DAY_OPTION: SelectOptionValue[] = arrDate.map((value) => {
+	return {
+		key: Number(value) + 1,
+		value: (Number(value) + 1).toString(),
+	};
+});
 export const USER_TYPE_OPTION: SelectOptionValue[] = [
 	// {
 	// 	key: 1,
@@ -102,6 +185,7 @@ export type USER_TYPE_ITEMS = typeof USER_TYPE[USER_TYPE_KEY];
 
 export const SORT_TYPE = {
 	create_date: "create_date",
+	id: "id",
 } as const;
 
 type SORT_TYPE_KEY = keyof typeof SORT_TYPE;

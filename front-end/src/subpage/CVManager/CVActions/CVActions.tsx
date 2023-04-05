@@ -20,7 +20,7 @@ const CVActions = ({ handleRenameClick, record, handleViewPdf }: Props) => {
 	const dispatch = useReduxDispatch();
 
 	const onDeleteConfirm = () => {
-		dispatch(deleteCV({ payload: { id_cv: record.id } }));
+		dispatch(deleteCV({ payload: { cv_id: record.id } }));
 	};
 
 	const onRenameClick = () => {
@@ -35,7 +35,7 @@ const CVActions = ({ handleRenameClick, record, handleViewPdf }: Props) => {
 		dispatch(
 			downloadCV({
 				payload: {
-					id_cv: record.id,
+					cv_id: record.id,
 					file_name: record.file_name,
 					ext: record.file_name_hash.split(".")[1],
 				},

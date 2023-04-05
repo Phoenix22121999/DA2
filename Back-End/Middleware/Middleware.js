@@ -15,6 +15,26 @@ const checkToken = (req, res, next) => {
 		return res.json({ code: 500, message: error.message });
 	}
 };
+
+const checkTokenForgotPassword = (req, res, next) => {
+	const authorToken = req.header("Authorization");
+	const token = authorToken && authorToken.split(" ")[1];
+	if (!token) {
+		return res.json({ code: 404, message: "Access Token Not Found " });
+	}
+	try {
+		const decrypt = jwt.verify(token, process.env.ACCESS_TOKEN_VERIFY);
+		req.user_id = decrypt.id;
+		req.user_type_id = decrypt.user_type_id;
+		req.user_name = decrypt.user_name;
+		req.email = decrypt.email;
+		next();
+	} catch (error) {
+		return res.json({ code: 500, message: error.message });
+	}
+};
+
 module.exports = {
 	checkToken,
+	checkTokenForgotPassword
 };

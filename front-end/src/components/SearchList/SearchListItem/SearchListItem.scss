@@ -36,6 +36,7 @@
 				justify-content: flex-start;
 				align-items: flex-start;
 				.logo {
+					border: 1px black solid;
 					display: none;
 					width: 6rem;
 					height: 6rem;
@@ -67,6 +68,9 @@
 				}
 			}
 			.top-right {
+				.button-common:first-child {
+					margin-right: 1rem;
+				}
 				height: 100%;
 				display: flex;
 				align-items: flex-start;
@@ -79,6 +83,9 @@
 			overflow: hidden;
 			&.content-open {
 				max-height: 12rem;
+			}
+			&.is-disable-collapse {
+				max-height: none;
 			}
 			display: flex;
 			flex-direction: column;

@@ -1,0 +1,30 @@
+@use "../../styles/variables" as v;
+.statistic-warpper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	.statistic-item {
+		width: 20rem;
+		padding: 3rem;
+		margin: 2rem;
+		aspect-ratio: 1/1;
+		justify-content: center;
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		border: 1px solid v.$info-background;
+		border-radius: 15px;
+		.statistic-item-tile {
+			@include v.text-lg;
+			font-weight: 700;
+			text-align: center;
+			color: v.$info-background;
+		}
+		.statistic-item-number {
+			@include v.text-base;
+			text-align: center;
+			color: v.$gray-color;
+		}
+	}
+}

@@ -1,6 +1,7 @@
 import { BaseApi } from "./base.api";
 import {
 	AuthUser,
+	SignInGGNewParameters,
 	SignInGGParameters,
 	SignInParameters,
 	SignUpParameters,
@@ -22,6 +23,10 @@ export class AuthApi extends BaseApi {
 
 	async signInWithGoogle(data: SignInGGParameters) {
 		return this.basePost<{}, AuthUser>("sign-in-google", data);
+	}
+
+	async signInWithGoogleNew(data: SignInGGNewParameters) {
+		return this.basePost<{}, AuthUser>("sign-in-google-new", data);
 	}
 
 	async signUp(data: SignUpParameters) {

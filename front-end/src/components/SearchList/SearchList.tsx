@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SearchList.scss";
 import SearchListSort from "./SearchListSort/SearchListSort";
 import SearchListItem from "./SearchListItem/SearchListItem";
 import { useReduxDispatch, useReduxSelector } from "src/redux/redux-hook";
 import {
+	selectSearchPageList,
 	selectSearchPostList,
 	selectSearchTotal,
 	updatePrameterAndSearchPost,
@@ -17,10 +18,14 @@ const SearchList = (props: Props) => {
 	const dispatch = useReduxDispatch();
 	const postList = useReduxSelector(selectSearchPostList);
 	const total = useReduxSelector(selectSearchTotal);
+	const page = useReduxSelector(selectSearchPageList);
 	useScrollToTop(postList);
+	useEffect(() => {
+		setCurrentPage(page || 1);
+	}, [page]);
 
 	const [selected, setSelected] = useState<number>(0);
-	const [currentPage, setCurrentPage] = useState<number>(1);
+	const [currentPage, setCurrentPage] = useState<number>(page || 1);
 	const onClick = (id: number) => {
 		if (id === selected) {
 			setSelected(0);
@@ -29,7 +34,7 @@ const SearchList = (props: Props) => {
 		setSelected(id);
 	};
 	const onChangePagination = (page: number, pageSize: number) => {
-		setCurrentPage(page);
+		// setCurrentPage(page);
 		dispatch(
 			updatePrameterAndSearchPost({
 				payload: {
@@ -75,6 +80,7 @@ const SearchList = (props: Props) => {
 							total={total}
 							pageSize={10}
 							showSizeChanger={false}
+							current={currentPage}
 							onChange={onChangePagination}
 						/>
 					</div>

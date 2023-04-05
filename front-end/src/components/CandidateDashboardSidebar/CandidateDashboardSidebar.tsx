@@ -8,6 +8,7 @@ import {
 	FileOutlined,
 	KeyOutlined,
 	SnippetsOutlined,
+	HeartOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 type Props = {
@@ -28,6 +29,11 @@ const ITEMS: DashboardSidebarItemProps[] = [
 		icon: <FileOutlined />,
 		title: "CV Manager",
 		path: "cv-manager",
+	},
+	{
+		icon: <HeartOutlined />,
+		title: "Bookmark",
+		path: "bookmark-manager",
 	},
 	{
 		icon: <SnippetsOutlined />,

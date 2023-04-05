@@ -3,16 +3,19 @@ export type CreateCVParameters = {
 	file_name: string;
 };
 export type UpdateCVParameters = {
-	id_cv: number;
+	cv_id: number;
 	file_name_new: string;
 };
 
 export type DeleteCVParameters = {
-	id_cv: number;
+	cv_id: number;
 };
 
 export type DownloadCVParameters = {
-	id_cv: number;
+	cv_id: number;
 	file_name: string;
 	ext: string;
+};
+export type CreateCVFromProfileParameters = {
+	name_cv: string;
 };

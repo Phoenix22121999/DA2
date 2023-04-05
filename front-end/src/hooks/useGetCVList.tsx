@@ -10,8 +10,6 @@ function useGetCVList() {
 	useEffect(() => {
 		if (first) {
 			if (cvList.length === 0) {
-				console.log("call");
-
 				dispatch(getListCV({}));
 			}
 			setFirst(false);
@@ -19,6 +17,9 @@ function useGetCVList() {
 	}, [dispatch, first, cvList]);
 
 	const cvsOption: SelectOptionValue[] = useMemo(() => {
+		if (!cvList) {
+			return [];
+		}
 		return cvList.map((cv) => {
 			return {
 				value: cv.file_name,

@@ -1,0 +1,11 @@
+@use "../../styles/variables" as v;
+.applicant-username {
+	color: v.$black-blue;
+	display: inline;
+	&:hover {
+		color: v.$info-background;
+		border-bottom: 1px v.$info-background solid;
+	}
+	transition: color 0.1s ease-in;
+	cursor: pointer;
+}

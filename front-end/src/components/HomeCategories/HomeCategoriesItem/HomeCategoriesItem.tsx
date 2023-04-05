@@ -8,7 +8,7 @@ import {
 import { CallbackFunction } from "src/types/UtilType";
 import "./HomeCategoriesItem.scss";
 export type HomeCategoriesItemProps = {
-	icon: React.ReactNode;
+	icon?: React.ReactNode;
 	name: string;
 	itemKey: string;
 };
@@ -34,7 +34,7 @@ const HomeCategoriesItem = ({
 	return (
 		<div className="home-categories-item" onClick={onClick}>
 			<div className="home-categories-inner">
-				<div className="home-categories-icon">{icon}</div>
+				{icon && <div className="home-categories-icon">{icon}</div>}
 				<div className="home-categories-name">{name}</div>
 			</div>
 		</div>

@@ -26,5 +26,17 @@
 			align-items: center;
 			flex-direction: column;
 		}
+		.forgot-password {
+			margin-top: 2rem;
+			color: v.$info-background;
+			text-decoration: underline;
+			cursor: pointer;
+			display: flex;
+			.forgot-password-content {
+				&:hover {
+					font-weight: bold;
+				}
+			}
+		}
 	}
 }

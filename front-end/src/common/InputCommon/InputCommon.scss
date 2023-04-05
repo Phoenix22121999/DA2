@@ -1,8 +1,22 @@
 @use "../../styles/variables" as v;
 .input-common {
 	// border-radius: 1rem;
-	.ant-input {
+	> .ant-input:not([type="password"]) {
 		@include v.border-radius-sm;
+	}
+	> .ant-input-group-wrapper {
+		.ant-input-wrapper {
+			.ant-input-affix-wrapper {
+				border-top-left-radius: v.$border-radius-sm;
+				border-bottom-left-radius: v.$border-radius-sm;
+			}
+			.ant-input-group-addon {
+				button {
+					border-top-right-radius: v.$border-radius-sm !important;
+					border-bottom-right-radius: v.$border-radius-sm !important;
+				}
+			}
+		}
 	}
 	.ant-input-affix-wrapper {
 		@include v.border-radius-sm;

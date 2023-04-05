@@ -15,10 +15,22 @@ function useGetStatictisOption() {
 	useEffect(() => {
 		if (first) {
 			if (jobTypeList.length === 0) {
-				dispatch(getListJobType({ payload: {} }));
+				dispatch(
+					getListJobType({
+						payload: {
+							item_per_page: 99999,
+						},
+					})
+				);
 			}
 			if (majorList.length === 0) {
-				dispatch(getListMajor({}));
+				dispatch(
+					getListMajor({
+						payload: {
+							item_per_page: 99999,
+						},
+					})
+				);
 			}
 			setFirst(false);
 		}

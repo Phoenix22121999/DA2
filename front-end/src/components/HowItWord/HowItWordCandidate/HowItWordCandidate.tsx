@@ -14,22 +14,19 @@ const CamdidateItem: HowItWordItemProps[] = [
 		number: 1,
 		icon: <UserAddOutlined />,
 		title: "Create Account",
-		content:
-			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, nihil dolores. Dicta?",
+		content: "Create your account and provide basic information",
 	},
 	{
 		number: 2,
 		icon: <FileSearchOutlined />,
 		title: "Search Job",
-		content:
-			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, nihil dolores. Dicta?",
+		content: "Search for jobs based on your criteria",
 	},
 	{
 		number: 3,
 		icon: <SolutionOutlined />,
 		title: "Send Your Resume",
-		content:
-			"Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, nihil dolores. Dicta?",
+		content: "Submit your CV to the employer",
 	},
 ];
 

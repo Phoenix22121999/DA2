@@ -1,0 +1,37 @@
+người dùng thường chưa đăng nhâp:
+    - đăng ký *
+    - search *
+ứng viên
+    - search *
+    - upload cv *
+    - delete cv *
+    - rename cv *
+    - apply cv *
+    - unapplied *
+    - view applied *
+    - bookmark *
+    - unbookmark *
+    - update profile *
+    - sign in *
+    - change pass *
+nhà tuyển dụng
+    - thêm post
+    - xóa post*
+    - sửa post*
+    - xem các cv đã apply *
+    - update profile *
+    - change pass *
+    - search Trùng
+    - sign in Trùng
+admin 
+    - sign in Trùng
+    - view user account *
+    - view all post *
+    - update account type *
+    - add job type *
+    - update job type *
+    - delete job type *
+    - add jmajor *
+    - update major *
+    - delete major *
+    - forgot password *

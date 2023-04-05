@@ -10,7 +10,7 @@ import { UserType } from "src/types/Type";
 export interface SignUpState {
 	data: SignUpParameters;
 	currentStep: number;
-	status: "idle" | "loading" | "failed";
+	status: "idle" | "loading" | "failed" | "wait";
 }
 
 const initialState: SignUpState = {
@@ -22,7 +22,7 @@ const initialState: SignUpState = {
 		first_name: null,
 		last_name: null,
 		full_name: null,
-		email: null,
+		email: "",
 		number_phone: null,
 		age: null,
 		gender: null,
@@ -32,6 +32,10 @@ const initialState: SignUpState = {
 		ward_code: null,
 		avartar: null,
 		logo: null,
+		birthday: null,
+		birthday_month: null,
+		birthday_year: null,
+		description: null,
 	},
 	currentStep: 0,
 	status: "idle",
@@ -74,7 +78,11 @@ export const signUpSlice = createSlice({
 				first_name: null,
 				last_name: null,
 				full_name: null,
-				email: null,
+				email: "",
+				birthday: null,
+				birthday_month: null,
+				birthday_year: null,
+				description: null,
 				number_phone: null,
 				age: null,
 				gender: null,
@@ -111,7 +119,11 @@ export const signUpSlice = createSlice({
 					first_name: null,
 					last_name: null,
 					full_name: null,
-					email: null,
+					email: "",
+					birthday: null,
+					birthday_month: null,
+					birthday_year: null,
+					description: null,
 					number_phone: null,
 					age: null,
 					gender: null,
@@ -122,7 +134,9 @@ export const signUpSlice = createSlice({
 					avartar: null,
 					logo: null,
 				};
-				state.status = "idle";
+				if (!action.payload.data) {
+					state.status = "wait";
+				} else state.status = "idle";
 			})
 			.addCase(signUp.rejected, (state) => {
 				state.status = "failed";

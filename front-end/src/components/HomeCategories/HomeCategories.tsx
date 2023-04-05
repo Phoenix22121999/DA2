@@ -3,7 +3,6 @@ import "./HomeCategories.scss";
 import HomeCategoriesItem, {
 	HomeCategoriesItemProps,
 } from "./HomeCategoriesItem/HomeCategoriesItem";
-import { FormatPainterOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { ROUTE } from "src/utils/contants";
 import { ButtonCommon } from "src/common";
@@ -13,9 +12,9 @@ type Props = {};
 const HomeCategories = (props: Props) => {
 	const { majorList } = useGetStatictisOption();
 	const topMajor: HomeCategoriesItemProps[] = useMemo(() => {
-		return majorList.map((i) => {
+		return majorList.slice(0, 8).map((i) => {
 			return {
-				icon: <FormatPainterOutlined />,
+				// icon: <FormatPainterOutlined />,
 				name: i.majors_name,
 				itemKey: i.id.toString(),
 			};
@@ -34,7 +33,7 @@ const HomeCategories = (props: Props) => {
 				</div>
 				<div className="categories-button">
 					<ButtonCommon ghost size="large" type="outstanding">
-						<Link to={ROUTE.SEARCH}>All Categories</Link>
+						<Link to={ROUTE.SEARCH}>All Major</Link>
 					</ButtonCommon>
 				</div>
 			</div>

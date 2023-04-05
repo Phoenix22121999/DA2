@@ -28,6 +28,7 @@ import {
 	LoadingCommon,
 	RangeSliderCommon,
 	SelectCommon,
+	SwitchCommon,
 } from "src/common";
 import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
 import SelectLocation from "src/components/SelectLocation/SelectLocation";
@@ -102,6 +103,7 @@ const EditPost = (props: Props) => {
 			district_code: editPost?.district_code || undefined,
 			ward_code: editPost?.ward_code || undefined,
 			address: editPost?.address || undefined,
+			is_active: editPost?.is_active || false,
 		});
 	}, [editPost, form]);
 
@@ -118,6 +120,13 @@ const EditPost = (props: Props) => {
 						// 	gender: editPost?.gender,
 						// }}
 					>
+						<Form.Item
+							label="Active"
+							name={"is_active"}
+							valuePropName="checked"
+						>
+							<SwitchCommon />
+						</Form.Item>
 						<Form.Item
 							label="Title"
 							name={"title"}

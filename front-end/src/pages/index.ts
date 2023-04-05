@@ -17,3 +17,6 @@ export const JobPostDetailPage = React.lazy(
 export const SearchPage = React.lazy(() => import("./Search/Search"));
 export const SignInPage = React.lazy(() => import("./SignIn/SignIn"));
 export const SignUpPage = React.lazy(() => import("./SignUp/SignUp"));
+export const ForgotPasswordPage = React.lazy(
+	() => import("./ForgotPassword/ForgotPassword")
+);

@@ -34,7 +34,7 @@ const RenameCVModal = ({ edited, onClose }: Props) => {
 			dispatch(
 				updateCV({
 					payload: {
-						id_cv: edited.id,
+						cv_id: edited.id,
 						file_name_new: name || "",
 					},
 					callback,

@@ -1,0 +1,91 @@
+variables:
+    IMAGES_NAME : nolanngo20031999
+    IMAGES_TAG_BACK_END : da2_backend
+    IMAGES_TAG_FRONT_END : da2_frontent
+  
+stages :
+    - build
+    - deploy
+  
+run_build_jobportal_backend:
+    stage : build
+    only :
+        refs:
+          - main
+        variables:
+          - $CI_COMMIT_DESCRIPTION =~ /(api).*/
+          - $CI_COMMIT_MESSAGE =~ /(api).*/
+    image : docker:20.10.16
+    services :
+      - docker:20.10.16-dind
+    variables:
+      DOCKER_TLC_CERTDIR : "/certs"
+    before_script :
+      - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+    script:
+      - echo "Runing build image Back End"
+      - cd Back-End
+      - docker build -t  $IMAGES_NAME/$IMAGES_TAG_BACK_END .
+      - docker push $IMAGES_NAME/$IMAGES_TAG_BACK_END
+      - echo "Build image Back-End success"
+  
+run_deploy_jobportal_backend:
+    stage : deploy
+    only :
+        refs:
+          - main
+        variables:
+          - $CI_COMMIT_DESCRIPTION =~ /(api).*/
+          - $CI_COMMIT_MESSAGE =~ /(api).*/
+    before_script:
+      - chmod 400 $SSH_KEY
+    script:
+      - echo "Runing deploy api"
+      - echo "Runing deploy api"
+      - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@159.223.54.199 "
+          docker stop container backendda2 || true && docker rm backendda2 || true &&
+          docker rmi $IMAGES_NAME/$IMAGES_TAG_BACK_END || true &&
+          docker login -u $REGISTRY_USER -p $REGISTRY_PASS &&
+          docker run -d -p 4000:4000 --name backendda2 --hostname backendda2 $IMAGES_NAME/$IMAGES_TAG_BACK_END"
+  
+run_build_jobportal_frontend:
+    stage : build
+    only :
+      refs:
+        - main
+      variables:
+        - $CI_COMMIT_DESCRIPTION =~ /(web).*/
+        - $CI_COMMIT_MESSAGE =~ /(web).*/
+    image : docker:20.10.16
+    services :
+      - docker:20.10.16-dind
+    variables:
+      DOCKER_TLC_CERTDIR : "/certs"
+    before_script :
+      - docker login -u $REGISTRY_USER -p $REGISTRY_PASS
+    script:
+      - echo "Runing build image Front-End"
+      - cd front-end
+      - docker build -t $IMAGES_NAME/$IMAGES_TAG_FRONT_END .
+      - docker push $IMAGES_NAME/$IMAGES_TAG_FRONT_END
+      - echo "Build image Front-End success"
+  
+run_deploy_jobportal_frontend:
+    stage : deploy
+    only :
+        refs:
+          - main
+        variables:
+          - $CI_COMMIT_DESCRIPTION =~ /(web).*/
+          - $CI_COMMIT_MESSAGE =~ /(web).*/
+    before_script:
+      - chmod 400 $SSH_KEY
+    script:
+      - echo "Runing deploy website"
+      - echo "Runing deploy website"
+      - ssh -o StrictHostKeyChecking=no -i $SSH_KEY root@159.223.54.199 "
+          docker stop container frontda2 || true && docker rm frontda2 || true &&
+          docker rmi $IMAGES_NAME/$IMAGES_TAG_FRONT_END || true &&
+          docker login -u $REGISTRY_USER -p $REGISTRY_PASS &&
+          docker run -d -p 80:80 --name frontda2 $IMAGES_NAME/$IMAGES_TAG_FRONT_END:latest"
+  

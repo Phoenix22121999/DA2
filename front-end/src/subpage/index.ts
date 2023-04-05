@@ -41,3 +41,24 @@ export const PostJobPage = React.lazy(() => import("./PostJob/PostJob"));
 export const RecruiterProfilePage = React.lazy(
 	() => import("./RecruiterProfile/RecruiterProfile")
 );
+
+export const AccountManagerPage = React.lazy(
+	() => import("./AccountManager/AccountManager")
+);
+
+export const StatisticPage = React.lazy(() => import("./Statistic/Statistic"));
+export const AccountDetailPage = React.lazy(
+	() => import("./AccountDetail/AccountDetail")
+);
+
+export const AllPostPage = React.lazy(() => import("./AllPost/AllPost"));
+export const AdminPostDetailPage = React.lazy(
+	() => import("./AdminPostDetail/AdminPostDetail")
+);
+
+export const BookmarkManagerPage = React.lazy(
+	() => import("./BookmarkManager/BookmarkManager")
+);
+export const RequestManagerPage = React.lazy(
+	() => import("./RequestManager/RequestManager")
+);

@@ -18,6 +18,8 @@ const FeaturesJob = (props: Props) => {
 		const getPosts = async () => {
 			const response = await api.postApi.getListPost({
 				item_per_page: 5,
+				sort_by: "id",
+				sort_order: "desc",
 			});
 			if (response.data && response.data.result) {
 				setPostList(response.data.result);
@@ -36,6 +38,7 @@ const FeaturesJob = (props: Props) => {
 								key={post.id}
 								{...post}
 								selected={post.id}
+								isDisableCollapse
 							/>
 						);
 					})}

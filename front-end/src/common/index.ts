@@ -8,12 +8,20 @@ export const ButtonCommon = React.lazy(
 	() => import("./ButtonCommon/ButtonCommon")
 );
 
+export const TextAreaCommon = React.lazy(
+	() => import("./TextAreaCommon/TextAreaCommon")
+);
+
 export const ButtonRadioGroupCommon = React.lazy(
 	() => import("./ButtonRadioGroupCommon/ButtonRadioGroupCommon")
 );
 
 export const InputCommon = React.lazy(
 	() => import("./InputCommon/InputCommon")
+);
+
+export const InputSearchCommon = React.lazy(
+	() => import("./InputCommon/InputSearchCommon")
 );
 
 export const InputNumberCommon = React.lazy(
@@ -83,3 +91,11 @@ export const InputPasswordCommon = React.lazy(
 export const FormCommon = React.lazy(
 	() => import("./FormCommon/FormCommon")
 ) as FormCommonType;
+
+export const CollapseCommon = React.lazy(
+	() => import("./CollapseCommon/CollapseCommon")
+);
+
+export const PanelCommon = React.lazy(
+	() => import("./CollapseCommon/PanelCommon")
+);

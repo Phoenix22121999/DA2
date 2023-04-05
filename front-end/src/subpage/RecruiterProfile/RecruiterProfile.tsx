@@ -1,16 +1,23 @@
-import { Form } from "antd";
+import { Form, message } from "antd";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useReduxSelector } from "src/redux/redux-hook";
 import { selectUserData, updateAccount } from "src/redux/slice/UserSilce";
 import ProfileAvatar from "../../components/ProfileAvatar/ProfileAvatar";
 import "./RecruiterProfile.scss";
 import { UserAccount } from "src/types/Type";
 import { useReduxDispatch } from "../../redux/redux-hook";
-import { ButtonCommon, FormCommon, InputCommon } from "src/common";
+import {
+	ButtonCommon,
+	FormCommon,
+	InputCommon,
+	TextAreaCommon,
+} from "src/common";
 import SuspenseLoading from "../../components/SuspenseLoading/SuspenseLoading";
 import SelectLocation from "src/components/SelectLocation/SelectLocation";
 import { FormItemCommon } from "./../../common/index";
+import BirthdaySelect from "src/components/BirthdaySelect/BirthdaySelect";
+import { CallbackFunction } from "src/types/UtilType";
 
 type Props = {};
 
@@ -18,17 +25,46 @@ const RecruiterProfile = (props: Props) => {
 	const [form] = Form.useForm();
 	const data = useReduxSelector(selectUserData);
 	const dispatch = useReduxDispatch();
-	const onUpdate = async () => {
-		const value: Partial<UserAccount> = await form.validateFields();
-		dispatch(updateAccount({ payload: value }));
+	const callback: CallbackFunction<Partial<UserAccount>> = (
+		isSuccess,
+		result
+	) => {
+		if (isSuccess) {
+			message.success("Update profile success");
+		} else {
+			message.error("Update profile fail");
+		}
 	};
+	const onUpdate = async () => {
+		const value = await form.validateFields();
+		const payload = {
+			...value,
+			gender: Number(value.gender) || undefined,
+			...value.birthday,
+		} as any;
+		dispatch(updateAccount({ payload, callback }));
+	};
+
+	useEffect(() => {
+		form.setFieldsValue({
+			...data,
+			province_code: data.province_code?.toString(),
+			district_code: data.district_code?.toString(),
+			ward_code: data.ward_code?.toString(),
+			birthday: {
+				birthday: data.birthday,
+				birthday_month: data.birthday_month,
+				birthday_year: data.birthday_year,
+			},
+		});
+	}, [data, form]);
 
 	return (
 		<div className="recruiter-profile">
 			<div className="dashboard-title">Profile</div>
 			<div className="inner-content">
 				<div className="avatar">
-					<ProfileAvatar />
+					<ProfileAvatar initialValue={data.avartar || undefined} />
 				</div>
 				<React.Suspense fallback={<SuspenseLoading size="medium" />}>
 					<div className="profile-form">
@@ -40,6 +76,11 @@ const RecruiterProfile = (props: Props) => {
 								province_code: data.province_code?.toString(),
 								district_code: data.district_code?.toString(),
 								ward_code: data.ward_code?.toString(),
+								birthday: {
+									birthday: data.birthday,
+									birthday_month: data.birthday_month,
+									birthday_year: data.birthday_year,
+								},
 							}}
 						>
 							<FormItemCommon
@@ -77,11 +118,11 @@ const RecruiterProfile = (props: Props) => {
 								label="Numberphone"
 								name={"number_phone"}
 								rules={[
-									{
-										required: true,
-										message:
-											"Please input your number phone!",
-									},
+									// {
+									// 	required: true,
+									// 	message:
+									// 		"Please input your number phone!",
+									// },
 									{
 										validator(_, value) {
 											var re =
@@ -100,7 +141,9 @@ const RecruiterProfile = (props: Props) => {
 							>
 								<InputCommon />
 							</FormItemCommon>
-
+							<Form.Item name="birthday" label={"Founded Date"}>
+								<BirthdaySelect isRecruiter={true} />
+							</Form.Item>
 							<SelectLocation
 								form={form}
 								initialValue={{
@@ -112,14 +155,26 @@ const RecruiterProfile = (props: Props) => {
 							<FormItemCommon
 								label="Address"
 								name={"address"}
-								rules={[
-									{
-										required: true,
-										message: "Please input your address!",
-									},
-								]}
+								// rules={[
+								// 	{
+								// 		required: true,
+								// 		message: "Please input your address!",
+								// 	},
+								// ]}
 							>
 								<InputCommon />
+							</FormItemCommon>
+							<FormItemCommon
+								label="Description"
+								name={"description"}
+								// rules={[
+								// 	{
+								// 		required: true,
+								// 		message: "Please input your address!",
+								// 	},
+								// ]}
+							>
+								<TextAreaCommon rows={10} />
 							</FormItemCommon>
 						</FormCommon>
 						<div className="button-form">

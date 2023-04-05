@@ -68,12 +68,12 @@ const SelectLocation = ({ initialValue, form }: Props) => {
 			<Form.Item
 				label="Province"
 				name="province_code"
-				rules={[
-					{
-						required: true,
-						message: "Please choose your province!",
-					},
-				]}
+				// rules={[
+				// 	{
+				// 		required: true,
+				// 		message: "Please choose your province!",
+				// 	},
+				// ]}
 			>
 				<SelectCommon
 					showSearch
@@ -87,12 +87,12 @@ const SelectLocation = ({ initialValue, form }: Props) => {
 			<Form.Item
 				label="Dictrict"
 				name="district_code"
-				rules={[
-					{
-						required: true,
-						message: "Please choose your dictrict!",
-					},
-				]}
+				// rules={[
+				// 	{
+				// 		required: true,
+				// 		message: "Please choose your dictrict!",
+				// 	},
+				// ]}
 			>
 				<SelectCommon
 					showSearch
@@ -106,12 +106,12 @@ const SelectLocation = ({ initialValue, form }: Props) => {
 			<Form.Item
 				label="Ward"
 				name="ward_code"
-				rules={[
-					{
-						required: true,
-						message: "Please choose your ward!",
-					},
-				]}
+				// rules={[
+				// 	{
+				// 		required: true,
+				// 		message: "Please choose your ward!",
+				// 	},
+				// ]}
 			>
 				<SelectCommon
 					showSearch

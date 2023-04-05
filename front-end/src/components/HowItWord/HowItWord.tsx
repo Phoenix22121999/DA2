@@ -13,7 +13,7 @@ const HowItWord = (props: Props) => {
 	return (
 		<div className="how-it-word">
 			<div className="container">
-				<div className="how-it-word-title">How It Word</div>
+				<div className="how-it-word-title">How It Work</div>
 				<TabCommon item={items} />
 			</div>
 		</div>

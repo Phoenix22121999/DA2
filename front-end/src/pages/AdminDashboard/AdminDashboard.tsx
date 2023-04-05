@@ -3,14 +3,19 @@ import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useCheckUserAuth } from "src/hooks/useCheckUserAuth";
 import "./AdminDashboard.scss";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import {
+	MenuFoldOutlined,
+	MenuUnfoldOutlined,
+	LeftOutlined,
+} from "@ant-design/icons";
 import AdminDashboardSidebar from "src/components/AdminDashboardSidebar/AdminDashboardSidebar";
 import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
+import { useGoBack } from "src/hooks/useGoBack";
 type Props = {};
 const { Sider, Content } = Layout;
 const AdminDashboard = (props: Props) => {
 	const navigate = useNavigate();
-
+	const onGoBack = useGoBack();
 	const isAuth = useCheckUserAuth(1);
 	useEffect(() => {
 		if (!isAuth) {
@@ -81,6 +86,12 @@ const AdminDashboard = (props: Props) => {
 									) : (
 										<MenuFoldOutlined />
 									)}
+								</div>
+								<div
+									className="go-back-button"
+									onClick={onGoBack}
+								>
+									<LeftOutlined /> <div>Back</div>
 								</div>
 							</div>
 							<div className="admin-dashboard-content dashboard-content-common">

@@ -4,12 +4,15 @@ import { RecruitmentPost } from "src/types/Type";
 import {
 	CreatePostParameters,
 	DeletePostParameters,
+	GetPostByUserIdParameters,
+	GetPostByUserParameters,
 	GetPostDetailParameters,
 	UpdatePostParameters,
 } from "src/types/PostType";
 import { SearchParameter, SearchReponse } from "src/types/SearchType";
 import { searchParameterBuilder } from "src/utils/function";
 import { DetailRecruitmentPost } from "src/types/CombineType";
+import { ReponseWithTotal } from "src/types/ApiType";
 
 export class PostApi extends BaseApi {
 	constructor() {
@@ -28,8 +31,26 @@ export class PostApi extends BaseApi {
 
 		return this.baseGet<{}, SearchReponse>(`?${params}`, {});
 	}
-	async getListPostByUser(token: string) {
-		return this.authGet<{}, RecruitmentPost[]>("list-of-user", token, {});
+	async getListPostByUser(data: GetPostByUserParameters, token: string) {
+		const params = searchParameterBuilder(data);
+
+		return this.authGet<{}, ReponseWithTotal<RecruitmentPost[]>>(
+			`list-of-user?${params}`,
+			token,
+			{}
+		);
+	}
+	async getListPostByUserById(
+		data: GetPostByUserIdParameters,
+		token: string
+	) {
+		const params = searchParameterBuilder(data);
+
+		return this.authGet<{}, ReponseWithTotal<RecruitmentPost[]>>(
+			`list-of-user-by-id?${params}`,
+			token,
+			{}
+		);
 	}
 	async getPostDetail(data: GetPostDetailParameters) {
 		const params = searchParameterBuilder(data);

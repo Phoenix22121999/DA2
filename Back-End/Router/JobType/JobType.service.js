@@ -1,6 +1,8 @@
 const { PrismaClient } = require("@prisma/client");
 const gateToken = require("../../Middleware/Middleware");
-const moment = require("moment-timezone");
+let moment = require("moment-timezone");
+
+moment().tz("Asia/Ho_Chi_Minh").format();
 BigInt.prototype.toJSON = function () {
 	return this.toString();
 };
@@ -83,7 +85,7 @@ const createJobType = async (req, res) => {
 				job_type_name: job_type_name,
 				is_active: true,
 				is_delete: false,
-				create_date: new Date(moment(new Date()).format("YYYY-MM-DD")),
+				create_date: new Date(moment(new Date()).format("YYYY-MM-DD HH:mm:ss")),
 				create_user: String(user_id),
 			},
 		});
@@ -97,7 +99,7 @@ const createJobType = async (req, res) => {
 		}
 		return res.json({
 			code: 200,
-			message: "Tạo bài đăng thành công",
+			message: "Tạo loại công việc thành công",
 			status_resposse: true,
 			data: result,
 		});

@@ -1,5 +1,5 @@
 import { Upload } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ImgCrop from "antd-img-crop";
 import {
 	RcFile,
@@ -60,6 +60,16 @@ const ProfileAvatar = ({ initialValue }: Props) => {
 				: `${CDN_URL}/${initialValue}`
 			: FakeAvatar
 	);
+	useEffect(() => {
+		setAvatar(
+			initialValue
+				? initialValue.includes("https")
+					? initialValue
+					: `${CDN_URL}/${initialValue}`
+				: FakeAvatar
+		);
+	}, [initialValue]);
+
 	const [changeAvatar, setChangeAvatar] = useState<string>(
 		initialValue
 			? initialValue.includes("https")

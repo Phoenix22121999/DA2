@@ -1,6 +1,9 @@
 const { PrismaClient } = require("@prisma/client");
 const gateToken = require("../../Middleware/Middleware");
 const moment = require("moment-timezone");
+
+moment().tz("Asia/Ho_Chi_Minh").format();
+
 BigInt.prototype.toJSON = function () {
 	return this.toString();
 };
@@ -45,6 +48,7 @@ function getDateLast(last) {
 }
 
 const getListPostOfUser = async (req, res) => {
+	let { key_word, item_per_page = 10, page = 1 } = req.query;
 	try {
 		let { user_id = null, user_type_id = null } = req;
 		if (!user_id) {
@@ -59,7 +63,21 @@ const getListPostOfUser = async (req, res) => {
 				AND: [
 					{
 						recuiter_id: Number(user_id),
-						is_active: true,
+						// is_active: true,
+						is_delete: false,
+						title: { contains: key_word },
+					},
+				],
+			},
+			take: Number(item_per_page),
+			skip: Number(item_per_page * (page - 1)),
+		});
+		let total = await prisma.Recruitment_Post.count({
+			where: {
+				AND: [
+					{
+						recuiter_id: Number(user_id),
+						// is_active: true,
 						is_delete: false,
 					},
 				],
@@ -77,7 +95,72 @@ const getListPostOfUser = async (req, res) => {
 			code: 200,
 			message: "Lấy danh sách bài đăng truyển dụng thành công",
 			status_resposse: true,
-			data: resultListPost,
+			data: {
+				result: resultListPost,
+				total: total,
+			},
+		});
+	} catch (error) {
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+};
+const getListPostOfUserById = async (req, res) => {
+	try {
+		let { key_word, item_per_page = 10, page = 1 } = req.query;
+		let { user_id = null } = req.query;
+		if (!user_id) {
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Người dùng không hợp lệ",
+			});
+		}
+		let resultListPost = await prisma.Recruitment_Post.findMany({
+			where: {
+				AND: [
+					{
+						recuiter_id: Number(user_id),
+						// is_active: true,
+						is_delete: false,
+						title: { contains: key_word },
+					},
+				],
+			},
+			take: Number(item_per_page),
+			skip: Number(item_per_page * (page - 1)),
+		});
+
+		let total = await prisma.Recruitment_Post.count({
+			where: {
+				AND: [
+					{
+						recuiter_id: Number(user_id),
+						// is_active: true,
+						is_delete: false,
+					},
+				],
+			},
+		});
+
+		if (resultListPost && resultListPost.length < 0) {
+			return res.json({
+				code: 400,
+				message: "Bạn chưa có danh sách bài đăng tuyển dụng",
+				status_resposse: false,
+			});
+		}
+		return res.json({
+			code: 200,
+			message: "Lấy danh sách bài đăng truyển dụng thành công",
+			status_resposse: true,
+			data: {
+				result: resultListPost,
+				total: total,
+			},
 		});
 	} catch (error) {
 		return res.json({
@@ -93,7 +176,7 @@ const getListPost = async (req, res) => {
 		item_per_page = 10,
 		page = 1,
 		sort_by = "create_date",
-		sort_order = "asc",
+		sort_order = "desc",
 		from_value,
 		to_value,
 		gender,
@@ -183,6 +266,11 @@ const getListPost = async (req, res) => {
 				create_date: sort_order,
 			});
 		}
+		if (sort_by === "id") {
+			sortArr.push({
+				id: sort_order,
+			});
+		}
 
 		let resultList = await prisma.Recruitment_Post.findMany({
 			where: {
@@ -204,6 +292,7 @@ const getListPost = async (req, res) => {
 						province_code: true,
 						district_code: true,
 						ward_code: true,
+						avartar: true,
 					},
 				},
 				post_job_types: {
@@ -371,7 +460,7 @@ const createPost = async (req, res) => {
 				district_code: district_code,
 				ward_code: ward_code,
 				address: address,
-				create_date: new Date(moment(new Date()).format("YYYY-MM-DD")),
+				create_date: new Date(moment(new Date()).format("YYYY-MM-DD HH:mm:ss")),
 				gender: Number(gender),
 				is_active: is_active,
 				is_delete: is_delete,
@@ -432,7 +521,7 @@ const update = async (req, res) => {
 				AND: [
 					{
 						id: Number(post_id),
-						is_active: is_active,
+						// is_active: is_active,
 						is_delete: is_delete,
 						recuiter_id: Number(user_id),
 					},
@@ -551,15 +640,16 @@ const update = async (req, res) => {
 			data: {
 				title: title,
 				content: content,
-				to_value: Number(to_value),
-				from_value: Number(from_value),
+				to_value: to_value && Number(to_value),
+				from_value: from_value && Number(from_value),
 				update_date: new Date(moment(new Date()).format("YYYY-MM-DD")),
 				update_user: user_id,
-				gender: Number(gender),
+				gender: gender && Number(gender),
 				province_code: province_code,
 				district_code: district_code,
 				ward_code: ward_code,
 				address: address,
+				is_active: is_active,
 				post_job_types: {
 					updateMany: {
 						where: {
@@ -690,7 +780,7 @@ const getDetail = async (req, res) => {
 				AND: [
 					{
 						id: Number(post_id),
-						is_active: true,
+						// is_active: true,
 						is_delete: false,
 					},
 				],
@@ -708,6 +798,7 @@ const getDetail = async (req, res) => {
 						province_code: true,
 						district_code: true,
 						ward_code: true,
+						avartar: true,
 					},
 				},
 				post_job_types: {
@@ -798,6 +889,562 @@ const getDetail = async (req, res) => {
 	}
 };
 
+const bookMarkPost = async (req, res) => {
+	try {
+		let { post_id } = req.body;
+		let { user_id, user_type_id = null } = req;
+
+		// Kiểm tra xem bài viết có tồn tại hay không
+		let isExistsPost = await prisma.recruitment_Post.findFirst({
+			where: {
+				AND: [
+					{
+						is_active: true,
+						is_delete: false,
+						id: Number(post_id),
+					},
+				],
+			},
+		});
+		if (!isExistsPost) {
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Bài viết này không tồn tại",
+			});
+		}
+
+		// Kiểm tra xem người dùng đã yêu thích bài tuyển dụng này hay chưa
+		let isExistLikePost = await prisma.recruitment_Post_User_Like.findFirst(
+			{
+				where: {
+					AND: [
+						{
+							post_id: Number(post_id),
+							user_id: Number(user_id),
+						},
+					],
+				},
+			}
+		);
+		// Nếu đã có tồn tại trong database thì check để cập nhật lại
+		if (isExistLikePost) {
+			let { is_active = true, is_delete = false } = isExistLikePost;
+			if (is_active == true && is_delete == false) {
+				return res.json({
+					code: 200,
+					status_resposse: true,
+					message: "Bạn đã yêu thích bài đăng này",
+				});
+			} else {
+				// Cập nhật lại nếu đã thích vài viết đó
+				const resultUpdate =
+					await prisma.recruitment_Post_User_Like.update({
+						where: {
+							id: Number(isExistLikePost.id),
+						},
+						data: {
+							is_active: true,
+							is_delete: false,
+						},
+						include: {
+							user_account: {
+								select: {
+									id: true,
+									full_name: true,
+									user_type_id: true,
+									email: true,
+									number_phone: true,
+									logo: true,
+									address: true,
+									province_code: true,
+									district_code: true,
+									ward_code: true,
+								},
+							},
+							Recruitment_Post: {
+								select: {
+									id: true,
+									title: true,
+									post_job_types: {
+										select: {
+											id: true,
+											job_type: {
+												select: {
+													id: true,
+													job_type_name: true,
+												},
+											},
+										},
+										where: {
+											is_delete: false,
+											is_active: true,
+										},
+									},
+									post_majors: {
+										select: {
+											id: true,
+											majors: {
+												select: {
+													id: true,
+													majors_name: true,
+												},
+											},
+										},
+										where: {
+											is_delete: false,
+											is_active: true,
+										},
+									},
+								},
+							},
+						},
+					});
+				if (!resultUpdate) {
+					return res.json({
+						code: 400,
+						status_resposse: false,
+						message: "Yêu thích bài viết đã xảy ra lỗi !",
+					});
+				}
+				return res.json({
+					code: 200,
+					status_resposse: true,
+					data: resultUpdate,
+					message: "Yêu thích bài viết thành công",
+				});
+			}
+		}
+		// Nếu chưa từng yêu thích bài viết sẽ tạo mới
+		const resultCreate = await prisma.recruitment_Post_User_Like.create({
+			data: {
+				user_id: Number(user_id),
+				post_id: Number(post_id),
+				create_date: new Date(moment(new Date()).format("YYYY-MM-DD")),
+				create_user: user_id,
+				is_active: true,
+				is_delete: false,
+			},
+			include: {
+				user_account: {
+					select: {
+						id: true,
+						full_name: true,
+						user_type_id: true,
+						email: true,
+						number_phone: true,
+						logo: true,
+						address: true,
+						province_code: true,
+						district_code: true,
+						ward_code: true,
+					},
+				},
+				Recruitment_Post: {
+					select: {
+						id: true,
+						title: true,
+						post_job_types: {
+							select: {
+								id: true,
+								job_type: {
+									select: {
+										id: true,
+										job_type_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+						post_majors: {
+							select: {
+								id: true,
+								majors: {
+									select: {
+										id: true,
+										majors_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+					},
+				},
+			},
+		});
+		if (!resultCreate) {
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message:
+					"Quá trình yêu thích bài đăng xảy ra vấn đề vui lòng thử lại sau",
+			});
+		}
+		return res.json({
+			code: 200,
+			status_resposse: true,
+			data: resultCreate,
+			message: "Quá trình yêu thích thành công",
+		});
+	} catch (error) {
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+};
+
+const unbookMarkPost = async (req, res) => {
+	try {
+		let { post_id } = req.body;
+		let { user_id, user_type_id = null } = req;
+
+		// Kiểm tra xem bài viết có tồn tại hay không
+		let isExistsPost = await prisma.recruitment_Post.findFirst({
+			where: {
+				AND: [
+					{
+						is_active: true,
+						is_delete: false,
+						id: Number(post_id),
+					},
+				],
+			},
+		});
+		if (!isExistsPost) {
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Bài viết này không tồn tại",
+			});
+		}
+
+		// Kiểm tra xem người dùng đã yêu thích bài tuyển dụng này hay chưa
+		let isExistLikePost = await prisma.recruitment_Post_User_Like.findFirst(
+			{
+				where: {
+					AND: [
+						{
+							post_id: Number(post_id),
+							user_id: Number(user_id),
+							is_active: true,
+							is_delete: false,
+						},
+					],
+				},
+			}
+		);
+
+		if (!isExistLikePost) {
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Không tìm thấy việc yêu thích bài đăng từ bạn",
+			});
+		}
+
+		const resultUnBookMark = await prisma.recruitment_Post_User_Like.update(
+			{
+				where: {
+					id: Number(isExistLikePost.id),
+				},
+				data: {
+					is_active: false,
+					is_delete: true,
+					delete_date: new Date(
+						moment(new Date()).format("YYYY-MM-DD")
+					),
+				},
+				include: {
+					user_account: {
+						select: {
+							id: true,
+							full_name: true,
+							user_type_id: true,
+							email: true,
+							number_phone: true,
+							logo: true,
+							address: true,
+							province_code: true,
+							district_code: true,
+							ward_code: true,
+						},
+					},
+					Recruitment_Post: {
+						select: {
+							id: true,
+							title: true,
+							post_job_types: {
+								select: {
+									id: true,
+									job_type: {
+										select: {
+											id: true,
+											job_type_name: true,
+										},
+									},
+								},
+								where: {
+									is_delete: false,
+									is_active: true,
+								},
+							},
+							post_majors: {
+								select: {
+									id: true,
+									majors: {
+										select: {
+											id: true,
+											majors_name: true,
+										},
+									},
+								},
+								where: {
+									is_delete: false,
+									is_active: true,
+								},
+							},
+						},
+					},
+				},
+			}
+		);
+		if (!resultUnBookMark) {
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Bỏ yêu thích bài đăng không thành công",
+			});
+		}
+		return res.json({
+			code: 200,
+			status_resposse: true,
+			message: "Bỏ yêu thích bài đăng thành công",
+			data: resultUnBookMark,
+		});
+	} catch (error) {
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			messsage: error.message,
+		});
+	}
+};
+
+const getListBookMark = async (req, res) => {
+	try {
+		let {
+			key_word,
+			item_per_page = 10,
+			page = 1,
+			from_value,
+			to_value,
+			gender,
+			is_content = false,
+		} = req.query;
+		let { user_id, user_type_id = null } = req;
+
+		const result = await prisma.recruitment_Post_User_Like.findMany({
+			where: {
+				AND: [
+					{
+						is_active: { equals: true },
+						is_delete: { equals: false },
+						user_id: Number(user_id),
+						user_account: {
+							is_active: true,
+							is_delete: false,
+						},
+						Recruitment_Post: {
+							// is_active: true,
+							is_delete: false,
+						},
+					},
+				],
+			},
+			take: Number(item_per_page),
+			skip: Number(item_per_page * (page - 1)),
+			include: {
+				user_account: {
+					select: {
+						id: true,
+						full_name: true,
+						user_type_id: true,
+						email: true,
+						number_phone: true,
+						logo: true,
+						address: true,
+						province_code: true,
+						district_code: true,
+						ward_code: true,
+					},
+				},
+				Recruitment_Post: {
+					select: {
+						id: true,
+						content: is_content,
+						title: true,
+						post_job_types: {
+							select: {
+								id: true,
+								job_type: {
+									select: {
+										id: true,
+										job_type_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+						post_majors: {
+							select: {
+								id: true,
+								majors: {
+									select: {
+										id: true,
+										majors_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+					},
+				},
+			},
+		});
+
+		return res.json({
+			code: 200,
+			message: "Lấy dữ liệu thành công",
+			status_resposse: true,
+			data: result,
+		});
+	} catch (error) {
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+};
+
+const getListBookMarkById = async (req, res) => {
+	try {
+		let {
+			key_word,
+			item_per_page = 10,
+			page = 1,
+			from_value,
+			to_value,
+			gender,
+			is_content = false,
+			user_id,
+		} = req.query;
+		let { user_type_id = null } = req;
+
+		const result = await prisma.recruitment_Post_User_Like.findMany({
+			where: {
+				AND: [
+					{
+						is_active: { equals: true },
+						is_delete: { equals: false },
+						user_id: Number(user_id),
+						user_account: {
+							is_active: true,
+							is_delete: false,
+						},
+						Recruitment_Post: {
+							is_active: true,
+							is_delete: false,
+						},
+					},
+				],
+			},
+			take: Number(item_per_page),
+			skip: Number(item_per_page * (page - 1)),
+			include: {
+				user_account: {
+					select: {
+						id: true,
+						full_name: true,
+						user_type_id: true,
+						email: true,
+						number_phone: true,
+						logo: true,
+						address: true,
+						province_code: true,
+						district_code: true,
+						ward_code: true,
+					},
+				},
+				Recruitment_Post: {
+					select: {
+						id: true,
+						content: is_content,
+						title: true,
+						post_job_types: {
+							select: {
+								id: true,
+								job_type: {
+									select: {
+										id: true,
+										job_type_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+						post_majors: {
+							select: {
+								id: true,
+								majors: {
+									select: {
+										id: true,
+										majors_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+					},
+				},
+			},
+		});
+
+		return res.json({
+			code: 200,
+			message: "Lấy dữ liệu thành công",
+			status_resposse: true,
+			data: result,
+		});
+	} catch (error) {
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+};
+
 module.exports = {
 	update,
 	createPost,
@@ -805,4 +1452,9 @@ module.exports = {
 	getListPostOfUser,
 	deletePost,
 	getDetail,
+	getListPostOfUserById,
+	bookMarkPost,
+	unbookMarkPost,
+	getListBookMark,
+	getListBookMarkById,
 };

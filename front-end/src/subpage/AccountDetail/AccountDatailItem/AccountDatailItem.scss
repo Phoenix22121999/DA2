@@ -1,0 +1,20 @@
+@use "../../../styles/variables" as v;
+.account-datail-item-warrper {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	.account-datail-item-title {
+		width: max(25%, 15rem);
+		@include v.text-base;
+		font-weight: bold;
+		margin: 0.6rem 0;
+		color: v.$black-blue;
+		&::after {
+			content: ":";
+		}
+	}
+	.account-datail-item-value {
+		@include v.text-sm;
+		margin: 0.6rem 0;
+	}
+}

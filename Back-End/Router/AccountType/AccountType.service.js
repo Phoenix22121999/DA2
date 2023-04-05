@@ -3,8 +3,8 @@ const gateToken = require("../../Middleware/Middleware");
 const jwt = require("jsonwebtoken");
 const { createPassHash } = require("../../Middleware/config");
 const { validationResult } = require("express-validator");
-const moment = require("moment-timezone");
-
+let moment = require("moment-timezone");
+moment().tz("Asia/Ho_Chi_Minh").format();
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 
@@ -44,7 +44,7 @@ const createAccountType = async (req, res) => {
 					user_type_name: user_type_name,
 					is_active: is_active,
 					is_delete: is_delete,
-					create_date: new Date(),
+					create_date: new Date(moment(new Date()).format("YYYY-MM-DD HH:mm:ss")),
 				},
 			});
 			// Check xem có tạo được không

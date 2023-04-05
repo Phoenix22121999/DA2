@@ -30,7 +30,7 @@ const option: SelectSortOption[] = [
 
 const SearchListSort = (props: Props) => {
 	const [searchParams, setSearchParams] =
-		useState<SORT_OPTION_TYPE>("create_date-asc");
+		useState<SORT_OPTION_TYPE>("create_date-desc");
 
 	const debouncedValue = useDebounce<string>(searchParams, 500);
 	const dispatch = useReduxDispatch();
@@ -57,7 +57,7 @@ const SearchListSort = (props: Props) => {
 			<SelectCommon
 				onChange={handleChange}
 				data={option as SelectOptionValue[]}
-				defaultValue={option[0].value}
+				defaultValue={option[1].value}
 			/>
 		</div>
 	);

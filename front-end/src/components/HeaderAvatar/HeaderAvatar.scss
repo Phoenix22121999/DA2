@@ -1,0 +1,33 @@
+@use "../../styles/variables" as v;
+.header-avatar {
+	cursor: pointer;
+	.header-avatar-image {
+		width: 4rem;
+		height: 4rem;
+		img {
+			border-radius: 100%;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+}
+.header-avatar-item {
+	a {
+		color: #000;
+	}
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	padding-bottom: 0.5rem;
+}
+
+.header-username {
+	height: 100%;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	height: 4rem;
+	@include v.text-base;
+	color: v.$info-background;
+}

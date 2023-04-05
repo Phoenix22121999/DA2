@@ -1,10 +1,10 @@
 import { Checkbox, Form, message } from "antd";
 import React from "react";
 import { useCookies } from "react-cookie";
-import {
-	GoogleLoginResponse,
-	GoogleLoginResponseOffline,
-} from "react-google-login";
+// import {
+// 	GoogleLoginResponse,
+// 	GoogleLoginResponseOffline,
+// } from "react-google-login";
 import { useNavigate } from "react-router-dom";
 import {
 	ButtonCommon,
@@ -13,14 +13,15 @@ import {
 	InputPasswordCommon,
 } from "src/common";
 import { useReduxDispatch } from "src/redux/redux-hook";
-import { signIn, signInGG } from "src/redux/slice/UserSilce";
+import { signIn, signInGGNew } from "src/redux/slice/UserSilce";
 import { BaseReponseType } from "src/types/ApiType";
-import { COOKIES_NAME } from "src/utils/contants";
+import { COOKIES_NAME, ROUTE } from "src/utils/contants";
 import SuspenseLoading from "../SuspenseLoading/SuspenseLoading";
 import "./SignInContent.scss";
-import { GGAPI_NORMAL } from "./../../utils/contants";
-import { checkIsTDTEmail } from "src/utils/function";
-import { GoogleLogin } from "react-google-login";
+// import { GGAPI_TDTU } from "./../../utils/contants";
+// import { checkIsTDTEmail } from "src/utils/function";
+// import { GoogleLogin } from "react-google-login";
+import { useGoogleLogin, TokenResponse } from "@react-oauth/google";
 import { UserAccount } from "src/types/Type";
 type Props = {};
 type SignUpForm = {
@@ -37,58 +38,33 @@ const SignInContent = (props: Props) => {
 	]);
 	const natigate = useNavigate();
 
-	const loginWithNormalGGSuccess = (
-		response: GoogleLoginResponse | GoogleLoginResponseOffline
-	) => {
-		if ("code" in response) {
-			message.error("Sign in fail");
-			return;
-		}
-		if (checkIsTDTEmail(response.profileObj.email)) {
-			message.error(
-				"you are sign in with tdtu google account please choose Sign In With TDT"
-			);
-			return;
-		}
-		dispatch(
-			signInGG({
-				payload: {
-					token: response.tokenId,
-					googleId: response.googleId,
-					is_tdtu: true,
-				},
-				callback,
-			})
-		);
-	};
+	// const loginWithTDTGGSuccess = (
+	// 	response: GoogleLoginResponse | GoogleLoginResponseOffline
+	// ) => {
+	// 	if ("code" in response) {
+	// 		message.error("Sign in fail");
+	// 		return;
+	// 	}
+	// 	if (!checkIsTDTEmail(response.profileObj.email)) {
+	// 		message.error("Please sign in with TDTU google account");
+	// 		return;
+	// 	}
+	// 	dispatch(
+	// 		signInGG({
+	// 			payload: {
+	// 				token: response.tokenId,
+	// 				googleId: response.googleId,
+	// 				is_tdtu: true,
+	// 			},
+	// 			callback,
+	// 		})
+	// 	);
+	// };
 
-	const loginWithTDTGGSuccess = (
-		response: GoogleLoginResponse | GoogleLoginResponseOffline
-	) => {
-		if ("code" in response) {
-			message.error("Sign in fail");
-			return;
-		}
-		if (!checkIsTDTEmail(response.profileObj.email)) {
-			message.error("Please sign in with TDTU google account");
-			return;
-		}
-		dispatch(
-			signInGG({
-				payload: {
-					token: response.tokenId,
-					googleId: response.googleId,
-					is_tdtu: true,
-				},
-				callback,
-			})
-		);
-	};
-
-	const loginWithGGFail = (res: any) => {
-		console.log(res);
-		message.error("Sign in fail");
-	};
+	// const loginWithGGFail = (res: any) => {
+	// 	console.log(res);
+	// 	message.error("Sign in fail");
+	// };
 
 	const callback = (
 		isSuccess: boolean,
@@ -117,27 +93,44 @@ const SignInContent = (props: Props) => {
 		dispatch(signIn({ payload: value, callback }));
 	};
 
-	const onSignInNomal = (renderProps: any) => (
-		<ButtonCommon
-			onClick={renderProps.onClick}
-			disabled={renderProps.disabled}
-			size="small"
-			type="secondary"
-		>
-			Sign In With Google
-		</ButtonCommon>
-	);
+	// const onSignInTDT = (renderProps: any) => (
+	// 	<ButtonCommon
+	// 		onClick={renderProps.onClick}
+	// 		disabled={renderProps.disabled}
+	// 		size="small"
+	// 		type="secondary"
+	// 	>
+	// 		Sign In With TDTU Google Account
+	// 	</ButtonCommon>
+	// );
 
-	const onSignInTDT = (renderProps: any) => (
-		<ButtonCommon
-			onClick={renderProps.onClick}
-			disabled={renderProps.disabled}
-			size="small"
-			type="secondary"
+	const onForgotPasswordClick = () => {
+		natigate(ROUTE.FORGOT_PASSWORD);
+	};
+	const onLoginGGSuccess = (
+		tokenResponse: Omit<
+			TokenResponse,
+			"error" | "error_description" | "error_uri"
 		>
-			Sign In With TDTU Google Account
-		</ButtonCommon>
-	);
+	) => {
+		dispatch(
+			signInGGNew({
+				payload: {
+					access_token: tokenResponse.access_token,
+				},
+				callback,
+			})
+		);
+	};
+
+	const login = useGoogleLogin({
+		onSuccess: onLoginGGSuccess,
+		prompt: "select_account",
+	});
+
+	const handleLoginGG = () => {
+		login();
+	};
 
 	return (
 		<div className="sign-in-content">
@@ -179,22 +172,31 @@ const SignInContent = (props: Props) => {
 							</ButtonCommon>
 						</div>
 						<div className="login-with-gg">
-							<GoogleLogin
-								clientId={GGAPI_NORMAL}
-								buttonText="Login"
-								onSuccess={loginWithNormalGGSuccess}
-								onFailure={loginWithGGFail}
-								cookiePolicy={"single_host_origin"}
-								render={onSignInNomal}
-							/>
-							<GoogleLogin
-								clientId={GGAPI_NORMAL}
+							{/* <GoogleLogin
+								clientId={GGAPI_TDTU}
 								buttonText="Login TDT"
 								onSuccess={loginWithTDTGGSuccess}
 								onFailure={loginWithGGFail}
 								cookiePolicy={"single_host_origin"}
 								render={onSignInTDT}
-							/>
+								prompt="select_account"
+							/> */}
+							<ButtonCommon
+								onClick={handleLoginGG}
+								size="small"
+								type="secondary"
+							>
+								Sign In With TDTU Google Account
+							</ButtonCommon>
+						</div>
+						<div className="forgot-password">
+							<div
+								className="forgot-password-content"
+								onClick={onForgotPasswordClick}
+							>
+								{" "}
+								Forgot password?
+							</div>
 						</div>
 					</div>
 				</React.Suspense>

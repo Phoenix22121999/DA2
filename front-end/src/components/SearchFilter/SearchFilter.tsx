@@ -13,6 +13,7 @@ import { useReduxDispatch } from "src/redux/redux-hook";
 import { updatePrameterAndSearchPost } from "src/redux/slice/SearchPostSlide";
 import { LocationCode } from "src/types/LocationType";
 import SuspenseLoading from "../SuspenseLoading/SuspenseLoading";
+import SearchGender from "./SearchGender/SearchGender";
 type Props = {
 	isOpen: boolean;
 };
@@ -74,6 +75,13 @@ const SearchFilter = ({ isOpen }: Props) => {
 		});
 	};
 
+	const handleGenderChange = (value: number) => {
+		setSearchParams({
+			...searchParams,
+			gender: value,
+		});
+	};
+
 	const handleDatePostChange = (value: string) => {
 		setSearchParams({
 			...searchParams,
@@ -107,6 +115,9 @@ const SearchFilter = ({ isOpen }: Props) => {
 				</div>
 				<div className="search-filter-item">
 					<SearchJobType handleChange={handleJobTypeChange} />
+				</div>
+				<div className="search-filter-item">
+					<SearchGender handleChange={handleGenderChange} />
 				</div>
 				<div className="search-filter-item">
 					<SearchDatePost handleChange={handleDatePostChange} />

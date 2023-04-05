@@ -9,22 +9,22 @@
 	padding: 1rem;
 	border: 2px transparent solid;
 	@include v.text-base;
-	color: v.$info-background;
+	color: v.$dark-blue;
 	font-weight: bold;
 	cursor: pointer;
 	margin-bottom: 1.4rem;
-	color: v.$primary-background;
-	transition: all 0.5s;
+	// color: v.$primary-background;
+	transition: all 0.3s;
 	height: 6rem;
 	.dashboard-sidebar-item-icon {
 		margin-right: 2.4rem;
 		@include v.text-2xl;
-		transition: all 0.5s;
+		// transition: all 0.5s;
 	}
 	.dashboard-sidebar-item-title {
 		overflow: hidden;
 		width: initial;
-		transition: all 1s;
+		// transition: all 1s;
 	}
 	&:hover {
 		border-color: transparent;

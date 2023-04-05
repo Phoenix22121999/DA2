@@ -8,8 +8,7 @@ export default function Banner(props: BannerProps) {
 		<section className="banner">
 			<div className="container">
 				<div className="title">
-					<span className="primary-text">1500+</span> Jobs posted last
-					week
+					Find your <span className="primary-text">dream </span>job
 				</div>
 				<div
 					style={{

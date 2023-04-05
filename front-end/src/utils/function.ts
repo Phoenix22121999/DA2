@@ -73,6 +73,7 @@ export const formValueToCreatePostParameters = (
 		district_code: value.district_code,
 		ward_code: value.ward_code,
 		address: value.address,
+		is_active: value.is_active,
 		list_job_type: value.jobTypeList.map((id) => {
 			return { job_type_id: id };
 		}),
@@ -97,6 +98,7 @@ export const formValueToUpdatePostParameters = (
 		district_code: value.district_code,
 		ward_code: value.ward_code,
 		address: value.address,
+		is_active: value.is_active,
 		gender: Number(value.gender),
 		list_job_type: value.jobTypeList.map((id) => {
 			return { job_type_id: id };

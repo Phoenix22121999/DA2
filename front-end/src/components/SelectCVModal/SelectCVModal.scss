@@ -19,8 +19,10 @@
 		}
 	}
 	.select-cv-not-candidate {
+		.select-cv-noti-message {
+			margin: 2rem 0;
+		}
 		.button-group {
-			margin-top: 2rem;
 			width: 100%;
 			display: flex;
 			justify-content: flex-end;
@@ -37,6 +39,7 @@
 			@include v.text-base;
 			margin-bottom: 2rem;
 		}
+
 		.button-group {
 			margin-top: 2rem;
 			width: 100%;

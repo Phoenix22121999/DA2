@@ -40,7 +40,7 @@ model User_Account {
   first_name        String?
   last_name         String?
   full_name         String?
-  email             String?
+  email             String              @unique
   number_phone      String?
   age               Int?
   gender            Int?
@@ -53,10 +53,19 @@ model User_Account {
   ward_code         String?
   avartar           String?
   logo              String?
+  birthday          String?
+  birthday_month    String?
+  birthday_year     String?
+  description        String?              @db.NVarChar(max)
+  user_education    User_Education[]
+  user_experience    User_Experience []
+  user_achievement    User_Achievement []
+  user_project        User_Project []
   profile           Apply_Profile[]
   post              Recruitment_Post[]
   cv                cv[]
   History_Apply_Job History_Apply_Job[]
+  Recruitment_Post_User_Like Recruitment_Post_User_Like[]
 }
 
 // Bảng người dùng ứng viên
@@ -177,7 +186,7 @@ model Apply_Profile {
 
 model Recruitment_Post {
   id                BigInt                      @id @default(autoincrement())
-  content           String                      @db.NVarChar(4000)
+  content           String                      @db.NVarChar(max)
   title             String
   recuiter_id       BigInt
   user              User_Account                @relation(fields: [recuiter_id], references: [id])
@@ -202,6 +211,7 @@ model Recruitment_Post {
   post_job_types    Recruitment_Post_Job_Type[]
   post_majors       Recruitment_Post_Majors[]
   History_Apply_Job History_Apply_Job[]
+  Recruitment_Post_User_Like Recruitment_Post_User_Like[]
 }
 
 model History_Apply_Job {
@@ -356,3 +366,105 @@ model wards {
   Recruitment_Post       Recruitment_Post[]
   User_Account           User_Account[]
 }
+
+model Recruitment_Post_User_Like {
+  id BigInt @id @default(autoincrement())
+  user_account User_Account @relation(fields: [user_id] , references: [id] , onDelete: NoAction , onUpdate: NoAction)
+  user_id BigInt
+  Recruitment_Post Recruitment_Post @relation(fields: [post_id], references: [id], onDelete: NoAction , onUpdate: NoAction)
+  post_id BigInt
+  create_date       DateTime?                   @default(now())
+  create_user       String?
+  update_date       DateTime?
+  update_user       String?
+  delete_date       DateTime?
+  delete_user       String?
+  is_delete         Boolean                     @default(false)
+  is_active         Boolean                     @default(true)
+
+  @@unique([post_id, user_id])
+}
+
+model User_Education {
+    id BigInt @id @default(autoincrement())
+    name_school       String 
+    year_start        String?
+    year_end          String?
+    month_start       String?
+    month_end         String?
+    description       String?                     @db.NVarChar(4000)
+    create_date       DateTime?                   @default(now())
+    create_user       String?
+    update_date       DateTime?
+    update_user       String?
+    delete_date       DateTime?
+    delete_user       String?
+    is_delete         Boolean                     @default(false)
+    is_active         Boolean                     @default(true)
+    user_id           BigInt
+    user              User_Account        @relation(fields: [user_id], references: [id])
+    majors            String?
+
+}
+
+model User_Experience {
+      id BigInt @id @default(autoincrement())
+      name_company       String 
+      year_start        String
+      year_end          String?
+      month_start        String?
+      month_end          String?
+      description          String?                      @db.NVarChar(4000)
+      create_date       DateTime?                   @default(now())
+      create_user       String?
+      update_date       DateTime?
+      update_user       String?
+      delete_date       DateTime?
+      position          String?
+      delete_user       String?
+      is_delete         Boolean                     @default(false)
+      is_active         Boolean                     @default(true)
+      user_id           BigInt
+      user              User_Account        @relation(fields: [user_id], references: [id])
+}
+
+
+model User_Achievement {
+      id BigInt @id @default(autoincrement())
+      name_achievement  String 
+      year              String?
+      month             String?
+      description       String?                      @db.NVarChar(4000)
+      create_date       DateTime?                   @default(now())
+      create_user       String?
+      update_date       DateTime?
+      update_user       String?
+      delete_date       DateTime?
+      delete_user       String?
+      is_delete         Boolean                     @default(false)
+      is_active         Boolean                     @default(true)
+      user_id           BigInt
+      user              User_Account        @relation(fields: [user_id], references: [id])
+}
+
+
+model User_Project {
+      id BigInt @id @default(autoincrement())
+      name_project  String 
+      year_start        String?
+      year_end          String?
+      month_start        String?
+      month_end          String?
+      description       String?                      @db.NVarChar(4000)
+      create_date       DateTime?                   @default(now())
+      create_user       String?
+      update_date       DateTime?
+      update_user       String?
+      delete_date       DateTime?
+      delete_user       String?
+      is_delete         Boolean                     @default(false)
+      is_active         Boolean                     @default(true)
+      user_id           BigInt
+      user              User_Account        @relation(fields: [user_id], references: [id])
+}
+

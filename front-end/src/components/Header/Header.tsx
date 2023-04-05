@@ -10,7 +10,7 @@ import "./Header.scss";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 import { Link, useNavigate } from "react-router-dom";
-import { COOKIES_NAME, GGAPI_NORMAL, ROUTE } from "src/utils/contants";
+import { COOKIES_NAME, ROUTE } from "src/utils/contants";
 import { useCookies } from "react-cookie";
 import { useReduxDispatch } from "src/redux/redux-hook";
 import {
@@ -22,7 +22,15 @@ import { useUserAuth } from "src/hooks/useUserAuth";
 import { resetSignUp } from "src/redux/slice/SignUpSlice";
 import { CallbackFunction } from "src/types/UtilType";
 import { ButtonCommon } from "src/common";
-import { useGoogleLogout } from "react-google-login";
+// import { useGoogleLogout } from "react-google-login";
+import HeaderAvatar from "../HeaderAvatar/HeaderAvatar";
+import { googleLogout } from "@react-oauth/google";
+import { resetApplyHistory } from "src/redux/slice/ApplyHistorySlide";
+import { resetBookmark } from "src/redux/slice/BookmarkSlide";
+import { resetCV } from "src/redux/slice/CVSlide";
+import { resetPost } from "src/redux/slice/PostSlide";
+import { resetSearch } from "src/redux/slice/SearchPostSlide";
+import { resetResume } from "src/redux/slice/UserResumeSilce";
 
 type HeaderProps = {};
 const HEADER_ITEM = [
@@ -45,46 +53,16 @@ export const AppHeader = (props: HeaderProps) => {
 		COOKIES_NAME.ACCESS_TOKEN,
 		COOKIES_NAME.USER,
 	]);
-	const { isAuth, user, accessToken } = useUserAuth();
+	const { isAuth, accessToken } = useUserAuth();
 	const navidate = useNavigate();
 	const dispatch = useReduxDispatch();
-	const { signOut: signOutGG } = useGoogleLogout({
-		clientId: GGAPI_NORMAL || "",
-		onLogoutSuccess: () => {},
-	});
+	// const { signOut: signOutGG } = useGoogleLogout({
+	// 	clientId: GGAPI_NORMAL || "",
+	// 	onLogoutSuccess: () => {},
+	// });
 	const itemList = useMemo(() => {
-		if (user.user_type_id === 2 && isAuth) {
-			return [
-				...HEADER_ITEM,
-				{
-					key: "cadidate",
-					link: "/cadidate/profile",
-					title: "Cadidate",
-				},
-			];
-		}
-		if (user.user_type_id === 3 && isAuth) {
-			return [
-				...HEADER_ITEM,
-				{
-					key: "recruiter",
-					link: "/recruiter/profile",
-					title: "Recruiter",
-				},
-			];
-		}
-		if (user.user_type_id === 1 && isAuth) {
-			return [
-				...HEADER_ITEM,
-				{
-					key: "admin",
-					link: "/admin/",
-					title: "Admin",
-				},
-			];
-		}
 		return HEADER_ITEM;
-	}, [user, isAuth]);
+	}, []);
 
 	const callback: CallbackFunction<null> = useCallback(
 		(isSuccess) => {
@@ -124,8 +102,16 @@ export const AppHeader = (props: HeaderProps) => {
 		removeCookie(COOKIES_NAME.ACCESS_TOKEN);
 		removeCookie(COOKIES_NAME.USER);
 
-		signOutGG();
+		// signOutGG();
+		googleLogout();
+
 		dispatch(resetUser());
+		dispatch(resetApplyHistory());
+		dispatch(resetBookmark());
+		dispatch(resetCV());
+		dispatch(resetPost());
+		dispatch(resetSearch());
+		dispatch(resetResume());
 	};
 
 	const signUp = () => {
@@ -153,14 +139,15 @@ export const AppHeader = (props: HeaderProps) => {
 				{/* <div className="button-group"> */}
 				{isAuth ? (
 					<>
-						<div className="header-username">{user.username}</div>
+						<HeaderAvatar signOut={signOut}></HeaderAvatar>
+						{/* <div className="header-username">{user.username}</div>
 						<ButtonCommon
 							className="login"
 							size="small"
 							onClick={signOut}
 						>
 							Sign out
-						</ButtonCommon>
+						</ButtonCommon> */}
 					</>
 				) : (
 					<>

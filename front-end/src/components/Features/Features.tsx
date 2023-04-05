@@ -5,23 +5,19 @@ type FeaturesProps = {};
 const contents: FeatureItemProps[] = [
 	{
 		title: "Searching",
-		content:
-			"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut, beatae!",
+		content: "Search jobs based on majors, job types",
 	},
 	{
 		title: "Applying",
-		content:
-			"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut, beatae!",
+		content: "Apply for the job position that's right for you",
 	},
 	{
 		title: "Security",
-		content:
-			"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut, beatae!",
+		content: "Your data is secure, not given to third parties",
 	},
 	{
 		title: "Notifications",
-		content:
-			"Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut, beatae!",
+		content: "Receive email notifications of changes",
 	},
 ];
 export const Features = (props: FeaturesProps) => {

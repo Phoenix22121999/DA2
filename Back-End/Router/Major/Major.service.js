@@ -1,6 +1,8 @@
 const { PrismaClient } = require("@prisma/client");
 const gateToken = require("../../Middleware/Middleware");
-const moment = require("moment-timezone");
+let moment = require("moment-timezone");
+moment().tz("Asia/Ho_Chi_Minh").format();
+
 BigInt.prototype.toJSON = function () {
 	return this.toString();
 };
@@ -70,7 +72,7 @@ const createMajor = async (req, res) => {
 				is_active: true,
 				is_delete: false,
 				create_user: user_id,
-				create_date: new Date(moment(new Date()).format("YYYY-MM-DD")),
+				create_date: new Date(moment(new Date()).format("YYYY-MM-DD HH:mm:ss")),
 			},
 		});
 		if (!result) {

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "src/apis/index.api";
 import {
+	CreateCVFromProfileParameters,
 	CreateCVParameters,
 	DeleteCVParameters,
 	DownloadCVParameters,
@@ -11,6 +12,7 @@ import { ActionPayload } from "src/types/UtilType";
 import { RootState } from "../store";
 import { selectUserToken } from "./UserSilce";
 import fileDownload from "js-file-download";
+import { BaseReponseType } from "src/types/ApiType";
 export interface CVType {
 	cvName: string;
 	fileName: string;
@@ -104,6 +106,33 @@ export const downloadCV = createAsyncThunk(
 	}
 );
 
+export const createCVFromProfile = createAsyncThunk(
+	"cv/createCVFromProfile",
+	async (
+		action: ActionPayload<CreateCVFromProfileParameters>,
+		{ getState }
+	) => {
+		try {
+			if (!action.payload) {
+				throw new Error("need payload");
+			}
+			const { name_cv } = action.payload;
+			const token = selectUserToken(getState() as RootState) || "";
+			const rawResponse = await api.cvApi.createCVFromProfile(
+				action.payload,
+				token
+			);
+
+			fileDownload(rawResponse, `${name_cv}.pdf`);
+			action.callback && action.callback(true, null);
+		} catch (err) {
+			action.callback && action.callback(false, null);
+			// return err;
+		}
+		// The value we return becomes the `fulfilled` action payload
+	}
+);
+
 export const getListCV = createAsyncThunk(
 	"cv/get-list",
 	async (action: ActionPayload, { getState }) => {
@@ -119,11 +148,37 @@ export const getListCV = createAsyncThunk(
 	}
 );
 
+export const getListCVById = createAsyncThunk(
+	"cv/get-list-by-id",
+	async (
+		action: ActionPayload<number, BaseReponseType<CV[]>>,
+		{ getState }
+	) => {
+		if (!action.payload) {
+			throw new Error("need payload");
+		}
+		const token = selectUserToken(getState() as RootState) || "";
+		const response = await api.cvApi.getListById(action.payload, token);
+		if (response.code !== 200) {
+			action.callback && action.callback(false, null);
+		} else {
+			action.callback && action.callback(true, response);
+		}
+		return response;
+		// The value we return becomes the `fulfilled` action payload
+	}
+);
+
 export const cvSlice = createSlice({
 	name: "cv",
 	initialState,
 	reducers: {
 		// Use the PayloadAction type to declare the contents of `action.payload`
+		resetCV: (state) => {
+			state.data = [];
+			state.currentStep = 0;
+			state.status = "idle";
+		},
 	},
 	extraReducers: (buider) => {
 		buider
@@ -149,12 +204,14 @@ export const cvSlice = createSlice({
 				}
 			})
 			.addCase(getListCV.fulfilled, (state, action) => {
-				state.data = action.payload.data!;
+				if (action.payload.data) {
+					state.data = action.payload.data!;
+				}
 			});
 	},
 });
 
-// export const {} = cvSlice.actions;
+export const { resetCV } = cvSlice.actions;
 export const selectCVList = (state: RootState) => state.cv.data;
 
 export const cvReducer = cvSlice.reducer;

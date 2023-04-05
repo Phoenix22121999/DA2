@@ -6,6 +6,7 @@ export type AuthUser = {
 	user_id: number;
 	user_type_id: number;
 	google_id?: string;
+	is_active: boolean;
 };
 export type OptionalAuthUser = Partial<AuthUser>;
 
@@ -33,6 +34,10 @@ export type SignInGGParameters = {
 	token: string;
 	is_tdtu: boolean;
 	googleId: string;
+};
+
+export type SignInGGNewParameters = {
+	access_token: string;
 };
 
 export type ChangePasswordParameters = {

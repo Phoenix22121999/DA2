@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* body{
+            font-family: 'Times New Roman', Times, serif;
+            zoom: 50%;
+        } */
+        p, h3, h4, h5{
+            margin: 7px 0;
+            font-size: 14px;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-left {
+            text-align: left;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .border-solid {
+            border: 1px solid black;
+        }
+        .col-4 {
+            float: left;
+            width: 33.33%;
+            text-align: center;
+        }
+        .col-4-custom {
+            float: left;
+            width: 33.33%;
+        }
+        .description {
+            margin-top: 20px;
+            margin-left: 40px;
+            position: relative;
+            height: 200px;
+            width: 60%;
+        }
+        .row {
+            display: table;
+            width: 100%;
+        }
+        .address-date {
+            text-align: right;
+            margin-right: 4%;
+            margin-top: 3%;
+        }
+        .style-list {
+            list-style-type: none;
+        }
+        .left-column {
+            float: left;
+            width: 30%;
+        }
+        .right-column {
+            float: left;
+            width: 70%;
+        }
+        .pos-flex {
+            position: flex;
+        }
+        .container {
+            margin: 10px;
+            padding: 10px;
+        }
+        .font-size-print {
+            font-size: 14px;
+        }
+        .pd-mg {
+            padding: 0;
+            margin: 0;
+        }
+        .mb-0 {
+            margin-bottom: 0;
+        }
+        h1{
+            font-size: 16px;
+        }
+        .text-name h2{
+            font-size: 14px;
+        }
+        .text-underline {
+            text-decoration: underline;
+        }
+        .bw_txt_right{
+            text-align: right !important;
+        }
+        .bw_container{
+            display: flex !important;
+            max-width: 100%;
+            margin: 0 auto;         
+            flex-direction: row !important;
+        }
+
+        .bw_container_end{
+            max-width: 90%;
+            margin: 0 auto;
+        }
+        .bw_i_receiver span{
+            font-weight: bold;
+            display: inline-block;
+            width: 120px;
+        }
+        ul li{
+            list-style: none;
+            margin: 7px 0;
+            font-size: 14px;
+        }
+        table.packing{
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid black;
+            border-right: 0;
+            text-align: center;
+            border-bottom: 0;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        table.packing tr td, table th{
+            padding: 3px 3px;
+            border-bottom: 1px solid black;
+            border-right: 1px solid black;
+            font-size: 14px;
+        }
+        table.packing th{
+            font-size: 14px;
+        }
+        .bw_w_50{
+            width: 33%;
+            float: left;
+        }
+        .bw_txt_center{
+            text-align: center !important;
+        }
+        .bw_bold{
+            font-weight: bold;
+        }
+        .flex { 
+            display: flex !important;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 100%;
+        }
+        .half {
+            width: 50%;
+        }
+
+    </style>
+</head>
+<body>
+    <table style="font-family:Helvetica,san-serif;background: #f8f8f8; padding: 30px 20px; background-size: 100% auto;" width="100%">
+        <tbody>
+            <tr>
+                <td>
+                    <table align="center" bgcolor="white" cellpadding="0" cellspacing="0" style="margin:30px auto;width:100%;max-width:750px;">
+                        <tbody>
+                            <tr>
+                                <td style="padding: 0px 30px; padding-bottom: 30px;">
+                                    <table style="font-size:15px" width="100%">
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="3" style="font-size:20px;font-weight:bold; padding: 20px 0; text-align: center;">Bạn vừa gửi 1 yêu cầu cấp lại tên đăng nhập tại <span style="color:#11B6EF">TDTU Job Portal</span></td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td colspan="3"  style="font-size: 14px; color: #555;">
+                                                    <p style="margin: 0; padding: 0; color: #011134; font-size: 16px; padding-top: 10px; line-height: 22px;">TDTU Job Portal rất vui lòng hỗ trợ bạn và mong là chính bạn gửi yêu cầu này để cấp lại tên đăng nhập. Tên đăng nhập của bạn là :</p>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                            <tr>
+                                                <td colspan="3" style="padding: 10px 0; background: #f2f2f2; text-align: center; font-size: 30px;">
+                                                    <b><%= username %></b>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td colspan="3" >
+                                                    <p style="margin: 0; padding: 0; color: #011134; font-size: 16px; padding: 10px; line-height: 25px; text-align: center;">TDTU Job Portal cảm ơn và rất mong tiếp tục nhận sự đóng góp của các bạn!</p>
+                                                </td>
+                                            </tr>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+
+

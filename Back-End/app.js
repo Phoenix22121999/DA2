@@ -19,7 +19,7 @@ app.use(helmet());
 app.use("/api", router);
 
 // Static file     
-app.use(express.static(path.join(__dirname, 'Upload/file'), { index: false }));
+app.use(express.static('Upload'));
 
 
 

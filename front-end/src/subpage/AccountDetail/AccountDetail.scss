@@ -1,0 +1,13 @@
+@use "../../styles/variables" as v;
+.account-warpper {
+	margin: 4rem 0;
+	width: 100%;
+	.account-title {
+		display: flex;
+		justify-content: center;
+		color: v.$primary-background;
+		@include v.text-2xl;
+		font-weight: 700;
+		margin-bottom: 1rem;
+	}
+}

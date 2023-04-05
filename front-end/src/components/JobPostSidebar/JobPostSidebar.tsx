@@ -19,9 +19,17 @@ import {
 	formatLocation,
 	inputNumberFormatter,
 } from "src/utils/function";
-interface Props extends Partial<DetailRecruitmentPost> {}
+import { GENDER } from "src/utils/contants";
+interface Props extends Partial<DetailRecruitmentPost> {
+	isHideIcon?: boolean;
+	isHorizontal?: boolean;
+}
 
-const JobPostSidebar = (props: Props) => {
+const JobPostSidebar = ({
+	isHideIcon = false,
+	isHorizontal = false,
+	...props
+}: Props) => {
 	const jobOverview: JobOverviewItemProps[] = useMemo(() => {
 		const overview = [
 			{
@@ -65,7 +73,9 @@ const JobPostSidebar = (props: Props) => {
 			{
 				icon: <GenderIcon />,
 				name: "Gender",
-				content: props.gender?.toString() || "",
+				content: props.gender
+					? GENDER[props.gender as keyof typeof GENDER]
+					: "",
 			},
 		];
 		return overview;
@@ -103,7 +113,12 @@ const JobPostSidebar = (props: Props) => {
 				<div className="job-sidebar-title">Job Overview</div>
 				<div className="job-overview-content">
 					{jobOverview.map((item) => (
-						<JobOverviewItem key={item.name} {...item} />
+						<JobOverviewItem
+							key={item.name}
+							{...item}
+							isHideIcon={isHideIcon}
+							isHorizontal={isHorizontal}
+						/>
 					))}
 				</div>
 			</div>

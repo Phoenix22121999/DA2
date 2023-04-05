@@ -22,7 +22,7 @@ const AllApplicantActions = ({ record, handleViewPdf }: Props) => {
 		dispatch(
 			downloadCV({
 				payload: {
-					id_cv: record.id,
+					cv_id: record.id,
 					file_name: record.cv.file_name,
 					ext: record.cv.file_name_hash.split(".")[1],
 				},

@@ -5,16 +5,30 @@ import { DetailHistoryApplyJob } from "src/types/CombineType";
 import useGetApplyHistory from "../../hooks/useGetApplyHistory";
 import AppliedJobActions from "./AppliedJobActions/AppliedJobActions";
 
-type Props = {};
+type Props = {
+	isHideTitle?: boolean;
+	isHideAction?: boolean;
+	isUseCustomData?: boolean;
+	customData?: DetailHistoryApplyJob[];
+};
 
-const AppliedJobs = (props: Props) => {
-	const { applyHistory } = useGetApplyHistory();
+const AppliedJobs = ({
+	isHideAction = false,
+	isHideTitle = false,
+	isUseCustomData = false,
+	customData = [],
+}: Props) => {
+	const { applyHistory } = useGetApplyHistory(isUseCustomData);
+
 	return (
 		<div className="applied-jobs">
-			<div className="dashboard-title">Applied Job</div>
+			{!isHideTitle && <div className="dashboard-title">Applied Job</div>}
 			<React.Suspense fallback={<SuspenseLoading size="medium" />}>
 				<div className="inner-content">
-					<TableCommon dataSource={applyHistory}>
+					<TableCommon
+						dataSource={isUseCustomData ? customData : applyHistory}
+						rowKey="id"
+					>
 						<ColumnCommon
 							title="Post"
 							dataIndex={["Recruitment_Post", "title"]}
@@ -39,14 +53,18 @@ const AppliedJobs = (props: Props) => {
 								);
 							}}
 						/>
-						<ColumnCommon<DetailHistoryApplyJob>
-							title="Action"
-							key="action"
-							width={"10%"}
-							render={(_, record) => {
-								return <AppliedJobActions record={record} />;
-							}}
-						/>
+						{!isHideAction && (
+							<ColumnCommon<DetailHistoryApplyJob>
+								title="Action"
+								key="action"
+								width={"10%"}
+								render={(_, record) => {
+									return (
+										<AppliedJobActions record={record} />
+									);
+								}}
+							/>
+						)}
 					</TableCommon>
 				</div>
 			</React.Suspense>

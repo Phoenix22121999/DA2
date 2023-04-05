@@ -1,6 +1,6 @@
 import React from "react";
 import "./Recruitment.scss";
-import RecruiterImage from "../../assets/images/good-job.jpg";
+import RecruiterImage from "../../assets/images/interview2.jpg";
 import CandidateImage from "../../assets/images/word.jpg";
 import { ButtonCommon } from "src/common";
 import { useUserAuth } from "src/hooks/useUserAuth";
@@ -30,19 +30,15 @@ const Recruitment = (props: RecruitmentProps) => {
 	return (
 		<div className="recruitment">
 			<div className="recruitment-warpper container">
-				{/* <div className="recruitment-candidate"> */}
 				<div className="image candidate-image">
 					<img src={CandidateImage} alt="CandidateImage" />
 				</div>
 				<div className="content candidate-content">
-					<div className="title">Create your profile</div>
+					<div className="title">Uppload your CV</div>
 					<div className="description">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit.
-						Vel, fuga deserunt eligendi nisi magni recusandae sint
-						animi suscipit excepturi voluptates error beatae amet
-						laborum esse ipsa tempora alias totam quis illo iusto
-						dignissimos incidunt dolor adipisci! Quas adipisci
-						provident qui!
+						If you are a candidate you can easily create a candidate
+						account to start posting your CVs, you can use those CVs
+						to upload to job postings that you see fit.
 					</div>
 					<div>
 						<ButtonCommon size="large" onClick={onUploadCV}>
@@ -50,18 +46,14 @@ const Recruitment = (props: RecruitmentProps) => {
 						</ButtonCommon>
 					</div>
 				</div>
-				{/* </div> */}
 				<div className="or">OR</div>
-				{/* <div className="recruitment-recruiter"> */}
 				<div className="content recruiter-content">
 					<div className="title">Create your recruitment post</div>
 					<div className="description">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit.
-						Vel, fuga deserunt eligendi nisi magni recusandae sint
-						animi suscipit excepturi voluptates error beatae amet
-						laborum esse ipsa tempora alias totam quis illo iusto
-						dignissimos incidunt dolor adipisci! Quas adipisci
-						provident qui!
+						If you are an recruiter, you can easily sign up for an
+						account and start posting jobs and wait for candidates
+						to apply, we will notify you as soon as a candidate
+						applies.
 					</div>
 					<div>
 						<ButtonCommon

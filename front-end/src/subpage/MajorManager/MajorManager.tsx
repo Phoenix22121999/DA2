@@ -43,7 +43,7 @@ const MajorManager = (props: Props) => {
 
 	return (
 		<div>
-			<div className="dashboard-title">Job Type Manager</div>
+			<div className="dashboard-title">Major Manager</div>
 			<div className="button-add-action">
 				<ButtonCommon size="small" onClick={open}>
 					Add Major
