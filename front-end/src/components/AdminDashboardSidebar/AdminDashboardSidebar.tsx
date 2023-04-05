@@ -18,15 +18,19 @@ type Props = {
 const ITEMS: DashboardSidebarItemProps[] = [
 	{
 		icon: <UserOutlined />,
+<<<<<<< HEAD
 		title: "Dashboard",
 		path: ROUTE.ADMIN_DASHBOARD,
 	},
 	{
 		icon: <UserOutlined />,
+=======
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 		title: "Account Manager",
 		path: ROUTE.ADMIN_ACCOUNT,
 	},
 	{
+<<<<<<< HEAD
 		icon: <UserOutlined />,
 		title: "Request Manager",
 		path: ROUTE.ADMIN_REQUEST,
@@ -37,6 +41,8 @@ const ITEMS: DashboardSidebarItemProps[] = [
 		path: ROUTE.ADMIN_ALL_POST,
 	},
 	{
+=======
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 		icon: <SnippetsOutlined />,
 		title: "User Type",
 		path: ROUTE.ADMIN_ACCOUNT_TYPE,

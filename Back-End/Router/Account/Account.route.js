@@ -29,6 +29,7 @@ router.post("/account-update-by-id", checkToken, AccoutService.updateById);
 router.post("/change-password", checkToken, AccoutService.changePassword);
 
 router.post("/sign-in-google", AccoutService.signInWithGoogle);
+<<<<<<< HEAD
 router.post("/sign-in-google-new", AccoutService.signInWithGoogleNew);
 
 router.post("/forgot-password", AccoutService.forgotPassword);
@@ -42,5 +43,7 @@ router.post(
 router.post("/forgot-username", AccoutService.forgotUsername);
 
 router.post("/review", checkToken, AccoutService.reviewUser);
+=======
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 
 module.exports = router;

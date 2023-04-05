@@ -26,7 +26,11 @@ function useGetApplyHistory(isDisable: boolean = false) {
 		if (isDisable) {
 			return;
 		}
+<<<<<<< HEAD
 		setFirst(false);
+=======
+		setFirst(first);
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 		if (lastID === user_type_id && applyHistory.length > 0) {
 			return;
 		}

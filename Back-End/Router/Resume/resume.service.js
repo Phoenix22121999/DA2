@@ -171,6 +171,49 @@ const getListResumeById = async (req, res) => {
 	}
 };
 
+const getListResumeById = async (req, res) => {
+	try {
+		let { user_id } = req.query;
+		if (!user_id) {
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Người dùng không hợp lệ",
+			});
+		}
+		let resultListResume = await prisma.cv.findMany({
+			where: {
+				AND: [
+					{
+						user_id: Number(user_id),
+						is_active: true,
+						is_delete: false,
+					},
+				],
+			},
+		});
+		if (resultListResume && resultListResume.length < 0) {
+			return res.json({
+				code: 400,
+				message: "Bạn chưa có danh sách CV",
+				status_resposse: false,
+			});
+		}
+		return res.json({
+			code: 200,
+			message: "Lấy danh sách thành công",
+			status_resposse: true,
+			data: resultListResume,
+		});
+	} catch (error) {
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+};
+
 const createCV = async (req, res) => {
 	try {
 		let {
@@ -988,6 +1031,110 @@ const getHistoryById = async (req, res) => {
 		});
 	}
 };
+const getHistoryById = async (req, res) => {
+	try {
+		let {
+			key_word,
+			item_per_page = 10,
+			page = 1,
+			from_value,
+			to_value,
+			gender,
+			is_content = false,
+			user_id,
+		} = req.query;
+		const result = await prisma.history_Apply_Job.findMany({
+			where: {
+				AND: [
+					{
+						is_active: { equals: true },
+						is_delete: { equals: false },
+						user_id: Number(user_id),
+					},
+				],
+			},
+			take: Number(item_per_page),
+			skip: Number(item_per_page * (page - 1)),
+			include: {
+				user_account: {
+					select: {
+						id: true,
+						full_name: true,
+						user_type_id: true,
+						email: true,
+						number_phone: true,
+						logo: true,
+						address: true,
+						province_code: true,
+						district_code: true,
+						ward_code: true,
+					},
+				},
+				Recruitment_Post: {
+					select: {
+						id: true,
+						content: is_content,
+						title: true,
+						post_job_types: {
+							select: {
+								id: true,
+								job_type: {
+									select: {
+										id: true,
+										job_type_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+						post_majors: {
+							select: {
+								id: true,
+								majors: {
+									select: {
+										id: true,
+										majors_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+					},
+				},
+				cv: {
+					select: {
+						id: true,
+						file_name_hash: true,
+						file_name: true,
+						extname: true,
+						is_active: true,
+						is_delete: true,
+					},
+				},
+			},
+		});
+
+		return res.json({
+			code: 200,
+			message: "Lấy dữ liệu thành công",
+			status_resposse: true,
+			data: result,
+		});
+	} catch (error) {
+		console.log(error.message);
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+};
 
 const getHistoryApplier = async (req, res) => {
 	try {
@@ -1260,6 +1407,138 @@ const getHistoryApplierById = async (req, res) => {
 		});
 	}
 };
+const getHistoryApplierById = async (req, res) => {
+	try {
+		let {
+			key_word,
+			item_per_page = 10,
+			page = 1,
+			from_value,
+			to_value,
+			gender,
+			post_id,
+			is_content = false,
+			user_id,
+		} = req.query;
+		const is_view_history = await prisma.recruitment_Post.findMany({
+			where: {
+				AND: [
+					{
+						is_active: true,
+						is_delete: false,
+						user: {
+							id: Number(user_id),
+						},
+					},
+				],
+			},
+		});
+
+		if (!is_view_history) {
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Bạn không thể xem lịch sử của bài tuyển dụng này",
+			});
+		}
+		// is_view_history
+
+		const result = await prisma.history_Apply_Job.findMany({
+			where: {
+				AND: [
+					{
+						is_active: { equals: true },
+						is_delete: { equals: false },
+						Recruitment_Post: {
+							user: {
+								id: Number(user_id),
+							},
+						},
+					},
+				],
+			},
+			take: Number(item_per_page),
+			skip: Number(item_per_page * (page - 1)),
+			include: {
+				user_account: {
+					select: {
+						id: true,
+						full_name: true,
+						user_type_id: true,
+						email: true,
+						number_phone: true,
+						logo: true,
+						address: true,
+						province_code: true,
+						district_code: true,
+						ward_code: true,
+					},
+				},
+				Recruitment_Post: {
+					select: {
+						id: true,
+						content: is_content,
+						title: true,
+						post_job_types: {
+							select: {
+								id: true,
+								job_type: {
+									select: {
+										id: true,
+										job_type_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+						post_majors: {
+							select: {
+								id: true,
+								majors: {
+									select: {
+										id: true,
+										majors_name: true,
+									},
+								},
+							},
+							where: {
+								is_delete: false,
+								is_active: true,
+							},
+						},
+					},
+				},
+				cv: {
+					select: {
+						id: true,
+						file_name_hash: true,
+						file_name: true,
+						extname: true,
+						is_active: true,
+						is_delete: true,
+					},
+				},
+			},
+		});
+
+		return res.json({
+			code: 200,
+			message: "Lấy dữ liệu thành công",
+			status_resposse: true,
+			data: result,
+		});
+	} catch (error) {
+		console.log(error.message);
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+};
 
 const exportPDF = async (req, res) => {
 	let { name_cv } = req.query;
@@ -1415,6 +1694,9 @@ module.exports = {
 	getListResumeById,
 	getHistoryApplierById,
 	getHistoryById,
+<<<<<<< HEAD
 	getListResumeAll,
 	exportPDF,
+=======
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 };

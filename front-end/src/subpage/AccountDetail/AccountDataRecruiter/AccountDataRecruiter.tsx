@@ -7,11 +7,9 @@ import { BaseReponseType } from "src/types/ApiType";
 import { getRecruiterApplyHistoryById } from "src/redux/slice/ApplyHistorySlide";
 import { DetailHistoryApplyJob } from "src/types/CombineType";
 import SuspenseLoading from "src/components/SuspenseLoading/SuspenseLoading";
-
 type Props = {
 	useId: number;
 };
-
 const AccountDataRecruiter = ({ useId }: Props) => {
 	const [aAList, setAaList] = useState<DetailHistoryApplyJob[]>([]);
 	const dispatch = useReduxDispatch();

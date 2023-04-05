@@ -12,6 +12,7 @@ import { ActionPayload } from "src/types/UtilType";
 import { RootState } from "../store";
 import { selectUserToken } from "./UserSilce";
 import { selectNewPostData } from "./NewPostSlice";
+
 export interface PostType {
 	postName: string;
 	fileName: string;

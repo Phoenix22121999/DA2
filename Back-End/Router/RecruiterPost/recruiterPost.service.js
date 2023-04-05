@@ -170,6 +170,49 @@ const getListPostOfUserById = async (req, res) => {
 		});
 	}
 };
+const getListPostOfUserById = async (req, res) => {
+	try {
+		let { user_id = null, user_type_id = null } = req.query;
+		if (!user_id) {
+			return res.json({
+				code: 400,
+				status_resposse: false,
+				message: "Người dùng không hợp lệ",
+			});
+		}
+		let resultListPost = await prisma.Recruitment_Post.findMany({
+			where: {
+				AND: [
+					{
+						recuiter_id: Number(user_id),
+						is_active: true,
+						is_delete: false,
+					},
+				],
+			},
+		});
+
+		if (resultListPost && resultListPost.length < 0) {
+			return res.json({
+				code: 400,
+				message: "Bạn chưa có danh sách bài đăng tuyển dụng",
+				status_resposse: false,
+			});
+		}
+		return res.json({
+			code: 200,
+			message: "Lấy danh sách bài đăng truyển dụng thành công",
+			status_resposse: true,
+			data: resultListPost,
+		});
+	} catch (error) {
+		return res.json({
+			code: 400,
+			status_resposse: false,
+			message: error.message,
+		});
+	}
+};
 const getListPost = async (req, res) => {
 	let {
 		key_word,
@@ -1453,8 +1496,11 @@ module.exports = {
 	deletePost,
 	getDetail,
 	getListPostOfUserById,
+<<<<<<< HEAD
 	bookMarkPost,
 	unbookMarkPost,
 	getListBookMark,
 	getListBookMarkById,
+=======
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 };

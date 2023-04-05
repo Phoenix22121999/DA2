@@ -56,4 +56,27 @@ export class ApplyHistoryApi extends BaseApi {
 			DetailHistoryApplyJob[]
 		>(`history-applier-post-by-id?${params}`, token, data);
 	}
+	async getCandidateApplyHistoryById(
+		id: number,
+		data: PaginationParameters,
+		token: string
+	) {
+		return this.authGet<PaginationParameters, DetailHistoryApplyJob[]>(
+			`history-apply-by-id?user_id=${id}`,
+			token,
+			data
+		);
+	}
+
+	async getRecruiterApplicantHistoryById(
+		id: number,
+		data: PaginationParameters,
+		token: string
+	) {
+		return this.authGet<PaginationParameters, DetailHistoryApplyJob[]>(
+			`history-applier-post-by-id?user_id=${id}`,
+			token,
+			data
+		);
+	}
 }

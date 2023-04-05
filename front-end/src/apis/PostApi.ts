@@ -52,6 +52,13 @@ export class PostApi extends BaseApi {
 			{}
 		);
 	}
+	async getListPostByUserById(id: number, token: string) {
+		return this.authGet<{}, RecruitmentPost[]>(
+			`list-of-user-by-id?user_id=${id}`,
+			token,
+			{}
+		);
+	}
 	async getPostDetail(data: GetPostDetailParameters) {
 		const params = searchParameterBuilder(data);
 

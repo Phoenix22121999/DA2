@@ -13,6 +13,7 @@ router.get(
 );
 
 router.post("/", checkToken, recruiterPostService.createPost);
+<<<<<<< HEAD
 
 router.put("/", checkToken, recruiterPostService.update);
 
@@ -39,5 +40,13 @@ router.get(
 
 // bookMarkPost,
 // unbookMarkPost
+=======
+
+router.put("/", checkToken, recruiterPostService.update);
+
+router.post("/delete", checkToken, recruiterPostService.deletePost);
+
+router.get("/get-detail", recruiterPostService.getDetail);
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 
 module.exports = router;

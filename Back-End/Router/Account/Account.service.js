@@ -49,6 +49,7 @@ const getListAcccount = async (req, res) => {
 	let { key_word = "", item_per_page = 10, page = 1, is_active } = req.query;
 	try {
 		const listAccount = await prisma.user_Account.findMany({
+<<<<<<< HEAD
 			where: {
 				AND: [
 					{
@@ -64,10 +65,13 @@ const getListAcccount = async (req, res) => {
 			},
 			take: Number(item_per_page),
 			skip: Number(item_per_page * (page - 1)),
+=======
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 			include: {
 				user_type: true,
 			},
 		});
+<<<<<<< HEAD
 		const total = await prisma.user_Account.count({
 			where: {
 				AND: [
@@ -115,6 +119,8 @@ const getListAcccount = async (req, res) => {
 			},
 		});
 
+=======
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 		res.json({
 			code: 200,
 			status_resposse: true,
@@ -612,6 +618,7 @@ const getDetailAccount = async (req, res) => {
 				provinces: true,
 				districts: true,
 				wards: true,
+<<<<<<< HEAD
 				user_education: {
 					select: {
 						id: true,
@@ -680,6 +687,8 @@ const getDetailAccount = async (req, res) => {
 						is_delete: false,
 					},
 				},
+=======
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 			},
 		});
 		if (!result) {
@@ -689,13 +698,21 @@ const getDetailAccount = async (req, res) => {
 				message: "Lấy thông tin tài khoản thất bại",
 			});
 		}
+<<<<<<< HEAD
 		// let obj = formatObj(result || {});
 		delete result.password;
+=======
+		let obj = formatObj(result || {});
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 		return res.json({
 			code: 200,
 			status_resposse: true,
 			message: "Lấy thông tin tài khoản",
+<<<<<<< HEAD
 			data: { ...result, password: "" },
+=======
+			data: obj,
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 		});
 	} catch (error) {
 		return res.json({
@@ -708,7 +725,10 @@ const getDetailAccount = async (req, res) => {
 
 const getDetailAccountWithId = async (req, res) => {
 	let { user_id } = req.query;
+<<<<<<< HEAD
 	console.log(user_id);
+=======
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 	try {
 		if (!user_id) {
 			return res.json({
@@ -726,6 +746,7 @@ const getDetailAccountWithId = async (req, res) => {
 				provinces: true,
 				districts: true,
 				wards: true,
+<<<<<<< HEAD
 				user_education: {
 					select: {
 						id: true,
@@ -794,6 +815,8 @@ const getDetailAccountWithId = async (req, res) => {
 						is_delete: false,
 					},
 				},
+=======
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 			},
 		});
 		if (!result) {
@@ -1286,10 +1309,13 @@ module.exports = {
 	getDetailAccount,
 	signInWithGoogle,
 	getDetailAccountWithId,
+<<<<<<< HEAD
 	forgotPassword,
 	resetPassword,
 	forgotUsername,
 	reviewUser,
 	updateById,
 	signInWithGoogleNew,
+=======
+>>>>>>> 4773822d28e2b5332f2f06ab9c937ee26d636b85
 };
